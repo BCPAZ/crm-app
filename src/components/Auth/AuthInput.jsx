@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 
 const AuthInput = ({ type, placeholder, label }) => {
   return (
-    <div className="flex flex-col relative border">
+    <div className="flex flex-col relative">
       <label
         className="text-xs font-semibold text-gray-500 absolute bg-white -top-3 p-1 left-4 w-fit"
       >
         {label}
       </label>
-      <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm bg-gray-300/20">
+      <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm bg-gray-300/15">
         <input
           className="w-full outline-none h-full bg-transparent"
           type={type}
