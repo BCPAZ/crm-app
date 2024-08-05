@@ -6,7 +6,6 @@ const AuthInput = ({ type, placeholder, label }) => {
     <div className="flex flex-col relative border">
       <label
         className="text-xs font-semibold text-gray-500 absolute bg-white -top-3 p-1 left-4 w-fit"
-        htmlFor="#password"
       >
         {label}
       </label>
