@@ -63,6 +63,10 @@ table {
   margin: 0 auto;
 }
 
+.border{
+    border : 1px solid "#919EAB"
+}
+
 
 @layer base{
   #root, html, body{
