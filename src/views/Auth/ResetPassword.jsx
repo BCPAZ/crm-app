@@ -6,7 +6,7 @@ const ResetPassword = () => {
   return (
     <section className="flex justify-center">
       <div className="max-w-[352px] w-full flex flex-col justify-center items-center">
-        <h1 className="font-bold text-2xl leading-normal mb-5">
+        <h1 className="font-bold text-2xl leading-normal mb-5 text-center">
           Yeni şifrə təyin et
         </h1>
         <p className="max-w-[196px] text-center text-sm font-light mb-6">
