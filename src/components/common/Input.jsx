@@ -1,7 +1,7 @@
 import { FaEyeSlash } from "react-icons/fa";
 import PropTypes from "prop-types";
 
-const AuthInput = ({ type, placeholder, label }) => {
+const Input = ({ type, placeholder, label }) => {
   return (
     <div className="flex flex-col relative">
       <label
@@ -25,10 +25,10 @@ const AuthInput = ({ type, placeholder, label }) => {
   );
 };
 
-AuthInput.propTypes = {
+Input.propTypes = {
   type : PropTypes.string.isRequired,
   placeholder : PropTypes.string.isRequired,
   label : PropTypes.string.isRequired
 }
 
-export default AuthInput;
+export default Input;

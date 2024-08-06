@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import AuthInput from "@/components/Auth/AuthInput";
-import AuthButton from "@/components/Auth/AuthButton";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import GoBackButton from "@/components/Auth/GoBackButton";
 const ResetPassword = () => {
   return (
@@ -14,12 +14,12 @@ const ResetPassword = () => {
         </p>
 
         <form className="w-full mb-5 flex flex-col gap-5" action="">
-          <AuthInput
+          <Input
             type="password"
             label="Şifrəniz"
             placeholder="Şifrənizi daxil edin..."
           />
-          <AuthInput
+          <Input
             type="password"
             label="Şifrənizin təkrarı"
             placeholder="Şifrənizi təkrar daxil edin..."
@@ -31,7 +31,7 @@ const ResetPassword = () => {
         >
           Şifrəmi unutdum
         </Link>
-        <AuthButton value="Dəyişdir" />
+        <Button value="Dəyişdir" />
         <GoBackButton />
       </div>
     </section>

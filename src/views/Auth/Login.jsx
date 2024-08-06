@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import AuthInput from "@/components/Auth/AuthInput";
-import AuthButton from "@/components/Auth/AuthButton";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import GoBackButton from "@/components/Auth/GoBackButton";
 
 const Login = () => {
@@ -12,11 +12,11 @@ const Login = () => {
           flegrei şirkətindən sizə verilən e-poçt və şifrə ilə giriş edin.
         </p>
         <form className="w-full mb-5 flex flex-col gap-5" action="">
-          <AuthInput type='email' placeholder='Email adresinizi daxil edin...' label='E-poçt' />
-          <AuthInput type='password' placeholder='Şifrənizi daxil edin...' label='Şifrə' />
+          <Input type='email' placeholder='Email adresinizi daxil edin...' label='E-poçt' />
+          <Input type='password' placeholder='Şifrənizi daxil edin...' label='Şifrə' />
         </form>
         <Link to={'/forgot-password'} className="text-end w-full text-sm font-base underline text-secondary mb-5">Şifrəmi unutdum</Link>
-        <AuthButton value='Giriş et' />
+        <Button value='Giriş et' />
         <GoBackButton />
       </div>
     </section>

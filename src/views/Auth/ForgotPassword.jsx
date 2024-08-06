@@ -1,5 +1,5 @@
-import AuthInput from "@/components/Auth/AuthInput";
-import AuthButton from "@/components/Auth/AuthButton";
+import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import GoBackButton from "@/components/Auth/GoBackButton";
 const ForgotPassword = () => {
   return (
@@ -12,9 +12,9 @@ const ForgotPassword = () => {
         </p>
 
         <form className="w-full mb-5 flex flex-col gap-5" action="">
-          <AuthInput label='e-poçt' placeholder="E-poçt daxil edin..." type='email' />
+          <Input label='e-poçt' placeholder="E-poçt daxil edin..." type='email' />
         </form>
-        <AuthButton value='Göndər' />
+        <Button value='Göndər' />
         <GoBackButton />
       </div>
     </section>
