@@ -7,7 +7,7 @@ const TextArea = ({placeholder, label}) => {
       >
         {label}
       </label>
-      <textarea className="w-full resize-none p-4 rounded-lg text-sm border border-grey/20" placeholder={placeholder}></textarea>
+      <textarea className="w-full outline-none min-h-24 resize-none p-4 rounded-lg text-sm border border-grey/20" placeholder={placeholder}></textarea>
     </div>
   )
 }
