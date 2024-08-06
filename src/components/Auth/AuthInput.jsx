@@ -9,7 +9,7 @@ const AuthInput = ({ type, placeholder, label }) => {
       >
         {label}
       </label>
-      <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm bg-gray-300/15">
+      <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm border border-grey/20">
         <input
           className="w-full outline-none h-full bg-transparent"
           type={type}
