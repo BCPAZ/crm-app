@@ -1,7 +1,11 @@
 import docs from "@/assets/icons/Nav/docs.svg";
 import projects from "@/assets/icons/Nav/projects.svg";
 import mail from "@/assets/icons/Nav/mail.svg";
-
+import workflow from "@/assets/icons/Nav/workflow.svg";
+import fieldManagement from "@/assets/icons/Nav/field-management.svg";
+import security from "@/assets/icons/Nav/security.svg";
+import cost from "@/assets/icons/Nav/cost.svg";
+import insights from "@/assets/icons/Nav/insights.svg";
 export const navigationLinks = [
   {
     title : 'Projects',
@@ -47,179 +51,76 @@ export const navigationLinks = [
     icon : mail,
     elements : [
       {
-        path : 'document-register',
-        label : 'Document Register'
+        path : 'all',
+        label : 'All'
       },
       {
-        path : 'drawings',
-        label : 'Drawings'
+        path : 'inbox',
+        label : 'Inbox'
       },
       {
-        path : 'temporary-files',
-        label : 'Temporary Files'
+        path : 'sent',
+        label : 'Sent'
       },
       {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
-      },
-      {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
+        path : 'drafts',
+        label : 'Drafts'
       }
     ]
   },
   {
-    title : 'Mail',
-    icon : mail,
+    title : 'Workflow',
+    icon : workflow,
     elements : [
       {
-        path : 'document-register',
-        label : 'Document Register'
+        path : 'workflows',
+        label : 'Workflows'
       },
       {
-        path : 'drawings',
-        label : 'Drawings'
+        path : 'templates',
+        label : 'Templated'
       },
       {
-        path : 'temporary-files',
-        label : 'Temporary Files'
-      },
-      {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
-      },
-      {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
+        label : 'New Template'
       }
     ]
   },
   {
-    title : 'Mail',
-    icon : mail,
+    title : 'Field management',
+    icon : fieldManagement,
     elements : [
       {
-        path : 'document-register',
-        label : 'Document Register'
+        path : 'issues',
+        label : 'Issues'
       },
       {
-        path : 'drawings',
-        label : 'Drawings'
+        path : 'inspections',
+        label : 'Inspections'
       },
       {
-        path : 'temporary-files',
-        label : 'Temporary Files'
+        path : 'punchlists',
+        label : 'Punchlists'
       },
       {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
+        path : 'daily-reports',
+        label : 'Daily Reports'
       },
       {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
+        path : 'project-settings',
+        label : 'Projects Settings'
       }
     ]
   },
   {
-    title : 'Mail',
-    icon : mail,
-    elements : [
-      {
-        path : 'document-register',
-        label : 'Document Register'
-      },
-      {
-        path : 'drawings',
-        label : 'Drawings'
-      },
-      {
-        path : 'temporary-files',
-        label : 'Temporary Files'
-      },
-      {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
-      },
-      {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
-      }
-    ]
+    title : 'Security',
+    icon : security,
   },
   {
-    title : 'Mail',
-    icon : mail,
-    elements : [
-      {
-        path : 'document-register',
-        label : 'Document Register'
-      },
-      {
-        path : 'drawings',
-        label : 'Drawings'
-      },
-      {
-        path : 'temporary-files',
-        label : 'Temporary Files'
-      },
-      {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
-      },
-      {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
-      }
-    ]
+    title : 'Cost',
+    icon : cost,
   },
   {
-    title : 'Mail',
-    icon : mail,
-    elements : [
-      {
-        path : 'document-register',
-        label : 'Document Register'
-      },
-      {
-        path : 'drawings',
-        label : 'Drawings'
-      },
-      {
-        path : 'temporary-files',
-        label : 'Temporary Files'
-      },
-      {
-        path : 'upload-new-document',
-        label : 'Upload New Document'
-      },
-      {
-        path : 'multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'bulk-processing',
-        label : 'Bulk Processing'
-      }
-    ]
-  },
+    title : 'Insights',
+    icon : insights,
+  }
 ]
