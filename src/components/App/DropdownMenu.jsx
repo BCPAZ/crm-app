@@ -9,7 +9,7 @@ const DropdownMenu = ({ navElement }) => {
         className="flex items-center gap-2 text-white text-sm font-semibold hover:bg-white/10 p-2 rounded-md"
       >
         <img src={navElement.icon} alt="" />
-        <span>{navElement.title}</span>
+        <span className="lg:block hidden">{navElement.title}</span>
         {navElement.elements && (
           <button className="outline-none">
             <LuChevronDown />

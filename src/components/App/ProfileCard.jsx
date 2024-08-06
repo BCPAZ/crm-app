@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Link } from "react-router-dom";
 export default function ProfileCard() {
   return (
     <div className="relative">
@@ -14,28 +15,23 @@ export default function ProfileCard() {
         <MenuItems
           transition
           anchor="bottom end"
-          className="w-52 flex flex-col overflow-x-hidden overflow-y-auto max-h-60 shadow-lg absolute right-0 mt-2 rounded-xl border bg-white p-1 text-sm font-medium text-black transition duration-100 ease-out focus:outline-none"
+          className="w-52 flex flex-col overflow-hidden overflow-y-auto max-h-60 shadow-lg absolute right-0 mt-2 rounded-xl border bg-white p-1 text-sm font-medium text-black transition duration-100 ease-out focus:outline-none"
         >
           <div className="flex flex-col gap-1 p-4 border-b border-dashed">
             <span className="text-sm text-black">Anar Anar</span>
             <span className="text-sm text-gray-500">anar@flegrei.ru</span>
           </div>
           <div className="bg-secondary h-[100px] w-[100px] rounded-full blur-[50px] absolute -top-[25%] -right-[10%]"></div>
-          <div className="border-b border-dashed">
+          <div className="border-b border-dashed py-2">
             <MenuItem className='hover:bg-gray-300/20'>
-              <button className="flex w-full items-center gap-2 rounded-lg px-4 py-3 data-[focus]:bg-white/10">
+              <Link to="/" className="flex w-full items-center gap-2 rounded-lg px-4 py-3 data-[focus]:bg-white/10">
                 Home
-              </button>
+              </Link>
             </MenuItem>
             <MenuItem className='hover:bg-gray-300/20'>
-              <button className="flex w-full items-center gap-2 rounded-lg px-4 py-3 data-[focus]:bg-white/10">
+              <Link to="/profile" className="flex w-full items-center gap-2 rounded-lg px-4 py-3 data-[focus]:bg-white/10">
                 Profile
-              </button>
-            </MenuItem>
-            <MenuItem className='hover:bg-gray-300/20'>
-              <button className="flex w-full items-center gap-2 rounded-lg px-4 py-3 data-[focus]:bg-white/10">
-                Settings
-              </button>
+              </Link>
             </MenuItem>
           </div>
           <MenuItem>
