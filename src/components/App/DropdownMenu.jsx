@@ -18,7 +18,7 @@ const DropdownMenu = ({ navElement }) => {
       </button>
       {navElement.elements && (
         <ul className="w-[254px] group-hover:block hidden rounded-lg outline-none border-none absolute top-[107%] left-0 shadow-lg bg-white p-2 overflow-hidden">
-          <div className="bg-green-900 h-[100px] w-[100px] rounded-full blur-[50px] absolute -top-[25%] -right-[10%]"></div>
+          <div className="bg-secondary h-[100px] w-[100px] rounded-full blur-[50px] absolute -top-[25%] -right-[10%]"></div>
           {navElement.elements.map((el, index) => (
             <li key={index}>
               <Link
