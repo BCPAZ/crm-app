@@ -5,10 +5,10 @@ const Profile = () => {
     <section className="h-screen">
       <div className="siteContainer">
         <h1 className="text-2xl mt-10 font-semibold">Profile</h1>
-        <div className="w-full flex justify-between" action="">
-          <div className="w-[38%]">Lala</div>
-          <div className="w-[62%]">
-            <div className="grid grid-cols-2 gap-6">
+        <div className="w-full flex lg:flex-row flex-col justify-between gap-10" action="">
+          <div className="lg:w-[38%] w-full">Lala</div>
+          <div className="lg:w-[62%] w-full">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
               <Input label="Name" placeholder="Enter your name" type="text" />
               <Input
                 label="Email"
