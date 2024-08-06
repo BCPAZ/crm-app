@@ -5,11 +5,13 @@ import Login from "@/views/Auth/Login";
 import ResetPassword from "@/views/Auth/ResetPassword";
 import ForgotPassword from "@/views/Auth/ForgotPassword";
 import Projects from "@/views/App/Projects";
+import Dashboard from "@/views/App/Dashboard";
 const AppRouter = () => {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/" element={<Projects />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/projects" element={<Projects />} />
       </Route>
       <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
