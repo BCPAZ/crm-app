@@ -12,7 +12,7 @@ const Dashboard = () => {
   return (
     <section>
       <div className="siteContainer">
-        <div className="mt-8 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-10">
+        <div className="mt-8 grid xl:grid-cols-4 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-10">
           <div className="flex flex-col">
             <div className="flex items-center gap-2 p-[22px] border-b-2 border-grey/20">
               <img src={profile} alt="" />
