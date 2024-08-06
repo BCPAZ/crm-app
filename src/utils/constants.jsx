@@ -30,27 +30,27 @@ export const navigationLinks = [
     icon : docs,
     elements : [
       {
-        path : 'document-register',
+        path : 'documents/document-register',
         label : 'Document Register'
       },
       {
-        path : 'drawings',
+        path : 'documents/drawings',
         label : 'Drawings'
       },
       {
-        path : 'temporary-files',
+        path : 'documents/temporary-files',
         label : 'Temporary Files'
       },
       {
-        path : 'upload-new-document',
+        path : 'documents/upload-new-document',
         label : 'Upload New Document'
       },
       {
-        path : 'multiple-file-upload',
+        path : 'documents/multiple-file-upload',
         label : 'Multiple File Upload'
       },
       {
-        path : 'bulk-processing',
+        path : 'documents/bulk-processing',
         label : 'Bulk Processing'
       }
     ]

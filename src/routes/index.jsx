@@ -7,6 +7,8 @@ import ForgotPassword from "@/views/Auth/ForgotPassword";
 import Projects from "@/views/App/Projects";
 import Dashboard from "@/views/App/Dashboard";
 import Profile from "@/views/App/Profile";
+import DocumentLayout from "@/layouts/PageLayouts/DocumentLayouts";
+import UploadNewDocument from "@/views/App/Documents/UploadNewDocument";
 const AppRouter = () => {
   return (
     <Routes>
@@ -14,6 +16,9 @@ const AppRouter = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/documents/*" element={<DocumentLayout />}>
+          <Route path="upload-new-document" element={<UploadNewDocument />} />
+        </Route>
       </Route>
       <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
