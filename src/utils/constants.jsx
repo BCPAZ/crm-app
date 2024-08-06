@@ -5,7 +5,7 @@ import mail from "@/assets/icons/Nav/mail.svg";
 export const navigationLinks = [
   {
     title : 'Projects',
-    img : projects,
+    icon : projects,
     elements : [
       'AZINTEST',
       'New Project',
@@ -14,7 +14,7 @@ export const navigationLinks = [
   },
   {
     title : 'Documents',
-    img : docs,
+    icon : docs,
     elements : [
       {
         path : 'document-register',
@@ -44,7 +44,7 @@ export const navigationLinks = [
   },
   {
     title : 'Mail',
-    img : mail,
+    icon : mail,
     elements : [
       {
         path : 'document-register',
@@ -71,5 +71,155 @@ export const navigationLinks = [
         label : 'Bulk Processing'
       }
     ]
-  }
+  },
+  {
+    title : 'Mail',
+    icon : mail,
+    elements : [
+      {
+        path : 'document-register',
+        label : 'Document Register'
+      },
+      {
+        path : 'drawings',
+        label : 'Drawings'
+      },
+      {
+        path : 'temporary-files',
+        label : 'Temporary Files'
+      },
+      {
+        path : 'upload-new-document',
+        label : 'Upload New Document'
+      },
+      {
+        path : 'multiple-file-upload',
+        label : 'Multiple File Upload'
+      },
+      {
+        path : 'bulk-processing',
+        label : 'Bulk Processing'
+      }
+    ]
+  },
+  {
+    title : 'Mail',
+    icon : mail,
+    elements : [
+      {
+        path : 'document-register',
+        label : 'Document Register'
+      },
+      {
+        path : 'drawings',
+        label : 'Drawings'
+      },
+      {
+        path : 'temporary-files',
+        label : 'Temporary Files'
+      },
+      {
+        path : 'upload-new-document',
+        label : 'Upload New Document'
+      },
+      {
+        path : 'multiple-file-upload',
+        label : 'Multiple File Upload'
+      },
+      {
+        path : 'bulk-processing',
+        label : 'Bulk Processing'
+      }
+    ]
+  },
+  {
+    title : 'Mail',
+    icon : mail,
+    elements : [
+      {
+        path : 'document-register',
+        label : 'Document Register'
+      },
+      {
+        path : 'drawings',
+        label : 'Drawings'
+      },
+      {
+        path : 'temporary-files',
+        label : 'Temporary Files'
+      },
+      {
+        path : 'upload-new-document',
+        label : 'Upload New Document'
+      },
+      {
+        path : 'multiple-file-upload',
+        label : 'Multiple File Upload'
+      },
+      {
+        path : 'bulk-processing',
+        label : 'Bulk Processing'
+      }
+    ]
+  },
+  {
+    title : 'Mail',
+    icon : mail,
+    elements : [
+      {
+        path : 'document-register',
+        label : 'Document Register'
+      },
+      {
+        path : 'drawings',
+        label : 'Drawings'
+      },
+      {
+        path : 'temporary-files',
+        label : 'Temporary Files'
+      },
+      {
+        path : 'upload-new-document',
+        label : 'Upload New Document'
+      },
+      {
+        path : 'multiple-file-upload',
+        label : 'Multiple File Upload'
+      },
+      {
+        path : 'bulk-processing',
+        label : 'Bulk Processing'
+      }
+    ]
+  },
+  {
+    title : 'Mail',
+    icon : mail,
+    elements : [
+      {
+        path : 'document-register',
+        label : 'Document Register'
+      },
+      {
+        path : 'drawings',
+        label : 'Drawings'
+      },
+      {
+        path : 'temporary-files',
+        label : 'Temporary Files'
+      },
+      {
+        path : 'upload-new-document',
+        label : 'Upload New Document'
+      },
+      {
+        path : 'multiple-file-upload',
+        label : 'Multiple File Upload'
+      },
+      {
+        path : 'bulk-processing',
+        label : 'Bulk Processing'
+      }
+    ]
+  },
 ]
