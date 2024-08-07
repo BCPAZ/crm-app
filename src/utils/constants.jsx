@@ -82,16 +82,16 @@ export const navigationLinks = [
     icon : workflow,
     elements : [
       {
-        path : 'workflows',
+        path : 'workflow/workflows',
         label : 'Workflows'
       },
       {
-        path : 'templates',
+        path : 'workflow/templates',
         label : 'Templates'
       },
       {
         label : 'New Template',
-        path : 'create-template'
+        path : 'workflow/create-template'
       }
     ]
   },
