@@ -7,7 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const DocumentRegister = () => {
   return (
-    <section className="h-screen">
+    <section className="h-full">
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <div className="flex items-center gap-5">
@@ -20,15 +20,15 @@ const DocumentRegister = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between relative">
-        <div className="w-[20%] top-0 left-0 absolute h-full bg-white">
-        <Sidebar />
+      <div className="flex justify-between relative h-full">
+        <div className="w-[20%] top-0 left-0 absolute h-screen bg-white">
+          <Sidebar />
         </div>
-        <div className="max-w-[80%] absolute top-0 right-0 w-full flex flex-col justify-between mx-auto px-5 gap-10 py-10">
-          <div className="w-full h-full">
+        <div className="w-[80%] h-full absolute top-0 right-0 flex flex-col justify-between px-5 gap-10 pt-10 pb-[100px]">
+          <div className="w-full">
             <Searchbar />
           </div>
-          <div className="w-full grid grid-cols-2">
+          <div className="w-full grid grid-cols-2 mt-10">
             <CheckboxElement label="File content search" />
             <CheckboxElement label="Show change history" />
           </div>
@@ -49,16 +49,16 @@ const DocumentRegister = () => {
             <button>Restore Filters</button>
           </div>
           <div className="bg-gray-200">
-          <div className="max-w-[1080px] mx-auto p-3 flex flex-col gap-4">
-            <h2>No results.</h2>
-            <span>Suggestions:</span>
-            <ul className="list-disc p-3">
-              <li className="list-disc">Check the spelling</li>
-              <li className="list-disc">Try using different keywords</li>
-              <li className="list-disc">Try using different filters</li>
-            </ul>
+            <div className="p-3 flex flex-col gap-4">
+              <h2>No results.</h2>
+              <span>Suggestions:</span>
+              <ul className="list-disc p-3">
+                <li className="list-disc">Check the spelling</li>
+                <li className="list-disc">Try using different keywords</li>
+                <li className="list-disc">Try using different filters</li>
+              </ul>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </section>
