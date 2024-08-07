@@ -1,4 +1,7 @@
+import Button from "@/components/common/Button";
+import FileUploader from "@/components/common/FileUploader";
 import SecondInput from "@/components/common/SecondInput";
+import SecondTextArea from "@/components/common/SecondTextArea";
 import Select from "@/components/common/Select";
 
 const UploadNewDocument = () => {
@@ -11,15 +14,16 @@ const UploadNewDocument = () => {
       </div>
       <div className="max-w-[1080px] w-full flex lg:flex-row flex-col justify-between mx-auto px-5 gap-10 py-10">
         <div className="lg:w-1/2 w-full flex flex-col gap-3">
-          <SecondInput label='Select Docs *' placeholder="Type file code" type="text" />
-          <SecondInput label='Select Docs *' placeholder="Type file code" type="text" />
+          <SecondInput label="Select Docs *" placeholder="Type file code" type="text" />
+          <SecondInput label="Select Docs *" placeholder="Type file code" type="text" />
           <Select />
           <Select />
-          <Select />
-          <Select />
-          <SecondInput label='Author' placeholder="Write author name" type="text" />
-
-
+          <SecondInput label="Author" placeholder="Write author name" type="text" />
+          <FileUploader />
+          <SecondInput label="Contractor document number" placeholder="Document number" type="text" />
+          <SecondTextArea label="Comment" placeholder="Enter your comment" /> {/* labelValue doğru şekilde sağlanmış */}
+          <SecondInput label="Page size" placeholder="Page size" type="text" />
+          <Button value="Upload" />
         </div>
         <div className="lg:w-1/2 w-full">
           <p className="w-full">
