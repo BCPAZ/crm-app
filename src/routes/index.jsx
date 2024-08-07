@@ -9,6 +9,7 @@ import Dashboard from "@/views/App/Dashboard";
 import Profile from "@/views/App/Profile";
 import DocumentLayout from "@/layouts/PageLayouts/DocumentLayouts";
 import UploadNewDocument from "@/views/App/Documents/UploadNewDocument";
+import DocumentRegister from "@/views/App/Documents/DocumentRegister";
 const AppRouter = () => {
   return (
     <Routes>
@@ -17,6 +18,7 @@ const AppRouter = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/documents/*" element={<DocumentLayout />}>
+          <Route path="document-register" element={<DocumentRegister />} />
           <Route path="upload-new-document" element={<UploadNewDocument />} />
         </Route>
       </Route>
