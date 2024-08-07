@@ -87,10 +87,11 @@ export const navigationLinks = [
       },
       {
         path : 'templates',
-        label : 'Templated'
+        label : 'Templates'
       },
       {
-        label : 'New Template'
+        label : 'New Template',
+        path : 'create-template'
       }
     ]
   },

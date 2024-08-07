@@ -10,6 +10,10 @@ import Profile from "@/views/App/Profile";
 import DocumentLayout from "@/layouts/PageLayouts/DocumentLayouts";
 import UploadNewDocument from "@/views/App/Documents/UploadNewDocument";
 import DocumentRegister from "@/views/App/Documents/DocumentRegister";
+import WorkflowLayout from "@/layouts/PageLayouts/WorkflowLayout";
+import Workflows from "@/views/App/Workflow/Workflows";
+import Templates from "@/views/App/Workflow/Templates";
+import CreateTemplate from "@/views/App/Workflow/CreateTemplate";
 const AppRouter = () => {
   return (
     <Routes>
@@ -20,6 +24,11 @@ const AppRouter = () => {
         <Route path="/documents/*" element={<DocumentLayout />}>
           <Route path="document-register" element={<DocumentRegister />} />
           <Route path="upload-new-document" element={<UploadNewDocument />} />
+        </Route>
+        <Route path="/workflow/*" element={<WorkflowLayout />}>
+          <Route path="workflows" element={<Workflows />} />
+          <Route path="templates" element={<Templates />} />
+          <Route path="create-template" element={<CreateTemplate />} />
         </Route>
       </Route>
       <Route element={<AuthLayout />}>
