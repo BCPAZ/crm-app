@@ -14,15 +14,15 @@ const UploadNewDocument = () => {
       </div>
       <div className="max-w-[1080px] w-full flex lg:flex-row flex-col justify-between mx-auto px-5 gap-10 py-10">
         <div className="lg:w-1/2 w-full flex flex-col gap-3">
-          <SecondInput label="Select Docs *" placeholder="Type file code" type="text" />
-          <SecondInput label="Select Docs *" placeholder="Type file code" type="text" />
-          <Select />
-          <Select />
-          <SecondInput label="Author" placeholder="Write author name" type="text" />
+          <SecondInput column label="Select Docs *" placeholder="Type file code" type="text" />
+          <SecondInput column label="Select Docs *" placeholder="Type file code" type="text" />
+          <Select column />
+          <Select column />
+          <SecondInput column label="Author" placeholder="Write author name" type="text" />
           <FileUploader />
-          <SecondInput label="Contractor document number" placeholder="Document number" type="text" />
-          <SecondTextArea label="Comment" placeholder="Enter your comment" /> {/* labelValue doğru şekilde sağlanmış */}
-          <SecondInput label="Page size" placeholder="Page size" type="text" />
+          <SecondInput column label="Contractor document number" placeholder="Document number" type="text" />
+          <SecondTextArea column label="Comment" placeholder="Enter your comment" /> {/* labelValue doğru şekilde sağlanmış */}
+          <SecondInput column label="Page size" placeholder="Page size" type="text" />
           <Button value="Upload" />
         </div>
         <div className="lg:w-1/2 w-full">
