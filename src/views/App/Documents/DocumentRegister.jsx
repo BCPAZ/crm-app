@@ -36,11 +36,11 @@ const DocumentRegister = () => {
             <Select />
             <Select />
             <Select />
-            <SecondInput label="Author" placeholder="Author name" type="text" />
-            <SecondInput label="Author" placeholder="Author name" type="text" />
-            <SecondInput label="Author" placeholder="Author name" type="text" />
-            <SecondInput label="Author" placeholder="Author name" type="text" />
-            <SecondInput label="Author" placeholder="Author name" type="text" />
+            <SecondInput column label="Author" placeholder="Author name" type="text" />
+            <SecondInput column label="Author" placeholder="Author name" type="text" />
+            <SecondInput column label="Author" placeholder="Author name" type="text" />
+            <SecondInput column label="Author" placeholder="Author name" type="text" />
+            <SecondInput column label="Author" placeholder="Author name" type="text" />
           </div>
           <div className="flex items-center justify-between mt-12">
             <span className="flex items-center gap-3">

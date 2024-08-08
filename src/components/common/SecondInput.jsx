@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-const SecondInput = ({label,placeholder,type}) => {
+const SecondInput = ({label,placeholder,type,column}) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex ${column ? 'flex-col' : 'flex-row items-center'} gap-2`}>
       <label
-        className="text-md font-light text-gray-500 w-fit"
+        className="text-sm font-light text-gray-500 w-fit"
       >
         {label}
       </label>
@@ -21,7 +21,8 @@ const SecondInput = ({label,placeholder,type}) => {
 SecondInput.propTypes = {
   label : PropTypes.string.isRequired,
   type : PropTypes.string.isRequired,
-  placeholder : PropTypes.string.isRequired
+  placeholder : PropTypes.string.isRequired,
+  column : PropTypes.bool
 }
 
 export default SecondInput
