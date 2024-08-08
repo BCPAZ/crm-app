@@ -14,6 +14,8 @@ import WorkflowLayout from "@/layouts/PageLayouts/WorkflowLayout";
 import Workflows from "@/views/App/Workflow/Workflows";
 import Templates from "@/views/App/Workflow/Templates";
 import CreateTemplate from "@/views/App/Workflow/CreateTemplate";
+import FieldManagementLayout from "@/layouts/PageLayouts/FieldManagementLayout";
+import ProjectSettings from "@/views/App/FieldManagement/ProjectSettings";
 const AppRouter = () => {
   return (
     <Routes>
@@ -29,6 +31,9 @@ const AppRouter = () => {
           <Route path="workflows" element={<Workflows />} />
           <Route path="templates" element={<Templates />} />
           <Route path="create-template" element={<CreateTemplate />} />
+        </Route>
+        <Route path="/field-management/*" element={<FieldManagementLayout />}>
+          <Route path="project-settings" element={<ProjectSettings />} />
         </Route>
       </Route>
       <Route element={<AuthLayout />}>
