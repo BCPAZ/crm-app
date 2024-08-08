@@ -30,7 +30,7 @@ const FileTable = () => {
               <span className="text-xs">09 Aug 2022</span>
               <span className="text-xs">10:37 AM</span>
             </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center">
+            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
@@ -48,7 +48,7 @@ const FileTable = () => {
               <span className="text-xs">09 Aug 2022</span>
               <span className="text-xs">10:37 AM</span>
             </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center">
+            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
@@ -66,7 +66,7 @@ const FileTable = () => {
               <span className="text-xs">09 Aug 2022</span>
               <span className="text-xs">10:37 AM</span>
             </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center">
+            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
               <img src={avatar} alt="" />
