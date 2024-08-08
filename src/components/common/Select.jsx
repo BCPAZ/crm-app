@@ -5,6 +5,8 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import PropTypes from "prop-types";
 
 const people = [
   { id: 1, name: "Durward Reynolds" },
@@ -16,7 +18,7 @@ const people = [
   { id: 7, name: "Katelyn Rohan" },
 ];
 
-function Select() {
+function Select({label}) {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
   return (
@@ -27,11 +29,14 @@ function Select() {
       onChange={setSelectedPerson}
     >
       <div className="flex flex-col gap-2">
-        <label className="text-md font-light text-gray-500" htmlFor="">
+        {
+          label && <label className="text-md font-light text-gray-500" htmlFor="">
           Date
         </label>
-        <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm">
+        }
+        <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm flex items-center justify-between">
           {selectedPerson.name}
+          <MdKeyboardArrowDown />
         </ListboxButton>
       </div>
       <ListboxOptions
@@ -49,6 +54,10 @@ function Select() {
       </ListboxOptions>
     </Listbox>
   );
+}
+
+Select.propTypes = {
+  label : PropTypes.string
 }
 
 export default Select;
