@@ -132,5 +132,6 @@ export const navigationLinks = [
   {
     title : 'Insights',
     icon : insights,
+    path : '/insights'
   }
 ]
