@@ -33,9 +33,9 @@ const DocumentRegister = () => {
             <CheckboxElement label="Show change history" />
           </div>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
-            <Select />
-            <Select />
-            <Select />
+            <Select column />
+            <Select column />
+            <Select column />
             <SecondInput column label="Author" placeholder="Author name" type="text" />
             <SecondInput column label="Author" placeholder="Author name" type="text" />
             <SecondInput column label="Author" placeholder="Author name" type="text" />

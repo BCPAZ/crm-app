@@ -18,7 +18,7 @@ const people = [
   { id: 7, name: "Katelyn Rohan" },
 ];
 
-function Select({label}) {
+function Select({label, column}) {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
   return (
@@ -28,7 +28,7 @@ function Select({label}) {
       value={selectedPerson}
       onChange={setSelectedPerson}
     >
-      <div className="flex flex-col gap-2">
+      <div className={`flex ${column ? 'flex-col' : 'flex-row items-center'} gap-2`}>
         {
           label && <label className="text-md font-light text-gray-500" htmlFor="">
           Date
@@ -57,7 +57,8 @@ function Select({label}) {
 }
 
 Select.propTypes = {
-  label : PropTypes.string
+  label : PropTypes.string,
+  column : PropTypes.bool
 }
 
 export default Select;
