@@ -1,5 +1,7 @@
 import CheckboxElement from "./CheckboxElement";
 import avatar from "@/assets/images/img.png";
+import { GoArrowDown } from "react-icons/go";
+
 
 const FileTable = () => {
   return (
@@ -9,7 +11,7 @@ const FileTable = () => {
           <tr className="p-4 w-full flex items-center justify-between gap-5">
             <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
               <CheckboxElement />
-              <span>No Document</span>
+              <span className="flex items-center gap-2">No Document <GoArrowDown /></span>
             </th>
             <th className="text-sm font-medium w-[10%] text-gray-500">Stage</th>
             <th className="text-sm font-medium w-[10%] text-gray-500">Results</th>
