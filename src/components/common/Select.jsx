@@ -36,7 +36,7 @@ function Select({label}) {
         }
         <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm flex items-center justify-between">
           {selectedPerson.name}
-          <MdKeyboardArrowDown />
+          <MdKeyboardArrowDown size={20}/>
         </ListboxButton>
       </div>
       <ListboxOptions
