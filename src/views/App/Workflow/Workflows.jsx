@@ -1,6 +1,8 @@
 import Button from "@/components/common/Button";
 import CheckboxElement from "@/components/common/CheckboxElement";
+import FileTable from "@/components/common/FileTable";
 import Select from "@/components/common/Select";
+import Selectbox from "@/components/common/Selectbox";
 
 const Workflows = () => {
   return (
@@ -17,7 +19,7 @@ const Workflows = () => {
           </div>
         </div>
       </div>
-      <div className="siteContainer h-full  mt-10">
+      <div className="siteContainer h-full mt-10">
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5 py-10">
           <Select />
           <Select />
@@ -25,6 +27,12 @@ const Workflows = () => {
           <Select />
           <Select />
           <CheckboxElement label="Just my works" />
+        </div>
+        <div className="w-fit">
+          <Selectbox />
+        </div>
+        <div className="py-10">
+          <FileTable />
         </div>
       </div>
     </section>
