@@ -21,7 +21,7 @@ export default function Selectbox({outline}) {
             <option value="canceled">Canceled</option>
           </Select>
           <MdKeyboardArrowDown
-            className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white cursor-pointer"
+            className={`group pointer-events-none absolute top-2.5 right-2.5 size-4 ${outline ? 'fill-black' : 'fill-white'} cursor-pointer`}
           />
         </div>
       </Field>
