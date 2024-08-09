@@ -1,0 +1,81 @@
+import { useState, useEffect } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const ComparisonBarChart = () => {
+  const [chartKey, setChartKey] = useState(0);
+
+  const chartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label : 'Flegrei',
+        backgroundColor: '#FFAB00',
+        hoverBackgroundColor: '#FFBB20',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        borderRadius: {
+          topLeft: 10,
+          topRight: 10,
+          bottomLeft: 0,
+          bottomRight: 0
+        },
+      },
+      {
+        label: 'Government',
+        backgroundColor: '#007867',
+        hoverBackgroundColor: '#007600',
+        data: [45, 69, 60, 91, 66, 75, 50],
+        borderRadius: {
+          topLeft: 10,
+          topRight: 10,
+          bottomLeft: 0,
+          bottomRight: 0
+        },
+      }
+    ]
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        min : 0,
+        max: 100,
+        ticks : {
+          stepSize : 20,
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      setChartKey(chartKey + 1);
+    };
+  }, []);
+
+  return (
+    <div className='w-full'>
+      <Bar key={chartKey} data={chartData} options={options} />
+    </div>
+  );
+};
+
+export default ComparisonBarChart;

@@ -1,3 +1,4 @@
+import ChartArea from "@/components/App/Insights/ChartArea";
 import Selectbox from "@/components/common/Selectbox";
 
 const Insights = () => {
@@ -14,6 +15,11 @@ const Insights = () => {
           </div>
         </div>
       </div>
+      <div className="siteContainer">
+          <div className="w-full">
+            <ChartArea />
+          </div>
+        </div>
     </section>
   );
 };
