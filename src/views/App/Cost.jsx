@@ -1,4 +1,5 @@
 import InvoicePanel from "@/components/App/Cost/InvoicePanel";
+import InvoiceTable from "@/components/App/Cost/InvoiceTable";
 import Selectbox from "@/components/common/Selectbox";
 import { IoAddSharp } from "react-icons/io5";
 
@@ -24,6 +25,9 @@ const Cost = () => {
         </div>
         <div className="mt-5">
           <InvoicePanel />
+        </div>
+        <div className="mt-5">
+          <InvoiceTable />
         </div>
       </div>
     </section>
