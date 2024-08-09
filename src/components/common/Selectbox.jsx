@@ -1,15 +1,16 @@
 import { Field, Select } from '@headlessui/react';
 import { MdKeyboardArrowDown } from "react-icons/md";
+import PropTypes from "prop-types";
 import clsx from 'clsx';
 
-export default function Selectbox() {
+export default function Selectbox({outline}) {
   return (
     <div className="w-full max-w-md">
       <Field>
         <div className="relative">
           <Select
             className={clsx(
-              'mt-3 block w-full appearance-none rounded-lg border-none bg-secondary py-1.5 px-3 text-sm/6 text-white',
+              `mt-3 block w-full appearance-none rounded-lg border-none ${outline ? 'text-black border border-grey/20' : 'bg-secondary text-white'} py-1.5 px-3 text-sm`,
               'focus:outline-none data-[focus]:-outline-offset-2',
               '*:text-black'
             )}
@@ -26,4 +27,8 @@ export default function Selectbox() {
       </Field>
     </div>
   )
+}
+
+Selectbox.propTypes = {
+  outline : PropTypes.bool
 }
