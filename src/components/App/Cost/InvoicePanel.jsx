@@ -3,7 +3,7 @@ import CircleProgressBar from "./CircleProgressBar";
 
 const InvoicePanel = () => {
   return (
-    <div className="p-4 rounded-xl shadow-lg grid grid-cols-5 place-content-center place-items-center gap-4">
+    <div className="p-4 rounded-xl shadow-lg grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 place-content-center place-items-center gap-4">
       {invoices.map((invoice, index) => (
         <div key={index} className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
           <CircleProgressBar progress={75} />
@@ -13,7 +13,7 @@ const InvoicePanel = () => {
             <span className="font-medium text-sm">${invoice.price}</span>
           </div>
           {index < invoices.length - 1 && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300"></div>
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300 sm:block hidden"></div>
           )}
         </div>
       ))}
