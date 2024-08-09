@@ -17,6 +17,7 @@ import CreateTemplate from "@/views/App/Workflow/CreateTemplate";
 import FieldManagementLayout from "@/layouts/PageLayouts/FieldManagementLayout";
 import ProjectSettings from "@/views/App/FieldManagement/ProjectSettings";
 import Insights from "@/views/App/Insights";
+import Cost from "@/views/App/Cost";
 const AppRouter = () => {
   return (
     <Routes>
@@ -25,6 +26,7 @@ const AppRouter = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/insights" element={<Insights />} />
+        <Route path="/cost" element={<Cost />} />
         <Route path="/documents/*" element={<DocumentLayout />}>
           <Route path="document-register" element={<DocumentRegister />} />
           <Route path="upload-new-document" element={<UploadNewDocument />} />

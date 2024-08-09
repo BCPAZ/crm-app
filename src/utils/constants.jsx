@@ -126,6 +126,7 @@ export const navigationLinks = [
     icon : security,
   },
   {
+    path : '/cost',
     title : 'Cost',
     icon : cost,
   },
