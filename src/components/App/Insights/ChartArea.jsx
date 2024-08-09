@@ -40,7 +40,7 @@ const ChartArea = () => {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 py-10">
+    <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
       <div className="md:p-6 p-3 bg-white shadow-lg rounded-lg">
         <h6 className="w-full font-medium text-lg">Emails Sent</h6>
         <div className="mt-6 w-full">

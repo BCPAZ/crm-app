@@ -1,4 +1,5 @@
 import ChartArea from "@/components/App/Insights/ChartArea";
+import WorkflowReport from "@/components/App/Insights/WorkflowReport";
 import Selectbox from "@/components/common/Selectbox";
 
 const Insights = () => {
@@ -16,13 +17,15 @@ const Insights = () => {
         </div>
       </div>
       <div className="siteContainer">
+        <div className="py-10">
           <div className="w-full">
             <ChartArea />
           </div>
-          <div>
-            
+          <div className="grid lg:grid-cols-2 grid-cols-1 mt-5">
+            <WorkflowReport />
           </div>
         </div>
+      </div>
     </section>
   );
 };
