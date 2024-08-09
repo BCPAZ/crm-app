@@ -10,7 +10,7 @@ export default function Selectbox({outline}) {
         <div className="relative">
           <Select
             className={clsx(
-              `mt-3 block w-full appearance-none rounded-lg ${outline ? 'text-black border border-grey/20' : 'bg-secondary text-white'} py-1.5 px-3 text-sm`,
+              `block w-full appearance-none rounded-lg ${outline ? 'text-black border border-grey/20' : 'bg-secondary text-white'} py-1.5 px-3 text-sm`,
               'focus:outline-none data-[focus]:-outline-offset-2',
               '*:text-black'
             )}
@@ -21,7 +21,7 @@ export default function Selectbox({outline}) {
             <option value="canceled">Canceled</option>
           </Select>
           <MdKeyboardArrowDown
-            className={`group pointer-events-none absolute top-2.5 right-2.5 size-4 ${outline ? 'fill-black' : 'fill-white'} cursor-pointer`}
+            className={`group pointer-events-none absolute top-2.5 right-2.5 size-3 ${outline ? 'fill-black' : 'fill-white'} cursor-pointer`}
           />
         </div>
       </Field>
