@@ -1,13 +1,11 @@
 import { Field, Select } from '@headlessui/react';
-import { MdKeyboardArrowDown } from "react-icons/md";
 import PropTypes from "prop-types";
 import clsx from 'clsx';
 
 export default function Selectbox({outline}) {
   return (
-    <div className="w-full max-w-md">
       <Field>
-        <div className="relative">
+        <div className="relative max-w-md">
           <Select
             className={clsx(
               `block w-full appearance-none rounded-lg ${outline ? 'text-black border border-grey/20' : 'bg-secondary text-white'} py-1.5 px-3 text-sm`,
@@ -20,12 +18,8 @@ export default function Selectbox({outline}) {
             <option value="delayed">Delayed</option>
             <option value="canceled">Canceled</option>
           </Select>
-          <MdKeyboardArrowDown
-            className={`group pointer-events-none absolute top-2.5 right-2.5 size-3 ${outline ? 'fill-black' : 'fill-white'} cursor-pointer`}
-          />
         </div>
       </Field>
-    </div>
   )
 }
 
