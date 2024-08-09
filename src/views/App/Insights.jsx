@@ -19,6 +19,9 @@ const Insights = () => {
           <div className="w-full">
             <ChartArea />
           </div>
+          <div>
+            
+          </div>
         </div>
     </section>
   );
