@@ -1,3 +1,4 @@
+import InvoicePanel from "@/components/App/Cost/InvoicePanel";
 import Selectbox from "@/components/common/Selectbox";
 import { IoAddSharp } from "react-icons/io5";
 
@@ -20,6 +21,9 @@ const Cost = () => {
         <div className="flex items-center justify-between mt-3">
           <h4 className="text-2xl font-bold">List</h4>
           <button className="flex items-center gap-2 bg-black text-white py-1.5 px-3 rounded-lg text-sm font-semibold" type="button"><IoAddSharp size={22}/>New Invoice</button>
+        </div>
+        <div className="mt-5">
+          <InvoicePanel />
         </div>
       </div>
     </section>
