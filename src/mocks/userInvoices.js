@@ -33,7 +33,30 @@ const userInvoices = [
     dueTime : '9:00 PM',
     amount : 32.45,
     sent : 66,
-    status : 'paid'
+    status : 'paid',
+    basket : [
+      {
+        id:1,
+        service : 'Design',
+        part : 'Home',
+        quantity : 1,
+        unitPrice : 63,
+      },
+      {
+        id:2,
+        service : 'License',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 55,
+      },
+      {
+        id:3,
+        service : 'UI Design',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 43,
+      },
+    ]
   },
   {
     id:3,
