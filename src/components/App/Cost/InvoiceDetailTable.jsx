@@ -20,56 +20,40 @@ const InvoiceDetailTable = () => {
           </tr>
         </thead>
         <tbody className="w-full flex flex-col text-left">
-          {userInvoices.map((invoice, index) => (
+          {userInvoices.basket.map((prod, index) => (
             <tr
               key={index}
               className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20  w-full flex items-center justify-between gap-5 min-h-[76px]"
             >
               <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[3%]">
-                <span>{invoice.id}</span>
+                <span>{prod.id}</span>
               </th>
               <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[58%]">
-                <div className="flex items-center gap-4">
-                  <img
-                    className="w-[40px] h-[40px] rounded-full"
-                    src={invoice.avatar}
-                    alt=""
-                  />
                   <div className="flex flex-col">
-                    <h3 className="text-sm text-secondary">{invoice.name}</h3>
+                    <h3 className="text-sm text-secondary">{prod.service}</h3>
                     <span className="text-sm text-gray-400">
-                      {invoice.code}
+                      {prod.part}
                     </span>
                   </div>
-                </div>
               </th>
               <td className="text-sm font-medium text-gray-500 w-[13%]">
                 <div className="flex flex-col">
-                  <h3 className="text-xs text-secondary">
-                    {invoice.createDate}
-                  </h3>
-                  <span className="text-xs text-gray-400">
-                    {invoice.createTime}
+                  <span className="text-xs text-secondary">
+                    {prod.quantity}
                   </span>
                 </div>
               </td>
               <td className="text-sm font-medium text-gray-500 w-[13%]">
                 <div className="flex flex-col">
-                  <h3 className="text-xs text-secondary">
-                    {invoice.createDate}
-                  </h3>
                   <span className="text-xs text-gray-400">
-                    {invoice.createTime}
+                    {prod.unitPrice}
                   </span>
                 </div>
               </td>
               <td className="text-sm font-medium text-gray-500 w-[13%]">
                 <div className="flex flex-col">
-                  <h3 className="text-xs text-secondary">
-                    {invoice.createDate}
-                  </h3>
                   <span className="text-xs text-gray-400">
-                    {invoice.createTime}
+                    {prod.quantity * prod.unitPrice}
                   </span>
                 </div>
               </td>
