@@ -57,7 +57,7 @@ const InvoiceDetailTable = ({ data }) => {
           ))}
         </tbody>
       </table>
-      <div className="flex flex-col gap-3 md:items-end items-start p-5">
+      <div className="flex flex-col gap-3 md:items-end items-start p-5 border-b border-grey/20 border-dashed">
         <div className="flex flex-row items-center text-sm">
           <span className="text-gray-500 md:w-fit w-[100px]">Subtotal:</span>
           <span className="md:w-[162px] text-end font-semibold">${subtotal.toFixed(2)}</span>
@@ -78,6 +78,16 @@ const InvoiceDetailTable = ({ data }) => {
           <span className="text-black font-semibold md:w-fit w-[100px]">Total:</span>
           <span className="md:w-[162px] text-end font-semibold">${total.toFixed(2)}</span>
         </div>
+      </div>
+      <div className="p-5 flex justify-between items-center flex-wrap gap-3">
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm font-semibold">NOTES</h3>
+            <p className="text-sm">We appreciate your business. Should you need us to add VAT or extra notes let us know!</p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm font-semibold">Have a question?</h3>
+            <a href="mailto:support@crm.az" className="text-sm">support@crm.az</a>
+          </div>
       </div>
     </div>
   );
