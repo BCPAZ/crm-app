@@ -1,5 +1,6 @@
 const userInvoices = [
   {
+    id:1,
     avatar : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671122.jpg',
     name : 'Jayvion Simon',
     code : 'INV-1708',
@@ -12,6 +13,7 @@ const userInvoices = [
     status : 'pending'
   },
   {
+    id:2,
     avatar : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
     name : 'George Rodrigues',
     code : 'INV-1823',
@@ -24,6 +26,7 @@ const userInvoices = [
     status : 'paid'
   },
   {
+    id:2,
     avatar : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671118.jpg',
     name : 'Deja Brady',
     code : 'INV-1719',
