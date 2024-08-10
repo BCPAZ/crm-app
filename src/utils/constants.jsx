@@ -6,6 +6,12 @@ import fieldManagement from "@/assets/icons/Nav/field-management.svg";
 import security from "@/assets/icons/Nav/security.svg";
 import cost from "@/assets/icons/Nav/cost.svg";
 import insights from "@/assets/icons/Nav/insights.svg";
+
+import { FaPen, FaEye, } from "react-icons/fa";
+import { GiCloudDownload } from "react-icons/gi";
+import { BsFillPrinterFill } from "react-icons/bs";
+import { HiMiniPaperAirplane } from "react-icons/hi2";
+import { IoShareSocialSharp } from "react-icons/io5";
 export const navigationLinks = [
   {
     title : 'Projects',
@@ -134,5 +140,33 @@ export const navigationLinks = [
     title : 'Insights',
     icon : insights,
     path : '/insights'
+  }
+]
+
+
+export const invoiceIcons = [
+  {
+    label : 'Write',
+    icon : <FaPen />
+  },
+  {
+    label : 'Watch',
+    icon : <FaEye />
+  },
+  {
+    label : 'Download',
+    icon : <GiCloudDownload />
+  },
+  {
+    label : 'Print',
+    icon : <BsFillPrinterFill />
+  },
+  {
+    label : 'Send',
+    icon : <HiMiniPaperAirplane />
+  },
+  {
+    label : 'Share',
+    icon : <IoShareSocialSharp />
   }
 ]
