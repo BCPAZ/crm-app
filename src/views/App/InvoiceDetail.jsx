@@ -76,7 +76,7 @@ const InvoiceDetail = () => {
               <Select />
             </div>
           </div>
-          <div className="mt-10 bg-white rounded-lg shadow-lg p-10">
+          <div className="mt-10 bg-white rounded-lg shadow-lg md:p-10 p-5">
             <div className="flex flex-col items-end gap-2 w-full">
               <span>{renderStatus(data.status)}</span>
               <span className="text-md font-semibold">{data.code}</span>
