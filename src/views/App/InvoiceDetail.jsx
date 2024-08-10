@@ -2,9 +2,14 @@ import Selectbox from "@/components/common/Selectbox";
 import { useParams } from "react-router-dom";
 import userInvoices from "@/mocks/userInvoices";
 import Breadcrumb from "@/components/App/Cost/Breadcrumb";
+import NotFound from "./NotFound";
 const InvoiceDetail = () => {
   const {id} = useParams();
   const data = userInvoices.find((invoice) => invoice.id === parseInt(id));
+
+  if(!data) {
+    return <NotFound name="Invoice" />
+  }
   return (
     <sections>
       <div className="border-b border-gray-400 py-7">
@@ -13,7 +18,7 @@ const InvoiceDetail = () => {
             <h1 className="text-xl font-semibold w-full">Cost</h1>
             <div className="w-[15%]">
               <Selectbox />
-            </div>
+            </div>  
           </div>
         </div>
       </div>
