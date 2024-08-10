@@ -5,6 +5,7 @@ import Breadcrumb from "@/components/App/Cost/Breadcrumb";
 import NotFound from "./NotFound";
 import { invoiceIcons } from "@/utils/constants";
 import Select from "@/components/common/Select";
+import InvoiceDetailTable from "@/components/App/Cost/InvoiceDetailTable";
 const InvoiceDetail = () => {
   const { id } = useParams();
   const data = userInvoices.find((invoice) => invoice.id === parseInt(id));
@@ -111,6 +112,9 @@ const InvoiceDetail = () => {
                   <span>{data.dueDate}</span>
                 </div>
               </div>
+            </div>
+            <div className="mt-10">
+              <InvoiceDetailTable />
             </div>
           </div>
         </div>
