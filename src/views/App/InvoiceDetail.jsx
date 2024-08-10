@@ -58,7 +58,7 @@ const InvoiceDetail = () => {
         <div className="py-10">
           <h1 className="text-2xl font-semibold">{data.code}</h1>
           <Breadcrumb />
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-2">
               {invoiceIcons.map((invIcon, index) => (
                 <button
@@ -81,7 +81,7 @@ const InvoiceDetail = () => {
               <span>{renderStatus(data.status)}</span>
               <span className="text-md font-semibold">{data.code}</span>
             </div>
-            <div className="grid grid-cols-2 gap-10 mt-10">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 mt-10">
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-semibold">Invoice from</h3>
                 <div className="flex flex-col gap-1 text-sm">
@@ -99,7 +99,7 @@ const InvoiceDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 mt-10">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-10">
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-semibold">Date create</h3>
                 <div className="text-sm">
