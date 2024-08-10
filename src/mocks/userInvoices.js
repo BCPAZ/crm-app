@@ -15,7 +15,30 @@ const userInvoices = [
     dueTime : '9:00 PM',
     amount : 16.19,
     sent : 52,
-    status : 'pending'
+    status : 'pending',
+    basket : [
+      {
+        id:1,
+        service : 'Design',
+        part : 'Home',
+        quantity : 1,
+        unitPrice : 63,
+      },
+      {
+        id:2,
+        service : 'License',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 55,
+      },
+      {
+        id:3,
+        service : 'UI Design',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 43,
+      },
+    ]
   },
   {
     id:2,
@@ -74,7 +97,30 @@ const userInvoices = [
     dueTime : '9:00 PM',
     amount : 44.55,
     sent : 27,
-    status : 'denied'
+    status : 'denied',
+    basket : [
+      {
+        id:1,
+        service : 'Design',
+        part : 'Home',
+        quantity : 1,
+        unitPrice : 63,
+      },
+      {
+        id:2,
+        service : 'License',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 55,
+      },
+      {
+        id:3,
+        service : 'UI Design',
+        part : 'Home',
+        quantity : 2,
+        unitPrice : 43,
+      },
+    ]
   },
 ]
 
