@@ -43,7 +43,7 @@ const InvoiceDetail = () => {
     }
   };
   return (
-    <sections>
+    <section>
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <div className="flex items-center justify-between">
@@ -114,12 +114,12 @@ const InvoiceDetail = () => {
               </div>
             </div>
             <div className="mt-10">
-              <InvoiceDetailTable />
+              <InvoiceDetailTable data={data} />
             </div>
           </div>
         </div>
       </div>
-    </sections>
+    </section>
   );
 };
 
