@@ -7,7 +7,7 @@ const NotFound = ({ name }) => {
         <span className="text-gray-400">
           <PiWarningOctagon size={64} />
         </span>
-        <span>{name} page not found</span>
+        <span className="text-2xl text-gray-400">{name} page not found</span>
       </div>
     </section>
   );
