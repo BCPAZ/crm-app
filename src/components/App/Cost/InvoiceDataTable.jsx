@@ -4,8 +4,20 @@ import { GoArrowDown } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { LuMoreVertical } from "react-icons/lu";
 
-
 const InvoiceDataTable = () => {
+  const renderStatus = (status) => {
+    switch(status) {
+      case 'denied':
+        return <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">{status}</span>;
+      case 'paid':
+        return <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">{status}</span>;
+      case 'pending':
+        return <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">{status}</span>;
+      default:
+        return <span className="text-xs py-1 px-2  rounded bg-gray-600/40 capitalize w-full">{status}</span>;
+    }
+  }
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full text-sm min-w-[1200px]">
@@ -82,10 +94,10 @@ const InvoiceDataTable = () => {
                     ${invoice.sent}
                   </span>
                 </td>
-                <td className="text-sm font-medium text-gray-500 w-[11%] rounded-e-lg">
-                  <span className="text-sm capitalize">{invoice.status}</span>
+                <td className="text-sm font-medium text-gray-500 w-[11%]">
+                  {renderStatus(invoice.status)}
                 </td>
-                <td className="text-sm font-medium text-gray-500 w-[5%] rounded-e-lg flex items-center justify-center">
+                <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center justify-center">
                   <button className="outline-none border-none" type="button"><LuMoreVertical size={18}/></button>
                 </td>
               </tr>
