@@ -1,4 +1,6 @@
-import Selectbox from "@/components/common/Selectbox"
+import Selectbox from "@/components/common/Selectbox";
+import SendInvoice from "@/components/App/Cost/SendInvoice";
+import Select from "@/components/common/Select";
 const CreateNewInvoice = () => {
   return (
     <section>
@@ -12,8 +14,24 @@ const CreateNewInvoice = () => {
           </div>
         </div>
       </div>
+      <div className="siteContainer">
+        <div className="py-10">
+          <h1 className="text-2xl font-bold">Create new invoice</h1>
+          <div className="rounded-xl shadow-lg mt-10 bg-white">
+            <div className="p-6">
+              <SendInvoice />
+            </div>
+            <div className="grid grid-cols-4 mt-5 gap-4 bg-gray-300/30 p-6">
+              <Select />
+              <Select />
+              <Select />
+              <Select />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-  )
-}
+  );
+};
 
-export default CreateNewInvoice
+export default CreateNewInvoice;
