@@ -1,3 +1,4 @@
+import Searchbar from "@/components/common/Searchbar";
 import mailLinks from "@/utils/mailLinks";
 import { FaPen } from "react-icons/fa";
 const Mail = () => {
@@ -5,8 +6,8 @@ const Mail = () => {
     <section className="py-10">
       <div className="siteContainer">
         <h1 className="font-bold text-2xl">Mail All (23)</h1>
-        <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10">
-          <div className="flex flex-col p-3 w-[18%]">
+        <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
+          <div className="flex flex-col p-3 w-[20%]">
             <button className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
               <FaPen size={22} />
               Compose
@@ -19,6 +20,12 @@ const Mail = () => {
                 </button>
               ))}
             </div>
+          </div>
+          <div className="bg-white rounded-lg flex flex-col w-[35%] p-4 min-h-screen">
+              <Searchbar simple />
+          </div>
+          <div className="flex-1 bg-white rounded-lg p-3">
+              salam
           </div>
         </div>
       </div>
