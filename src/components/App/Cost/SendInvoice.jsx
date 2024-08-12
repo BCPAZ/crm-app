@@ -1,11 +1,11 @@
 import { FaPen } from "react-icons/fa";
-const SendInvoice = () => {
+const SendInvoice = ({openUserModal}) => {
   return (
     <div className="relative grid md:grid-cols-2 grid-cols-1 gap-8 w-full">
       <div className="flex flex-col w-full px-6">
         <div className="flex items-center justify-between gap-3">
           <h1 className="text-lg text-gray-400 font-semibold">From:</h1>
-          <button type="button" className="text-gray-500 cursor-pointer">
+          <button onClick={openUserModal} className="text-gray-500 cursor-pointer">
             <FaPen size={20} />
           </button>
         </div>
@@ -18,7 +18,7 @@ const SendInvoice = () => {
       <div className="flex flex-col w-full px-6">
         <div className="flex items-center justify-between gap-3">
           <h1 className="text-lg text-gray-400 font-semibold">To:</h1>
-          <button type="button" className="text-gray-500 cursor-pointer">
+          <button className="text-gray-500 cursor-pointer">
             <FaPen size={20} />
           </button>
         </div>
