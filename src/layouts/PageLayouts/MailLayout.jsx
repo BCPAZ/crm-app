@@ -7,6 +7,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import moment from "moment";
 import { useState } from "react";
 import empty from "@/assets/icons/Mail/empty.svg";
+import disabled from "@/assets/icons/Mail/disabled.svg";
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
@@ -32,8 +33,8 @@ const MailLayout = () => {
         <h1 className="font-bold text-2xl">
           Mail All ({filteredMails.length})
         </h1>
-        <aside className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
-          <div className="flex flex-col p-3 w-[20%]">
+        <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
+          <aside className="flex flex-col p-3 w-[20%]">
             <button className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
               <FaPen size={22} />
               Compose
@@ -63,7 +64,7 @@ const MailLayout = () => {
                 </button>
               ))}
             </div>
-          </div>
+          </aside>
           <div className="bg-white rounded-lg flex flex-col w-[35%] p-4 min-h-screen">
             <Searchbar simple />
             <div className="flex flex-col gap-2 mt-5">
@@ -124,9 +125,16 @@ const MailLayout = () => {
             </div>
           </div>
           <div className="flex-1 bg-white rounded-lg p-3">
-            <Outlet />
+            {filteredMails.length > 0 ? (
+              <Outlet />
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <img src={disabled} alt="Here is empty" />
+              </div>
+            )}
           </div>
-        </aside>
+
+        </div>
       </div>
     </section>
   );
