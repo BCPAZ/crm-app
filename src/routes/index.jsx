@@ -20,6 +20,8 @@ import Insights from "@/views/App/Insights";
 import Cost from "@/views/App/Cost";
 import InvoiceDetail from "@/views/App/InvoiceDetail";
 import CreateNewInvoice from "@/views/App/CreateNewInvoice";
+import Mail from "@/views/App/Mail/Mail";
+import MailDetail from "@/views/App/Mail/MailDetail";
 const AppRouter = () => {
   return (
     <Routes>
@@ -30,6 +32,8 @@ const AppRouter = () => {
         <Route path="/insights" element={<Insights />} />
         <Route path="/cost" element={<Cost />} />
         <Route path="/cost/:id" element={<InvoiceDetail />} />
+        <Route path="/mail" element={<Mail />} />
+        <Route path="/mail/:id" element={<MailDetail />} />
         <Route path="/cost/create-new-invoice" element={<CreateNewInvoice />} />
         <Route path="/documents/*" element={<DocumentLayout />}>
           <Route path="document-register" element={<DocumentRegister />} />

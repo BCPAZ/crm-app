@@ -64,21 +64,18 @@ export const navigationLinks = [
   {
     title : 'Mail',
     icon : mail,
+    path : '/mail',
     elements : [
       {
-        path : 'all',
         label : 'All'
       },
       {
-        path : 'inbox',
         label : 'Inbox'
       },
       {
-        path : 'sent',
         label : 'Sent'
       },
       {
-        path : 'drafts',
         label : 'Drafts'
       }
     ]
