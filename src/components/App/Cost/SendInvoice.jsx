@@ -1,7 +1,7 @@
 import { FaPen } from "react-icons/fa";
 const SendInvoice = () => {
   return (
-    <div className="relative grid grid-cols-2 gap-5 w-full">
+    <div className="relative grid md:grid-cols-2 grid-cols-1 gap-8 w-full">
       <div className="flex flex-col w-full px-6">
         <div className="flex items-center justify-between gap-3">
           <h1 className="text-lg text-gray-400 font-semibold">From:</h1>
@@ -28,7 +28,7 @@ const SendInvoice = () => {
           <span>+1 202-555-0143</span>
         </div>
       </div>
-      <div className="absolute inset-0 flex items-center">
+      <div className="absolute inset-0 md:flex hidden items-center">
         <div className="w-0.5 h-full bg-gray-200 mx-auto"></div>
       </div>
     </div>
