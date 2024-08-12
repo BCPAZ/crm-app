@@ -2,10 +2,11 @@ import SecondTextArea from "@/components/common/SecondTextArea";
 import mails from "@/mocks/mails";
 import { useParams } from "react-router-dom";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { IoSend } from "react-icons/io5";
+import { IoSend, IoCloudDownload } from "react-icons/io5";
 import { HiTrash } from "react-icons/hi2";
 import { LuMoreVertical } from "react-icons/lu";
 import { IoMdAttach } from "react-icons/io";
+
 const MailDetail = () => {
   const { id } = useParams();
   const selectedMail = mails.find((mail) => mail.id === parseInt(id));
@@ -33,7 +34,7 @@ const MailDetail = () => {
           src={selectedMail.opponent.avatar_url}
           alt={selectedMail.opponent.name}
         />
-        <div>
+        <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <span className="text-sm">{selectedMail.opponent.name}</span>
             <span className="text-sm text-gray-400">
@@ -43,10 +44,20 @@ const MailDetail = () => {
           <span className="text-black text-xs">To : <span className="text-xs text-gray-400">{selectedMail.to}</span></span>
         </div>
       </div>
+      <div className="p-4 bg-grey/20 rounded-lg flex items-center justify-between">
+          <div className="flex items-center text-sm gap-2 text-gray-500">
+            <IoMdAttach size={18}/>
+            <span>{selectedMail.attachments.length} Attachment</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-black font-semibold">
+            <IoCloudDownload size={18}/>
+            <span>Download</span>
+          </div>
+      </div>
       <div className="p-4 h-[261px] overflow-y-auto">
           <p className="text-sm whitespace-pre-wrap">{selectedMail.message}</p>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[330px] z-20 flex flex-col gap-3">
+      <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
         <SecondTextArea solid placeholder="Write something awesome..." />
         <div className="flex items-center justify-between">
           <button className="hover:bg-gray-300 transition-all duration-300 rounded w-[25px] h-[25px] flex items-center justify-center"><IoMdAttach size={18}/></button>

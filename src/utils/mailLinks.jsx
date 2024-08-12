@@ -7,29 +7,35 @@ import star from "@/assets/icons/Mail/star.svg";
 
 const mailLinks = [
   {
-    label : 'All',
-    icon : mail
+    label: 'All',
+    icon: mail,
+    type: 'ALL'
   },
   {
-    label : 'Inbox',
-    icon : inbox
+    label: 'Inbox',
+    icon: inbox,
+    type: 'INBOX'
   },
   {
-    label : 'Sent',
-    icon : send
+    label: 'Sent',
+    icon: send,
+    type: 'SENT'
   },
   {
-    label : 'Trash',
-    icon : trash
+    label: 'Trash',
+    icon: trash,
+    type: 'TRASH'
   },
   {
-    label : 'Important',
-    icon : important
+    label: 'Important',
+    icon: important,
+    type: 'IMPORTANT'
   },
   {
-    label : 'Starred',
-    icon : star
+    label: 'Starred',
+    icon: star,
+    type: 'STARRED'
   },
-]
+];
 
-export default mailLinks
+export default mailLinks;
