@@ -59,7 +59,7 @@ const MailLayout = () => {
                         <span className="text-gray-400 text-sm">{moment(mail.created_at).fromNow()}</span>
                       </div>
                       <div className="w-full flex items-center justify-between relative">
-                        <span className={`line-clamp-1 text-sm ${mail.is_read ? 'text-gray-400' : 'text-black'}`}>{mail.message}</span>
+                        <span className={`line-clamp-1 w-3/4 text-sm ${mail.is_read ? 'text-gray-400' : 'text-black'}`}>{mail.message}</span>
                         {!mail.is_read ? (
                           <span className="w-[10px] h-[10px] bg-blue-500 absolute right-[5%] bottom-[20%] rounded-full"></span>
                         ) : null}
