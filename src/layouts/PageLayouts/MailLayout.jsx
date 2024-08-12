@@ -12,7 +12,14 @@ import { useState } from "react";
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
+  const [mailModal, setMailModal] = useState(false);
 
+  const openMailModal = () => {
+    setMailModal(true);
+  }
+  const closeMailModal = () => {
+    setMailModal(false);
+  }
   const filterMails = () => {
     switch (filterType) {
       case "ALL":
@@ -34,12 +41,12 @@ const MailLayout = () => {
         <h1 className="font-bold text-2xl">
           Mail All ({filteredMails.length})
         </h1>
-        <div className="fixed bottom-5 right-5 z-30">
-        <CreateMail />
+        <div className={`fixed bottom-5 right-5 z-30 ${mailModal ? 'block' : 'hidden'}`}>
+        <CreateMail closeMailModal={closeMailModal}/>
         </div>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
           <aside className="flex flex-col p-3 w-[20%]">
-            <button className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
+            <button onClick={openMailModal} className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
               <FaPen size={22} />
               Compose
             </button>
