@@ -14,7 +14,7 @@ const Mail = () => {
             <div className="p-3 flex flex-col">
               {mailLinks.map((link, index) => (
                 <button className="flex items-center w-full gap-4 p-2" key={index}>
-                  <span className="text-2xl text-gray-500">{link.icon}</span>
+                  <img src={link.icon} alt={link.label} />
                   <span className="text-lg text-gray-500 font-medium">{link.label}</span>
                 </button>
               ))}
