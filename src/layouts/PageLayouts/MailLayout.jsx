@@ -1,13 +1,14 @@
-import Searchbar from "@/components/common/Searchbar";
+import clsx from "clsx";
+import moment from "moment";
 import mails from "@/mocks/mails";
 import mailLinks from "@/utils/mailLinks";
-import clsx from "clsx";
+import Searchbar from "@/components/common/Searchbar";
+import empty from "@/assets/icons/Mail/empty.svg";
+import CreateMail from "@/components/App/Mail/CreateMail";
+import disabled from "@/assets/icons/Mail/disabled.svg";
 import { FaPen } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-import moment from "moment";
 import { useState } from "react";
-import empty from "@/assets/icons/Mail/empty.svg";
-import disabled from "@/assets/icons/Mail/disabled.svg";
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
@@ -29,10 +30,13 @@ const MailLayout = () => {
 
   return (
     <section className="py-10">
-      <div className="siteContainer">
+      <div className="siteContainer relative">
         <h1 className="font-bold text-2xl">
           Mail All ({filteredMails.length})
         </h1>
+        <div className="fixed bottom-5 right-5 z-30">
+        <CreateMail />
+        </div>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
           <aside className="flex flex-col p-3 w-[20%]">
             <button className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
