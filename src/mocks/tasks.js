@@ -6,7 +6,7 @@ const tasks = [
     members : 12,
     created_at: "2024-08-10T08:32:05.000000Z",
     updated_at: "2024-08-10T08:32:05.000000Z",
-    tasks: [
+    data: [
       {
         id: 1,
         type : 'TODO',
@@ -70,7 +70,7 @@ const tasks = [
     members : 4,
     created_at: "2024-08-10T08:32:05.000000Z",
     updated_at: "2024-08-10T08:32:05.000000Z",
-    tasks: [
+    data: [
       {
         id: 1,
         type : 'TODO',
