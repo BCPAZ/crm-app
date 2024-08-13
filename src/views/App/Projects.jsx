@@ -1,14 +1,14 @@
 import tasks from "@/mocks/tasks";
 import { Link } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
-import { LuMoreVertical } from "react-icons/lu";
+import { LuMoreVertical,LuEye } from "react-icons/lu";
 import moment from "moment";
 const Projects = () => {
   return (
     <section>
       <div className="siteContainer">
         <h1 className="text-2xl font-semibold mt-10">Projects</h1>
-        <div className="grid grid-cols-3 gap-3 mt-10">
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-10">
           {tasks.map((task, index) => (
             <div
               className="relative p-6 rounded-lg border border-grey/20 flex flex-col gap-2"
@@ -29,9 +29,10 @@ const Projects = () => {
               </div>
               <div className="flex items-center justify-between gap-2 mt-3">
                 <Link
-                  className="text-white bg-secondary font-medium rounded-lg py-3 px-4 text-sm w-fit"
+                  className="text-white bg-secondary font-medium rounded-lg py-3 px-4 text-sm w-fit flex items-center gap-2"
                   to={`${task.id}`}
                 >
+                  <LuEye size={18}/>
                   See more
                 </Link>
                 <span className="flex items-center gap-2 text-xs font-semibold">
