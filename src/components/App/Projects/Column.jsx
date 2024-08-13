@@ -5,7 +5,7 @@ import { MdDragIndicator } from "react-icons/md";
 
 const Column = () => {
   return (
-    <div className="w-[336px] bg-column rounded-xl py-5 px-4">
+    <div className="min-w-[336px] h-fit bg-column rounded-xl py-5 px-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="w-[25px] h-[25px] bg-grey/40 flex text-sm rounded-full items-center justify-center">
