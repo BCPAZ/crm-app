@@ -3,6 +3,9 @@ const tasks = [
     id:1,
     project : 'AZINTEST',
     projectDesc : 'Lorem ipsum dolor sit amet',
+    members : 12,
+    created_at: "2024-08-10T08:32:05.000000Z",
+    updated_at: "2024-08-10T08:32:05.000000Z",
     tasks: [
       {
         id: 1,
@@ -64,6 +67,9 @@ const tasks = [
     id:2,
     project : 'BCP.AZ',
     projectDesc : 'Lorem ipsum dolor sit amet',
+    members : 4,
+    created_at: "2024-08-10T08:32:05.000000Z",
+    updated_at: "2024-08-10T08:32:05.000000Z",
     tasks: [
       {
         id: 1,
