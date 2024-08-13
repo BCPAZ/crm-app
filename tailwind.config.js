@@ -12,7 +12,8 @@ export default {
       colors : {
         secondary : '#003458',
         light : '#fff',
-        grey : '#919EAB'
+        grey : '#919EAB',
+        column : '#F4F6F8'
       }
     },
   },
