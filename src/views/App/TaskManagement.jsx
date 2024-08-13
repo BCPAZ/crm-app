@@ -1,6 +1,12 @@
+import KanbanBoard from "@/components/App/Projects/KanbanBoard"
+
 const TaskManagement = () => {
   return (
-    <div>TaskManagement</div>
+    <section>
+      <div className="siteContainer">
+        <KanbanBoard />
+      </div>
+    </section>
   )
 }
 
