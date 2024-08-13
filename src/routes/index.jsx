@@ -5,6 +5,7 @@ import Login from "@/views/Auth/Login";
 import ResetPassword from "@/views/Auth/ResetPassword";
 import ForgotPassword from "@/views/Auth/ForgotPassword";
 import Projects from "@/views/App/Projects";
+import TaskManagement from "@/views/App/TaskManagement";
 import Dashboard from "@/views/App/Dashboard";
 import Profile from "@/views/App/Profile";
 import DocumentLayout from "@/layouts/PageLayouts/DocumentLayouts";
@@ -29,6 +30,7 @@ const AppRouter = () => {
       <Route element={<AppLayout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:id" element={<TaskManagement />}/>
         <Route path="/profile" element={<Profile />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/cost" element={<Cost />} />
