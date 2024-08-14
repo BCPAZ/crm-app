@@ -1,24 +1,23 @@
 import { IoAddSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Column from "./Column";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState([]);
 
-  const handleAddColumn = () => {
-    setColumns([
-      ...columns,
-      { id: `column-${columns.length}`, name: `Column ${columns.length + 1}`, items: [] },
+  const handleAddColumn = useCallback(() => {
+    setColumns((prevColumns) => [
+      ...prevColumns,
+      { id: `column-${prevColumns.length}`, name: `Column ${prevColumns.length + 1}`, items: [] },
     ]);
-  };
+  }, []);
 
-  const handleDeleteColumn = (id) => {
-    const filteredColumns = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumns);
-  };
+  const handleDeleteColumn = useCallback((id) => {
+    setColumns((prevColumns) => prevColumns.filter((col) => col.id !== id));
+  }, []);
 
-  const onDragEnd = (result) => {
+  const onDragEnd = useCallback((result) => {
     const { source, destination, type } = result;
     if (!destination) return;
 
@@ -29,6 +28,7 @@ const KanbanBoard = () => {
       setColumns(newColumns);
       return;
     }
+
     const sourceColumnIndex = columns.findIndex(
       (column) => column.id === source.droppableId
     );
@@ -56,7 +56,7 @@ const KanbanBoard = () => {
     };
 
     setColumns(newColumns);
-  };
+  }, [columns]);
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
@@ -70,7 +70,7 @@ const KanbanBoard = () => {
                 className="flex space-x-6 h-full"
               >
                 {columns.map((column, index) => (
-                  <Draggable draggableId={column.id} index={index} key={column.id}>
+                  <Draggable draggableId={column.id} key={column.id} index={index}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -80,8 +80,6 @@ const KanbanBoard = () => {
                         <Column
                           handleDeleteColumn={handleDeleteColumn}
                           column={column}
-                          name={column.name}
-                          key={column.id}
                         />
                       </div>
                     )}

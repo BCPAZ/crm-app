@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { IoAddSharp } from "react-icons/io5";
-import { LuMoreHorizontal } from "react-icons/lu";
 import { MdDragIndicator } from "react-icons/md";
+import { HiTrash } from "react-icons/hi2";
 
 const Column = ({ column, handleDeleteColumn }) => {
   return (
@@ -15,18 +15,20 @@ const Column = ({ column, handleDeleteColumn }) => {
         >
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
-              <span className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-gray-500 bg-grey/20 font-bold text-sm">1</span>
+              <span className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-gray-500 bg-grey/20 font-bold text-sm">
+                1
+              </span>
               <h2 className="text-lg font-semibold">{column.name}</h2>
             </div>
             <div className="flex items-center gap-1">
-              <button
-                onClick={() => handleDeleteColumn(column.id)}
-                className="p-1 bg-black rounded-full text-white"
-              >
+              <button className="p-1 bg-black rounded-full text-white">
                 <IoAddSharp size={14} />
               </button>
-              <button className="p-1 hover:bg-grey/20 rounded-full text-gray-400">
-                <LuMoreHorizontal size={18} />
+              <button
+                onClick={() => handleDeleteColumn(column.id)}
+                className=" hover:bg-red-500 hover:text-white rounded-full text-gray-400 p-1 transition-colors duration-300"
+              >
+                <HiTrash size={18} />
               </button>
               <button className="p-1 hover:bg-grey/20 rounded-full text-gray-400">
                 <MdDragIndicator size={20} />
