@@ -1,75 +1,15 @@
 import PropTypes from "prop-types";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { IoAddSharp } from "react-icons/io5";
+import { CgAttachment } from "react-icons/cg";
 import { MdDragIndicator } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
 import { FaCommentDots } from "react-icons/fa6";
 import High from "@/assets/icons/Kanban/high.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
-
+import kanbanData from "@/mocks/kanbanData";
 const Column = ({ column, handleDeleteColumn }) => {
-  const tasks = [
-    {
-      id: 1,
-      title: "Close image",
-      img: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/tsah7c9evnal289z5fig/IMG%20Worlds%20of%20Adventure%20Admission%20Ticket%20in%20Dubai%20-%20Klook.jpg",
-      priority: "High",
-      comments : [
-        {
-          id:1,
-          name : 'Sarah Gille',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-        {
-          id:2,
-          name : 'Elsen Memmedov',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-        {
-          id:3,
-          name : 'Salam',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-      ],
-      selectedUsers : [
-        {
-          id:1,
-          name : 'Sarah Gille',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-        {
-          id:2,
-          name : 'Elsen Memmedov',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-        {
-          id:3,
-          name : 'Salam',
-          img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
-          comment : 'Helal olsun dayi ogliiiiii'
-        },
-      ]
-    },
-    {
-      id: 2,
-      title: "Close image",
-      img: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/tsah7c9evnal289z5fig/IMG%20Worlds%20of%20Adventure%20Admission%20Ticket%20in%20Dubai%20-%20Klook.jpg",
-      priority: "Medium",
-    },
-    {
-      id: 3,
-      title: "Delete functionality",
-      img: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/tsah7c9evnal289z5fig/IMG%20Worlds%20of%20Adventure%20Admission%20Ticket%20in%20Dubai%20-%20Klook.jpg",
-      priority: "Low",
-    },
-  ];
-
   const checkPriority = (priority) => {
     if (priority === "High") {
       return High;
@@ -110,8 +50,8 @@ const Column = ({ column, handleDeleteColumn }) => {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            {tasks &&
-              tasks.map((task, index) => (
+            {kanbanData &&
+              kanbanData.map((task, index) => (
                 <Draggable key={task.id} draggableId={task.id} index={index}>
                   {(provided) => (
                     <div
@@ -124,7 +64,7 @@ const Column = ({ column, handleDeleteColumn }) => {
                         <div className="h-[200px] overflow-hidden w-full p-2">
                           <img
                             className="w-full h-full object-cover rounded-lg"
-                            src={task?.img}
+                            src={task.img}
                             alt={task.title}
                           />
                         </div>
@@ -137,13 +77,24 @@ const Column = ({ column, handleDeleteColumn }) => {
                         </div>
                         <div className="pb-5 px-5 mt-2">
                           <h3 className="text-md font-bold">{task.title}</h3>
-                        </div>
-                        <div>
-                          <div className="">
-                            <button><FaCommentDots />{}</button>
-                          </div>
-                          <div>
-
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <button className="flex items-center gap-1 text-gray-500 text-sm font-semibold">
+                                <FaCommentDots size={14} />
+                                <span>{task.comments?.length}</span>
+                              </button>
+                              <button className="flex items-center gap-1 text-gray-500 text-sm font-semibold">
+                                <CgAttachment size={14} />
+                                <span>{task.attachments?.length}</span>
+                              </button>
+                            </div>
+                            <div className="flex items-center">
+                              {task.selectedUsers?.map((user, index) => (
+                                <div className="w-[25px] h-[25px] rounded-full overflow-hidden border border-white" key={index}>
+                                  <img className="w-full h-full object-cover object-center" src={user.img} alt={user.name} />
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>

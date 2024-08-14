@@ -1,4 +1,4 @@
-const tasks = [
+const kanbanData = [
   {
     id: 1,
     title: "Close image",
@@ -22,6 +22,24 @@ const tasks = [
         name : 'Salam',
         img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
         comment : 'Helal olsun dayi ogliiiiii'
+      },
+    ],
+    attachments : [
+      {
+        id:1,
+        img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
+      },
+      {
+        id:2,
+        img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
+      },
+      {
+        id:3,
+        img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
+      },
+      {
+        id:4,
+        img : 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
       },
     ],
     selectedUsers : [
@@ -60,4 +78,4 @@ const tasks = [
 ];
 
 
-export default tasks
+export default kanbanData
