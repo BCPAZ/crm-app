@@ -5,13 +5,13 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState([]);
-
   const handleAddColumn = useCallback(() => {
     setColumns((prevColumns) => [
       ...prevColumns,
       { id: `column-${prevColumns.length}`, name: `Column ${prevColumns.length + 1}`, items: [] },
     ]);
   }, []);
+
 
   const handleDeleteColumn = useCallback((id) => {
     setColumns((prevColumns) => prevColumns.filter((col) => col.id !== id));
@@ -59,15 +59,15 @@ const KanbanBoard = () => {
   }, [columns]);
 
   return (
-    <section className="py-10 w-full h-screen overflow-x-auto">
-      <div className="flex space-x-6 h-full overflow-x-scroll">
+    <section className="py-10 w-full h-auto overflow-x-auto">
+      <div className="flex space-x-6 h-full">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
             {(provided) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className="flex space-x-6 h-full"
+                className="flex space-x-6 h-full "
               >
                 {columns.map((column, index) => (
                   <Draggable draggableId={column.id} key={column.id} index={index}>
