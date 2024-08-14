@@ -1,31 +1,58 @@
-import { IoAddSharp } from "react-icons/io5";
-import { GoKebabHorizontal } from "react-icons/go";
-import { MdDragIndicator } from "react-icons/md";
+import PropTypes from "prop-types";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
+import { IoCloseSharp } from "react-icons/io5";
 
-const Column = ({name}) => {
+const Column = ({ column, handleDeleteColumn }) => {
   return (
-    <div className="min-w-[336px] h-fit bg-column rounded-xl py-5 px-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="w-[25px] h-[25px] bg-grey/40 flex text-sm rounded-full items-center justify-center">
-            1
-          </span>
-          <h1 className="text-lg font-bold">{name}</h1>
+    <Droppable droppableId={column.id}>
+      {(provided) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className="min-w-[336px] bg-gray-100 p-4 rounded-lg shadow-md"
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">{column.name}</h2>
+            <button
+              onClick={() => handleDeleteColumn(column.id)}
+              className="text-red-500"
+            >
+              <IoCloseSharp size={20} />
+            </button>
+          </div>
+          {column.items && column.items.map((item, index) => (
+            <Draggable key={item.id} draggableId={item.id} index={index}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  className="bg-white p-2 mb-2 rounded shadow"
+                >
+                  {item.content}
+                </div>
+              )}
+            </Draggable>
+          ))}
+          {provided.placeholder}
         </div>
-        <div className="flex items-center gap-3">
-          <button className="w-[25px] h-[25px] bg-black text-white flex text-sm rounded-full items-center justify-center">
-            <IoAddSharp size={18} />
-          </button>
-          <button className="p-1 hover:bg-grey/20 rounded-full transition-all duration-300 text-gray-40">
-            <GoKebabHorizontal size={18} />
-          </button>
-          <button className="p-1 hover:bg-grey/20 rounded-full transition-all duration-300 text-gray-40">
-            <MdDragIndicator size={18} />
-          </button>
-        </div>
-      </div>
-    </div>
+      )}
+    </Droppable>
   );
+};
+
+Column.propTypes = {
+  column: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+  handleDeleteColumn: PropTypes.func.isRequired,
 };
 
 export default Column;
