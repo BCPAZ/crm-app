@@ -4,75 +4,118 @@ import Column from "./Column";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const KanbanBoard = () => {
-  const [columns, setColumns] = useState([
-    {
-      id: "column-1",
-      name: "Column 1",
-      items: [
-        { id: "task-1", content: "Task 1" },
-        { id: "task-2", content: "Task 2" },
-      ],
-    },
-    {
-      id: "column-2",
-      name: "Column 2",
-      items: [
-        { id: "task-3", content: "Task 3" },
-        { id: "task-4", content: "Task 4" },
-      ],
-    },
-  ]);
+  const [columns, setColumns] = useState([]);
 
-  const handleAddColumn = useCallback(() => {
+  const [isAddingColumn, setIsAddingColumn] = useState(false);
+  const [newColumnName, setNewColumnName] = useState("");
+
+  const handleAddColumn = () => {
+    setIsAddingColumn(true);
+  };
+
+  const handleColumnNameChange = (e) => {
+    setNewColumnName(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSaveColumn();
+    }
+  };
+
+  const handleSaveColumn = () => {
+    if (newColumnName.trim() === "") return;
+
     setColumns((prevColumns) => [
       ...prevColumns,
-      { id: `column-${prevColumns.length + 1}`, name: `Column ${prevColumns.length + 1}`, items: [] },
+      {
+        id: `column-${prevColumns.length + 1}`,
+        name: newColumnName,
+        items: [],
+      },
     ]);
-  }, []);
+    setNewColumnName("");
+    setIsAddingColumn(false);
+  };
 
   const handleDeleteColumn = useCallback((id) => {
     setColumns((prevColumns) => prevColumns.filter((col) => col.id !== id));
   }, []);
 
-  const onDragEnd = useCallback((result) => {
-    const { source, destination, type } = result;
+  const handleUpdateColumnName = useCallback((id, newName) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((col) =>
+        col.id === id ? { ...col, name: newName } : col
+      )
+    );
+  }, []);
 
-    if (!destination) return;
+  const handleAddTask = useCallback((columnId, taskContent) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              ...column,
+              items: [
+                ...column.items,
+                { id: `task-${column.items.length + 1}`, content: taskContent },
+              ],
+            }
+          : column
+      )
+    );
+  }, []);
 
-    if (type === "COLUMN") {
-      const newColumns = [...columns];
-      const [movedColumn] = newColumns.splice(source.index, 1);
-      newColumns.splice(destination.index, 0, movedColumn);
-      setColumns(newColumns);
-      return;
-    }
-
-    const sourceColumnIndex = columns.findIndex((column) => column.id === source.droppableId);
-    const destinationColumnIndex = columns.findIndex((column) => column.id === destination.droppableId);
-
-    if (sourceColumnIndex === -1 || destinationColumnIndex === -1) return;
-
-    const sourceColumn = columns[sourceColumnIndex];
-    const destinationColumn = columns[destinationColumnIndex];
-
-    const sourceItems = [...sourceColumn.items];
-    const [movedItem] = sourceItems.splice(source.index, 1);
-    const destinationItems = [...destinationColumn.items];
-
-    destinationItems.splice(destination.index, 0, movedItem);
-
-    const updatedColumns = [...columns];
-    updatedColumns[sourceColumnIndex] = { ...sourceColumn, items: sourceItems };
-    updatedColumns[destinationColumnIndex] = { ...destinationColumn, items: destinationItems };
-
-    setColumns(updatedColumns);
-  }, [columns]);
+  const onDragEnd = useCallback(
+    (result) => {
+      const { source, destination, type } = result;
+  
+      if (!destination) return;
+  
+      // Column taşınması
+      if (type === "COLUMN") {
+        const newColumns = [...columns];
+        const [movedColumn] = newColumns.splice(source.index, 1);
+        newColumns.splice(destination.index, 0, movedColumn);
+        setColumns(newColumns);
+        return;
+      }
+  
+      const sourceColumnIndex = columns.findIndex(
+        (column) => column.id === source.droppableId
+      );
+      const destinationColumnIndex = columns.findIndex(
+        (column) => column.id === destination.droppableId
+      );
+        if (sourceColumnIndex === -1 || destinationColumnIndex === -1) return;
+  
+      const sourceColumn = columns[sourceColumnIndex];
+      const destinationColumn = columns[destinationColumnIndex];
+  
+      const sourceItems = [...sourceColumn.items];
+      const [movedItem] = sourceItems.splice(source.index, 1);
+      const destinationItems = [...destinationColumn.items];
+      destinationItems.splice(destination.index, 0, movedItem);
+  
+      const updatedColumns = [...columns];
+      updatedColumns[sourceColumnIndex] = { ...sourceColumn, items: sourceItems };
+      updatedColumns[destinationColumnIndex] = { ...destinationColumn, items: destinationItems };
+  
+      setColumns(updatedColumns);
+    },
+    [columns]
+  );
+  
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
       <div className="flex space-x-6 h-full overflow-x-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
+          <Droppable
+            droppableId="all-columns"
+            direction="horizontal"
+            type="COLUMN"
+          >
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -80,7 +123,11 @@ const KanbanBoard = () => {
                 className="flex space-x-6 h-full"
               >
                 {columns.map((column, index) => (
-                  <Draggable draggableId={column.id} key={column.id} index={index}>
+                  <Draggable
+                    draggableId={column.id}
+                    key={column.id}
+                    index={index}
+                  >
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -88,9 +135,10 @@ const KanbanBoard = () => {
                         {...provided.dragHandleProps}
                       >
                         <Column
-                          handleDeleteColumn={handleDeleteColumn}
                           column={column}
-                          key={column.id}
+                          handleDeleteColumn={handleDeleteColumn}
+                          handleUpdateColumnName={handleUpdateColumnName}
+                          handleAddTask={handleAddTask}
                         />
                       </div>
                     )}
@@ -101,13 +149,25 @@ const KanbanBoard = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <button
-          onClick={handleAddColumn}
-          className="min-w-[336px] h-12 p-2 bg-white border border-grey/20 rounded-lg text-sm flex items-center justify-center gap-2 font-semibold"
-        >
-          <IoAddSharp size={20} />
-          Create Column
-        </button>
+
+        {isAddingColumn ? (
+          <input
+            type="text"
+            value={newColumnName}
+            onChange={handleColumnNameChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Enter column name"
+            className="p-2 min-w-[336px] border border-grey/20 h-12 text-sm focus:outline-black rounded-lg"
+          />
+        ) : (
+          <button
+            onClick={handleAddColumn}
+            className="min-w-[336px] h-12 p-2 border-2 border-grey/20 rounded-lg text-sm font-semibold flex items-center justify-center"
+          >
+            <IoAddSharp size={18} className="mr-2" />
+            Add Column
+          </button>
+        )}
       </div>
     </section>
   );

@@ -45,7 +45,7 @@ const TaskCard = ({ task, index }) => {
               />
             </div>
             <div className="pb-5 px-5 mt-2">
-              <h3 className="text-md font-bold">{task.title}</h3>
+              <h3 className="text-md font-bold">{task.content}</h3>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <button className="flex items-center gap-1 text-gray-500 text-sm font-semibold">
