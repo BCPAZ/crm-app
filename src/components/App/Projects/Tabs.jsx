@@ -28,7 +28,7 @@ export default function Tabs() {
           ))
         }
       </TabList>
-      <TabPanels className={'p-2 h-full'}>
+      <TabPanels className={'p-5 h-full'}>
         <TabPanel><OverviewPanel /></TabPanel>
         <TabPanel><SubtasksPanel /></TabPanel>
         <TabPanel><CommentsPanel /></TabPanel>
