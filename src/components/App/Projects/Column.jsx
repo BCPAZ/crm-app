@@ -1,22 +1,21 @@
+import { memo } from "react";
 import PropTypes from "prop-types";
 import { Droppable } from "@hello-pangea/dnd";
 import { IoAddSharp } from "react-icons/io5";
 import { MdDragIndicator } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
-
-import kanbanData from "@/mocks/kanbanData";
 import TaskCard from "./TaskCard";
+
 const Column = ({ column, handleDeleteColumn }) => {
-  
   return (
     <Droppable droppableId={column.id} type="TASK">
       {(provided) => (
         <div
-          {...provided.droppableProps}
+          className="min-w-[336px] bg-gray-100 p-4 rounded-xl"
           ref={provided.innerRef}
-          className="min-w-[336px] bg-gray-100 p-5 rounded-xl"
+          {...provided.droppableProps}
         >
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <span className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-gray-500 bg-grey/20 font-bold text-sm">
                 1
@@ -38,11 +37,10 @@ const Column = ({ column, handleDeleteColumn }) => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            {kanbanData &&
-              kanbanData.map((task, index) => (
-                <TaskCard task={task} key={index} index={index} />
-              ))}
+          <div className="space-y-2">
+            {column.items.map((task, index) => (
+              <TaskCard key={task.id} task={task} index={index} />
+            ))}
             {provided.placeholder}
           </div>
         </div>
@@ -58,13 +56,11 @@ Column.propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired,
-        priority: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
       })
     ).isRequired,
   }).isRequired,
   handleDeleteColumn: PropTypes.func.isRequired,
 };
 
-export default Column;
+export default memo(Column);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { FaCommentDots } from "react-icons/fa6";
 import { CgAttachment } from "react-icons/cg";
@@ -6,8 +7,7 @@ import High from "@/assets/icons/Kanban/high.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
 
-const TaskCard = ({ task ,index }) => {
-
+const TaskCard = ({ task, index }) => {
   const checkPriority = (priority) => {
     if (priority === "High") {
       return High;
@@ -17,8 +17,9 @@ const TaskCard = ({ task ,index }) => {
       return Low;
     }
   };
+
   return (
-    <Draggable key={task.id} draggableId={task.id} index={index}>
+    <Draggable draggableId={task.id} index={index}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -27,14 +28,16 @@ const TaskCard = ({ task ,index }) => {
           className="bg-white rounded-xl"
         >
           <div className="flex flex-col">
-            <div className="h-[200px] overflow-hidden w-full p-2">
-              <img
-                className="w-full h-full object-cover rounded-lg"
-                src={task.img}
-                alt={task.title}
-              />
-            </div>
-            <div className="w-full flex justify-end px-5">
+            {task.img && (
+              <div className="h-[200px] overflow-hidden w-full p-2">
+                <img
+                  className="w-full h-full object-cover rounded-lg"
+                  src={task?.img}
+                  alt={task?.title}
+                />
+              </div>
+            )}
+            <div className="w-full flex justify-end px-5 mt-2">
               <img
                 className="w-[25px]"
                 src={checkPriority(task.priority)}
@@ -77,19 +80,20 @@ const TaskCard = ({ task ,index }) => {
   );
 };
 
-
 TaskCard.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    img: PropTypes.string,
     title: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
-    comments: PropTypes.array.isRequired,
+    comments: PropTypes.array,
     attachments: PropTypes.arrayOf(PropTypes.string),
-    selectedUsers: PropTypes.arrayOf(PropTypes.string),
+    selectedUsers: PropTypes.arrayOf(PropTypes.shape({
+      img: PropTypes.string,
+      name: PropTypes.string,
+    })),
   }).isRequired,
   index: PropTypes.number.isRequired,
 };
 
-
-export default TaskCard;
+export default memo(TaskCard);
