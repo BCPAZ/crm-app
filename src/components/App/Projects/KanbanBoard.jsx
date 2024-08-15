@@ -2,6 +2,7 @@ import { IoAddSharp } from "react-icons/io5";
 import { useState, useCallback, memo } from "react";
 import Column from "./Column";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import TaskDetail from "./TaskDetail";
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState([]);
@@ -122,6 +123,7 @@ const KanbanBoard = () => {
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
+      <TaskDetail />
       <div className="flex space-x-6 h-full overflow-x-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
