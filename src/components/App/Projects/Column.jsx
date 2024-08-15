@@ -6,7 +6,7 @@ import { MdDragIndicator } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
 import TaskCard from "./TaskCard";
 
-const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddTask }) => {
+const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddTask, handleDeleteTask }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(column.name);
   const [newTaskName, setNewTaskName] = useState("");
@@ -113,7 +113,8 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
           </div>
           <div className="space-y-2">
             {column.items.map((task, index) => (
-              <TaskCard key={task.id} task={task} index={index} />
+              <TaskCard key={task.id} task={task} index={index} handleDeleteTask={handleDeleteTask}
+              />
             ))}
             {provided.placeholder}
           </div>
@@ -154,6 +155,7 @@ Column.propTypes = {
   handleDeleteColumn: PropTypes.func.isRequired,
   handleUpdateColumnName: PropTypes.func.isRequired,
   handleAddTask: PropTypes.func.isRequired,
+  handleDeleteTask : PropTypes.func.isRequired
 };
 
 export default memo(Column);

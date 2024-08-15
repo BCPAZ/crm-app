@@ -7,7 +7,7 @@ import High from "@/assets/icons/Kanban/high.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
 
-const TaskCard = ({ task, index }) => {
+const TaskCard = ({ task, index, handleDeleteTask }) => {
   const checkPriority = (priority) => {
     if (priority === "High") {
       return High;
@@ -26,6 +26,7 @@ const TaskCard = ({ task, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className="bg-white rounded-xl"
+          onClick={() => handleDeleteTask(task.id)}
         >
           <div className="flex flex-col">
             {task.img && (
@@ -87,6 +88,7 @@ TaskCard.propTypes = {
     title: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
     comments: PropTypes.array,
+    content : PropTypes.string,
     attachments: PropTypes.arrayOf(PropTypes.string),
     selectedUsers: PropTypes.arrayOf(PropTypes.shape({
       img: PropTypes.string,
@@ -94,6 +96,7 @@ TaskCard.propTypes = {
     })),
   }).isRequired,
   index: PropTypes.number.isRequired,
+  handleDeleteTask : PropTypes.func.isRequired
 };
 
 export default memo(TaskCard);

@@ -50,6 +50,20 @@ const KanbanBoard = () => {
     );
   }, []);
 
+  const handleDeleteTask = (columnId, taskId) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              ...column,
+              items: column.items.filter((task) => task.id !== taskId),
+            }
+          : column
+      )
+    );
+  };
+
+
   const handleAddTask = useCallback((columnId, taskContent) => {
     setColumns((prevColumns) =>
       prevColumns.map((column) =>
@@ -72,7 +86,6 @@ const KanbanBoard = () => {
   
       if (!destination) return;
   
-      // Column taşınması
       if (type === "COLUMN") {
         const newColumns = [...columns];
         const [movedColumn] = newColumns.splice(source.index, 1);
@@ -139,6 +152,7 @@ const KanbanBoard = () => {
                           handleDeleteColumn={handleDeleteColumn}
                           handleUpdateColumnName={handleUpdateColumnName}
                           handleAddTask={handleAddTask}
+                          handleDeleteTask={(taskId) => handleDeleteTask(column.id, taskId)}
                         />
                       </div>
                     )}
