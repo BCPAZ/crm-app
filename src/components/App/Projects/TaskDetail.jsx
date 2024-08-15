@@ -16,7 +16,7 @@ const TaskDetail = () => {
           <button><IoMdMore size={24}/></button>
         </div>
       </header>
-      <div className="w-full">
+      <div className="w-full h-full">
         <Tabs />
       </div>
     </aside>
