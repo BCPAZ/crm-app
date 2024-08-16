@@ -16,7 +16,6 @@ import Workflows from "@/views/App/Workflow/Workflows";
 import Templates from "@/views/App/Workflow/Templates";
 import CreateTemplate from "@/views/App/Workflow/CreateTemplate";
 import FieldManagementLayout from "@/layouts/PageLayouts/FieldManagementLayout";
-import ProjectSettings from "@/views/App/FieldManagement/ProjectSettings";
 import Insights from "@/views/App/Insights";
 import Cost from "@/views/App/Cost";
 import InvoiceDetail from "@/views/App/InvoiceDetail";
@@ -24,6 +23,8 @@ import CreateNewInvoice from "@/views/App/CreateNewInvoice";
 import Mail from "@/views/App/Mail/Mail";
 import MailDetail from "@/views/App/Mail/MailDetail";
 import MailLayout from "@/layouts/PageLayouts/MailLayout";
+import Issues from "@/views/App/FieldManagement/Issues";
+import Reports from "@/views/App/FieldManagement/Reports";
 const AppRouter = () => {
   return (
     <Routes>
@@ -50,7 +51,8 @@ const AppRouter = () => {
           <Route path="create-template" element={<CreateTemplate />} />
         </Route>
         <Route path="/field-management/*" element={<FieldManagementLayout />}>
-          <Route path="project-settings" element={<ProjectSettings />} />
+          <Route path="issues" element={<Issues />} />
+          <Route path="reports" element={<Reports />} />
         </Route>
       </Route>
       <Route element={<AuthLayout />}>
