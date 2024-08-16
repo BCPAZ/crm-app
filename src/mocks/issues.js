@@ -9,7 +9,8 @@ const issues = [
     created_time : '10:00',
     checked_time : '10:00',
     checked_at: "2024-08-10T08:32:05.000000Z",
-    status : 'resolved'
+    status : 'resolved',
+    description : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia est quis non accusamus nemo optio? Tempore omnis totam, velit aut fuga aliquid adipisci molestias error!'
   },
   {
     id:2,

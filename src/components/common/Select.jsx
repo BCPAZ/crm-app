@@ -30,8 +30,8 @@ function Select({label, column}) {
     >
       <div className={`flex ${column ? 'flex-col' : 'flex-row items-center'} gap-2`}>
         {
-          label && <label className="text-md font-light text-gray-500" htmlFor="">
-          Date
+          label && <label className="text-sm font-base text-gray-500" htmlFor="">
+          {label}
         </label>
         }
         <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm flex items-center justify-between">
