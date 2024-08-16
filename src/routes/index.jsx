@@ -26,6 +26,10 @@ import MailLayout from "@/layouts/PageLayouts/MailLayout";
 import Issues from "@/views/App/FieldManagement/Issues";
 import Reports from "@/views/App/FieldManagement/Reports";
 import IssueDetail from "@/views/App/FieldManagement/IssueDetail";
+import SecurityLayout from "@/layouts/PageLayouts/SecurityLayout";
+import Users from "@/views/App/Security/Users";
+import Roles from "@/views/App/Security/Roles";
+import JobTitle from "@/views/App/Security/JobTitle";
 const AppRouter = () => {
   return (
     <Routes>
@@ -40,6 +44,11 @@ const AppRouter = () => {
         <Route path="/mail/*" element={<MailLayout />}>
           <Route index={true} element={<Mail />} />
           <Route path=":id" element={<MailDetail />} />
+        </Route>
+        <Route element={<SecurityLayout />}>
+          <Route path="/users" element={<Users />}/>
+          <Route path="/roles" element={<Roles />}/>
+          <Route path="/job-title" element={<JobTitle />}/>
         </Route>
         <Route path="/cost/create-new-invoice" element={<CreateNewInvoice />} />
         <Route element={<DocumentLayout />}>

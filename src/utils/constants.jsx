@@ -100,6 +100,20 @@ export const navigationLinks = [
   {
     title : 'Security',
     icon : security,
+    elements : [
+      {
+        path : '/users',
+        label : 'Users'
+      },
+      {
+        path : '/roles',
+        label : 'Roles',
+      },
+      {
+        path : '/job-title',
+        label : 'Job Title',
+      }
+    ]
   },
   {
     path : '/cost',
