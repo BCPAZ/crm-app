@@ -100,21 +100,9 @@ export const navigationLinks = [
         label : 'Issues'
       },
       {
-        path : 'field-management/inspections',
-        label : 'Inspections'
-      },
-      {
-        path : 'field-management/punchlists',
-        label : 'Punchlists'
-      },
-      {
-        path : 'field-management/daily-reports',
+        path : 'field-management/reports',
         label : 'Daily Reports'
       },
-      {
-        path : 'field-management/project-settings',
-        label : 'Projects Settings'
-      }
     ]
   },
   {
