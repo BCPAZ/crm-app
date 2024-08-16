@@ -10,8 +10,8 @@ const Sidebar = ({links}) => {
           {
             links.map((link,index) => (
               <NavLink to={link.path} key={index} className={({isActive}) => clsx('p-3 text-sm rounded-lg', {
-                'bg-secondary text-white' : isActive,
-                'bg-transparent text-secondary' : !isActive
+                'bg-secondary text-white font-semibold' : isActive,
+                'bg-transparent text-secondary font-medium' : !isActive
               })}>{link.label}</NavLink>
             ))
           }
