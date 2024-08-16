@@ -7,7 +7,7 @@ import Tabs from "./Tabs";
 
 const TaskDetail = () => {
   return (
-    <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg">
+    <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg overflow-y-auto">
       <header className="p-5 flex items-center justify-between gap-2">
         <Selectbox outline/>
         <div className="flex items-center gap-5 text-gray-500">
