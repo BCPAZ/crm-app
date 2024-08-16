@@ -1,9 +1,12 @@
 import Sidebar from "@/components/App/Documents/Sidebar";
 import { Outlet } from "react-router-dom";
+import { navigationLinks } from "@/utils/constants";
 
 const FieldManagementLayout = () => {
+  const fieldManagementLinks = navigationLinks.find((link) => link.title.toLowerCase() === 'field management').elements;
+
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <div className="flex items-center justify-between">
@@ -11,11 +14,11 @@ const FieldManagementLayout = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-between relative">
-        <div className="w-[25%] absolute top-0 left-0">
-          <Sidebar />
+      <div className="flex flex-grow">
+        <div className="w-[25%] h-full">
+          <Sidebar links={fieldManagementLinks} />
         </div>
-        <main className="w-[75%] absolute top-0 right-0">
+        <main className="w-[75%] h-full">
           <Outlet />
         </main>
       </div>
