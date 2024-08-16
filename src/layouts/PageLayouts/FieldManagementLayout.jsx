@@ -14,7 +14,7 @@ const FieldManagementLayout = () => {
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold w-full">Project Settings</h1>
+            <h1 className="text-xl font-semibold w-full">Field Management</h1>
           </div>
         </div>
       </div>
