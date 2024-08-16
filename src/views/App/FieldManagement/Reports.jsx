@@ -20,13 +20,13 @@ const Reports = () => {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="lg:w-1/2 w-full">
+          <div className="w-full">
             <SecondInput column placeholder="Description" />
           </div>
-          <div className="lg:w-1/2 w-full">
+          <div className="w-full">
             <Select />
           </div>
-         <div className="lg:w-1/2 w-full">
+         <div className="w-full">
           <Button value="Upload" />
          </div>
         </div>
