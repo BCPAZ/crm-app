@@ -4,8 +4,8 @@ import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 const Reports = () => {
   return (
-    <section className="p-10">
-      <div className="grid lg:grid-cols-2 gap-10">
+    <section className="py-10">
+      <div className="siteContainer grid lg:grid-cols-2 gap-10">
         <div className="h-[250px] bg-grey/10 p-5 rounded-xl flex flex-col items-center">
           <img src={file} alt="File Icon" />
           <div className="flex items-center flex-col gap-2">
