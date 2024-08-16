@@ -20,11 +20,11 @@ const FieldManagementLayout = () => {
       </div>
       <div className="flex flex-grow">
         {!hideSidebar && (
-          <div className="w-[20%] h-full">
+          <div className="w-[20%] h-screen lg:block hidden">
             <Sidebar links={fieldManagementLinks} />
           </div>
         )}
-        <main className={`h-full ${hideSidebar ? 'w-full' : 'w-[75%]'}`}>
+        <main className={`h-full ${hideSidebar ? 'w-full' : 'lg:w-[75%] w-full'}`}>
           <Outlet />
         </main>
       </div>
