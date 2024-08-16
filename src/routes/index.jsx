@@ -50,7 +50,7 @@ const AppRouter = () => {
           <Route path="templates" element={<Templates />} />
           <Route path="create-template" element={<CreateTemplate />} />
         </Route>
-        <Route path="/field-management/*" element={<FieldManagementLayout />}>
+        <Route element={<FieldManagementLayout />}>
           <Route path="issues" element={<Issues />} />
           <Route path="reports" element={<Reports />} />
         </Route>

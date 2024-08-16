@@ -96,11 +96,11 @@ export const navigationLinks = [
     icon : fieldManagement,
     elements : [
       {
-        path : 'issues',
+        path : '/issues',
         label : 'Issues'
       },
       {
-        path : 'reports',
+        path : '/reports',
         label : 'Daily Reports'
       },
     ]
