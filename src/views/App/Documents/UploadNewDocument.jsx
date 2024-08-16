@@ -6,7 +6,7 @@ import Select from "@/components/common/Select";
 
 const UploadNewDocument = () => {
   return (
-    <section>
+    <section className="w-full h-full">
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <h1 className="text-xl font-semibold">Upload document</h1>

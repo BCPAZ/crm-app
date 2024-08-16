@@ -41,9 +41,9 @@ const AppRouter = () => {
           <Route path=":id" element={<MailDetail />} />
         </Route>
         <Route path="/cost/create-new-invoice" element={<CreateNewInvoice />} />
-        <Route path="/documents/*" element={<DocumentLayout />}>
-          <Route path="document-register" element={<DocumentRegister />} />
-          <Route path="upload-new-document" element={<UploadNewDocument />} />
+        <Route element={<DocumentLayout />}>
+          <Route path="/document-register" element={<DocumentRegister />} />
+          <Route path="/upload-new-document" element={<UploadNewDocument />} />
         </Route>
         <Route path="/workflow/*" element={<WorkflowLayout />}>
           <Route path="workflows" element={<Workflows />} />

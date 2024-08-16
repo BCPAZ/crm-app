@@ -29,29 +29,21 @@ export const navigationLinks = [
     icon : docs,
     elements : [
       {
-        path : 'documents/document-register',
+        path : '/document-register',
         label : 'Document Register'
       },
+      // {
+      //   path : '/drawings',
+      //   label : 'Drawings'
+      // },
+      // {
+      //   path : '/temporary-files',
+      //   label : 'Temporary Files'
+      // },
       {
-        path : 'documents/drawings',
-        label : 'Drawings'
-      },
-      {
-        path : 'documents/temporary-files',
-        label : 'Temporary Files'
-      },
-      {
-        path : 'documents/upload-new-document',
+        path : '/upload-new-document',
         label : 'Upload New Document'
       },
-      {
-        path : 'documents/multiple-file-upload',
-        label : 'Multiple File Upload'
-      },
-      {
-        path : 'documents/bulk-processing',
-        label : 'Bulk Processing'
-      }
     ]
   },
   {
