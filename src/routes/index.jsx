@@ -25,6 +25,7 @@ import MailDetail from "@/views/App/Mail/MailDetail";
 import MailLayout from "@/layouts/PageLayouts/MailLayout";
 import Issues from "@/views/App/FieldManagement/Issues";
 import Reports from "@/views/App/FieldManagement/Reports";
+import IssueDetail from "@/views/App/FieldManagement/IssueDetail";
 const AppRouter = () => {
   return (
     <Routes>
@@ -51,8 +52,9 @@ const AppRouter = () => {
           <Route path="create-template" element={<CreateTemplate />} />
         </Route>
         <Route element={<FieldManagementLayout />}>
-          <Route path="issues" element={<Issues />} />
-          <Route path="reports" element={<Reports />} />
+          <Route path="/issues" element={<Issues />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/issues/:id" element={<IssueDetail />} />
         </Route>
       </Route>
       <Route element={<AuthLayout />}>
