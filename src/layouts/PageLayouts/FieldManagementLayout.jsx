@@ -15,7 +15,7 @@ const FieldManagementLayout = () => {
         </div>
       </div>
       <div className="flex flex-grow">
-        <div className="w-[25%] h-full">
+        <div className="w-[20%] h-full">
           <Sidebar links={fieldManagementLinks} />
         </div>
         <main className="w-[75%] h-full">
