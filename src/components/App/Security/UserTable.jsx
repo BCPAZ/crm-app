@@ -30,13 +30,13 @@ const UserTable = () => {
               </span>
             </th>
             <th className="text-sm font-medium w-[11%] text-gray-500">
-              Create
+              Phone Number
             </th>
-            <th className="text-sm font-medium w-[11%] text-gray-500">Due</th>
+            <th className="text-sm font-medium w-[11%] text-gray-500">Company</th>
             <th className="text-sm font-medium w-[11%] text-gray-500">
               Amount
             </th>
-            <th className="text-sm font-medium w-[11%] text-gray-500">Sent</th>
+            <th className="text-sm font-medium w-[11%] text-gray-500">Role</th>
             <th className="text-sm font-medium w-[11%] text-gray-500 rounded-e-lg">
               Status
             </th>
@@ -47,7 +47,7 @@ const UserTable = () => {
         <tbody className="w-full flex flex-col text-left">
           {userInvoices.map((invoice, index) => (
             <Link className="group" to={`${invoice.id}`} key={index}>
-              <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20  w-full flex items-center justify-between gap-5 min-h-[76px]">
+              <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed  w-full flex items-center justify-between gap-5 min-h-[76px]">
                 <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
                   <CheckboxElement />
                   <div className="flex items-center gap-4">
