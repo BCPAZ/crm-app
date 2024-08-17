@@ -1,14 +1,27 @@
+import Input from "@/components/common/Input"
+import SecondInput from "@/components/common/SecondInput"
+import Select from "@/components/common/Select"
+
 const CreateNewUser = () => {
   return (
-    <section className="w-full h-full">
+    <section className="w-full h-full py-5">
       <div className="siteContainer">
         <h1 className="text-2xl font-semibold">Create new user</h1>
         <div className="flex">
-          <div>
-
+          <div className="w-[45%]">
+            
           </div>
-          <div>
-
+          <div className="bg-white p-6 rounded-xl w-[52%]">
+            <div className="grid grid-cols-2 gap-5">
+              <SecondInput />
+              <SecondInput />
+              <SecondInput />
+              <Select />
+              <SecondInput />
+              <SecondInput />
+              <Input type="password"/>
+              <Select />
+            </div>
           </div>
         </div>
       </div>
