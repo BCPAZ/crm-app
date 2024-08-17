@@ -7,11 +7,11 @@ const SecurityLayout = () => {
   return (
     <div className="h-full flex flex-col">
       <div className="flex flex-grow">
-        <div className="w-[18%] h-screen lg:block hidden">
+        <div className="md:w-[18%] h-screen lg:block hidden">
           <Sidebar links={securityLinks} />
         </div>
         <main
-          className={`h-full w-[75%] "}`}
+          className={`h-full md:w-[75%] w-full"}`}
         >
           <Outlet />
         </main>
