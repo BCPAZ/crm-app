@@ -9,18 +9,21 @@ const CreateNewUser = () => {
         <h1 className="text-2xl font-semibold">Create new user</h1>
         <div className="flex">
           <div className="w-[45%]">
-            
+
           </div>
           <div className="bg-white p-6 rounded-xl w-[52%]">
             <div className="grid grid-cols-2 gap-5">
-              <SecondInput />
-              <SecondInput />
-              <SecondInput />
+              <SecondInput column placeholder="Full Name" type="text"/>
+              <SecondInput column placeholder="Email address" type="text"/>
+              <SecondInput column placeholder="Phone Number" type="text"/>
               <Select />
-              <SecondInput />
-              <SecondInput />
-              <Input type="password"/>
+              <SecondInput column placeholder="Address" type="text"/>
+              <SecondInput column placeholder="ZIP Code" type="text"/>
+              <Input type="password" placeholder="Password"/>
               <Select />
+            </div>
+            <div>
+
             </div>
           </div>
         </div>
