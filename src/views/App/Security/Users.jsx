@@ -1,6 +1,14 @@
+import UserTable from "@/components/App/Security/UserTable"
 const Users = () => {
   return (
-    <div>Users</div>
+      <section className="w-full h-full py-5">
+        <div className="siteContainer">
+        <h1 className="text-2xl font-semibold">Users list</h1>
+          <div className="mt-10">
+            <UserTable />
+          </div>
+        </div>
+      </section>
   )
 }
 
