@@ -1,6 +1,7 @@
 import Input from "@/components/common/Input";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
+import CustomSwitch from "@/components/common/Switch";
 import { IoCamera } from "react-icons/io5";
 const CreateNewUser = () => {
   return (
@@ -25,15 +26,15 @@ const CreateNewUser = () => {
                 Allowed *.jpeg, *.jpg, *.png, *.gif Max size of 3.1 MB
               </p>
             </div>
-            <div className="flex justify-start mt-5">
-              <div className="flex flex-col gap-2">
+            <div className="flex justify-between mt-5">
+              <div className="flex flex-col gap-2 max-w-[247px]">
                 <h3 className="text-sm font-semibold">Email verified</h3>
                 <p className="text-sm">
                   Disabling this will automatically send the user a verification
                   email
                 </p>
               </div>
-              
+                <CustomSwitch />
             </div>
           </div>
           <div className="bg-white p-6 rounded-xl lg:w-[62%] w-full shadow-lg">

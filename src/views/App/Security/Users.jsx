@@ -12,7 +12,7 @@ const Users = () => {
         <div className="mt-5 flex justify-end">
           <Link to={'/create-new-user'} className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2">
             <IoAddSharp size={18} />
-            Create Role
+            Create user
           </Link>
         </div>
       </div>
