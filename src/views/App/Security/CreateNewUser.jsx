@@ -1,6 +1,10 @@
 const CreateNewUser = () => {
   return (
-    <div>CreateNewUser</div>
+    <section className="w-full h-full">
+      <div className="siteContainer">
+        salam
+      </div>
+    </section>
   )
 }
 

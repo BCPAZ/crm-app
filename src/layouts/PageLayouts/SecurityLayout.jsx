@@ -9,13 +9,13 @@ const SecurityLayout = () => {
   const hideSidebar = location.pathname === '/create-new-user';
   return (
     <div className="h-full flex flex-col">
-      <div className="flex gap-3">
-        {!hideSidebar && <div className="w-[250px] h-screen lg:block hidden">
-          <Sidebar links={securityLinks} />
-        </div>}
-        <main
-          className={`h-full lg:max-w-[75%] w-full px-5`}
-        >
+      <div className="flex flex-grow gap-5">
+        {!hideSidebar && (
+          <div className="w-[20%] h-screen lg:block hidden">
+            <Sidebar links={securityLinks} />
+          </div>
+        )}
+        <main className={`h-full ${hideSidebar ? 'w-full' : 'lg:w-[75%] w-full'}`}>
           <Outlet />
         </main>
       </div>

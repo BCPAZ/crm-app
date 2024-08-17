@@ -3,7 +3,7 @@ import { IoAddSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 const Users = () => {
   return (
-    <section className="w-full h-full py-5">
+    <section className="w-full h-full p-5">
       <div className="mx-auto w-full">
         <h1 className="text-2xl font-semibold">Users list</h1>
         <div className="mt-10 w-full">
