@@ -30,6 +30,7 @@ import SecurityLayout from "@/layouts/PageLayouts/SecurityLayout";
 import Users from "@/views/App/Security/Users";
 import Roles from "@/views/App/Security/Roles";
 import JobTitle from "@/views/App/Security/JobTitle";
+import CreateNewUser from "@/views/App/Security/CreateNewUser";
 const AppRouter = () => {
   return (
     <Routes>
@@ -49,6 +50,7 @@ const AppRouter = () => {
           <Route path="/users" element={<Users />}/>
           <Route path="/roles" element={<Roles />}/>
           <Route path="/job-title" element={<JobTitle />}/>
+          <Route path="/create-new-user" element={<CreateNewUser />} />
         </Route>
         <Route path="/cost/create-new-invoice" element={<CreateNewInvoice />} />
         <Route element={<DocumentLayout />}>
