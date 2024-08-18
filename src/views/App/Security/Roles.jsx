@@ -3,8 +3,8 @@ import { IoAddSharp } from "react-icons/io5";
 
 const Roles = () => {
   return (
-    <section className="w-full h-full py-5">
-      <div className="siteContainer">
+    <section className="w-full h-full">
+      <div className="py-10 px-5">
         <div className="flex justify-between items-center gap-2">
         <h1 className="text-2xl font-semibold">Roles</h1>
         <button className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2">
