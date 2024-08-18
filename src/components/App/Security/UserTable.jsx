@@ -4,9 +4,9 @@ import { GoArrowDown } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { LuMoreVertical } from "react-icons/lu";
 import { MdModeEditOutline } from "react-icons/md";
+import PropTypes from "prop-types";
 
-
-const UserTable = () => {
+const UserTable = ({handleModal}) => {
   const renderStatus = (status) => {
     switch(status) {
       case 'banned':
@@ -86,7 +86,7 @@ const UserTable = () => {
                   {renderStatus(user.status)}
                 </td>
                 <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center gap-2">
-                  <button className="outline-none border-none" type="button"><MdModeEditOutline size={20}/></button>
+                  <button onClick={handleModal} className="outline-none border-none" type="button"><MdModeEditOutline size={20}/></button>
                   <button className="outline-none border-none" type="button"><LuMoreVertical size={20}/></button>
                 </td>
               </tr>
@@ -97,5 +97,10 @@ const UserTable = () => {
     </div>
   );
 };
+
+
+UserTable.propTypes = {
+  handleModal : PropTypes.func
+}
 
 export default UserTable;
