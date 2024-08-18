@@ -15,7 +15,7 @@ const SecurityLayout = () => {
             <Sidebar links={securityLinks} />
           </div>
         )}
-        <main className={`h-full ${hideSidebar ? 'w-full' : 'lg:w-[75%] w-full'}`}>
+        <main className={`h-full ${hideSidebar ? 'w-full' : 'lg:w-[80%] w-full'}`}>
           <Outlet />
         </main>
       </div>
