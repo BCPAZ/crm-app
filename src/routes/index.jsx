@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
-const Loading = () => <div>Loading...</div>;
+import LoadingScreen from "@/components/common/LoadingScreen";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 const AppLayout = lazy(() => import("@/layouts/AppLayout"));
@@ -38,7 +38,7 @@ const CreateNewUser = lazy(() => import("@/views/App/Security/CreateNewUser"));
 
 const AppRouter = () => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LoadingScreen />}>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Dashboard />} />
