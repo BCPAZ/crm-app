@@ -10,7 +10,7 @@ const JobTitleModal = ({showModal, closeModal}) => {
         <h1 className="text-xl font-semibold">Create new position</h1>
         <Alert />
         <Input label="Position name" type="text" placeholder="Add position name"/>
-        <Select column/>
+        <Select column absolute label="Select company"/>
         <div className="flex justify-end gap-3">
           <button className="text-sm p-2 border border-grey/20 rounded-lg font-semibold bg-black text-white">Create</button>
           <button onClick={closeModal} className="text-sm p-2 border border-grey/40 rounded-lg font-semibold bg-white">Cancel</button>
