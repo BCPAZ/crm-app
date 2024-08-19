@@ -19,8 +19,8 @@ export const navigationLinks = [
     path : '/projects',
     elements : [
       {
-        path : 'new-project',
-        label : 'New Project'
+        path : 'create-project',
+        label : 'New Project',
       },
     ]
   },
