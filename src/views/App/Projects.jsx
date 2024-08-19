@@ -11,7 +11,7 @@ const Projects = () => {
         <div className="flex items-center justify-between mt-10">
           <h1 className="text-2xl font-semibold ">Projects</h1>
           <Link
-            to={"/create-new-user"}
+            to={"/create-project"}
             className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2"
           >
             <IoAddSharp size={18} />
