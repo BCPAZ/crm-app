@@ -10,17 +10,17 @@ const QuickUpdateModal = ({showModal, closeModal}) => {
         <h1 className="text-xl font-semibold">Quick Update</h1>
         <Alert />
         <div className="w-1/2">
-          <Select />
+          <Select absolute column label="Status"/>
         </div>
         <div className="grid grid-cols-2 gap-5">
           <Input label="Full name" type="text" placeholder="Enter fullname"/>
           <Input label="Email address" type="text" placeholder="Enter email"/>
           <Input label="Phone number" type="text" placeholder="Enter phone number"/>
-          <Select />
+          <Select absolute column label="Company"/>
           <Input label="Address" type="text" placeholder="Enter address"/>
           <Input label="Zip/Code" type="text" placeholder="Enter Zip Code"/>
           <Input label="Password" type="password" placeholder="Enter password"/>
-          <Select />
+          <Select absolute column label="Role"/>
         </div>
         <div className="flex justify-end gap-3">
           <button className="text-sm p-2 border border-grey/20 rounded-lg font-semibold bg-black text-white">Update</button>
