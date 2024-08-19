@@ -18,7 +18,7 @@ const people = [
   { id: 7, name: "Katelyn Rohan" },
 ];
 
-function Select({label, column}) {
+function Select({label, column, absolute}) {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
   return (
@@ -30,7 +30,7 @@ function Select({label, column}) {
     >
       <div className={`flex ${column ? 'flex-col' : 'flex-row items-center'} gap-2`}>
         {
-          label && <label className="text-sm font-base text-gray-500" htmlFor="">
+          label && <label className={`text-sm font-base text-gray-500 ${absolute ? "text-xs font-semibold text-gray-500 absolute bg-white -top-3 p-1 left-4 w-fit" : "text-sm font-base text-gray-500"}`} htmlFor="">
           {label}
         </label>
         }
@@ -58,7 +58,8 @@ function Select({label, column}) {
 
 Select.propTypes = {
   label : PropTypes.string,
-  column : PropTypes.bool
+  column : PropTypes.bool,
+  absolute : PropTypes.bool
 }
 
 export default Select;
