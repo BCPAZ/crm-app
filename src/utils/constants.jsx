@@ -50,20 +50,20 @@ export const navigationLinks = [
     title : 'Mail',
     icon : mail,
     path : '/mail',
-    elements : [
-      {
-        label : 'All'
-      },
-      {
-        label : 'Inbox'
-      },
-      {
-        label : 'Sent'
-      },
-      {
-        label : 'Drafts'
-      }
-    ]
+    // elements : [
+    //   {
+    //     label : 'All'
+    //   },
+    //   {
+    //     label : 'Inbox'
+    //   },
+    //   {
+    //     label : 'Sent'
+    //   },
+    //   {
+    //     label : 'Drafts'
+    //   }
+    // ]
   },
   {
     title : 'Workflow',
