@@ -20,7 +20,7 @@ const UserList = () => {
         <Tabs />
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 p-5">
           <div className="w-full">
-            <Select column />
+            <Select column absolute label="Project" />
           </div>
           <div className="lg:col-span-3">
             <Searchbar simple />
