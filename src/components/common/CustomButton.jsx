@@ -23,9 +23,9 @@ const CustomButton = ({ type, to, value, simple }) => {
 
 CustomButton.propTypes = {
   type : PropTypes.string.isRequired,
-  to : PropTypes.string,
+  to : PropTypes.string.isRequired,
   value : PropTypes.string.isRequired,
-  simple : PropTypes.bool
+  simple : PropTypes.bool.isRequired
 }
 
 export default CustomButton;
