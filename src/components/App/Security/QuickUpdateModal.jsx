@@ -1,4 +1,5 @@
 import Alert from "@/components/common/Alert"
+import CustomButton from "@/components/common/CustomButton";
 import Input from "@/components/common/Input"
 import Select from "@/components/common/Select";
 import PropTypes from "prop-types";
@@ -23,7 +24,7 @@ const QuickUpdateModal = ({showModal, closeModal}) => {
           <Select absolute column label="Role"/>
         </div>
         <div className="flex justify-end gap-3">
-          <button className="text-sm p-2 border border-grey/20 rounded-lg font-semibold bg-black text-white">Update</button>
+          <CustomButton simple value="Update" />
           <button onClick={closeModal} className="text-sm p-2 border border-grey/40 rounded-lg font-semibold bg-white">Cancel</button>
         </div>
       </div>
