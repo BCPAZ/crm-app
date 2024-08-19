@@ -42,9 +42,9 @@ const CommentsPanel = () => {
   return (
     <section className="md:w-[440px] w-full h-full">
       <div className="w-full h-full relative">
-        <div className="flex flex-col gap-10 h-[70%] ">
+        <div className="flex flex-col gap-10 min-h-[70%] overflow-y-scroll">
           {comments.map((comment, index) => (
-            <div className="flex gap-x-5 overflow-y-scroll" key={index}>
+            <div className="flex gap-x-5" key={index}>
               <div className="w-[40px] h-[40px] flex items-center justify-center overflow-hidden">
                 <img
                   src={comment.avatar}
