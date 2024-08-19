@@ -35,6 +35,7 @@ const Users = lazy(() => import("@/views/App/Security/Users"));
 const Roles = lazy(() => import("@/views/App/Security/Roles"));
 const JobTitle = lazy(() => import("@/views/App/Security/JobTitle"));
 const CreateNewUser = lazy(() => import("@/views/App/Security/CreateNewUser"));
+const CreateProject = lazy(() => import("@/views/App/CreateProject"));
 
 const AppRouter = () => {
   return (
@@ -44,6 +45,7 @@ const AppRouter = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<TaskManagement />} />
+          <Route path="/create-project" element={<CreateProject />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/cost" element={<Cost />} />
