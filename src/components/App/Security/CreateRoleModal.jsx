@@ -10,7 +10,7 @@ const CreateRoleModal = ({showModal, closeModal}) => {
         <h1 className="text-xl font-semibold">Create new role</h1>
         <Alert />
         <Input label="Role Name" type="text" placeholder="Add role name"/>
-        <Select column/>
+        <Select absolute column label="Select company"/>
         <div className="flex justify-end gap-3">
           <button className="text-sm p-2 border border-grey/20 rounded-lg font-semibold bg-black text-white">Create </button>
           <button onClick={closeModal} className="text-sm p-2 border border-grey/40 rounded-lg font-semibold bg-white">Cancel</button>
