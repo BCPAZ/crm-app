@@ -59,7 +59,7 @@ const AppRouter = () => {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Routes>
-        <ProtectedRoute>
+        <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/change-password" element={<ChangePassword />} />
@@ -102,7 +102,7 @@ const AppRouter = () => {
               <Route path="/issues/:id" element={<IssueDetail />} />
             </Route>
           </Route>
-        </ProtectedRoute>
+        </Route>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/reset-password" element={<ResetPassword />} />
