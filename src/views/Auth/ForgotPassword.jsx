@@ -15,7 +15,7 @@ const ForgotPassword = () => {
           <Input label='e-poçt' placeholder="E-poçt daxil edin..." type='email' />
         </form>
         <Button value='Göndər' />
-        <GoBackButton />
+        <GoBackButton path="/login"/>
       </div>
     </section>
   )
