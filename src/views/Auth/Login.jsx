@@ -92,7 +92,7 @@ const Login = () => {
         >
           Şifrəmi unutdum
         </Link>
-        <Button value="Giriş et" onClick={handleSubmit(onSubmit)} />
+        <Button value="Giriş et" onClick={handleSubmit(onSubmit)} isLoading={isLoading} />
         <GoBackButton />
       </div>
     </section>
