@@ -7,10 +7,14 @@ import { Link } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { authSchema } from "@/schema/authSchema";
-
+import useToast from "@/hooks/useToast";
+import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [handleLogin, { isLoading, isError, isSuccess }] = useLoginMutation();
+  const {showToast} = useToast();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -27,18 +31,20 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      // TODO: success handling
+      showToast('Giriş uğurlu başa çatdı', 'success')
+      navigate('/')
     }
-  }, [isSuccess]);
+  }, [isSuccess, showToast,navigate]);
 
   useEffect(() => {
     if (isError) {
-      // TODO: error handling
+      showToast('Giriş uğursuz oldu! Yenidən cəhd edin', 'error');
     }
-  }, [isError]);
+  }, [isError ,showToast]);
 
   return (
     <section className="flex justify-center">
+      <Toaster />
       <div className="max-w-[352px] w-full flex flex-col justify-center items-center">
         <h1 className="font-bold text-2xl leading-normal mb-5 text-center">
           Giriş et
