@@ -27,6 +27,11 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     });
+    builder.addMatcher(authService.endpoints.logout.matchFulfilled, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.token = null
+    })
   },
 });
 
