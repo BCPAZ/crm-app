@@ -3,8 +3,8 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import api from './api';
-import authSlice from './slices/authSlice';
+import api from '@/data/api';
+import authSlice from '@/data/slices/authSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,

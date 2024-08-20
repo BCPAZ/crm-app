@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import accountService from '../services/accountService';
-import authService from '../services/authService';
+import accountService from '@/data/services/accountService';
+import authService from '@/data/services/authService';
 
 const authSlice = createSlice({
   name: 'auth',

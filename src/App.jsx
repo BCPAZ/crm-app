@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import LoadingScreen from './components/common/LoadingScreen';
-import { persistor, store } from './data/store';
+import LoadingScreen from '@/components/common/LoadingScreen';
+import { persistor, store } from '@/data/store';
 import AppRouter from './routes';
 
 const App = () => {
