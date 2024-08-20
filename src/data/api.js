@@ -35,6 +35,16 @@ const api = createApi({
         options: req,
       };
     },
+
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState();
+      const { token, isAuthenticated } = state.auth;
+      headers.set('Accept', 'application/json');
+      if (isAuthenticated) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: () => ({}),
 

@@ -1,19 +1,18 @@
-import GoBackButton from "@/components/Auth/GoBackButton";
-import Button from "@/components/common/Button";
-import Input from "@/components/common/Input";
-import { useLoginMutation } from "@/data/services/authService";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { authSchema } from "@/schema/authSchema";
-import useToast from "@/hooks/useToast";
-import { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import GoBackButton from '@/components/Auth/GoBackButton';
+import Button from '@/components/common/Button';
+import Input from '@/components/common/Input';
+import { useLoginMutation } from '@/data/services/authService';
+import useToast from '@/hooks/useToast';
+import { authSchema } from '@/schema/authSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Toaster } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [handleLogin, { isLoading, isError, isSuccess }] = useLoginMutation();
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -31,54 +30,52 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      showToast('Giriş uğurlu başa çatdı', 'success')
+      showToast('Giriş uğurlu başa çatdı', 'success');
     }
-  }, [isSuccess, showToast,navigate]);
+  }, [isSuccess, showToast, navigate]);
 
   useEffect(() => {
     if (isError) {
       showToast('Giriş uğursuz oldu! Yenidən cəhd edin', 'error');
     }
-  }, [isError ,showToast]);
+  }, [isError, showToast]);
 
   return (
-    <section className="flex justify-center">
+    <section className='flex justify-center'>
       <Toaster />
-      <div className="max-w-[352px] w-full flex flex-col justify-center items-center">
-        <h1 className="font-bold text-2xl leading-normal mb-5 text-center">
-          Giriş et
-        </h1>
-        <p className="max-w-[196px] text-center text-sm font-light mb-6">
+      <div className='max-w-[352px] w-full flex flex-col justify-center items-center'>
+        <h1 className='font-bold text-2xl leading-normal mb-5 text-center'>Giriş et</h1>
+        <p className='max-w-[196px] text-center text-sm font-light mb-6'>
           flegrei şirkətindən sizə verilən e-poçt və şifrə ilə giriş edin.
         </p>
         <form
-          className="w-full mb-5 flex flex-col gap-5"
-          action=""
+          className='w-full mb-5 flex flex-col gap-5'
+          action=''
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
-            name="email"
+            name='email'
             control={control}
             render={({ field }) => (
               <Input
                 {...field}
-                type="email"
-                placeholder="Email adresinizi daxil edin..."
-                label="E-poçt"
+                type='email'
+                placeholder='Email adresinizi daxil edin...'
+                label='E-poçt'
                 disabled={isLoading}
                 error={errors.email?.message}
               />
             )}
           />
           <Controller
-            name="password"
+            name='password'
             control={control}
             render={({ field }) => (
               <Input
                 {...field}
-                type="password"
-                placeholder="Şifrənizi daxil edin..."
-                label="Şifrə"
+                type='password'
+                placeholder='Şifrənizi daxil edin...'
+                label='Şifrə'
                 disabled={isLoading}
                 error={errors.password?.message}
               />
@@ -86,12 +83,12 @@ const Login = () => {
           />
         </form>
         <Link
-          to={"/forgot-password"}
-          className="text-end w-full text-sm font-base underline text-secondary mb-5"
+          to={'/forgot-password'}
+          className='text-end w-full text-sm font-base underline text-secondary mb-5'
         >
           Şifrəmi unutdum
         </Link>
-        <Button value="Giriş et" onClick={handleSubmit(onSubmit)} isLoading={isLoading} />
+        <Button value='Giriş et' type='submit' isLoading={isLoading} />
         <GoBackButton />
       </div>
     </section>
