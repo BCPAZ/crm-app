@@ -1,4 +1,4 @@
-import api from '@/data/api';
+import api from '@/api';
 
 const authService = api.injectEndpoints({
   endpoints: (builder) => ({

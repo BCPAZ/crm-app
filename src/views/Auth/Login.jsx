@@ -32,7 +32,6 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       showToast('Giriş uğurlu başa çatdı', 'success')
-      navigate('/')
     }
   }, [isSuccess, showToast,navigate]);
 
