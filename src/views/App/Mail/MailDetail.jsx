@@ -6,21 +6,29 @@ import { HiTrash } from "react-icons/hi2";
 import { LuMoreVertical } from "react-icons/lu";
 import { IoMdAttach } from "react-icons/io";
 import { useGetMailDetailQuery } from "@/data/services/mailService";
+import { useToggleStarredStatusMutation } from "@/data/services/mailService";
 import { LuUserCircle2 } from "react-icons/lu";
 import Spinner from "@/components/common/Spinner";
 
 const MailDetail = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetMailDetailQuery(id);
+  const [toggleStarredStatus] = useToggleStarredStatusMutation()
 
   const mailDetail = data?.default_mail;
   if (isLoading) return <div className="w-full h-full flex items-center justify-center"><Spinner /></div>;
   if (isError) return <div className="w-full h-full ">Error loading mail details</div>;
 
+  const handleToggleStarred = () => {
+    if(mailDetail) {
+      toggleStarredStatus({id, is_starred : !mailDetail.is_starred});
+    }
+  }
+
   return (
     <div className="h-full relative">
       <div className="flex items-center justify-end w-full gap-3 py-3 border-b border-dashed border-gray-300/40">
-        <button>
+        <button onClick={handleToggleStarred}>
           {mailDetail.is_starred ? (
             <FaStar color="#FFAB00" size={20} />
           ) : (
