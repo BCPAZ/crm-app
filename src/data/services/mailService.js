@@ -3,9 +3,9 @@ import api from "@/data/api";
 const mailService = api.injectEndpoints({
   endpoints: (builder) => ({
     getMails: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/mails",
-        method: "GET",
+        params,
       }),
     }),
   }),

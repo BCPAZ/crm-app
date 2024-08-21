@@ -10,8 +10,8 @@ const SecondTextArea = ({placeholder, label, column, solid}) => {
 }
 
 SecondTextArea.propTypes = {
-  placeholder : PropTypes.string.isRequired,
-  label : PropTypes.string.isRequired,
+  placeholder : PropTypes.string,
+  label : PropTypes.string,
   column : PropTypes.bool,
   solid : PropTypes.bool
 }

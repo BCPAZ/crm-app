@@ -2,12 +2,12 @@ import { IoSearchOutline } from "react-icons/io5";
 import Button from "./Button";
 import PropTypes from "prop-types";
 
-const Searchbar = ({simple}) => {
+const Searchbar = ({simple ,onChange}) => {
   return (
     <div className="flex justify-between items-center gap-4 w-auto">
       <div className={`flex items-center p-4 gap-5 rounded-lg border border-grey/20 ${simple ? 'w-full' : 'w-[90%]'}`}>
         <IoSearchOutline size={18} color="gray"/>
-        <input className="bg-transparent w-full h-full outline-none border-none" placeholder="Search anything" type="search" autoComplete="false" />
+        <input onChange={onChange} className="bg-transparent w-full h-full outline-none border-none" placeholder="Search anything" type="search" autoComplete="false" />
       </div>
       {!simple ? <div className="flex flex-1">
         <Button value="Search" />
@@ -17,7 +17,8 @@ const Searchbar = ({simple}) => {
 }
 
 Searchbar.propTypes = {
-  simple : PropTypes.bool
+  simple : PropTypes.bool,
+  onChange : PropTypes.func
 }
 
 export default Searchbar

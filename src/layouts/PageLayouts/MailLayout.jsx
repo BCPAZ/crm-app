@@ -1,60 +1,101 @@
 import clsx from "clsx";
 import moment from "moment";
-import mails from "@/mocks/mails";
-import mailLinks from "@/utils/mailLinks";
+import { useEffect, useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import { useGetMailsQuery } from "@/data/services/mailService";
 import Searchbar from "@/components/common/Searchbar";
 import empty from "@/assets/icons/Mail/empty.svg";
 import CreateMail from "@/components/App/Mail/CreateMail";
 import disabled from "@/assets/icons/Mail/disabled.svg";
 import { FaPen } from "react-icons/fa";
-import { NavLink, Outlet } from "react-router-dom";
-import { useState } from "react";
+import mailLinks from "@/utils/mailLinks";
+import { LuUserCircle2 } from "react-icons/lu";
+
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
   const [mailModal, setMailModal] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
 
   const openMailModal = () => {
     setMailModal(true);
-  }
+  };
   const closeMailModal = () => {
     setMailModal(false);
-  }
-  const filterMails = () => {
-    switch (filterType) {
-      case "ALL":
-        return mails;
-      case "STARRED":
-        return mails.filter((mail) => mail.is_starred);
-      case "IMPORTANT":
-        return mails.filter((mail) => mail.is_important);
-      default:
-        return mails.filter((mail) => mail.type === filterType);
-    }
   };
 
-  const filteredMails = filterMails();
+  const [filter, setFilter] = useState({
+    page: 1,
+    limit: 10,
+  });
+
+  useEffect(() => {
+    setFilter(state => ({
+      ...state,
+      search: searchInput
+    }));
+  }, [searchInput]);
+
+  useEffect(() => {
+    switch (filterType) {
+      case "INBOX":
+        setFilter({ type: "RECEIVE", page: 1, limit: 10 });
+        break;
+      case "SENT":
+        setFilter({ type: "SEND", page: 1, limit: 10 });
+        break;
+      case "STARRED":
+        setFilter({ is_starred: true, page: 1, limit: 10 });
+        break;
+      case "TRASH":
+        setFilter({ is_deleted: true, page: 1, limit: 10 });
+        break;
+      case "IMPORTANT":
+        setFilter({ is_important: true, page: 1, limit: 10 });
+        break;
+      case "ALL":
+      default:
+        setFilter({ page: 1, limit: 10 });
+    }
+  }, [filterType]);
+
+  const handleSearchInput = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const { data, isLoading, isError } = useGetMailsQuery(filter);
+
+  const mails = data?.mails || [];
+  const meta = data?.meta || {};
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading mails</p>;
 
   return (
     <section className="py-10">
       <div className="siteContainer relative">
-        <h1 className="font-bold text-2xl">
-          Mail All ({filteredMails.length})
-        </h1>
-        <div className={`fixed bottom-5 right-5 z-30 ${mailModal ? 'block' : 'hidden'}`}>
-        <CreateMail closeMailModal={closeMailModal}/>
+        <h1 className="font-bold text-2xl">Mail All ({mails.length})</h1>
+        <div
+          className={`fixed bottom-5 right-5 z-30 ${
+            mailModal ? "block" : "hidden"
+          }`}
+        >
+          <CreateMail closeMailModal={closeMailModal} />
         </div>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
           <aside className="flex flex-col p-3 w-[20%]">
-            <button onClick={openMailModal} className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2">
+            <button
+              onClick={openMailModal}
+              className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
+            >
               <FaPen size={22} />
-              Compose
+              <span className="md:block hidden">Compose</span>
             </button>
             <div className="py-3 flex flex-col gap-2">
               {mailLinks.map((link, index) => (
                 <button
                   className={clsx(
-                    "flex items-center w-full gap-4 p-2 rounded-lg",
+                    "flex items-center md:justify-start justify-center w-full gap-4 p-2 rounded-lg",
                     {
                       "bg-gray-300": filterType === link.type,
                       "bg-transparent": filterType !== link.type,
@@ -65,7 +106,7 @@ const MailLayout = () => {
                 >
                   <img src={link.icon} alt={link.label} />
                   <span
-                    className={clsx("text-lg font-medium", {
+                    className={clsx("text-lg font-medium md:block hidden", {
                       "text-black": filterType === link.type,
                       "text-gray-500": filterType !== link.type,
                     })}
@@ -77,10 +118,10 @@ const MailLayout = () => {
             </div>
           </aside>
           <div className="bg-white rounded-lg flex flex-col w-[35%] p-4 min-h-screen">
-            <Searchbar simple />
+            <Searchbar onChange={handleSearchInput} simple />
             <div className="flex flex-col gap-2 mt-5">
-              {filteredMails.length > 0 ? (
-                filteredMails.map((mail, index) => (
+              {mails.length > 0 ? (
+                mails.map((mail, index) => (
                   <NavLink
                     className={({ isActive }) =>
                       clsx("w-full p-2 rounded-lg", {
@@ -92,11 +133,15 @@ const MailLayout = () => {
                     key={index}
                   >
                     <div className="flex items-center gap-3">
-                      <img
+                      {
+                        mail.opponent?.avatar_url ? <img
                         className="w-[40px] h-[40px] rounded-full"
-                        src={mail.opponent.avatar_url}
-                        alt=""
-                      />
+                        src={!mail.opponent.avatar_url}
+                        alt={mail.opponent.name}
+                      /> : <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
+                        <LuUserCircle2 size={30}/>
+                      </div>
+                      }
                       <div className="flex flex-col w-full">
                         <div className="flex justify-between gap-2 w-full">
                           <span className="text-sm font-semibold">
@@ -136,7 +181,7 @@ const MailLayout = () => {
             </div>
           </div>
           <div className="flex-1 bg-white rounded-lg p-3">
-            {filteredMails.length > 0 ? (
+            {mails.length > 0 ? (
               <Outlet />
             ) : (
               <div className="flex items-center justify-center h-full">
@@ -144,7 +189,6 @@ const MailLayout = () => {
               </div>
             )}
           </div>
-
         </div>
       </div>
     </section>
