@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '@/utils/constants';
 
 function generateBoundary() {
   let boundary = '';
@@ -22,7 +23,7 @@ function serializeFormData(formData, boundary) {
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8000/api',
+    baseUrl: `${BASE_URL}/api`,
     serializeRequest: (req) => {
       if (req.body instanceof FormData) {
         const boundary = generateBoundary();
