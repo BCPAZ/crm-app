@@ -8,9 +8,14 @@ const mailService = api.injectEndpoints({
         params,
       }),
     }),
+    getMailDetail : builder.query({
+      query : (id) => ({
+        url : `/mails/${id}`
+      })
+    })
   }),
 });
 
-export const { useGetMailsQuery } = mailService;
+export const { useGetMailsQuery,useGetMailDetailQuery } = mailService;
 
 export default mailService;
