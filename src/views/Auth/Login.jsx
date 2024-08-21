@@ -29,28 +29,22 @@ const Login = () => {
       password: data.password
     };
 
-    handleLogin(loginData).unwrap()
-      .then(() => {
-        navigate('/');
-        reset();
-      })
-      .catch((error) => {
-        console.error('Login failed:', error);
-        showToast('Giriş uğursuz oldu! Yenidən cəhd edin', 'error');
-      });
+    handleLogin(loginData);
   };
 
   useEffect(() => {
     if (isSuccess) {
       showToast('Giriş uğurlu başa çatdı', 'success');
+      reset();
+      navigate('/')
     }
-  }, [isSuccess, showToast]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
       showToast('Giriş uğursuz oldu! Yenidən cəhd edin', 'error');
     }
-  }, [isError, showToast]);
+  }, [isError]);
 
   return (
     <section className='flex justify-center'>

@@ -8,6 +8,7 @@ const authSlice = createSlice({
     user: null,
     isAuthenticated: false,
     token: null,
+    forgotPasswordStatus : null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -31,7 +32,16 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.token = null
-    })
+    });
+    // builder.addMatcher(authService.endpoints.forgotPassword.matchPending, (state) => {
+    //   state.forgotPasswordStatus = 'loading'; 
+    // });
+    // builder.addMatcher(authService.endpoints.forgotPassword.matchFulfilled, (state) => {
+    //   state.forgotPasswordStatus = 'success'; 
+    // });
+    // builder.addMatcher(authService.endpoints.forgotPassword.matchRejected, (state) => {
+    //   state.forgotPasswordStatus = 'error';
+    // });
   },
 });
 

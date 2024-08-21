@@ -9,9 +9,16 @@ const authService = api.injectEndpoints({
         body: data,
       }),
     }),
+    forgotPassword : builder.mutation({
+      query :(data) => ({
+        url : '/auth/forgot-password',
+        method : 'POST',
+        body : data
+      })
+    })
   }),
 });
 
-export const { useLoginMutation } = authService;
+export const { useLoginMutation, useForgotPasswordMutation } = authService;
 
 export default authService;

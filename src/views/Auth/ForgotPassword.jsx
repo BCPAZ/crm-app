@@ -1,24 +1,88 @@
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import GoBackButton from "@/components/Auth/GoBackButton";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForgotPasswordMutation } from "@/data/services/authService";
+import { authSchema } from "@/schema/authSchema";
+import { useEffect } from "react";
+import useToast from "@/hooks/useToast";
+import { Toaster } from "react-hot-toast";
+import * as Yup from "yup"
+
 const ForgotPassword = () => {
+  const [handleForgotPassword, { isLoading, isError, isSuccess }] =
+    useForgotPasswordMutation();
+  const { showToast } = useToast();
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(Yup.object().shape({
+      email : Yup.string()
+      .required('Email daxil etmək mütləqdir!')
+      .email('Yanlış email adresi'),
+    })),
+  });
+
+  const onSubmit = (data) => {
+    console.log('Form data', data);
+    const forgotPasswordData = {
+      subdomain: "flegri",
+      email: data.email,
+    };
+    handleForgotPassword(forgotPasswordData);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+      showToast("Mail göndərildi", "success");
+    }
+  }, [isSuccess, showToast]);
+
+  useEffect(() => {
+    if (isError) {
+      showToast("Xəta baş verdi", "error");
+    }
+  }, [isError, showToast]);
+
   return (
     <section className="flex justify-center">
+      <Toaster />
       <div className="max-w-[352px] w-full flex flex-col justify-center items-center">
-        <h1 className="font-bold text-2xl leading-normal mb-5 text-center">Şifrə yeniləmə</h1>
+        <h1 className="font-bold text-2xl leading-normal mb-5 text-center">
+          Şifrə yeniləmə
+        </h1>
         <p className="w-full text-center text-sm font-light mb-6">
-        flegrei.crm.com adresindən şifrənizi yeniləmək üçün
-        e-poçtunuzu qeyd edin.
+          flegrei.crm.com adresindən şifrənizi yeniləmək üçün e-poçtunuzu qeyd edin.
         </p>
 
-        <form className="w-full mb-5 flex flex-col gap-5" action="">
-          <Input label='e-poçt' placeholder="E-poçt daxil edin..." type='email' />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full mb-5 flex flex-col gap-5"
+        >
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="E-poçt"
+                placeholder="E-poçt daxil edin..."
+                type="email"
+                error={errors.email?.message}
+              />
+            )}
+          />
+          <Button isLoading={isLoading} type="submit" value="Göndər" />
         </form>
-        <Button value='Göndər' />
-        <GoBackButton path="/login"/>
+        <GoBackButton path="/login" />
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
