@@ -1,6 +1,17 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Link } from 'react-router-dom';
+import { useLogoutMutation } from '@/data/services/accountService';
+
 export default function ProfileCard() {
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = () => {
+    try {
+      logout();
+    } catch (error) {
+      console.error('Logout işlemi sırasında bir hata oluştu:', error);
+    }
+  };
   return (
     <div className='relative overflow-hidden'>
       <Menu as='nav'>
@@ -41,7 +52,7 @@ export default function ProfileCard() {
             </MenuItem>
           </div>
           <MenuItem>
-            <button className='text-red-600 p-4 text-start'>Logout</button>
+            <button onClick={handleLogout} className='text-red-600 p-4 text-start'>Logout</button>
           </MenuItem>
         </MenuItems>
       </Menu>

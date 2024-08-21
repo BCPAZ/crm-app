@@ -8,9 +8,15 @@ const accountService = api.injectEndpoints({
         method: 'GET',
       }),
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: 'account/logout',
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
-export const { useCurrentAccountQuery } = accountService;
+export const { useCurrentAccountQuery , useLogoutMutation } = accountService;
 
 export default accountService;

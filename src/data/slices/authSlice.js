@@ -14,7 +14,7 @@ const authSlice = createSlice({
     builder.addMatcher(authService.endpoints.login.matchFulfilled, (state, action) => {
       state.user = action.payload.user;
       state.isAuthenticated = true;
-      state.token = action.payload.token;
+      state.token = action.payload.access_token;
     });
 
     builder.addMatcher(accountService.endpoints.currentAccount.matchRejected, (state) => {
@@ -27,7 +27,7 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticated = true;
     });
-    builder.addMatcher(authService.endpoints.logout.matchFulfilled, (state) => {
+    builder.addMatcher(accountService.endpoints.logout.matchFulfilled, (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.token = null

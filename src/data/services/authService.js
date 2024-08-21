@@ -9,15 +9,9 @@ const authService = api.injectEndpoints({
         body: data,
       }),
     }),
-    logout: builder.mutation({
-      query: () => ({
-        url: 'auth/logout',
-        method: 'POST',
-      }),
-    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authService;
+export const { useLoginMutation } = authService;
 
 export default authService;
