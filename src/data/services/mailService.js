@@ -8,22 +8,34 @@ const mailService = api.injectEndpoints({
         params,
       }),
     }),
-    getMailDetail : builder.query({
-      query : (id) => ({
-        url : `/mails/${id}`
+    getMailDetail: builder.query({
+      query: (id) => ({
+        url: `/mails/${id}`,
       }),
     }),
-    toggleStarredStatus : builder.mutation({
-      query : ({id , is_starred}) => ({
-        url : `/mails/${id}/is-starred`,
-        method : 'PATCH',
-        body : {is_starred}
+    toggleStarredStatus: builder.mutation({
+      query: ({ id, is_starred }) => ({
+        url: `/mails/${id}/is-starred`,
+        method: "PATCH",
+        body: { is_starred },
       }),
-      invalidatesTags : (result, error , {id}) => [{type : 'MAIL'}, id]
-    })
+      invalidatesTags: ({ id }) => [{ type: "MAIL" }, id],
+    }),
+    toggleImportantStatus: builder.mutation({
+      query: (id, { is_important }) => ({
+        url: `/mails/${id}/is-important`,
+        method: "PATCH",
+        body: { is_important },
+      }),
+    }),
   }),
 });
 
-export const { useGetMailsQuery,useGetMailDetailQuery, useToggleStarredStatusMutation } = mailService;
+export const {
+  useGetMailsQuery,
+  useGetMailDetailQuery,
+  useToggleStarredStatusMutation,
+  useToggleImportantStatusMutation
+} = mailService;
 
 export default mailService;
