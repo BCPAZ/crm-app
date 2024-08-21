@@ -28,7 +28,7 @@ const Login = () => {
       email: data.email,
       password: data.password
     };
-  
+
     handleLogin(loginData).unwrap()
       .then(() => {
         navigate('/');
@@ -93,15 +93,13 @@ const Login = () => {
             )}
           />
           <Link
-          to={'/forgot-password'}
-          className='text-end w-full text-sm font-base underline text-secondary mb-5'
-        >
-          Şifrəmi unutdum
-        </Link>
-        <Button value='Giriş et' type='submit' isLoading={isLoading} />
+            to={'/forgot-password'}
+            className='text-end w-full text-sm font-base underline text-secondary mb-5'
+          >
+            Şifrəmi unutdum
+          </Link>
+          <Button value='Giriş et' type='submit' isLoading={isLoading} />
         </form>
-        <div className='flex items-center just'>
-        </div>
       </div>
     </section>
   );

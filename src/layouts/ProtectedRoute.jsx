@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 
 const ProtectedRoute = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated)
-
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 

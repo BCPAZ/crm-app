@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 
 const Input = React.forwardRef(
-  ({ type, placeholder, label, value, onChange, error, ...props }, ref) => {
+  ({ type, placeholder, label, value = '', onChange, onBlur, error, disabled, ...props }, ref) => {
     const [isPasswordVisible, setPasswordVisible] = React.useState(false);
 
     const togglePasswordVisibility = () => {
@@ -20,9 +20,11 @@ const Input = React.forwardRef(
             className="w-full outline-none h-full bg-transparent disabled:opacity-50"
             type={type === 'password' && isPasswordVisible ? 'text' : type}
             placeholder={placeholder}
-            value={value}
+            value={value} // Ensure value is always defined
             onChange={onChange}
+            onBlur={onBlur}
             ref={ref}
+            disabled={disabled}
             {...props}
           />
           {type === 'password' && (
@@ -44,8 +46,10 @@ Input.propTypes = {
   placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   error: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default Input;
