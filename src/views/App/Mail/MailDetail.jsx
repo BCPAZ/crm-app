@@ -67,13 +67,15 @@ const MailDetail = () => {
       <div className="p-4 h-[261px] overflow-y-auto">
         <p className="text-sm whitespace-pre-wrap">{mailDetail.message}</p>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
+      {
+        mailDetail.can_send_reply && <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
         <SecondTextArea solid placeholder="Write something awesome..." />
         <div className="flex items-center justify-between">
           <button className="hover:bg-gray-300 transition-all duration-300 rounded w-[25px] h-[25px] flex items-center justify-center"><IoMdAttach size={18}/></button>
           <button className="bg-green-700 p-3 rounded-lg text-white font-semibold flex items-center gap-3 text-sm">Send <IoSend size={18}/></button>
         </div>
       </div>
+      }
     </div>
   );
 };
