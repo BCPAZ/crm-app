@@ -1,4 +1,3 @@
-import GoBackButton from '@/components/Auth/GoBackButton';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useLoginMutation } from '@/data/services/authService';
@@ -24,15 +23,28 @@ const Login = () => {
   });
 
   const onSubmit = (data) => {
-    handleLogin(data);
-    reset();
+    const loginData = {
+      subdomain: 'flegri',
+      email: data.email,
+      password: data.password
+    };
+  
+    handleLogin(loginData).unwrap()
+      .then(() => {
+        navigate('/');
+        reset();
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+        showToast('Giriş uğursuz oldu! Yenidən cəhd edin', 'error');
+      });
   };
 
   useEffect(() => {
     if (isSuccess) {
       showToast('Giriş uğurlu başa çatdı', 'success');
     }
-  }, [isSuccess, showToast, navigate]);
+  }, [isSuccess, showToast]);
 
   useEffect(() => {
     if (isError) {
@@ -50,7 +62,6 @@ const Login = () => {
         </p>
         <form
           className='w-full mb-5 flex flex-col gap-5'
-          action=''
           onSubmit={handleSubmit(onSubmit)}
         >
           <Controller
@@ -81,15 +92,16 @@ const Login = () => {
               />
             )}
           />
-        </form>
-        <Link
+          <Link
           to={'/forgot-password'}
           className='text-end w-full text-sm font-base underline text-secondary mb-5'
         >
           Şifrəmi unutdum
         </Link>
         <Button value='Giriş et' type='submit' isLoading={isLoading} />
-        <GoBackButton />
+        </form>
+        <div className='flex items-center just'>
+        </div>
       </div>
     </section>
   );
