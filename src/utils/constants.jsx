@@ -154,3 +154,6 @@ export const invoiceIcons = [
     icon : <IoShareSocialSharp />
   }
 ]
+
+
+export const BASE_URL = 'http://94.20.88.106';
