@@ -1,13 +1,18 @@
 import { IoMdInformationCircle } from "react-icons/io";
-const Alert = () => {
+import PropTypes from "prop-types";
+const Alert = ({value}) => {
   return (
     <div className="flex items-center gap-2 bg-sky-300 p-3 rounded-lg">
-      <IoMdInformationCircle size={36} color="white" />
+      <IoMdInformationCircle size={24} color="white" />
       <p className="text-md text-white">
-      The rules for completing individual stages can also be changed in the constructor.
+        {value}
       </p>
     </div>
   )
+}
+
+Alert.propTypes = {
+  value : PropTypes.string
 }
 
 export default Alert
