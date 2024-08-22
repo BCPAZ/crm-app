@@ -4,7 +4,7 @@ import CustomButton from "@/components/common/CustomButton";
 import { Toaster } from "react-hot-toast";
 import { useGetPositionsQuery } from "@/data/services/positionsService";
 import JobTitleCard from "@/components/App/Security/JobTitleCard";
-
+import Spinner from "@/components/common/Spinner";
 
 const JobTitle = () => {
   const { data: positions, isLoading, isError } = useGetPositionsQuery();
@@ -27,8 +27,8 @@ const JobTitle = () => {
           <CustomButton value="Create position" functionality={handleModal}  />
         </div>
         <div className="mt-10">
-          {isLoading && <p>Yüklənir...</p>}
-          {isError && <p>Bir xəta baş verdi, yenidən cəhd edin.</p>}
+          {isLoading && <div className="w-full h-full flex items-center justify-center"><Spinner /></div>}
+          {isError && <div className="h-full w-full flex items-center justify-center font-semibold text-xl">Bir xəta baş verdi, yenidən cəhd edin.</div>}
           {positions && positions.length > 0 ? (
             <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5">
               {positions.map((position,index) => (
