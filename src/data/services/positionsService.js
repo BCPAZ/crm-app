@@ -17,6 +17,6 @@ const positionService = api.injectEndpoints({
   }),
 });
 
-export const { useGetPositionsQuery } = positionService;
+export const { useGetPositionsQuery, useCreatePositionMutation } = positionService;
 
 export default positionService;

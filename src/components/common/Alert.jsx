@@ -4,7 +4,7 @@ const Alert = ({value}) => {
   return (
     <div className="flex items-center gap-2 bg-sky-300 p-3 rounded-lg">
       <IoMdInformationCircle size={24} color="white" />
-      <p className="text-md text-white">
+      <p className="text-sm text-white">
         {value}
       </p>
     </div>

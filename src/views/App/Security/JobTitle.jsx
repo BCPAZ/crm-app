@@ -2,6 +2,7 @@ import FileTable from "@/components/common/FileTable";
 import { useState } from "react";
 import JobTitleModal from "@/components/App/Security/JobTitleModal";
 import CustomButton from "@/components/common/CustomButton";
+import { Toaster } from "react-hot-toast";
 const JobTitle = () => {
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
@@ -12,6 +13,7 @@ const JobTitle = () => {
   }
   return (
     <section className="w-full h-full relative">
+      <Toaster />
       <div className="py-10 px-5">
         <div className="flex justify-between items-center gap-2">
         <h1 className="text-2xl font-semibold">Positions</h1>
