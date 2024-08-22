@@ -16,8 +16,9 @@ const JobTitle = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [positionToDelete, setPositionToDelete] = useState(null);
+  const [editPosition, setEditPosition] = useState(null);
 
-  const [{ isSuccess }] = useDeletePositionMutation();
+  const [deletePosition] = useDeletePositionMutation();
   const { showToast } = useToast();
 
   const handleDeleteModal = (id) => {
@@ -25,29 +26,31 @@ const JobTitle = () => {
     setShowConfirmation(true);
   };
 
+  const handleEdit = (position) => {
+    setEditPosition(position);
+    setShowModal(true);
+  };
+
   useEffect(() => {
-    if (isSuccess) {
+    if (deletePosition.isSuccess) {
       showToast("Pozisiya uğurla silindi.", "success");
       setPositionToDelete(null);
     }
-  }, [isSuccess, showToast]);
+  }, [deletePosition.isSuccess]);
 
   useEffect(() => {
-    if (isError) {
+    if (deletePosition.isError) {
       showToast("Pozisiya silinə bilmədi.", "error");
     }
-  }, [isError, showToast]);
+  }, [deletePosition.isError]);
 
   const closeConfirmationModal = () => {
     setShowConfirmation(false);
   };
 
-  const handleModal = () => {
-    setShowModal(true);
-  };
-
   const closeModal = () => {
     setShowModal(false);
+    setEditPosition(null);
   };
 
   return (
@@ -56,7 +59,7 @@ const JobTitle = () => {
       <div className="py-10 px-5 h-full">
         <div className="flex justify-between items-center gap-2">
           <h1 className="text-2xl font-semibold">Positions</h1>
-          <CustomButton value="Create position" functionality={handleModal} />
+          <CustomButton value="Create position" functionality={() => setShowModal(true)} />
         </div>
         <div className="mt-10 h-full">
           {isError && (
@@ -65,14 +68,17 @@ const JobTitle = () => {
             </div>
           )}
           {!isFetching && positions && positions.length > 0 ? (
-            <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5">
+            <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5">
               {positions.map((position, index) => (
                 <div
                   key={index}
                   className="min-h-[150px] relative p-4 flex flex-col justify-end rounded-lg border border-grey/40"
                 >
                   <div className="absolute top-2 right-2 flex items-center gap-1">
-                    <button className="text-gray-400 hover:bg-blue-600 p-1 rounded-lg hover:text-white">
+                    <button
+                      onClick={() => handleEdit(position)}
+                      className="text-gray-400 hover:bg-blue-600 p-1 rounded-lg hover:text-white"
+                    >
                       <MdModeEdit size={18} />
                     </button>
                     <button
@@ -107,7 +113,11 @@ const JobTitle = () => {
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
       />
-      <JobTitleModal showModal={showModal} closeModal={closeModal} />
+      <JobTitleModal
+        showModal={showModal}
+        closeModal={closeModal}
+        position={editPosition}
+      />
     </section>
   );
 };

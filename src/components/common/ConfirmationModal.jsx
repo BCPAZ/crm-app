@@ -14,9 +14,9 @@ const ConfirmationModal = ({ id, closeConfirmationModal, showConfirmation }) => 
 
   return (
     <div
-      className={`w-full h-screen bg-black/70 ${showConfirmation ? 'flex' : 'hidden'} items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0`}
+      className={`w-full h-screen bg-black/70 ${showConfirmation ? 'flex' : 'hidden'} items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 px-5`}
     >
-      <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 w-1/2">
+      <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-1/2">
         <Alert value="Pozisiyanı sildyiniz təqdirdə digər layihələrdə problem yaşanma ehtimalı var" type="danger"/>
         <p className="font-semibold">Qərarınızdan əminsinizmi? Silmək istəyirsinizmi?</p>
         <div className="flex justify-end gap-3">
@@ -41,7 +41,7 @@ const ConfirmationModal = ({ id, closeConfirmationModal, showConfirmation }) => 
 ConfirmationModal.propTypes = {
   showConfirmation: PropTypes.bool.isRequired,
   closeConfirmationModal: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
 };
 
 export default ConfirmationModal;
