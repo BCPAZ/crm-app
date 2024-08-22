@@ -49,7 +49,7 @@ const api = createApi({
   }),
   endpoints: () => ({}),
 
-  tagTypes: ['TASKS'],
+  tagTypes: ['POSITIONS'],
 });
 
 export default api;
