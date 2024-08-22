@@ -24,9 +24,10 @@ const positionsService = api.injectEndpoints({
       invalidatesTags: ["POSITIONS"],
     }),
     updatePosition: builder.mutation({
-      query: (id) => ({
+      query: ({ id, data }) => ({
         url: `/positions/${id}`,
         method: "PUT",
+        body: data,
       }),
       invalidatesTags: ["POSITIONS"],
     }),
