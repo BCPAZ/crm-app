@@ -1,10 +1,10 @@
 import api from "@/data/api";
 
-const positionService = api.injectEndpoints({
+const positionsService = api.injectEndpoints({
   endpoints: (builder) => ({
     getPositions: builder.query({
       query: () => ({
-        url: "/positions",
+        url: '/positions',
       }),
     }),
     createPosition : builder.mutation({
@@ -17,6 +17,6 @@ const positionService = api.injectEndpoints({
   }),
 });
 
-export const { useGetPositionsQuery, useCreatePositionMutation } = positionService;
+export const { useCreatePositionMutation , useGetPositionsQuery } = positionsService;
 
-export default positionService;
+export default positionsService;
