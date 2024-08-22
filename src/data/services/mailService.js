@@ -13,7 +13,7 @@ const mailService = api.injectEndpoints({
         url: `/mails/${id}`,
       }),
     }),
-    sendMail : builder.query({
+    sendMail : builder.mutation({
       query : (data) => {
         const formData = new FormData();
         formData.append('to', data.to);
@@ -74,7 +74,11 @@ export const {
   useGetMailsQuery,
   useGetMailDetailQuery,
   useToggleStarredStatusMutation,
-  useToggleImportantStatusMutation
+  useToggleImportantStatusMutation,
+  useForceDeleteMutation,
+  useRestoreMailMutation,
+  useSoftDeleteMutation,
+  useSendMailMutation
 } = mailService;
 
 export default mailService;
