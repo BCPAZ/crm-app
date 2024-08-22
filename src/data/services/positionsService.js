@@ -4,28 +4,40 @@ const positionsService = api.injectEndpoints({
   endpoints: (builder) => ({
     getPositions: builder.query({
       query: () => ({
-        url: '/positions',
+        url: "/positions",
       }),
-      providesTags: ['POSITIONS'],
+      providesTags: ["POSITIONS"],
     }),
-    createPosition : builder.mutation({
-      query : (data) => ({
-        url : '/positions',
-        method : 'POST',
-        body : data
+    createPosition: builder.mutation({
+      query: (data) => ({
+        url: "/positions",
+        method: "POST",
+        body: data,
       }),
-      invalidatesTags: ['POSITIONS']
+      invalidatesTags: ["POSITIONS"],
     }),
-    deletePosition : builder.mutation({
-      query : (id) => ({
-        url : `/positions/${id}`,
-        method : 'DELETE',
+    deletePosition: builder.mutation({
+      query: (id) => ({
+        url: `/positions/${id}`,
+        method: "DELETE",
       }),
-      invalidatesTags: ['POSITIONS']
-    })
+      invalidatesTags: ["POSITIONS"],
+    }),
+    updatePosition: builder.mutation({
+      query: (id) => ({
+        url: `/positions/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["POSITIONS"],
+    }),
   }),
 });
 
-export const { useCreatePositionMutation , useGetPositionsQuery , useDeletePositionMutation } = positionsService;
+export const {
+  useCreatePositionMutation,
+  useGetPositionsQuery,
+  useDeletePositionMutation,
+  useUpdatePositionMutation,
+} = positionsService;
 
 export default positionsService;
