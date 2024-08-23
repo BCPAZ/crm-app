@@ -75,6 +75,7 @@ const CreateMail = ({ closeMailModal }) => {
   useEffect(() => {
     if (mailSuccess) {
       showToast('Mail uğurlu şəkildə göndərildi', 'success');
+      
       closeMailModal();
     }
   }, [mailSuccess]);
