@@ -10,6 +10,7 @@ import disabled from "@/assets/icons/Mail/disabled.svg";
 import { FaPen } from "react-icons/fa";
 import mailLinks from "@/utils/mailLinks";
 import { LuUserCircle2 } from "react-icons/lu";
+import LoadingScreen from "@/components/common/LoadingScreen";
 
 
 const MailLayout = () => {
@@ -68,7 +69,7 @@ const MailLayout = () => {
   const mails = data?.mails || [];
   const meta = data?.meta || {};
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingScreen />;
   if (isError) return <p>Error loading mails</p>;
 
   return (
@@ -83,7 +84,7 @@ const MailLayout = () => {
           <CreateMail closeMailModal={closeMailModal} />
         </div>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-full p-2 mt-10 flex justify-between gap-3">
-          <aside className="flex flex-col p-3 w-[20%]">
+          <aside className="md:flex hidden flex-col p-3 w-[20%]">
             <button
               onClick={openMailModal}
               className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
@@ -106,7 +107,7 @@ const MailLayout = () => {
                 >
                   <img src={link.icon} alt={link.label} />
                   <span
-                    className={clsx("text-lg font-medium md:block hidden", {
+                    className={clsx("text-md font-medium md:block hidden", {
                       "text-black": filterType === link.type,
                       "text-gray-500": filterType !== link.type,
                     })}
@@ -117,7 +118,7 @@ const MailLayout = () => {
               ))}
             </div>
           </aside>
-          <div className="bg-white rounded-lg flex flex-col w-[35%] p-4 min-h-screen">
+          <div className="bg-white rounded-lg md:flex hidden flex-col w-[35%] p-4 min-h-screen">
             <Searchbar onChange={handleSearchInput} simple />
             <div className="flex flex-col gap-2 mt-5">
               {mails.length > 0 ? (
