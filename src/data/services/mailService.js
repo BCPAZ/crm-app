@@ -14,7 +14,7 @@ const mailService = api.injectEndpoints({
         return args;
       },
       merge: (currentCacheData, responseData) => {
-        if (
+          if (
           currentCacheData.meta.current_page === responseData.meta.current_page
         ) {
           currentCacheData.mails = [];

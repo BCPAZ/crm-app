@@ -11,6 +11,7 @@ import {
   useToggleStarredStatusMutation,
   useToggleImportantStatusMutation,
   useSendMailMutation,
+  useSoftDeleteMutation,
 } from "@/data/services/mailService";
 import { LuUserCircle2 } from "react-icons/lu";
 import Spinner from "@/components/common/Spinner";
@@ -25,8 +26,18 @@ const MailDetail = () => {
     useToggleStarredStatusMutation();
   const [toggleImportantStatus, { isError: toggleImportantError }] =
     useToggleImportantStatusMutation();
-  const [sendMail, { isLoading: isSending, isError: sendError, isSuccess : sendSuccess }] =
-    useSendMailMutation();
+  const [
+    sendMail,
+    { isLoading: isSending, isError: sendError, isSuccess: sendSuccess },
+  ] = useSendMailMutation();
+
+  const [
+    softDelete,
+    {
+      isError: softDeleteError,
+      isSuccess: softDeleteSuccess,
+    },
+  ] = useSoftDeleteMutation();
 
   const [isStarred, setIsStarred] = useState(false);
   const [isImportant, setIsImportant] = useState(false);
@@ -59,27 +70,43 @@ const MailDetail = () => {
       return;
     }
     sendMail({
-      to : mailDetail.to,
-      subject : "Re :" + mailDetail.subject,
+      to: mailDetail.to,
+      subject: "Re :" + mailDetail.subject,
       message,
-      reply_id : id,
-      attachments
+      reply_id: id,
+      attachments,
     });
   };
 
-  useEffect(() => {
-    if(sendSuccess){
-      setMessage('');
-      setAttachments([]);
-      showToast('Mesaj uğurla göndərildi', 'success');
-    }
-  },[sendSuccess])
+  const handleDeleteEmail = () => {
+    softDelete(id);
+  }
 
   useEffect(() => {
-    if(sendError){
-      showToast('Mesaj göndərilə bilmədi', 'error');
+    if(softDeleteSuccess){
+      showToast('Mesaj uğurlu şəkildə silindi', 'success')
     }
-  },[sendError])
+  },[softDeleteSuccess])
+
+  useEffect(() => {
+    if(softDeleteError){
+      showToast('Mesaj silinə bilmədi', 'error')
+    }
+  },[softDeleteError])
+
+  useEffect(() => {
+    if (sendSuccess) {
+      setMessage("");
+      setAttachments([]);
+      showToast("Mesaj uğurla göndərildi", "success");
+    }
+  }, [sendSuccess]);
+
+  useEffect(() => {
+    if (sendError) {
+      showToast("Mesaj göndərilə bilmədi", "error");
+    }
+  }, [sendError]);
 
   const handleToggleStarred = () => {
     const updatedStarredStatus = !isStarred;
@@ -142,7 +169,7 @@ const MailDetail = () => {
             <MdLabelImportantOutline color="#FFAB00" size={20} />
           )}
         </button>
-        <button className="text-gray-500">
+        <button onClick={handleDeleteEmail} className="text-gray-500">
           <HiTrash size={20} />
         </button>
         <button className="text-gray-500">
@@ -188,26 +215,31 @@ const MailDetail = () => {
       </div>
       {mailDetail?.can_send_reply && (
         <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
-        <SecondTextArea
-          solid
-          placeholder="Write something awesome..."
-          value={message}
-          onChange={handleMessageChange}
-        />
-        <div className="flex items-center justify-between">
-          <label className="hover:bg-gray-300 transition-all duration-300 rounded w-[25px] h-[25px] flex items-center justify-center cursor-pointer">
-            <IoMdAttach size={18} />
-            <input type="file" multiple className="hidden" onChange={handleAttachmentChange} />
-          </label>
-          <button
-            className="bg-green-700 p-3 rounded-lg text-white font-semibold flex items-center gap-3 text-sm"
-            onClick={handleSendMail}
-            disabled={isSending}
-          >
-            Send <IoSend size={18} />
-          </button>
+          <SecondTextArea
+            solid
+            placeholder="Write something awesome..."
+            value={message}
+            onChange={handleMessageChange}
+          />
+          <div className="flex items-center justify-between">
+            <label className="hover:bg-gray-300 transition-all duration-300 rounded w-[25px] h-[25px] flex items-center justify-center cursor-pointer">
+              <IoMdAttach size={18} />
+              <input
+                type="file"
+                multiple
+                className="hidden"
+                onChange={handleAttachmentChange}
+              />
+            </label>
+            <button
+              className="bg-green-700 p-3 rounded-lg text-white font-semibold flex items-center gap-3 text-sm"
+              onClick={handleSendMail}
+              disabled={isSending}
+            >
+              Send <IoSend size={18} />
+            </button>
+          </div>
         </div>
-      </div>
       )}
     </div>
   );
