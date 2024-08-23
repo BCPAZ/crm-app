@@ -13,10 +13,10 @@ const CreateMail = ({ closeMailModal }) => {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [cc, setCc] = useState([""]); // default to an array with one empty string
-  const [bcc, setBcc] = useState([""]); // default to an array with one empty string
+  const [cc, setCc] = useState([""]);
+  const [bcc, setBcc] = useState([""]);
   const [attachments, setAttachments] = useState([]);
-  const [sendMail, { isSuccess, isError, isLoading }] = useSendMailMutation();
+  const [sendMail, { isSuccess : mailSuccess, isError: mailError, isLoading: mailLoading }] = useSendMailMutation();
   const { showToast } = useToast();
 
   const toggleFullscreen = () => {
@@ -47,11 +47,11 @@ const CreateMail = ({ closeMailModal }) => {
   };
 
   const handleCcAdd = () => {
-    setCc([...cc, ""]); // Add a new empty field
+    setCc([...cc, ""]);
   };
 
   const handleBccAdd = () => {
-    setBcc([...bcc, ""]); // Add a new empty field
+    setBcc([...bcc, ""]);
   };
 
   const handleAttachmentChange = (event) => {
@@ -59,7 +59,6 @@ const CreateMail = ({ closeMailModal }) => {
   };
 
   const handleSendMail = () => {
-    // Remove empty CC and BCC values
     const filteredCc = cc.filter(email => email.trim() !== "");
     const filteredBcc = bcc.filter(email => email.trim() !== "");
 
@@ -74,17 +73,17 @@ const CreateMail = ({ closeMailModal }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (mailSuccess) {
       showToast('Mail uğurlu şəkildə göndərildi', 'success');
-      closeMailModal(); // Close modal on success
+      closeMailModal();
     }
-  }, [isSuccess, showToast, closeMailModal]);
+  }, [mailSuccess]);
 
   useEffect(() => {
-    if (isError) {
+    if (mailError) {
       showToast('Mail göndərilə bilmədi', 'error');
     }
-  }, [isError, showToast]);
+  }, [mailError]);
 
   return (
     <div
@@ -178,7 +177,7 @@ const CreateMail = ({ closeMailModal }) => {
               onClick={handleSendMail}
               className="bg-green-700 p-3 rounded-lg text-white font-semibold flex items-center gap-3 text-sm"
             >
-              Send {isLoading ? <Spinner /> : <IoSend size={18} />}
+              Send {mailLoading ? <Spinner /> : <IoSend size={18} />}
             </button>
           </div>
         </div>
