@@ -7,11 +7,13 @@ const mailService = api.injectEndpoints({
         url: "/mails",
         params,
       }),
+      providesTags : ['MAILS']
     }),
     getMailDetail: builder.query({
       query: (id) => ({
         url: `/mails/${id}`,
       }),
+      providesTags : ['MAILS']
     }),
     sendMail : builder.mutation({
       query : (data) => {
@@ -19,20 +21,27 @@ const mailService = api.injectEndpoints({
         formData.append('to', data.to);
         formData.append('subject', data.subject);
         formData.append('message', data.message);
-        formData.append('cc', data.cc[0]);
-        formData.append('bcc',data.bcc[0]);
         formData.append('reply_id', data.reply_id);
-        
-        if(data.attachment[0]){
-          formData.append('attachment', data.attachment[0]);
-        }
-
-        return{
+    
+        data?.cc?.forEach((item, index) => {
+          formData.append(`cc[${index}]`, item);
+        });
+    
+        data?.bcc?.forEach((item, index) => {
+          formData.append(`bcc[${index}]`, item);
+        });
+    
+        data?.attachments?.forEach((item, index) => {
+          formData.append(`attachment[${index}]`, item);
+        });
+    
+        return {
           url : '/mails',
           method : 'POST',
           body : formData
-        }
-      }
+        };
+      },
+      invalidatesTags : ['MAILS']
     }),
     toggleStarredStatus: builder.mutation({
       query: ({ id, is_starred }) => ({
@@ -40,7 +49,7 @@ const mailService = api.injectEndpoints({
         method: "PATCH",
         body: { is_starred },
       }),
-      invalidatesTags: ({ id }) => [{ type: "MAIL" }, id],
+      invalidatesTags: ['MAILS'],
     }),
     toggleImportantStatus: builder.mutation({
       query: (id, { is_important }) => ({
@@ -48,24 +57,28 @@ const mailService = api.injectEndpoints({
         method: "PATCH",
         body: { is_important },
       }),
+      invalidatesTags : ['MAILS']
     }),
     forceDelete : builder.mutation({
       query : (id) => ({
         url : `/mails/${id}/force`,
         method : 'DELETE'
-      })
+      }),
+      invalidatesTags : ['MAILS']
     }),
     softDelete : builder.mutation({
       query : (id) => ({
         url : `/mails/${id}`,
         method : 'DELETE'
-      })
+      }),
+      invalidatesTags : ['MAILS']
     }),
     restoreMail : builder.mutation({
       query : (id) => ({
         url : `/mails/${id}/restore`,
         method : 'PATCH'
-      })
+      }),
+      invalidatesTags : ['MAILS']
     })
   }),
 });

@@ -49,7 +49,7 @@ const api = createApi({
   }),
   endpoints: () => ({}),
 
-  tagTypes: ['POSITIONS', 'ROLES', 'PERMISSIONS'],
+  tagTypes: ['POSITIONS', 'ROLES', 'PERMISSIONS', 'MAILS'],
 });
 
 export default api;
