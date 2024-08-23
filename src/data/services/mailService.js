@@ -21,7 +21,10 @@ const mailService = api.injectEndpoints({
         formData.append('to', data.to);
         formData.append('subject', data.subject);
         formData.append('message', data.message);
-        formData.append('reply_id', data.reply_id);
+        
+        if(data.reply_id){
+          formData.append('reply_id', data.reply_id);
+        }
     
         data?.cc?.forEach((item, index) => {
           formData.append(`cc[${index}]`, item);
