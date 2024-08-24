@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { IoSend, IoCloudDownload } from "react-icons/io5";
@@ -7,7 +7,6 @@ import { HiTrash } from "react-icons/hi2";
 import { LuMoreVertical } from "react-icons/lu";
 import { IoMdAttach } from "react-icons/io";
 import { FileIcon, defaultStyles } from "react-file-icon";
-
 import {
   useGetMailDetailQuery,
   useToggleStarredStatusMutation,
@@ -21,6 +20,7 @@ import Spinner from "@/components/common/Spinner";
 import SecondTextArea from "@/components/common/SecondTextArea";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
+import moment from "moment";
 
 const MailDetail = () => {
   const { id } = useParams();
@@ -41,12 +41,11 @@ const MailDetail = () => {
   ] = useForceDeleteMutation();
   const [message, setMessage] = useState("");
   const [attachments, setAttachments] = useState([]);
+  const endOfMessagesRef = useRef(null);
   const { showToast } = useToast();
 
   const mailControl = data?.default_mail;
   const mailDetail = data?.mails;
-
-  console.log(mailDetail);
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -90,6 +89,12 @@ const MailDetail = () => {
 
     return <FileIcon extension={ext} {...style} />;
   };
+
+  useEffect(() => {
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [mailDetail]);
 
   useEffect(() => {
     if (softDeleteSuccess) {
@@ -197,63 +202,68 @@ const MailDetail = () => {
           <LuMoreVertical size={26} />
         </button>
       </div>
-      <div className="overflow-y-scroll h-[60%]">
-        {mailDetail.map((mail, index) => (
-          <div className="p-4 border-b border-gray-200" key={index}>
-            <div className="flex items-center gap-3 mb-2">
-              {mail?.opponent?.avatar_url ? (
-                <img
-                  className="w-[40px] h-[40px] rounded-full"
-                  src={mail.opponent.avatar_url}
-                  alt={mail.opponent.name}
-                />
-              ) : (
-                <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
-                  <LuUserCircle2 size={30} />
-                </div>
-              )}
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">{mail?.opponent?.name}</span>
-                  <span className="text-sm text-gray-400">
-                    {`<${mail?.opponent?.email}>`}
-                  </span>
-                </div>
-                <span className="text-black text-xs">
-                  To : <span className="text-xs text-gray-400">{mail?.to}</span>
+      <div className="flex items-center justify-between py-5 border-b border-gray-300/50">
+          <h1 className="w-auto text-md font-semibold">Re : {mailControl.subject}</h1>
+          <span className="text-xs text-gray-500 font-medium">{moment(mailControl.created_at).format('DD MMM YYYY hh:mm a')}</span>
+      </div>
+      <div className="max-h-[55%] h-full overflow-y-scroll">
+      {mailDetail.map((mail, index) => (
+        <div className="p-4 border-b border-gray-200" key={index}>
+          <div className="flex items-center gap-3 mb-2">
+            {mail?.opponent?.avatar_url ? (
+              <img
+                className="w-[40px] h-[40px] rounded-full"
+                src={mail.opponent.avatar_url}
+                alt={mail.opponent.name}
+              />
+            ) : (
+              <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
+                <LuUserCircle2 size={30} />
+              </div>
+            )}
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">{mail?.opponent?.name}</span>
+                <span className="text-sm text-gray-400">
+                  {`<${mail?.opponent?.email}>`}
                 </span>
               </div>
-            </div>
-            <div className="p-4 bg-grey/20 rounded-lg flex items-center justify-between">
-              <div className="flex flex-col gap-2 w-full">
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center text-sm gap-2 text-gray-500">
-                    <IoMdAttach size={18} />
-                    <span>{mail?.attachments?.length} Attachment</span>
-                  </div>
-                  <button
-                    onClick={handleDownloadFile}
-                    className="flex items-center gap-2 text-sm text-black font-semibold"
-                  >
-                    <IoCloudDownload size={18} />
-                    <span>Download</span>
-                  </button>
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  {mail.attachments.map((attachment, index) => (
-                    <div className="w-[20px] h-[20px]" key={index}>
-                      {renderFileIcon(attachment.name)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="p-4 h-auto overflow-y-auto">
-              <p className="text-sm whitespace-pre-wrap">{mail.message}</p>
+              <span className="text-black text-xs">
+                To : <span className="text-xs text-gray-400">{mail?.to}</span>
+              </span>
             </div>
           </div>
-        ))}
-      </div>
+          <div className="p-4 bg-grey/20 rounded-lg flex items-center justify-between">
+            <div className="flex flex-col gap-2 w-full">
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center text-sm gap-2 text-gray-500">
+                  <IoMdAttach size={18} />
+                  <span>{mail?.attachments?.length} Attachment</span>
+                </div>
+                <button
+                  onClick={handleDownloadFile}
+                  className="flex items-center gap-2 text-sm text-black font-semibold"
+                >
+                  <IoCloudDownload size={18} />
+                  <span>Download</span>
+                </button>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                {mail.attachments.map((attachment, index) => (
+                  <div className="w-[20px] h-[20px]" key={index}>
+                    {renderFileIcon(attachment.name)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="p-4 h-auto  overflow-y-auto">
+            <p className="text-sm whitespace-pre-wrap">{mail.message}</p>
+          </div>
+        </div>
+      ))}
+      <div ref={endOfMessagesRef} /> {/* Bu div ən son mesaja keçmək üçün referansdır */}
+    </div>
 
       {/* {mailControl?.can_send_reply && ( */}
       <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
