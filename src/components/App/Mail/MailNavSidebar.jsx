@@ -43,7 +43,7 @@ const MailNavSidebar = ({
               "bg-transparent": filterType !== link.type,
             })}
             key={index}
-            onClick={() => handleFilterTypeChange(link.type)} // Burada handleFilterTypeChange istifadə olunur
+            onClick={() => handleFilterTypeChange(link.type)}
           >
             <img src={link.icon} alt={link.label} />
             <span
