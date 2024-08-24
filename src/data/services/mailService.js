@@ -71,7 +71,7 @@ const mailService = api.injectEndpoints({
       invalidatesTags: ["MAILS"],
     }),
     toggleImportantStatus: builder.mutation({
-      query: (id, { is_important }) => ({
+      query: ({id, is_important }) => ({
         url: `/mails/${id}/is-important`,
         method: "PATCH",
         body: { is_important },

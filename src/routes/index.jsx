@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import LoadingScreen from "@/components/common/LoadingScreen";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
+import { useCurrentAccountQuery } from "@/data/services/accountService";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 const AppLayout = lazy(() => import("@/layouts/AppLayout"));
@@ -56,6 +57,9 @@ const CreateProject = lazy(() => import("@/views/App/CreateProject"));
 const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
 
 const AppRouter = () => {
+
+  useCurrentAccountQuery();
+
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Routes>

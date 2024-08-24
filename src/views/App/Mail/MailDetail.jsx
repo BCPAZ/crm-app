@@ -21,39 +21,16 @@ import { Toaster } from "react-hot-toast";
 
 const MailDetail = () => {
   const { id } = useParams();
-  const { data, isLoading, isError, isSuccess } = useGetMailDetailQuery(id);
-  const [toggleStarredStatus, { isError: toggleStarError }] =
-    useToggleStarredStatusMutation();
-  const [toggleImportantStatus, { isError: toggleImportantError }] =
-    useToggleImportantStatusMutation();
-  const [
-    sendMail,
-    { isLoading: isSending, isError: sendError, isSuccess: sendSuccess },
-  ] = useSendMailMutation();
-
-  const [
-    softDelete,
-    {
-      isError: softDeleteError,
-      isSuccess: softDeleteSuccess,
-    },
-  ] = useSoftDeleteMutation();
-
-  const [isStarred, setIsStarred] = useState(false);
-  const [isImportant, setIsImportant] = useState(false);
+  const { data, isLoading, isError, refetch } = useGetMailDetailQuery(id);
+  const [toggleStarredStatus] = useToggleStarredStatusMutation();
+  const [toggleImportantStatus] = useToggleImportantStatusMutation();
+  const [sendMail, { isLoading: isSending, isError: sendError, isSuccess: sendSuccess }] = useSendMailMutation();
+  const [softDelete, { isError: softDeleteError, isSuccess: softDeleteSuccess }] = useSoftDeleteMutation();
   const [message, setMessage] = useState("");
   const [attachments, setAttachments] = useState([]);
   const { showToast } = useToast();
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      const mailDetail = data.default_mail;
-      if (mailDetail) {
-        setIsStarred(mailDetail.is_starred ?? false);
-        setIsImportant(mailDetail.is_important ?? false);
-      }
-    }
-  }, [isSuccess, data]);
+  const mailDetail = data?.default_mail;
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -80,19 +57,20 @@ const MailDetail = () => {
 
   const handleDeleteEmail = () => {
     softDelete(id);
-  }
+  };
 
   useEffect(() => {
-    if(softDeleteSuccess){
-      showToast('Mesaj uğurlu şəkildə silindi', 'success')
+    if (softDeleteSuccess) {
+      showToast('Mesaj uğurlu şəkildə silindi', 'success');
+      refetch(); // Yenidən məlumatı əldə et
     }
-  },[softDeleteSuccess])
+  }, [softDeleteSuccess, refetch]);
 
   useEffect(() => {
-    if(softDeleteError){
-      showToast('Mesaj silinə bilmədi', 'error')
+    if (softDeleteError) {
+      showToast('Mesaj silinə bilmədi', 'error');
     }
-  },[softDeleteError])
+  }, [softDeleteError]);
 
   useEffect(() => {
     if (sendSuccess) {
@@ -109,36 +87,15 @@ const MailDetail = () => {
   }, [sendError]);
 
   const handleToggleStarred = () => {
-    const updatedStarredStatus = !isStarred;
-    setIsStarred(updatedStarredStatus);
-    toggleStarredStatus({ id, is_starred: updatedStarredStatus });
-
-    if (updatedStarredStatus) {
-      showToast("Seçilən poçt ulduzlananlara əlavə edildi.", "success");
-    } else {
-      showToast("Seçilən poçt ulduzlananlardan çıxarıldı.", "warning");
-    }
-
-    if (toggleStarError) {
-      showToast("Poçtu ulduzlananlara əlavə etmək mümkün olmadı.", "error");
-    }
+    toggleStarredStatus({ id: mailDetail.id, is_starred: !mailDetail.is_starred })
+      .then(() => refetch());
   };
 
   const handleToggleImportant = () => {
-    const updatedImportantStatus = !isImportant;
-    setIsImportant(updatedImportantStatus);
-    toggleImportantStatus({ id, is_important: updatedImportantStatus });
-
-    if (updatedImportantStatus) {
-      showToast("Seçilən poçt vaciblərə əlavə edildi.", "success");
-    } else {
-      showToast("Seçilən poçt vaciblərdən çıxarıldı.", "warning");
-    }
-
-    if (toggleImportantError) {
-      showToast("Poçtu vaciblərə əlavə etmək mümkün olmadı.", "error");
-    }
+    toggleImportantStatus({ id: mailDetail.id, is_important: !mailDetail.is_important })
+      .then(() => refetch());
   };
+
 
   if (isLoading)
     return (
@@ -147,23 +104,21 @@ const MailDetail = () => {
       </div>
     );
   if (isError)
-    return <div className="w-full h-full">Error loading mail details</div>;
-
-  const mailDetail = data?.default_mail;
+    return <div className="w-full h-full flex items-center justify-center">Error loading mail details</div>;
 
   return (
     <div className="h-full relative">
       <Toaster />
       <div className="flex items-center justify-end w-full gap-3 py-3 border-b border-dashed border-gray-300/40">
         <button onClick={handleToggleStarred}>
-          {isStarred ? (
+          {mailDetail.is_starred ? (
             <FaStar color="#FFAB00" size={20} />
           ) : (
             <FaRegStar color="#FFAB00" size={20} />
           )}
         </button>
         <button onClick={handleToggleImportant}>
-          {isImportant ? (
+          {mailDetail.is_important ? (
             <MdLabelImportant color="#FFAB00" size={20} />
           ) : (
             <MdLabelImportantOutline color="#FFAB00" size={20} />
