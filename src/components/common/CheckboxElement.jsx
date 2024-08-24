@@ -21,7 +21,7 @@ const CheckboxElement = ({label}) => {
 };
 
 CheckboxElement.propTypes = {
-  label : PropTypes.string.isRequired
+  label : PropTypes.string
 }
 
 export default CheckboxElement;
