@@ -16,7 +16,8 @@ import Spinner from "@/components/common/Spinner";
 import { IoMdMail } from "react-icons/io";
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import MailSidebar from "@/components/App/Mail/MailSidebar";
-
+import { useRef } from "react";
+import useClickOutside from "@/hooks/useClickOutside";
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
@@ -98,10 +99,17 @@ const MailLayout = () => {
   }, [meta.current_page, meta.last_page]);
 
   const [toggleSidebar, setToggleSidebar] = useState(false);
+  const sidebarRef = useRef(null);
 
   const handleSidebar = () => {
     setToggleSidebar(!toggleSidebar)
   }
+
+  const closeNavSidebar = () => {
+    setToggleSidebar(false)
+  }
+
+  useClickOutside(sidebarRef, closeNavSidebar);
 
   if (isLoading && !data) return <LoadingScreen />;
   if (isError) return <p>Error loading mails</p>;
@@ -123,7 +131,7 @@ const MailLayout = () => {
         >
           <CreateMail closeMailModal={closeMailModal} />
         </div>
-        <MailSidebar openMailModal={openMailModal} filterType={filterType} setFilterType={setFilterType} toggleSidebar={toggleSidebar}/>
+        <MailSidebar sidebarRef={sidebarRef} openMailModal={openMailModal} filterType={filterType} setFilterType={setFilterType} toggleSidebar={toggleSidebar}/>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-[480px] p-2 mt-10 flex justify-between gap-3">
           <aside className="md:flex hidden flex-col p-3 w-[20%]">
             <button

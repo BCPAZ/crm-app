@@ -2,9 +2,9 @@ import { FaPen } from "react-icons/fa";
 import mailLinks from "@/utils/mailLinks";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-const MailSidebar = ({ openMailModal, filterType, setFilterType, toggleSidebar }) => {
+const MailSidebar = ({ openMailModal, filterType, setFilterType, toggleSidebar, sidebarRef }) => {
   return (
-    <aside className={`md:hidden flex flex-col p-3 md:w-[20%] w-1/2 fixed h-full top-0 ${toggleSidebar ? 'left-0' : '-left-full'} transition-all duration-300 bg-white z-20 border-r border-gray-300/40`}>
+    <aside ref={sidebarRef} className={`md:hidden flex flex-col p-3 md:w-[20%] w-1/2 fixed h-full top-0 ${toggleSidebar ? 'left-0' : '-left-full'} transition-all duration-300 bg-white z-20 border-r border-gray-300/40`}>
       <button
         onClick={openMailModal}
         className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
@@ -45,7 +45,8 @@ MailSidebar.propTypes = {
   openMailModal : PropTypes.func,
   filterType : PropTypes.string,
   setFilterType : PropTypes.func,
-  toggleSidebar : PropTypes.bool
+  toggleSidebar : PropTypes.bool,
+  sidebarRef : PropTypes.any
 }
 
 export default MailSidebar;
