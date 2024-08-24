@@ -13,6 +13,10 @@ import { LuUserCircle2 } from "react-icons/lu";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "@/components/common/Spinner";
+import { IoMdMail } from "react-icons/io";
+import { BiSolidMessageRoundedDetail } from "react-icons/bi";
+import MailSidebar from "@/components/App/Mail/MailSidebar";
+
 
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
@@ -93,13 +97,25 @@ const MailLayout = () => {
     }
   }, [meta.current_page, meta.last_page]);
 
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+
+  const handleSidebar = () => {
+    setToggleSidebar(!toggleSidebar)
+  }
+
   if (isLoading && !data) return <LoadingScreen />;
   if (isError) return <p>Error loading mails</p>;
 
   return (
     <section className="py-10">
       <div className="siteContainer relative">
-        <h1 className="font-bold text-2xl">Mail All ({mails.length})</h1>
+        <div className="flex items-center justify-between w-full">
+          <h1 className="font-bold text-2xl">Mail All ({mails.length})</h1>
+          <div className="md:hidden flex items-center gap-3">
+            <button onClick={handleSidebar} className="text-gray-500 cursor-pointer"><IoMdMail size={20}/></button>
+            <button className="text-gray-500 cursor-pointer"><BiSolidMessageRoundedDetail size={20}/></button>
+          </div>
+        </div>
         <div
           className={`fixed bottom-5 right-5 z-30 ${
             mailModal ? "block" : "hidden"
@@ -107,14 +123,15 @@ const MailLayout = () => {
         >
           <CreateMail closeMailModal={closeMailModal} />
         </div>
+        <MailSidebar openMailModal={openMailModal} filterType={filterType} setFilterType={setFilterType} toggleSidebar={toggleSidebar}/>
         <div className="w-full bg-[#F4F6F8] rounded-lg h-[480px] p-2 mt-10 flex justify-between gap-3">
           <aside className="md:flex hidden flex-col p-3 w-[20%]">
             <button
               onClick={openMailModal}
               className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
             >
-              <FaPen size={22} />
-              <span className="md:block hidden">Compose</span>
+              <FaPen size={20} />
+              <span className="md:block hidden text-sm">Compose</span>
             </button>
             <div className="py-3 flex flex-col gap-2">
               {mailLinks.map((link, index) => (
