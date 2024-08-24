@@ -51,7 +51,7 @@ const mailService = api.injectEndpoints({
         });
 
         data?.attachments?.forEach((item, index) => {
-          formData.append(`attachment[${index}]`, item);
+          formData.append(`attachments[${index}]`, item);
         });
 
         return {

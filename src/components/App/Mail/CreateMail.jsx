@@ -58,6 +58,8 @@ const CreateMail = ({ closeMailModal }) => {
     setAttachments([...attachments, ...event.target.files]);
   };
 
+  console.log(attachments)
+
   const handleSendMail = () => {
     const filteredCc = cc.filter(email => email.trim() !== "");
     const filteredBcc = bcc.filter(email => email.trim() !== "");
