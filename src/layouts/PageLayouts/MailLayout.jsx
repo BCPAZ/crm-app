@@ -15,17 +15,17 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "@/components/common/Spinner";
 import { IoMdMail } from "react-icons/io";
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
-import MailSidebar from "@/components/App/Mail/MailSidebar";
+import MailNavSidebar from "@/components/App/Mail/MailNavSidebar";
 import { useRef } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
-
+import ShowMailSidebar from "@/components/App/Mail/ShowMailSidebar";
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
   const [mailModal, setMailModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
+  
   const openMailModal = () => {
     setMailModal(true);
   };
@@ -99,17 +99,28 @@ const MailLayout = () => {
   }, [meta.current_page, meta.last_page]);
 
   const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [toggleMailsSidebar, setToggleMailsSidebar] = useState(false);
   const sidebarRef = useRef(null);
+  const mailsRef = useRef(null);
 
   const handleSidebar = () => {
-    setToggleSidebar(!toggleSidebar)
+    setToggleSidebar(!toggleSidebar);
+  };
+  const handlMailsSidebar = () => {
+    setToggleMailsSidebar(!toggleMailsSidebar);
   }
 
   const closeNavSidebar = () => {
-    setToggleSidebar(false)
+    setToggleSidebar(false);
+  };
+
+  const closeMailsSidebar = () => {
+    setToggleMailsSidebar(false);
   }
 
   useClickOutside(sidebarRef, closeNavSidebar);
+  useClickOutside(mailsRef, closeMailsSidebar);
+
 
   if (isLoading && !data) return <LoadingScreen />;
   if (isError) return <p>Error loading mails</p>;
@@ -120,8 +131,15 @@ const MailLayout = () => {
         <div className="flex items-center justify-between w-full">
           <h1 className="font-bold text-2xl">Mail All ({mails.length})</h1>
           <div className="md:hidden flex items-center gap-3">
-            <button onClick={handleSidebar} className="text-gray-500 cursor-pointer"><IoMdMail size={20}/></button>
-            <button className="text-gray-500 cursor-pointer"><BiSolidMessageRoundedDetail size={20}/></button>
+            <button
+              onClick={handleSidebar}
+              className="text-gray-500 cursor-pointer"
+            >
+              <IoMdMail size={20} />
+            </button>
+            <button onClick={handlMailsSidebar} className="text-gray-500 cursor-pointer">
+              <BiSolidMessageRoundedDetail size={20} />
+            </button>
           </div>
         </div>
         <div
@@ -131,8 +149,24 @@ const MailLayout = () => {
         >
           <CreateMail closeMailModal={closeMailModal} />
         </div>
-        <MailSidebar sidebarRef={sidebarRef} openMailModal={openMailModal} filterType={filterType} setFilterType={setFilterType} toggleSidebar={toggleSidebar}/>
-        <div className="w-full bg-[#F4F6F8] rounded-lg h-[480px] p-2 mt-10 flex justify-between gap-3">
+        <MailNavSidebar
+          sidebarRef={sidebarRef}
+          openMailModal={openMailModal}
+          filterType={filterType}
+          setFilterType={setFilterType}
+          toggleSidebar={toggleSidebar}
+          closeNavSidebar={closeNavSidebar}
+        />
+        <ShowMailSidebar
+          handleSearchInput={handleSearchInput}
+          fetchNextPage={fetchNextPage}
+          mails={mails}
+          meta={meta}
+          toggleMailsSidebar={toggleMailsSidebar}
+          mailsRef={mailsRef}
+          closeMailsSidebar={closeMailsSidebar}
+        />
+        <div className="w-full bg-[#F4F6F8] rounded-lg h-[920px] p-2 mt-10 flex justify-between gap-3">
           <aside className="md:flex hidden flex-col p-3 w-[20%]">
             <button
               onClick={openMailModal}
