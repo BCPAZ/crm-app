@@ -23,7 +23,7 @@ const rolesPermissionsService = api.injectEndpoints({
       providesTags: ["PERMISSIONS"],
     }),
     updateRole: builder.mutation({
-      query: (id, data) => ({
+      query: ({id, data}) => ({
         url: `/roles/${id}`,
         method: "PUT",
         body: data,

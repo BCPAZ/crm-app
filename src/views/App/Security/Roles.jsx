@@ -15,6 +15,7 @@ const Roles = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
+  const [editRole , setEditRole] = useState(null); 
   const { showToast } = useToast();
 
   const handleModal = () => {
@@ -23,6 +24,11 @@ const Roles = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  }
+
+  const handleEdit = (role) => {
+    setEditRole(role);
+    setShowModal(true);
   }
 
   const openConfirmationModal = (id) => {
@@ -112,7 +118,7 @@ const Roles = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 justify-end w-[33%]">
-                  <button className="text-gray-500 p-1 rounded-md hover:bg-blue-600/20 hover:text-blue-600 transition-colors duration-300">
+                  <button onClick={() => handleEdit(role)} className="text-gray-500 p-1 rounded-md hover:bg-blue-600/20 hover:text-blue-600 transition-colors duration-300">
                     <MdModeEditOutline size={18}/>
                   </button>
                   <button
@@ -127,7 +133,7 @@ const Roles = () => {
           </div>
         </div>
       </div>
-      <CreateRoleModal showModal={showModal} closeModal={closeModal} />
+      <CreateRoleModal showModal={showModal} closeModal={closeModal} role={editRole}/>
     </section>
   );
 };
