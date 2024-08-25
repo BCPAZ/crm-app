@@ -7,23 +7,40 @@ import Spinner from "@/components/common/Spinner";
 import { HiTrash } from "react-icons/hi2";
 import { MdModeEditOutline } from "react-icons/md";
 import { Toaster } from "react-hot-toast";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
 
 const Roles = () => {
   const { data: roles = [], isLoading, isError } = useGetRolesQuery();
-  const [deleteRole , {isSuccess : deleteSuccess, isError : deleteError}] = useDeleteRoleMutation();
+  const [deleteRole, { isSuccess: deleteSuccess, isError: deleteError }] = useDeleteRoleMutation();
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState(null);
   const { showToast } = useToast();
 
   const handleModal = () => {
     setShowModal(true);
   };
+
   const closeModal = () => {
     setShowModal(false);
+  }
+
+  const openConfirmationModal = (id) => {
+    setSelectedRoleId(id);
+    setShowConfirmation(true);
   };
 
-  const handleDeleteRole = (id) => {
-    deleteRole(id);
-  }
+  const closeConfirmationModal = () => {
+    setShowConfirmation(false);
+    setSelectedRoleId(null); // Reset the selected role
+  };
+
+  const handleDeleteRole = () => {
+    if (selectedRoleId) {
+      deleteRole(selectedRoleId);
+      closeConfirmationModal(); // Close the modal after deletion
+    }
+  };
 
   useEffect(() => {
     if (isError) {
@@ -42,6 +59,7 @@ const Roles = () => {
       showToast("Rol silinən zaman xəta baş verdi", "error");
     }
   }, [deleteError]);
+
   return (
     <section className="w-full h-full relative">
       <Toaster />
@@ -50,6 +68,11 @@ const Roles = () => {
           <h1 className="text-2xl font-semibold">Rol yaradın</h1>
           <CustomButton value="Rol yarat" functionality={handleModal} />
         </div>
+        <ConfirmationModal
+          closeConfirmationModal={closeConfirmationModal}
+          showConfirmation={showConfirmation}
+          handleDelete={handleDeleteRole}
+        />
         <div className="mt-10 w-full overflow-x-scroll">
           <div className="p-4 border-b border-gray-400/40 outline-none flex items-center justify-between gap-4 w-full">
             <div className="md:text-md text-sm font-semibold w-[33%]">Rol adı</div>
@@ -92,7 +115,10 @@ const Roles = () => {
                   <button className="text-gray-500 p-1 rounded-md hover:bg-blue-600/20 hover:text-blue-600 transition-colors duration-300">
                     <MdModeEditOutline size={18}/>
                   </button>
-                  <button onClick={() => handleDeleteRole(role.id)} className="text-gray-500 p-1 rounded-md hover:bg-red-600/20 hover:text-red-600 transition-colors duration-300">
+                  <button
+                    onClick={() => openConfirmationModal(role.id)}
+                    className="text-gray-500 p-1 rounded-md hover:bg-red-600/20 hover:text-red-600 transition-colors duration-300"
+                  >
                     <HiTrash size={18}/>
                   </button>
                 </div>

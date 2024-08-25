@@ -34,15 +34,15 @@ const CreateRoleModal = ({ showModal, closeModal }) => {
     });
   };
 
-  const handleSubmit = () => {
-    console.log({ name: roleName, permissions: selectedPermissions });
+  const handleSubmit = () => {    
     createRole({ name: roleName, permissions: selectedPermissions });
   };
 
-  // Toast messages
   useEffect(() => {
     if (isSuccess) {
       showToast("Rol uğurlu şəkildə yaradıldı", "success");
+      setRoleName('');
+      setSelectedPermissions([]);
       closeModal();
     }
   }, [isSuccess]);

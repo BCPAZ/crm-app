@@ -1,17 +1,7 @@
 import Alert from "./Alert";
 import PropTypes from "prop-types";
-import { useDeletePositionMutation } from "@/data/services/positionsService";
 
-const ConfirmationModal = ({ id, closeConfirmationModal, showConfirmation }) => {
-  const [deletePosition] = useDeletePositionMutation();
-
-  const handleDelete = () => {
-    if (id) {
-      deletePosition(id);
-      closeConfirmationModal();
-    }
-  };
-
+const ConfirmationModal = ({ closeConfirmationModal, showConfirmation, handleDelete }) => {
   return (
     <div
       className={`w-full h-screen bg-black/70 ${showConfirmation ? 'flex' : 'hidden'} items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 px-5`}
@@ -41,7 +31,7 @@ const ConfirmationModal = ({ id, closeConfirmationModal, showConfirmation }) => 
 ConfirmationModal.propTypes = {
   showConfirmation: PropTypes.bool.isRequired,
   closeConfirmationModal: PropTypes.func.isRequired,
-  id: PropTypes.string,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default ConfirmationModal;
