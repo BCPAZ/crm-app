@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import JobTitleModal from "@/components/App/Security/JobTitleModal";
 import CustomButton from "@/components/common/CustomButton";
 import { Toaster } from "react-hot-toast";
-import { useGetPositionsQuery } from "@/data/services/positionsService";
+import { useGetPositionsQuery, useDeletePositionMutation } from "@/data/services/positionsService";
 import { HiTrash } from "react-icons/hi2";
 import { MdModeEdit } from "react-icons/md";
 import Spinner from "@/components/common/Spinner";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
-import { useDeletePositionMutation } from "@/data/services/positionsService";
 import useToast from "@/hooks/useToast";
 
 const JobTitle = () => {
@@ -18,7 +17,7 @@ const JobTitle = () => {
   const [positionToDelete, setPositionToDelete] = useState(null);
   const [editPosition, setEditPosition] = useState(null);
 
-  const [deletePosition] = useDeletePositionMutation();
+  const [deletePosition, { isSuccess, isError }] = useDeletePositionMutation();
   const { showToast } = useToast();
 
   const handleDeleteModal = (id) => {
@@ -31,18 +30,23 @@ const JobTitle = () => {
     setShowModal(true);
   };
 
+  const handleDelete = () => {
+    deletePosition(positionToDelete); // RTK Query ilə delete əməliyyatı
+    setShowConfirmation(false);
+  };
+
   useEffect(() => {
-    if (deletePosition.isSuccess) {
+    if (isSuccess) {
       showToast("Pozisiya uğurla silindi.", "success");
       setPositionToDelete(null);
     }
-  }, [deletePosition.isSuccess]);
+  }, [isSuccess]);
 
   useEffect(() => {
-    if (deletePosition.isError) {
+    if (isError) {
       showToast("Pozisiya silinə bilmədi.", "error");
     }
-  }, [deletePosition.isError]);
+  }, [isError]);
 
   const closeConfirmationModal = () => {
     setShowConfirmation(false);
@@ -107,6 +111,7 @@ const JobTitle = () => {
         id={positionToDelete}
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
+        handleDelete={handleDelete} // handleDelete funksiyasını ConfirmationModal-a ötürürük
       />
       <JobTitleModal
         showModal={showModal}
