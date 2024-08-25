@@ -101,13 +101,13 @@ const JobTitleModal = ({ showModal, closeModal, position }) => {
             isLoading={isCreating || isUpdating}
             functionality={handleSubmit}
             simple
-            value={position ? "Yeniləyin" : "Create"}
+            value={position ? "Yeniləyin" : "Yaradın"}
           />
           <button
             onClick={closeModal}
             className="text-sm p-2 border border-grey/40 rounded-lg font-semibold bg-white"
           >
-            Cancel
+            Ləğv et
           </button>
         </div>
       </div>

@@ -12,7 +12,7 @@ import { useDeletePositionMutation } from "@/data/services/positionsService";
 import useToast from "@/hooks/useToast";
 
 const JobTitle = () => {
-  const { data: positions, isFetching, isError } = useGetPositionsQuery();
+  const { data: positions, isFetching } = useGetPositionsQuery();
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [positionToDelete, setPositionToDelete] = useState(null);
@@ -58,15 +58,10 @@ const JobTitle = () => {
       <Toaster />
       <div className="py-10 px-5 h-full">
         <div className="flex justify-between items-center gap-2">
-          <h1 className="text-2xl font-semibold">Positions</h1>
-          <CustomButton value="Create position" functionality={() => setShowModal(true)} />
+          <h1 className="text-2xl font-semibold">Pozisiyalar</h1>
+          <CustomButton value="Pozisiya yaradın" functionality={() => setShowModal(true)} />
         </div>
-        <div className="mt-10 h-full">
-          {isError && (
-            <div className="h-full w-full flex items-center justify-center font-semibold text-xl">
-              Bir xəta baş verdi, yenidən cəhd edin.
-            </div>
-          )}
+        <div className="mt-[150px] h-full">
           {!isFetching && positions && positions.length > 0 ? (
             <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5">
               {positions.map((position, index) => (

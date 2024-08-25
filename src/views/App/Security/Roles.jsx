@@ -47,17 +47,17 @@ const Roles = () => {
       <Toaster />
       <div className="py-10 px-5">
         <div className="flex justify-between items-center gap-2">
-          <h1 className="text-2xl font-semibold">Roles</h1>
-          <CustomButton value="Create Role" functionality={handleModal} />
+          <h1 className="text-2xl font-semibold">Rol yaradın</h1>
+          <CustomButton value="Rol yarat" functionality={handleModal} />
         </div>
         <div className="mt-10 w-full overflow-x-scroll">
           <div className="p-4 border-b border-gray-400/40 outline-none flex items-center justify-between gap-4 w-full">
-            <div className="md:text-md text-sm font-semibold w-[33%]">Role name</div>
+            <div className="md:text-md text-sm font-semibold w-[33%]">Rol adı</div>
             <div className="md:text-md text-sm font-semibold text-start w-[33%]">
-              Permissions
+              İcazələr
             </div>
             <div className="flex items-center gap-2 justify-end w-[33%]">
-              <span className="md:text-md text-sm font-semibold">Actions</span>
+              <span className="md:text-md text-sm font-semibold text-end">Tənzimləmələr</span>
             </div>
           </div>
           <div className="mt-5 flex flex-col gap-2 h-full">
