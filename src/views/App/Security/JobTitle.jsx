@@ -111,7 +111,7 @@ const JobTitle = () => {
         id={positionToDelete}
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
-        handleDelete={handleDelete} // handleDelete funksiyasını ConfirmationModal-a ötürürük
+        handleDelete={handleDelete} 
       />
       <JobTitleModal
         showModal={showModal}
