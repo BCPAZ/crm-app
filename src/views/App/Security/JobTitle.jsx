@@ -31,7 +31,7 @@ const JobTitle = () => {
   };
 
   const handleDelete = () => {
-    deletePosition(positionToDelete); // RTK Query ilə delete əməliyyatı
+    deletePosition(positionToDelete);
     setShowConfirmation(false);
   };
 
