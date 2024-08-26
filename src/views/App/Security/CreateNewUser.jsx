@@ -8,6 +8,7 @@ import { IoCamera } from "react-icons/io5";
 import Spinner from "@/components/common/Spinner";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
+import imageCompression from "browser-image-compression";
 // import CustomSwitch from "@/components/common/Switch";
 
 const CreateNewUser = () => {
@@ -43,13 +44,24 @@ const CreateNewUser = () => {
     }));
   };
 
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormState((prevState) => ({
-        ...prevState,
-        avatar: file,
-      }));
+      try {
+        const options = {
+          maxSizeMB: 2,
+          useWebWorker: true,
+        };
+        
+       const compressedFile = await imageCompression(file, options);
+  
+        setFormState((prevState) => ({
+          ...prevState,
+          avatar: compressedFile,
+        }));
+      } catch (error) {
+        showToast('Şəkil ölçüsü gözləniləndən böyükdür', "error");
+      }
     }
   };
 
@@ -74,7 +86,13 @@ const CreateNewUser = () => {
       });
       showToast("Hesab uğurlu şəkildə yaradıldı", "success");
     }
-  }, []);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      showToast("Hesab yaradılan zaman xəta baş verdi", "success");
+    }
+  }, [isError]);
 
   return (
     <section className="w-full h-full py-5">
@@ -96,7 +114,7 @@ const CreateNewUser = () => {
                 />
                 <div className="hidden group-hover:flex flex-col gap-2 items-center justify-center w-full h-full bg-black/50 absolute top-0 left-0 right-0 bottom-0">
                   <IoCamera size={24} color="white" />
-                  <span className="text-sm text-white">Update photo</span>
+                  <span className="text-sm text-white">Şəkil əlavə edin</span>
                 </div>
                 <input
                   type="file"
@@ -106,7 +124,7 @@ const CreateNewUser = () => {
                 />
               </div>
               <p className="text-xs text-gray-400 max-w-[174px] text-center mt-6">
-                Allowed *.jpeg, *.jpg, *.png, *.gif Max size of 3.1 MB
+                İcazə verilən formatlar : *.jpeg, *.jpg, *.png, *.gif. Şəkilin max ölçüsü 2MB olmalıdır.
               </p>
             </div>
             {/* <div className="flex justify-between mt-5">
@@ -201,16 +219,8 @@ const CreateNewUser = () => {
                   className="col-span-2 bg-black text-white py-2 px-4 text-md font-semibold rounded-lg mt-4 flex justify-center items-center"
                   disabled={isLoading}
                 >
-                  {isLoading ? <Spinner /> : "Create User"}
+                  {isLoading ? <Spinner /> : "İstifadəçi yarat"}
                 </button>
-                {isSuccess && (
-                  <p className="text-green-500">User created successfully!</p>
-                )}
-                {isError && (
-                  <p className="text-red-500">
-                    An error occurred. Please try again.
-                  </p>
-                )}
               </form>
             </div>
           </div>
