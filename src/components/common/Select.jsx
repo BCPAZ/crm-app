@@ -8,7 +8,7 @@ import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import PropTypes from "prop-types";
 
-function Select({ label, column, absolute, options, value, onChange }) {
+function Select({ label, column, absolute, options = [], value, onChange }) {
   const [selectedOption, setSelectedOption] = useState(value);
 
   const handleChange = (selected) => {
