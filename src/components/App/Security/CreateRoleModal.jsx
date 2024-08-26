@@ -15,22 +15,10 @@ const formatPermissionName = (name) => {
 };
 
 const CreateRoleModal = ({ showModal, closeModal, role }) => {
-  const [createRole, { isLoading, isSuccess, isError, reset }] =
-    useCreateRoleMutation();
-  const [
-    updateRole,
-    {
-      isLoading: updateLoading,
-      isSuccess: updateSuccess,
-      isError: updateError,
-      reset: updateReset
-    },
-  ] = useUpdateRoleMutation();
-  const {
-    data: permissions = [],
-    isLoading: permissionLoading,
-    isError: permissionError,
-  } = useGetPermissionsQuery();
+  const [createRole, { isLoading: createLoading, isSuccess: createSuccess, isError: createError, reset: createReset }] = useCreateRoleMutation();
+  const [updateRole, { isLoading: updateLoading, isSuccess: updateSuccess, isError: updateError, reset: updateReset }] = useUpdateRoleMutation();
+  const { data: permissions = [], isLoading: permissionLoading, isError: permissionError } = useGetPermissionsQuery();
+
   const [roleName, setRoleName] = useState("");
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const { showToast } = useToast();
@@ -64,40 +52,57 @@ const CreateRoleModal = ({ showModal, closeModal, role }) => {
     });
   };
 
-  const handleSubmit = () => {
-    if (role) {
-      updateRole({ id: role.id, data: { name: roleName } });
-    } else {
-      createRole({ name: roleName, permissions: selectedPermissions });
-    }
+  const handleCreateRole = () => {
+    createRole({
+      name: roleName,
+      permissions: selectedPermissions,
+    });
+  };
+
+  const handleUpdateRole = () => {
+    updateRole({
+      id: role.id,
+      data: {
+        name: roleName,
+        permissions: selectedPermissions,
+      },
+    });
   };
 
   useEffect(() => {
-    if (isSuccess || updateSuccess) {
+    if (createSuccess) {
       showToast("Rol uğurlu şəkildə yaradıldı", "success");
-      if (role) {
-        updateReset();
-      } else {
-        reset();
-      }
+      createReset();
       closeModal();
     }
-  }, [isSuccess, updateSuccess]);
+  }, [createSuccess]);
 
   useEffect(() => {
-    if (isError || updateError) {
+    if (updateSuccess) {
+      showToast("Rol uğurlu şəkildə yeniləndi", "success");
+      updateReset();
+      closeModal();
+    }
+  }, [updateSuccess]);
+
+  useEffect(() => {
+    if (createError) {
       showToast("Rol yaradılan zaman xəta baş verdi", "error");
     }
-  }, [isError, updateError]);
+  }, [createError]);
+
+  useEffect(() => {
+    if (updateError) {
+      showToast("Rol yenilənən zaman xəta baş verdi", "error");
+    }
+  }, [updateError]);
 
   return (
     <div
-      className={`w-full h-screen bg-black/70 ${
-        showModal ? "flex" : "hidden"
-      } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0`}
+      className={`w-full h-screen bg-black/70 ${showModal ? "flex" : "hidden"} items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0`}
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-[50%]">
-        <h1 className="text-xl font-semibold">Yeni rol yaradın</h1>
+        <h1 className="text-xl font-semibold">{role ? "Rol yeniləyin" : "Yeni rol yaradın"}</h1>
         <Alert
           value="Proyektdə iştirak edəcək rol və ona uyğun icazəni yaradın"
           type="primary"
@@ -121,7 +126,6 @@ const CreateRoleModal = ({ showModal, closeModal, role }) => {
               Xəta baş verdi
             </div>
           )}
-
           <div className="mt-3 w-full">
             {permissions.map((permission) => (
               <label
@@ -142,10 +146,10 @@ const CreateRoleModal = ({ showModal, closeModal, role }) => {
         </div>
         <div className="flex justify-end gap-3">
           <button
-            onClick={handleSubmit}
+            onClick={role ? handleUpdateRole : handleCreateRole}
             className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center justify-center gap-2"
           >
-            {isLoading || updateLoading && <Spinner />}
+            {(createLoading || updateLoading) && <Spinner />}
             {role ? 'Yeniləyin' : 'Yaradın'}
           </button>
           <button
