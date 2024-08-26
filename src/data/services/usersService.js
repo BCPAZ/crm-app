@@ -4,7 +4,7 @@ const usersService = api.injectEndpoints({
   endpoints: (builder) => ({
     getCompanyUsers: builder.query({
       query: () => ({
-        url: "/users",
+        url: "/users?limit=100",
       }),
       providesTags: ["USERS"],
     }),
@@ -15,13 +15,12 @@ const usersService = api.injectEndpoints({
         formData.append("email", data.email);
         formData.append("password", data.password);
         formData.append("role_id", data.role_id);
-        formData.append("phone", data.phone);
+        formData.append("phone_number", data.phone_number);
         formData.append("address", data.address);
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
-
-        if (formData.avatar) {
+        if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
         return {

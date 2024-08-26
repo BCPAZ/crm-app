@@ -9,17 +9,15 @@ import Spinner from "@/components/common/Spinner";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import imageCompression from "browser-image-compression";
-// import CustomSwitch from "@/components/common/Switch";
 
 const CreateNewUser = () => {
   const { data: roles = [] } = useGetRolesQuery();
-  const [createUser, { isLoading, isSuccess, isError }] =
-    useCreateUserMutation();
+  const [createUser, { isLoading, isSuccess, isError }] = useCreateUserMutation();
   const { showToast } = useToast();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
-    phone: "",
+    phone_number: "", 
     role_id: roles[0]?.id || null,
     address: "",
     city: "",
@@ -52,9 +50,9 @@ const CreateNewUser = () => {
           maxSizeMB: 2,
           useWebWorker: true,
         };
-        
-       const compressedFile = await imageCompression(file, options);
-  
+        const compressedFile = await imageCompression(file, options);
+        console.log(compressedFile)
+
         setFormState((prevState) => ({
           ...prevState,
           avatar: compressedFile,
@@ -67,7 +65,12 @@ const CreateNewUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createUser(formState);
+    console.log(formState.avatar)
+    const formData = {
+      ...formState,
+      avatar: formState.avatar,  // Avatar URL olarak ekledik
+    };
+    createUser(formData);
   };
 
   useEffect(() => {
@@ -75,7 +78,7 @@ const CreateNewUser = () => {
       setFormState({
         name: "",
         email: "",
-        phone: "",
+        phone_number: "",
         role_id: null,
         address: "",
         city: "",
@@ -90,7 +93,7 @@ const CreateNewUser = () => {
 
   useEffect(() => {
     if (isError) {
-      showToast("Hesab yaradılan zaman xəta baş verdi", "success");
+      showToast("Hesab yaradılan zaman xəta baş verdi", "error");
     }
   }, [isError]);
 
@@ -102,15 +105,15 @@ const CreateNewUser = () => {
         <div className="w-full flex lg:flex-row flex-col justify-between gap-10 mt-24">
           <div className="lg:w-[38%] w-full flex flex-col bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-center h-full flex-col">
-              <div className="w-40 h-40 rounded-full overflow-hidden border-2 border-gray-500/50 relative group">
+              <div className="relative w-40 h-40 rounded-full overflow-hidden border-2 border-gray-500/50 group">
                 <img
                   className="w-full h-full object-cover"
                   src={
                     formState.avatar
-                      ? URL.createObjectURL(formState.avatar)
+                      ? URL.createObjectURL(formState.avatar)  // Doğru avatar URL'ini kullanıyoruz
                       : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg"
                   }
-                  alt=""
+                  alt="Profile Photo"
                 />
                 <div className="hidden group-hover:flex flex-col gap-2 items-center justify-center w-full h-full bg-black/50 absolute top-0 left-0 right-0 bottom-0">
                   <IoCamera size={24} color="white" />
@@ -127,7 +130,7 @@ const CreateNewUser = () => {
                 İcazə verilən formatlar : *.jpeg, *.jpg, *.png, *.gif. Şəkilin max ölçüsü 2MB olmalıdır.
               </p>
             </div>
-            {/* <div className="flex justify-between mt-5">
+             {/* <div className="flex justify-between mt-5">
               <div className="flex flex-col gap-2 max-w-[247px]">
                 <h3 className="text-sm font-semibold">Email verified</h3>
                 <p className="text-sm">
@@ -138,91 +141,88 @@ const CreateNewUser = () => {
               <CustomSwitch />
             </div> */}
           </div>
-          {/* TODO : grid problem fix */}
           <div className="bg-white p-6 rounded-xl lg:w-[62%] w-full shadow-lg">
-            <div className="w-full">
-              <form
-                className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full"
-                onSubmit={handleSubmit}
+            <form
+              className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full"
+              onSubmit={handleSubmit}
+            >
+              <SecondInput
+                name="name"
+                value={formState.name}  // Doğru anahtar
+                onChange={handleChange}
+                column
+                placeholder="Ad və soyad"
+                type="text"
+              />
+              <SecondInput
+                name="email"
+                value={formState.email}  // Doğru anahtar
+                onChange={handleChange}
+                column
+                placeholder="Elektron poçt"
+                type="text"
+              />
+              <SecondInput
+                name="phone_number"
+                value={formState.phone_number}  // Doğru anahtar
+                onChange={handleChange}
+                column
+                placeholder="Telefon nömrəsi"
+                type="text"
+              />
+              <Select
+                options={roles}
+                column
+                value={roles.find((role) => role.id === formState.role_id)}
+                onChange={handleRoleChange}
+              />
+              <SecondInput
+                name="city"
+                value={formState.city}
+                onChange={handleChange}
+                column
+                placeholder="Şəhər"
+                type="text"
+              />
+              <SecondInput
+                name="address"
+                value={formState.address}
+                onChange={handleChange}
+                column
+                placeholder="Address"
+                type="text"
+              />
+              <SecondInput
+                name="zip_code"
+                value={formState.zip_code}
+                onChange={handleChange}
+                column
+                placeholder="Poçt Kodu"
+                type="text"
+              />
+              <SecondInput
+                name="about"
+                value={formState.about}
+                onChange={handleChange}
+                column
+                placeholder="Haqqında"
+                type="text"
+              />
+              <Input
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+                type="password"
+                placeholder="Şifrə"
+              />
+              <button
+                type="submit"
+                className="col-span-2 bg-black text-white py-2 px-4 text-md font-semibold rounded-lg mt-4 flex justify-center items-center"
+                disabled={isLoading}
               >
-                <SecondInput
-                  name="name"
-                  value={formState.fullName}
-                  onChange={handleChange}
-                  column
-                  placeholder="Ad və soyad"
-                  type="text"
-                />
-                <SecondInput
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  column
-                  placeholder="Elektron poçt"
-                  type="text"
-                />
-                <SecondInput
-                  name="phone"
-                  value={formState.phone}
-                  onChange={handleChange}
-                  column
-                  placeholder="Telefon nömrəsi"
-                  type="text"
-                />
-                <Select
-                  options={roles}
-                  column
-                  value={roles.find((role) => role.id === formState.role_id)}
-                  onChange={handleRoleChange}
-                />
-                <SecondInput
-                  name="city"
-                  value={formState.city}
-                  onChange={handleChange}
-                  column
-                  placeholder="Şəhər"
-                  type="text"
-                />
-                <SecondInput
-                  name="address"
-                  value={formState.address}
-                  onChange={handleChange}
-                  column
-                  placeholder="Address"
-                  type="text"
-                />
-                <SecondInput
-                  name="zip_code"
-                  value={formState.zip_code}
-                  onChange={handleChange}
-                  column
-                  placeholder="Poçt Kodu"
-                  type="text"
-                />
-                <SecondInput
-                  name="about"
-                  value={formState.about}
-                  onChange={handleChange}
-                  column
-                  placeholder="Haqqında"
-                  type="text"
-                />
-                <Input
-                  name="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                  type="password"
-                  placeholder="Şifrə"
-                />
-                <button
-                  type="submit"
-                  className="col-span-2 bg-black text-white py-2 px-4 text-md font-semibold rounded-lg mt-4 flex justify-center items-center"
-                  disabled={isLoading}
-                >
-                  {isLoading ? <Spinner /> : "İstifadəçi yarat"}
-                </button>
-              </form>
-            </div>
+                {isLoading ? <Spinner /> : "İstifadəçi yarat"}
+              </button>
+            </form>
           </div>
         </div>
       </div>
