@@ -10,7 +10,7 @@ const Users = () => {
           <UserList />
         </div>
         <div className="mt-5 flex justify-end">
-          <CustomButton value="İstifadəçi yaradın"  to={'/create-new-user'} type="link"/>
+          <CustomButton value="İstifadəçi yaradın" to={'/create-new-user'} type="link"/>
         </div>
       </div>
     </section>
