@@ -40,7 +40,8 @@ const usersService = api.injectEndpoints({
       invalidatesTags: ["USERS"],
     }),
     updateUser: builder.mutation({
-      query: (id, data) => {
+      query: ({id, data}) => {
+        console.log(data)
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("email", data.email);

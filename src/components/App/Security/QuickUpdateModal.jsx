@@ -55,13 +55,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   };
 
   const handleSubmit = () => {
-    const formDataToSend = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== null && formData[key] !== undefined) {
-        formDataToSend.append(key, formData[key]);
-      }
-    }
-    updateUser({ id: user.id, data: formDataToSend });
+    updateUser({ id: user.id, data: formData });
   };
 
   useEffect(() => {
@@ -76,6 +70,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
       showToast("İstifadəçi məlumatları yenilənə bilmədi", "error");
     }
   }, [isError]);
+
+  console.log(isError)
 
   return (
     <div

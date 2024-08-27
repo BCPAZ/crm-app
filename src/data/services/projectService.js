@@ -5,6 +5,14 @@ const projectService = api.injectEndpoints({
     getProjects : builder.mutation({
       query : () => ({
         url : '/projects'
+      }),
+      providesTags : ['PROJECTS']
+    }),
+    createProject : builder.mutation({
+      query : (data) => ({
+        url : '/projects',
+        method : 'POST',
+        body : data
       })
     })
   })
