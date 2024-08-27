@@ -22,6 +22,8 @@ const UserList = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const { showToast } = useToast();
 
   const users = data?.users || [];
@@ -43,7 +45,8 @@ const UserList = () => {
     }
   };
 
-  const handleModal = () => {
+  const handleModal = (user) => {
+    setSelectedUser(user);
     setShowModal(true);
   };
   const closeModal = () => {
@@ -157,7 +160,7 @@ const UserList = () => {
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center gap-2">
                           <button
-                            onClick={handleModal}
+                            onClick={() => handleModal(user)}
                             className="outline-none border-none p-1 hover:bg-blue-600/40 hover:text-blue-600 rounded-lg"
                             type="button"
                           >
@@ -179,7 +182,7 @@ const UserList = () => {
             </table>
           </div>
         </div>
-        <QuickUpdateModal showModal={showModal} closeModal={closeModal} />
+        <QuickUpdateModal showModal={showModal} closeModal={closeModal} user={selectedUser} />
       </div>
     </div>
   );

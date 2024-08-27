@@ -58,7 +58,7 @@ const usersService = api.injectEndpoints({
         return {
           url: `/users/${id}`,
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
       invalidatesTags: ["USERS"],
