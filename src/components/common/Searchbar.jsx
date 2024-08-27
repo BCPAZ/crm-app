@@ -7,7 +7,7 @@ const Searchbar = ({simple ,onChange}) => {
     <div className="flex justify-between items-center gap-4 w-auto">
       <div className={`flex items-center p-4 gap-5 rounded-lg border border-grey/20 ${simple ? 'w-full' : 'w-[90%]'}`}>
         <IoSearchOutline size={18} color="gray"/>
-        <input onChange={onChange} className="bg-transparent w-full h-full outline-none border-none" placeholder="Search anything" type="search" autoComplete="false" />
+        <input onChange={onChange} className="bg-transparent w-full h-full outline-none border-none" placeholder="Axtarış" type="search" autoComplete="false" />
       </div>
       {!simple ? <div className="flex flex-1">
         <Button value="Search" />
