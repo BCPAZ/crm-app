@@ -11,10 +11,12 @@ import {
 } from "@/data/services/usersService";
 import Spinner from "@/components/common/Spinner";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
+import Pagination from "@/components/common/Pagination"; // Import the Pagination component
 import { Toaster } from "react-hot-toast";
 
 const UserList = () => {
-  const { data, isLoading, isError } = useGetCompanyUsersQuery();
+  const [page, setPage] = useState(1); // State for pagination
+  const { data, isLoading, isError } = useGetCompanyUsersQuery({ page });
   const [
     deleteUser,
     { isSuccess: userSuccess, isError: userError },
@@ -27,6 +29,7 @@ const UserList = () => {
   const { showToast } = useToast();
 
   const users = data?.users || [];
+  const meta = data?.meta || {};
 
   const openConfirmationModal = (id) => {
     setSelectedUserId(id);
@@ -51,6 +54,10 @@ const UserList = () => {
   };
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
 
   useEffect(() => {
@@ -80,7 +87,7 @@ const UserList = () => {
           </div>
         </div>
         <div className="flex flex-col w-full p-5">
-          <h3>8 results found</h3>
+          <h3>{data ? `${data.users.length} results found` : 'Loading...'}</h3>
         </div>
         <div className="w-full overflow-x-auto">
           <div className="w-full overflow-x-auto">
@@ -182,6 +189,7 @@ const UserList = () => {
             </table>
           </div>
         </div>
+        <Pagination meta={meta} onPageChange={handlePageChange} />
         <QuickUpdateModal showModal={showModal} closeModal={closeModal} user={selectedUser} />
       </div>
     </div>
