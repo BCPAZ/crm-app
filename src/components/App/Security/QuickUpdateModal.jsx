@@ -9,8 +9,7 @@ import { useUpdateUserMutation } from "@/data/services/usersService";
 import { useGetRolesQuery } from "@/data/services/rolesPermissionsService";
 
 const QuickUpdateModal = ({ showModal, closeModal, user }) => {
-  const [updateUser, { isLoading, isSuccess, isError }] =
-    useUpdateUserMutation();
+  const [updateUser, { isLoading, isSuccess, isError }] = useUpdateUserMutation();
   const { data: roles = [] } = useGetRolesQuery();
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -22,8 +21,6 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     role_id: user?.role_id || "",
     avatar: null,
   });
-
-  console.log(user);
 
   const { showToast } = useToast();
 
@@ -52,36 +49,24 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   };
 
   const handleSelectChange = (selectedOption) => {
-  if (selectedOption) {
-    setFormData((prev) => ({ ...prev, role_id: selectedOption.id }));
-  }
-};
+    if (selectedOption) {
+      setFormData((prev) => ({ ...prev, role_id: selectedOption.id }));
+    }
+  };
 
   const handleSubmit = () => {
     const formDataToSend = new FormData();
     for (const key in formData) {
-      formDataToSend.append(key, formData[key]);
-    }
-    if (formData.avatar) {
-      formDataToSend.append("avatar", formData.avatar);
+      if (formData[key] !== null && formData[key] !== undefined) {
+        formDataToSend.append(key, formData[key]);
+      }
     }
     updateUser({ id: user.id, data: formDataToSend });
-    console.log(formData);
   };
 
   useEffect(() => {
     if (isSuccess) {
       showToast("İstifadəçi məlumatları uğurla yeniləndi", "success");
-      setFormData({
-        name: "",
-        email: "",
-        phone_number: "",
-        address: "",
-        city: "",
-        zip_code: "",
-        role_id: "",
-        avatar: null,
-      });
       closeModal();
     }
   }, [isSuccess]);

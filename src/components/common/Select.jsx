@@ -59,7 +59,7 @@ Select.propTypes = {
   column: PropTypes.bool,
   absolute: PropTypes.bool,
   options: PropTypes.array,
-  value: PropTypes.object,
+  value: PropTypes.string,
   onChange: PropTypes.func,
 }
 

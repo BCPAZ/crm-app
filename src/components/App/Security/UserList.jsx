@@ -11,16 +11,13 @@ import {
 } from "@/data/services/usersService";
 import Spinner from "@/components/common/Spinner";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
-import Pagination from "@/components/common/Pagination"; // Import the Pagination component
+import Pagination from "@/components/common/Pagination";
 import { Toaster } from "react-hot-toast";
 
 const UserList = () => {
-  const [page, setPage] = useState(1); // State for pagination
+  const [page, setPage] = useState(1);
   const { data, isLoading, isError } = useGetCompanyUsersQuery({ page });
-  const [
-    deleteUser,
-    { isSuccess: userSuccess, isError: userError },
-  ] = useDeleteUserMutation();
+  const [deleteUser, { isSuccess: userSuccess, isError: userError }] = useDeleteUserMutation();
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -52,6 +49,7 @@ const UserList = () => {
     setSelectedUser(user);
     setShowModal(true);
   };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -99,18 +97,10 @@ const UserList = () => {
                       İstifadəçilər <GoArrowDown />
                     </span>
                   </th>
-                  <th className="text-sm font-medium w-[12%] text-gray-500">
-                    Telefon nömrəsi
-                  </th>
-                  <th className="text-sm font-medium w-[12%] text-gray-500">
-                    Adres
-                  </th>
-                  <th className="text-sm font-medium w-[12%] text-gray-500">
-                    Şəhər
-                  </th>
-                  <th className="text-sm font-medium w-[12%] text-gray-500 rounded-e-lg">
-                    Poçt
-                  </th>
+                  <th className="text-sm font-medium w-[12%] text-gray-500">Telefon nömrəsi</th>
+                  <th className="text-sm font-medium w-[12%] text-gray-500">Adres</th>
+                  <th className="text-sm font-medium w-[12%] text-gray-500">Şəhər</th>
+                  <th className="text-sm font-medium w-[12%] text-gray-500 rounded-e-lg">Poçt</th>
                   <th className="text-sm font-medium w-[5%] text-gray-500 rounded-e-lg"></th>
                 </tr>
               </thead>
@@ -119,13 +109,11 @@ const UserList = () => {
                   {isLoading && <Spinner />}
                 </div>
                 {isError || users.length === 0 ? (
-                  <div className="p-5 text-center w-full">
-                    Hec bir istifadəçi tapılmadı
-                  </div>
+                  <div className="p-5 text-center w-full">Hec bir istifadəçi tapılmadı</div>
                 ) : (
                   users.map((user, index) => (
                     <div className="group" key={index}>
-                      <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed  w-full flex items-center justify-between gap-5 min-h-[76px]">
+                      <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]">
                         <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[35%]">
                           <div className="flex items-center gap-4">
                             <img
@@ -134,33 +122,23 @@ const UserList = () => {
                               alt={user.name}
                             />
                             <div className="flex flex-col">
-                              <div className="text-sm text-secondary hover:underline">
-                                {user.name}
-                              </div>
-                              <span className="text-xs text-gray-400">
-                                {user.email}
-                              </span>
+                              <div className="text-sm text-secondary hover:underline">{user.name}</div>
+                              <span className="text-xs text-gray-400">{user.email}</span>
                             </div>
                           </div>
                         </th>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           <div className="flex flex-col">
-                            <h3 className="text-xs text-secondary">
-                              {user.phone_number}
-                            </h3>
+                            <h3 className="text-xs text-secondary">{user.phone_number}</h3>
                           </div>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           <div className="flex flex-col">
-                            <h3 className="text-xs text-secondary">
-                              {user.address}
-                            </h3>
+                            <h3 className="text-xs text-secondary">{user.address}</h3>
                           </div>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
-                          <span className="text-xs text-secondary">
-                            {user.city}
-                          </span>
+                          <span className="text-xs text-secondary">{user.city}</span>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           {user.zip_code}
