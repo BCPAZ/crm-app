@@ -12,7 +12,7 @@ const ConfirmationModal = ({ closeConfirmationModal, showConfirmation, handleDel
         <div className="flex justify-end gap-3">
           <button
             onClick={handleDelete}
-            className="text-sm p-2 bg-red-600 rounded-lg font-semibold text-white min-w-[100px]"
+            className="text-sm p-2 bg-red-600 rounded-lg font-semibold text-white min-w-[100px] flex items-center justify-center gap-2"
           >
             Sil
           </button>
@@ -32,6 +32,7 @@ ConfirmationModal.propTypes = {
   showConfirmation: PropTypes.bool.isRequired,
   closeConfirmationModal: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
+  isLoading : PropTypes.bool
 };
 
 export default ConfirmationModal;

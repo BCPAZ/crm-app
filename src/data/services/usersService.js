@@ -3,8 +3,9 @@ import api from "@/data/api";
 const usersService = api.injectEndpoints({
   endpoints: (builder) => ({
     getCompanyUsers: builder.query({
-      query: () => ({
-        url: "/users?limit=100",
+      query: (params) => ({
+        url: "/users",
+        params,
       }),
       providesTags: ["USERS"],
     }),
