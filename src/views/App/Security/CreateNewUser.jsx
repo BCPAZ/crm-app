@@ -9,11 +9,13 @@ import Spinner from "@/components/common/Spinner";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import imageCompression from "browser-image-compression";
+import { useNavigate } from "react-router-dom";
 
 const CreateNewUser = () => {
   const { data: roles = [] } = useGetRolesQuery();
   const [createUser, { isLoading, isSuccess, isError }] = useCreateUserMutation();
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -88,6 +90,7 @@ const CreateNewUser = () => {
         avatar: null,
       });
       showToast("Hesab uğurlu şəkildə yaradıldı", "success");
+      navigate('/users')
     }
   }, [isSuccess]);
 
