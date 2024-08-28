@@ -13,13 +13,17 @@ function Select({ label, column, absolute, options = [], value, onChange }) {
 
   const handleChange = (selected) => {
     setSelectedOption(selected);
-    onChange(selected);
+    if (onChange) {
+      onChange(selected);
+    }
   };
+
+  const validOptions = Array.isArray(options) ? options : [];
 
   return (
     <Listbox
       as="nav"
-      className={"relative"}
+      className="relative"
       value={selectedOption}
       onChange={handleChange}
     >
@@ -40,7 +44,7 @@ function Select({ label, column, absolute, options = [], value, onChange }) {
       <ListboxOptions
         className="p-4 bg-white shadow-lg absolute top-[100%] h-[250px] overflow-y-scroll z-20 left-0 w-full outline-none rounded-xl"
       >
-        {options.map((option) => (
+        {validOptions.map((option) => (
           <ListboxOption
             key={option.id}
             value={option}
@@ -58,8 +62,11 @@ Select.propTypes = {
   label: PropTypes.string,
   column: PropTypes.bool,
   absolute: PropTypes.bool,
-  options: PropTypes.array,
-  value: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
+  })).isRequired,
+  value: PropTypes.object,
   onChange: PropTypes.func,
 }
 

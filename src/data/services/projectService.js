@@ -2,7 +2,7 @@ import api from "@/data/api";
 
 const projectService = api.injectEndpoints({
   endpoints : (builder) => ({
-    getProjects : builder.mutation({
+    getProjects : builder.query({
       query : () => ({
         url : '/projects'
       }),
@@ -13,11 +13,12 @@ const projectService = api.injectEndpoints({
         url : '/projects',
         method : 'POST',
         body : data
-      })
+      }),
+      invalidatesTags : ['PROJECTS']
     })
   })
 })
 
-export const {useGetProjectsQuery} = projectService;
+export const {useGetProjectsQuery , useCreateProjectMutation} = projectService;
 
 export default projectService;

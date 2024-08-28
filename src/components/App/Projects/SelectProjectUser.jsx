@@ -2,29 +2,51 @@ import Alert from "@/components/common/Alert";
 import CustomButton from "@/components/common/CustomButton";
 import Select from "@/components/common/Select";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useGetPositionsQuery } from "@/data/services/positionsService";
+import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 
+const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
+  const { data: companyUsers = [], isError: usersError } = useGetCompanyUsersQuery();
+  const { data: positions = [], isError: positionError } = useGetPositionsQuery();
 
-const SelectUserProject = ({showModal, closeModal}) => {
-   return (
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState(null);
+
+  const resetSelections = () => {
+    setSelectedUser(null);
+    setSelectedPosition(null);
+  };
+
+  const handleAddUser = () => {
+    if (selectedUser && selectedPosition) {
+      onAddUser(selectedUser, selectedPosition);
+      resetSelections();
+      closeModal();
+    }
+  };
+
+  const users = companyUsers?.users || [];
+
+  return (
     <div
       className={`w-full h-screen bg-black/70 ${
         showModal ? "flex" : "hidden"
       } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0`}
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-[50%]">
-        <h1 className="text-xl font-semibold">
-          İstifadəçi əlavə edin
-        </h1>
-        <Alert
-          type="primary"
-          value="Alert burdadı"
-        />
+        <h1 className="text-xl font-semibold">İstifadəçi əlavə edin</h1>
+        {usersError && <Alert type="error" value="İstifadəçiləri əldə etmək mümkün olmadı" />}
+        {positionError && <Alert type="error" value="Pozisiyaları əldə etmək mümkün olmadı" />}
         <Select
           label="İstifadəçi seçin"
           type="text"
           placeholder="İstifadəçini seçin"
           absolute
           column
+          options={users.map(user => ({ id: user.id, name: user.name }))}
+          value={selectedUser}
+          onChange={setSelectedUser}
         />
         <Select
           label="Pozisiya adı"
@@ -32,11 +54,15 @@ const SelectUserProject = ({showModal, closeModal}) => {
           placeholder="Pozisiya əlavə edin"
           absolute
           column
+          options={positions.map(position => ({ id: position.id, name: position.name }))}
+          value={selectedPosition}
+          onChange={setSelectedPosition}
         />
         <div className="flex justify-end gap-3">
           <CustomButton
             simple
             value='Seç'
+            functionality={handleAddUser}
           />
           <button
             onClick={closeModal}
@@ -53,8 +79,7 @@ const SelectUserProject = ({showModal, closeModal}) => {
 SelectUserProject.propTypes = {
   showModal: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  position: PropTypes.object,
-  onUpdate: PropTypes.func,
+  onAddUser: PropTypes.func.isRequired,
 };
 
 export default SelectUserProject;

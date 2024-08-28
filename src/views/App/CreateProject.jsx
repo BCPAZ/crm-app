@@ -1,33 +1,105 @@
-import SecondInput from "@/components/common/SecondInput"
-import Button from "@/components/common/Button"
-import SelectUserProject from "@/components/App/Projects/SelectProjectUser"
-import CustomButton from "@/components/common/CustomButton"
-import { useState } from "react"
-const CreateProject = () => {
-  const [showModal , setShowModal] = useState(false);
+import { useState, useEffect } from "react";
+import { useCreateProjectMutation } from "@/data/services/projectService";
+import SecondInput from "@/components/common/SecondInput";
+import Button from "@/components/common/Button";
+import CustomButton from "@/components/common/CustomButton";
+import SelectUserProject from "@/components/App/Projects/SelectProjectUser";
+import { Toaster } from "react-hot-toast";
+import useToast from "@/hooks/useToast";
+import { IoMdClose } from "react-icons/io";
 
-  const openModal = () => {
-    setShowModal(true)
-  }
-  const closeModal = () => {
-    setShowModal(false);
-  }
+const CreateProject = () => {
+  const [createProject, { isSuccess, isError, isLoading}] = useCreateProjectMutation();
+  const [showModal, setShowModal] = useState(false);
+  const [projectName, setProjectName] = useState("");
+  const [projectCode, setProjectCode] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const { showToast } = useToast();
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
+  const handleAddUser = (user, position) => {
+    if (selectedUsers.find(u => u.user.id === user.id)) {
+      showToast('Bu istifadəçi artıq seçilib.', 'error');
+      return;
+    }
+    
+    setSelectedUsers([...selectedUsers, { user, position }]);
+  };
+
+  const handleRemoveUser = (userId) => {
+    setSelectedUsers(selectedUsers.filter(u => u.user.id !== userId));
+  };
+
+  const handleSubmit = () => {
+    createProject({
+      name: projectName,
+      code: projectCode,
+      users: selectedUsers.map(({ user, position }) => ({
+        id: user.id,
+        position_id: position.id,
+      })),
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showToast('Proyekt uğurlu şəkildə yaradıldı', 'success');
+      setProjectName('');
+      setProjectCode('');
+      setSelectedUsers([]);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      showToast('Proyekt yaradıla bilmədi', 'error');
+    }
+  }, [isError]);
+
   return (
     <section className="w-full h-full py-10">
+      <Toaster />
       <div className="siteContainer">
         <h1 className="text-2xl font-semibold">Proyekt yarat</h1>
         <div className="flex flex-col gap-4 md:w-1/2 w-full h-full mt-10">
-          <SecondInput column label="* Proyekt adı" placeholder="Proyekt adını daxil edin..."/>
-          <SecondInput column label="* Proyektin kodu" placeholder="Proyekt kodunu daxil edin..."/>
-          <CustomButton functionality={openModal} value="İstifadəçi seç"/>
-          <SelectUserProject showModal={showModal} closeModal={closeModal} />
+          <SecondInput
+            column
+            label="* Proyekt adı"
+            placeholder="Proyekt adını daxil edin..."
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+          />
+          <SecondInput
+            column
+            label="* Proyektin kodu"
+            placeholder="Proyekt kodunu daxil edin..."
+            value={projectCode}
+            onChange={(e) => setProjectCode(e.target.value)}
+          />
+          <CustomButton functionality={openModal} value="İstifadəçi seç" />
+          <SelectUserProject showModal={showModal} closeModal={closeModal} onAddUser={handleAddUser} />
+          <div className="mt-5">
+            <h2 className="text-lg font-semibold">Seçilmiş İstifadəçilər:</h2>
+            <ul className="flex items-center gap-2 mt-3">
+              {selectedUsers.map(({ user, position }) => (
+                <li key={user.id} className="p-2 rounded-lg bg-grey/10 flex items-center justify-between w-fit gap-5">
+                  <span>{user.name} - {position.name}</span>
+                  <button onClick={() => handleRemoveUser(user.id)} className="text-red-500">
+                    <IoMdClose />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="w-fit mt-3">
-            <Button value="Create project"/>
+            <Button isLoading={isLoading} value="Proyekt yarat" onClick={handleSubmit} />
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CreateProject
+export default CreateProject;
