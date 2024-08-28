@@ -18,11 +18,18 @@ const fieldService = api.injectEndpoints({
        if(data.files[0]){
         formData.append('files[0]', data.files[0]);
        }
+       return{
+        url : '/field-management',
+        method : 'POST',
+        body : formData
+       }
       },
       invalidatesTags : ['FIELDS'],
       keepUnusedDataFor : 0
     }),
   })
 });
+
+export const {useCreateIssueMutation, useGetAllIssuesQuery} = fieldService;
 
 export default fieldService;

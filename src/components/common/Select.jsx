@@ -8,13 +8,13 @@ import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import PropTypes from "prop-types";
 
-function Select({ label, column, absolute, options = [], value, onChange }) {
+function Select({ label, column, absolute, options = [], value, onChange, mode = 'id' }) {
   const [selectedOption, setSelectedOption] = useState(value);
 
   const handleChange = (selected) => {
-    setSelectedOption(selected);
+    setSelectedOption(mode === 'id' ? selected.id : selected);
     if (onChange) {
-      onChange(selected);
+      onChange(mode === 'id' ? selected.id : selected);
     }
   };
 
@@ -37,7 +37,7 @@ function Select({ label, column, absolute, options = [], value, onChange }) {
           </label>
         )}
         <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm flex items-center justify-between">
-          {selectedOption?.name || 'Select...'}
+          {validOptions.find(option => option.id === selectedOption)?.name || 'Select...'}
           <MdKeyboardArrowDown size={20} />
         </ListboxButton>
       </div>
@@ -47,8 +47,8 @@ function Select({ label, column, absolute, options = [], value, onChange }) {
         {validOptions.map((option) => (
           <ListboxOption
             key={option.id}
-            value={option}
-            className="data-[focus]:bg-blue-100 p-2 rounded-md text-sm"
+            value={option} // burada tüm option nesnesi gönderiliyor
+            className="hover:bg-blue-100 p-2 rounded-md text-sm cursor-pointer"
           >
             {option.name}
           </ListboxOption>
@@ -63,11 +63,12 @@ Select.propTypes = {
   column: PropTypes.bool,
   absolute: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    name: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
   })).isRequired,
-  value: PropTypes.object,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
   onChange: PropTypes.func,
+  mode: PropTypes.oneOf(['id', 'object']),
 }
 
 export default Select;
