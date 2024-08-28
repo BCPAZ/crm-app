@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { LuMoreVertical, LuEye } from "react-icons/lu";
 import { IoAddSharp } from "react-icons/io5";
-import moment from "moment";
 import { useGetProjectsQuery } from "@/data/services/projectService";
+import { IoMdCheckmark } from "react-icons/io";
+import moment from "moment";
 import Spinner from "@/components/common/Spinner";
+
 const Projects = () => {
-  const {data : projects = [], isLoading, isError} = useGetProjectsQuery();
+  const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
 
   return (
     <section>
@@ -22,8 +24,16 @@ const Projects = () => {
           </Link>
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 py-10">
-          {isError && <div className="w-full h-full flex items-center justify-center text-2xl font-semibold">Heç bir proyekt tapılmadı</div>}
-          {isLoading && <div className="flex items-center justify-center h-full"><Spinner /></div>}
+          {isError && (
+            <div className="w-full h-full flex items-center justify-center text-2xl font-semibold">
+              Heç bir proyekt tapılmadı
+            </div>
+          )}
+          {isLoading && (
+            <div className="flex items-center justify-center h-full">
+              <Spinner />
+            </div>
+          )}
           {projects.map((project, index) => (
             <div
               className="relative p-6 rounded-lg border border-grey/20 flex flex-col gap-2"
@@ -43,13 +53,18 @@ const Projects = () => {
                 <p className="line-clamp-2 text-sm mt-3">{project.code}</p>
               </div>
               <div className="flex items-center justify-between gap-2 mt-3">
-                <Link
-                  className="text-white bg-secondary font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2"
-                  to={`${project.id}`}
-                >
-                  <LuEye size={16} />
-                  Baxın
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    className="text-white bg-secondary font-medium rounded-lg py-2 px-4 text-xs w-fit flex items-center gap-2"
+                    to={`${project.id}`}
+                  >
+                    <LuEye size={16} />
+                    Baxın
+                  </Link>
+                  <button className="text-white bg-green-600 font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2">
+                    <IoMdCheckmark size={16}/>
+                  </button>
+                </div>
                 <span className="flex items-center gap-2 text-xs font-semibold">
                   <FaUsers color="#00A76F" size={16} />
                   {/* {project.members} members */}
