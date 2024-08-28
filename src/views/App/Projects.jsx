@@ -4,12 +4,21 @@ import { LuMoreVertical, LuEye } from "react-icons/lu";
 import { IoAddSharp } from "react-icons/io5";
 import { useGetProjectsQuery } from "@/data/services/projectService";
 import { IoMdCheckmark } from "react-icons/io";
+import { IoCheckboxSharp } from "react-icons/io5";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
-
+import { setProject } from "@/data/slices/projectSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 const Projects = () => {
   const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
+  const [selectedId, setSelectedId] = useState(null);
+  const dispatch = useDispatch();
 
+  const handleSetProject = (project) => {
+    dispatch(setProject(project));
+    setSelectedId(project.id);
+  };
   return (
     <section>
       <div className="siteContainer">
@@ -61,8 +70,17 @@ const Projects = () => {
                     <LuEye size={16} />
                     Baxın
                   </Link>
-                  <button className="text-white bg-green-600 font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2">
-                    <IoMdCheckmark size={16}/>
+                  <button
+                    onClick={() => handleSetProject(project)}
+                    className={`text-white font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2 ${
+                      selectedId === project.id
+                        ? "bg-grey"
+                        : "bg-green-600"
+                    }`}
+                  >
+                    {
+                      selectedId === project.id ? <IoCheckboxSharp size={16} /> : <IoMdCheckmark size={16} />
+                    }
                   </button>
                 </div>
                 <span className="flex items-center gap-2 text-xs font-semibold">
