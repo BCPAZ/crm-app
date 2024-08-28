@@ -9,13 +9,13 @@ const Projects = () => {
     <section>
       <div className="siteContainer">
         <div className="flex items-center justify-between mt-10">
-          <h1 className="text-2xl font-semibold ">Projects</h1>
+          <h1 className="text-2xl font-semibold ">Proyektlər</h1>
           <Link
             to={"/create-project"}
             className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2"
           >
             <IoAddSharp size={18} />
-            Create project
+            Proyekt yarat
           </Link>
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-10">
