@@ -5,10 +5,14 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import api from '@/data/api';
 import authSlice from '@/data/slices/authSlice';
+import kanbanSlice from './slices/kanbanSlice';
+import projectSlice from './slices/projectSlice';
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   [authSlice.reducerPath]: authSlice.reducer,
+  [kanbanSlice.reducerPath]: kanbanSlice.reducer,
+  [projectSlice.reducerPath]: projectSlice.reducer,
 });
 
 const persistedReducer = persistReducer(

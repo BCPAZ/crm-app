@@ -43,9 +43,13 @@ const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState();
       const { token, isAuthenticated } = state.auth;
+      const { project } = state.project;
       headers.set("Accept", "application/json");
       if (isAuthenticated) {
         headers.set("Authorization", `Bearer ${token}`);
+      }
+      if (project?.id) {
+        headers.set("project_id", project.id);
       }
       return headers;
     },
