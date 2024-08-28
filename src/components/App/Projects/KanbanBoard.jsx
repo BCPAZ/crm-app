@@ -3,12 +3,22 @@ import { useState, useCallback, memo } from "react";
 import Column from "./Column";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskDetail from "./TaskDetail";
+import {
+  useChangeBoardPositionMutation,
+  useCreateBoardMutation,
+  useGetBoardsQuery,
+} from "@/data/services/taskManagementService";
+import { useSelector } from "react-redux";
 
 const KanbanBoard = () => {
-  const [columns, setColumns] = useState([]);
+  useGetBoardsQuery();
+  const { boards = [] } = useSelector((state) => state.kanban);
 
+  const [columns, setColumns] = useState([]);
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const [newColumnName, setNewColumnName] = useState("");
+  const [createBoard] = useCreateBoardMutation();
+  const [changeBoardPosition] = useChangeBoardPositionMutation();
 
   const handleAddColumn = () => {
     setIsAddingColumn(true);
@@ -37,6 +47,7 @@ const KanbanBoard = () => {
     ]);
     setNewColumnName("");
     setIsAddingColumn(false);
+    createBoard({ name: newColumnName });
   };
 
   const handleDeleteColumn = useCallback((id) => {
@@ -64,7 +75,6 @@ const KanbanBoard = () => {
     );
   };
 
-
   const handleAddTask = useCallback((columnId, taskContent) => {
     setColumns((prevColumns) =>
       prevColumns.map((column) =>
@@ -84,46 +94,56 @@ const KanbanBoard = () => {
   const onDragEnd = useCallback(
     (result) => {
       const { source, destination, type } = result;
-  
+
       if (!destination) return;
-  
+
       if (type === "COLUMN") {
         const newColumns = [...columns];
         const [movedColumn] = newColumns.splice(source.index, 1);
         newColumns.splice(destination.index, 0, movedColumn);
+        changeBoardPosition({
+          old_position: source.index,
+          new_position: destination.index,
+        });
         setColumns(newColumns);
+
         return;
       }
-  
+
       const sourceColumnIndex = columns.findIndex(
         (column) => column.id === source.droppableId
       );
       const destinationColumnIndex = columns.findIndex(
         (column) => column.id === destination.droppableId
       );
-        if (sourceColumnIndex === -1 || destinationColumnIndex === -1) return;
-  
+      if (sourceColumnIndex === -1 || destinationColumnIndex === -1) return;
+
       const sourceColumn = columns[sourceColumnIndex];
       const destinationColumn = columns[destinationColumnIndex];
-  
+
       const sourceItems = [...sourceColumn.items];
       const [movedItem] = sourceItems.splice(source.index, 1);
       const destinationItems = [...destinationColumn.items];
       destinationItems.splice(destination.index, 0, movedItem);
-  
+
       const updatedColumns = [...columns];
-      updatedColumns[sourceColumnIndex] = { ...sourceColumn, items: sourceItems };
-      updatedColumns[destinationColumnIndex] = { ...destinationColumn, items: destinationItems };
-  
+      updatedColumns[sourceColumnIndex] = {
+        ...sourceColumn,
+        items: sourceItems,
+      };
+      updatedColumns[destinationColumnIndex] = {
+        ...destinationColumn,
+        items: destinationItems,
+      };
+
       setColumns(updatedColumns);
     },
     [columns]
   );
-  
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
-      <TaskDetail />
+      {/* <TaskDetail /> */}
       <div className="flex space-x-6 h-full overflow-x-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
@@ -137,9 +157,9 @@ const KanbanBoard = () => {
                 ref={provided.innerRef}
                 className="flex space-x-6 h-full"
               >
-                {columns.map((column, index) => (
+                {boards.map((column, index) => (
                   <Draggable
-                    draggableId={column.id}
+                    draggableId={`column-${column.id}`}
                     key={column.id}
                     index={index}
                   >
@@ -154,7 +174,9 @@ const KanbanBoard = () => {
                           handleDeleteColumn={handleDeleteColumn}
                           handleUpdateColumnName={handleUpdateColumnName}
                           handleAddTask={handleAddTask}
-                          handleDeleteTask={(taskId) => handleDeleteTask(column.id, taskId)}
+                          handleDeleteTask={(taskId) =>
+                            handleDeleteTask(column.id, taskId)
+                          }
                         />
                       </div>
                     )}

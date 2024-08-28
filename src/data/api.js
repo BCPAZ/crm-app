@@ -49,7 +49,7 @@ const api = createApi({
         headers.set("Authorization", `Bearer ${token}`);
       }
       if (project?.id) {
-        headers.set("project_id", project.id);
+        headers.set("X-Project", project.id);
       }
       return headers;
     },
