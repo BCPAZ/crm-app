@@ -5,12 +5,24 @@ import { IoAddSharp } from "react-icons/io5";
 import { MdDragIndicator } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
 import TaskCard from "./TaskCard";
+import {
+  useDeleteBoardMutation,
+  useUpdateBoardMutation,
+} from "@/data/services/taskManagementService";
 
-const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddTask, handleDeleteTask }) => {
+const Column = ({
+  column,
+  handleDeleteColumn,
+  handleUpdateColumnName,
+  handleAddTask,
+  handleDeleteTask,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(column.name);
   const [newTaskName, setNewTaskName] = useState("");
   const [isAddingTask, setIsAddingTask] = useState(false);
+  const [deleteBoard] = useDeleteBoardMutation();
+  const [updateBoard] = useUpdateBoardMutation();
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -28,7 +40,8 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
 
   const handleSave = () => {
     if (newName.trim() === "") return;
-    handleUpdateColumnName(column.id, newName);
+    // handleUpdateColumnName(column.id, newName);
+    updateBoard({ id: column.id, data: { name: newName } });
     setIsEditing(false);
   };
 
@@ -63,7 +76,7 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
   };
 
   return (
-    <Droppable droppableId={column.id} type="TASK">
+    <Droppable droppableId={`column-${column.id}`} type="TASK">
       {(provided) => (
         <div
           className="min-w-[336px] bg-gray-100 p-4 rounded-xl"
@@ -73,7 +86,7 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <span className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-gray-500 bg-grey/20 font-bold text-sm">
-                1
+                {column.tasks.length}
               </span>
               {isEditing ? (
                 <input
@@ -101,7 +114,7 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
                 <IoAddSharp size={14} />
               </button>
               <button
-                onClick={() => handleDeleteColumn(column.id)}
+                onClick={() => deleteBoard(column.id)}
                 className="hover:bg-red-500 hover:text-white rounded-full text-gray-400 p-1 transition-colors duration-300"
               >
                 <HiTrash size={18} />
@@ -112,8 +125,12 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
             </div>
           </div>
           <div className="space-y-2">
-            {column.items.map((task, index) => (
-              <TaskCard key={task.id} task={task} index={index} handleDeleteTask={handleDeleteTask}
+            {column?.items?.map((task, index) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                index={index}
+                handleDeleteTask={handleDeleteTask}
               />
             ))}
             {provided.placeholder}
@@ -143,19 +160,19 @@ const Column = ({ column, handleDeleteColumn, handleUpdateColumnName, handleAddT
 
 Column.propTypes = {
   column: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.any.isRequired,
     name: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        content: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
+    // items: PropTypes.arrayOf(
+    //   PropTypes.shape({
+    //     id: PropTypes.string.isRequired,
+    //     content: PropTypes.string.isRequired,
+    //   })
+    // ).isRequired,
+  }),
   handleDeleteColumn: PropTypes.func.isRequired,
   handleUpdateColumnName: PropTypes.func.isRequired,
   handleAddTask: PropTypes.func.isRequired,
-  handleDeleteTask : PropTypes.func.isRequired
+  handleDeleteTask: PropTypes.func.isRequired,
 };
 
 export default memo(Column);

@@ -8,17 +8,17 @@ import { IoCheckboxSharp } from "react-icons/io5";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
 import { setProject } from "@/data/slices/projectSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 const Projects = () => {
   const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
-  const [selectedId, setSelectedId] = useState(null);
+  const {project: selectedProject} = useSelector(state => state.project)
   const dispatch = useDispatch();
 
   const handleSetProject = (project) => {
     dispatch(setProject(project));
-    setSelectedId(project.id);
   };
+
   return (
     <section>
       <div className="siteContainer">
@@ -73,13 +73,13 @@ const Projects = () => {
                   <button
                     onClick={() => handleSetProject(project)}
                     className={`text-white font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2 ${
-                      selectedId === project.id
+                      selectedProject?.id === project.id
                         ? "bg-grey"
                         : "bg-green-600"
                     }`}
                   >
                     {
-                      selectedId === project.id ? <IoCheckboxSharp size={16} /> : <IoMdCheckmark size={16} />
+                      selectedProject?.id === project.id ? <IoCheckboxSharp size={16} /> : <IoMdCheckmark size={16} />
                     }
                   </button>
                 </div>
