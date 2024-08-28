@@ -136,54 +136,29 @@ const kanbanSlice = createSlice({
     builder.addMatcher(
       taskManagementService.endpoints.changeBoardPosition.matchPending,
       (state, action) => {
-        const oldPosition = action.meta.arg.originalArgs.old_position;
-        const newPosition = action.meta.arg.originalArgs.new_position;
-
-        if (oldPosition < newPosition) {
-          state.boards = sortBoardsByPosition(
-            state.boards.map((board) => {
-              if (
-                board.position > oldPosition &&
-                board.position <= newPosition
-              ) {
-                return {
-                  ...board,
-                  oldPosition: board.position,
-                  position: board.position - 1,
-                };
-              } else if (board.position === oldPosition) {
-                return {
-                  ...board,
-                  oldPosition: board.position,
-                  position: newPosition,
-                };
-              }
-              return board;
-            })
-          );
-        } else {
-          state.boards = sortBoardsByPosition(
-            state.boards.map((board) => {
-              if (
-                board.position < oldPosition &&
-                board.position >= newPosition
-              ) {
-                return {
-                  ...board,
-                  oldPosition: board.position,
-                  position: board.position + 1,
-                };
-              } else if (board.position === oldPosition) {
-                return {
-                  ...board,
-                  oldPosition: board.position,
-                  position: newPosition,
-                };
-              }
-              return board;
-            })
-          );
-        }
+        const { old_position: oldPosition, new_position: newPosition } = action.meta.arg.originalArgs;
+    
+        const updateBoardPosition = (board) => {
+          if (
+            (oldPosition < newPosition && board.position > oldPosition && board.position <= newPosition) ||
+            (oldPosition > newPosition && board.position < oldPosition && board.position >= newPosition)
+          ) {
+            return {
+              ...board,
+              oldPosition: board.position,
+              position: oldPosition < newPosition ? board.position - 1 : board.position + 1,
+            };
+          } else if (board.position === oldPosition) {
+            return {
+              ...board,
+              oldPosition: board.position,
+              position: newPosition,
+            };
+          }
+          return board;
+        };
+    
+        state.boards = sortBoardsByPosition(state.boards.map(updateBoardPosition));
       }
     );
 
