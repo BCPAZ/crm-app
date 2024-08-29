@@ -7,12 +7,14 @@ import api from "@/data/api";
 import authSlice from "@/data/slices/authSlice";
 import kanbanSlice from "./slices/kanbanSlice";
 import projectSlice from "./slices/projectSlice";
+import siteSlice from "./slices/siteSlice";
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   [authSlice.reducerPath]: authSlice.reducer,
   [kanbanSlice.reducerPath]: kanbanSlice.reducer,
   [projectSlice.reducerPath]: projectSlice.reducer,
+  [siteSlice.reducerPath] : siteSlice.reducer
 });
 
 const persistedReducer = persistReducer(

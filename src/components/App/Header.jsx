@@ -1,7 +1,14 @@
-import notifications from "@/assets/icons/notifications.svg";
+import { IoMdMenu } from "react-icons/io";
 import english from "@/assets/icons/english.svg";
 import ProfileCard from "./ProfileCard";
+import { openMobileNav } from "@/data/slices/siteSlice";
+import { useDispatch } from "react-redux";
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const openMobileMenu = () => {
+    dispatch(openMobileNav());
+  }
   return (
     <header className="h-16 flex items-center">
       <div className="siteContainer flex items-center justify-between">
@@ -12,10 +19,10 @@ const Header = () => {
           <button type="button">
             <img src={english} alt="Language changed" />
           </button>
-          <button type="button">
-            <img src={notifications} alt="Language changed" />
-          </button>
           <ProfileCard />
+          <button onClick={openMobileMenu} className="md:hidden block" type="button">
+            <IoMdMenu size={24}/>
+          </button>
         </div>
       </div>
     </header>

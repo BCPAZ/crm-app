@@ -3,10 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import { useState } from "react";
 import { IoChevronUpSharp } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
+import { closeMobileNav } from "@/data/slices/siteSlice";
 
 const MobileNav = () => {
   const [subMenu, setSubMenu] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.site.isOpen);
 
   const handleSubMenu = (index) => {
     if (subMenu === index) {
@@ -20,13 +24,21 @@ const MobileNav = () => {
     navigate(path);
   };
 
+  const handleCloseMenu = () => {
+    dispatch(closeMobileNav());
+  }
+
   return (
-    <aside className="w-[422px] h-full fixed top-0 right-0 p-5 bg-white shadow-lg z-40">
+    <aside
+      className={`fixed top-0 right-0 sm:w-[422px] w-full h-full p-5 bg-white shadow-lg z-40 transition-transform duration-300 ease-in-out ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}
+    >
       <div className="flex items-center justify-between gap-2 py-5">
         <div className="bg-black w-[50px] h-[50px] flex items-center justify-center p-2 rounded-md select-none">
           <img src="https://bcp.az/img/logo.svg" alt="" />
         </div>
-        <button className="bg-grey/20 p-2 rounded-md">
+        <button onClick={handleCloseMenu} className="bg-grey/20 p-2 rounded-md">
           <MdOutlineClose size={24} />
         </button>
       </div>
