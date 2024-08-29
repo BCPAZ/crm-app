@@ -1,14 +1,22 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LuChevronDown } from "react-icons/lu";
 import PropTypes from "prop-types";
 
 const DropdownMenu = ({ navElement }) => {
+  const activeProject = useSelector((state) => state.project.project);
+
+  const restrictedElements = ["Workflow", "Documents", "Field management", "Cost"];
+
+  const isDisabled = restrictedElements.includes(navElement.title) && !activeProject;
+
   return (
     <div className="relative group">
       {navElement.path ? (
         <Link
           to={navElement.path}
-          className="flex items-center gap-2 text-white text-sm font-semibold hover:bg-white/10 p-2 rounded-md"
+          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
+          onClick={(e) => isDisabled && e.preventDefault()}
         >
           <img src={navElement.icon} alt="" />
           <span className="lg:block hidden">{navElement.title}</span>
@@ -20,7 +28,8 @@ const DropdownMenu = ({ navElement }) => {
         </Link>
       ) : (
         <button
-          className="flex items-center gap-2 text-white text-sm font-semibold hover:bg-white/10 p-2 rounded-md"
+          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
+          disabled={isDisabled}
         >
           <img src={navElement.icon} alt="" />
           <span className="lg:block hidden">{navElement.title}</span>
@@ -31,7 +40,7 @@ const DropdownMenu = ({ navElement }) => {
           )}
         </button>
       )}
-      {navElement.elements && (
+      {navElement.elements && !isDisabled && (
         <ul className="w-[254px] group-hover:block hidden rounded-lg outline-none border-none absolute top-[100%] left-0 shadow-lg bg-white p-2 overflow-hidden z-30">
           <div className="bg-secondary h-[100px] w-[100px] rounded-full blur-[50px] absolute -top-[25%] -right-[10%]"></div>
           {navElement.elements.map((el, index) => (

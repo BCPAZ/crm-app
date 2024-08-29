@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import LoadingScreen from "@/components/common/LoadingScreen";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
+import PrivateRoute from "@/components/App/PrivateRoute";
 import { useCurrentAccountQuery } from "@/data/services/accountService";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
@@ -57,7 +58,6 @@ const CreateProject = lazy(() => import("@/views/App/CreateProject"));
 const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
 
 const AppRouter = () => {
-
   useCurrentAccountQuery();
 
   return (
@@ -65,15 +65,42 @@ const AppRouter = () => {
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
+              <Route path="/projects" element={<Projects />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/cost" element={<Cost />} />
+              <Route path="/cost/:id" element={<InvoiceDetail />} />
+              <Route path="/projects/:id" element={<TaskManagement />} />
+              <Route path="/create-project" element={<CreateProject />} />
+              <Route
+                path="/cost/create-new-invoice"
+                element={<CreateNewInvoice />}
+              />
+              <Route element={<DocumentLayout />}>
+                <Route
+                  path="/document-register"
+                  element={<DocumentRegister />}
+                />
+                <Route
+                  path="/upload-new-document"
+                  element={<UploadNewDocument />}
+                />
+              </Route>
+              <Route path="/workflow/*" element={<WorkflowLayout />}>
+                <Route path="workflows" element={<Workflows />} />
+                <Route path="templates" element={<Templates />} />
+                <Route path="create-template" element={<CreateTemplate />} />
+              </Route>
+              <Route element={<FieldManagementLayout />}>
+                <Route path="/issues" element={<Issues />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/issues/:id" element={<IssueDetail />} />
+              </Route>
+            </Route>
             <Route path="/" element={<Dashboard />} />
             <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<TaskManagement />} />
-            <Route path="/create-project" element={<CreateProject />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/insights" element={<Insights />} />
-            <Route path="/cost" element={<Cost />} />
-            <Route path="/cost/:id" element={<InvoiceDetail />} />
+
             <Route path="/mail/*" element={<MailLayout />}>
               <Route index={true} element={<Mail />} />
               <Route path=":id" element={<MailDetail />} />
@@ -83,27 +110,6 @@ const AppRouter = () => {
               <Route path="/roles" element={<Roles />} />
               <Route path="/job-title" element={<JobTitle />} />
               <Route path="/create-new-user" element={<CreateNewUser />} />
-            </Route>
-            <Route
-              path="/cost/create-new-invoice"
-              element={<CreateNewInvoice />}
-            />
-            <Route element={<DocumentLayout />}>
-              <Route path="/document-register" element={<DocumentRegister />} />
-              <Route
-                path="/upload-new-document"
-                element={<UploadNewDocument />}
-              />
-            </Route>
-            <Route path="/workflow/*" element={<WorkflowLayout />}>
-              <Route path="workflows" element={<Workflows />} />
-              <Route path="templates" element={<Templates />} />
-              <Route path="create-template" element={<CreateTemplate />} />
-            </Route>
-            <Route element={<FieldManagementLayout />}>
-              <Route path="/issues" element={<Issues />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/issues/:id" element={<IssueDetail />} />
             </Route>
           </Route>
         </Route>
