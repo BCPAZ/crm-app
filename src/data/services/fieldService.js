@@ -39,6 +39,12 @@ const fieldService = api.injectEndpoints({
       invalidatesTags: ["FIELDS"],
       keepUnusedDataFor: 0,
     }),
+    getIssueDetail : builder.query({
+      query : (id) => ({
+        url : `/field-management/${id}`
+      }),
+      providesTags : ['FIELDS']
+    })
   }),
 });
 
@@ -46,6 +52,7 @@ export const {
   useCreateIssueMutation,
   useGetAllIssuesQuery,
   useResolveIssueMutation,
+  useGetIssueDetailQuery
 } = fieldService;
 
 export default fieldService;

@@ -18,13 +18,13 @@ const IssueTable = () => {
 
   const renderStatus = (status) => {
     switch (status) {
-      case "resolved":
+      case "RESOLVED":
         return (
           <span className="text-xs py-1 px-2 rounded bg-green-600/20 text-green-600 capitalize w-full">
             {status}
           </span>
         );
-      case "pending":
+      case "PENDING":
         return (
           <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
             {status}
@@ -76,7 +76,7 @@ const IssueTable = () => {
                   <Link className="group flex items-center gap-4" to={`${issue.id}`}>
                     <img
                       className="w-[40px] h-[40px] rounded-full"
-                      src={issue.files.length > 0 ? issue.files[0].url : '/default-image.png'}
+                      src={issue.files.length > 0 ? issue.files[0].path : '/default-image.png'}
                       alt={issue.name}
                     />
                     <h3 className="text-sm text-secondary">{issue.name}</h3>
