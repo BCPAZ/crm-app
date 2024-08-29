@@ -6,6 +6,7 @@ import useToast from "@/hooks/useToast";
 import { useState, useRef, useEffect } from "react";
 import { useCreateIssueMutation } from "@/data/services/fieldService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { Toaster } from "react-hot-toast";
 
 const Reports = () => {
   const [createIssue, { isError, isSuccess, isLoading }] = useCreateIssueMutation();
@@ -56,21 +57,22 @@ const Reports = () => {
 
   useEffect(() => {
     if (isSuccess){ 
-      showToast('Problem successfully created', 'success');
       setTitle('');
       setFiles(null);
       setDescription('');
       setAssigneeId(null);
       setFilePreview(null);
+      showToast('Report uğurlu şəkildə yaradıldı', 'success');
     }
   }, [isSuccess]);
 
   useEffect(() => {
-    if (isError) showToast('Error occurred while creating the problem', 'error');
+    if (isError) showToast('Report yaranan zaman xəta baş verdi', 'error');
   }, [isError]);
 
   return (
     <section className="py-10">
+      <Toaster />
       <div className="siteContainer grid lg:grid-cols-2 gap-10">
         <div
           onClick={handleFileClick}
@@ -89,12 +91,11 @@ const Reports = () => {
               <img src={fileIcon} alt="File Icon" className="w-16 h-16" />
               <div className="flex items-center flex-col gap-2 mt-2">
                 <h4 className="text-md font-semibold text-center">
-                  Drop or select file
+                  Basın və fayl seçin
                 </h4>
                 <p className="text-xs font-medium text-center text-gray-500">
-                  Drop files here or click to{" "}
-                  <span className="text-green-600">browse</span> through your
-                  machine.
+                  Bu hissəyə klik edərək kompüterinizdə{" "}
+                  <span className="text-green-600">axtarış</span> edin və fayl seçin
                 </p>
                 <input
                   className="hidden"
