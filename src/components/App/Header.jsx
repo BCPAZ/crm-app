@@ -1,5 +1,4 @@
 import { IoMdMenu } from "react-icons/io";
-import english from "@/assets/icons/english.svg";
 import ProfileCard from "./ProfileCard";
 import { openMobileNav } from "@/data/slices/siteSlice";
 import { useDispatch } from "react-redux";
@@ -16,9 +15,6 @@ const Header = () => {
           <img className="w-[50px]" src="https://cdn-icons-png.flaticon.com/512/906/906341.png" alt="" />
         </div>
         <div className="flex items-center gap-2">
-          <button type="button">
-            <img src={english} alt="Language changed" />
-          </button>
           <ProfileCard />
           <button onClick={openMobileMenu} className="md:hidden block" type="button">
             <IoMdMenu size={24}/>
