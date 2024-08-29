@@ -2,9 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useGetIssueDetailQuery, useResolveIssueMutation } from "@/data/services/fieldService";
 import Spinner from "@/components/common/Spinner";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
-import ConfirmationModal from "@/components/common/ConfirmationModal";
 
 const IssueDetail = () => {
   const { id } = useParams();
@@ -58,8 +57,8 @@ const IssueDetail = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading issue details.</div>;
+  if (isLoading) return <div className="flex items-center justify-center h-full"><Spinner /></div>;
+  if (isError) return <div className="flex items-center justify-center h-full font-semibold text-xl">Problemə dair məlumat yoxdur.</div>;
 
   return (
     <section className="w-full h-full py-10">
@@ -107,8 +106,7 @@ const IssueDetail = () => {
             </div>
           </div>
         </div>
-        <ConfirmationModal />
-      </div>
+=      </div>
     </section>
   );
 };
