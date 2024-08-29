@@ -16,8 +16,11 @@ export const navigationLinks = [
   {
     title : 'Projects',
     icon : projects,
-    path : '/projects',
     elements : [
+      {
+        path : '/projects',
+        label : 'All Projects'
+      },
       {
         path : 'create-project',
         label : 'New Project',
