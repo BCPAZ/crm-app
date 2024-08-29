@@ -3,8 +3,8 @@ import api from "@/data/api";
 const fieldService = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllIssues: builder.query({
-      query: () => ({
-        url: "/field-management",
+      query: (page) => ({
+        url: `/field-management?page=${page}`,
       }),
       providesTags: ["FIELDS"],
       keepUnusedDataFor: 0,

@@ -11,7 +11,7 @@ const Pagination = ({ meta, onPageChange }) => {
     };
 
     return (
-        <div className="p-5 flex items-center gap-2">
+        <div className="p-5 flex items-center gap-2 text-sm font-medium">
             <button 
                 onClick={() => handlePageChange(current_page - 1)} 
                 disabled={current_page === 1}
