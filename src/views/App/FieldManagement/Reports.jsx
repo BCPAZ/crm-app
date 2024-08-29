@@ -37,25 +37,32 @@ const Reports = () => {
   const handleFileClick = () => fileRef.current.click();
 
   const handleAssigneeChange = (id) => {
-    setAssigneeId(id); // sadece ID'yi alıyoruz
+    setAssigneeId(id);
   };
 
   const handleSubmit = () => {
     if (!title || !description || !files) {
-      showToast('Please fill in all fields and select a file', 'error');
+      showToast('Bu sahələr boş buraxıla bilməz', 'error');
       return;
     }
   
     createIssue({
       name: title,
       description,
-      assignee_id: assigneeId, // burada sadece ID'yi gönderiyoruz
+      assignee_id: assigneeId,
       files,
     });
   };
 
   useEffect(() => {
-    if (isSuccess) showToast('Problem successfully created', 'success');
+    if (isSuccess){ 
+      showToast('Problem successfully created', 'success');
+      setTitle('');
+      setFiles(null);
+      setDescription('');
+      setAssigneeId(null);
+      setFilePreview(null);
+    }
   }, [isSuccess]);
 
   useEffect(() => {
