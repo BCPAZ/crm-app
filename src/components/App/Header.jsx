@@ -16,7 +16,7 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-2">
           <ProfileCard />
-          <button onClick={openMobileMenu} className="md:hidden block" type="button">
+          <button onClick={openMobileMenu} className="lg:hidden block" type="button">
             <IoMdMenu size={24}/>
           </button>
         </div>
