@@ -1,13 +1,13 @@
 import Searchbar from "@/components/common/Searchbar";
 import companyUsers from "@/mocks/companyUsers";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const UserSelectModal = ({ modal, closeUserModal }) => {
   const [selected, setSelected] = useState(null);
 
   const handleSelect = (user) => {
     setSelected(user);
-    console.log(user);
     closeUserModal();
   };
 
@@ -39,5 +39,10 @@ const UserSelectModal = ({ modal, closeUserModal }) => {
     </section>
   );
 };
+
+UserSelectModal.propTypes = {
+  modal : PropTypes.bool,
+  closeUserModal : PropTypes.func
+}
 
 export default UserSelectModal;
