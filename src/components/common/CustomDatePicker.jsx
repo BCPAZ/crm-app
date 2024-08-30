@@ -6,8 +6,8 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 
 const CustomDatePicker = ({label, onChange, value}) => {
   return (
-    <div className="relative">
-      <label htmlFor="" className="text-sm">{label}</label>
+    <div className="relative flex flex-col gap-2">
+      <label htmlFor="" className="text-sm text-gray-500">{label}</label>
       <div className="flex items-center justify-between border border-grey/20 p-3 rounded-lg">
       <DatePicker
         selected={value}
