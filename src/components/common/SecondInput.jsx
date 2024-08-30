@@ -7,6 +7,7 @@ const SecondInput = ({
   onChange,
   value,
   name,
+  ...props
 }) => {
   return (
     <div className="w-full">
@@ -26,6 +27,7 @@ const SecondInput = ({
             placeholder={placeholder}
             value={value}
             name={name}
+            {...props}
           />
         </div>
       </div>
