@@ -21,10 +21,27 @@ const documentService = api.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: ["DOCUMENTS"],
+    }),
+    getDocuments: builder.query({
+      query: (params) => ({
+        url: "/documents",
+        params,
+      }),
+      providesTags: ["DOCUMENTS"],
+      keepUnusedDataFor: 0,
+    }),
+    submitDocument: builder.mutation({
+      query: (id) => ({
+        url: `/documents/${id}/submit-for-review`,
+        method: "POST",
+      }),
+      invalidatesTags : ['WORKFLOWS']
     }),
   }),
 });
 
-export const { useUploadDocumentMutation } = documentService;
+export const { useUploadDocumentMutation, useGetDocumentsQuery, useSubmitDocumentMutation } =
+  documentService;
 
-export default documentService
+export default documentService;
