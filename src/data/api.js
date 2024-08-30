@@ -66,7 +66,8 @@ const api = createApi({
     "FIELDS",
     "COMPANIES",
     "TEMPLATES",
-    "DOCUMENTS"
+    "DOCUMENTS",
+    'INSIGHTS'
   ],
 });
 

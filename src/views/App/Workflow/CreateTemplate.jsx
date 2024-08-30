@@ -32,7 +32,7 @@ const CreateTemplate = () => {
     isLoading,
     isError,
   } = useGetGovernmentsQuery();
-  const [createTemplate, {isSuccess:createSuccess , error : createError}] = useCreateTemplateMutation();
+  const [createTemplate, {isSuccess:createSuccess , error : createError, isLoading: createIsLoading}] = useCreateTemplateMutation();
 
   const {showToast} = useToast();
 
@@ -98,7 +98,7 @@ const CreateTemplate = () => {
 
       setTimeout(() => {
         navigate('/workflow/templates')
-      }, 2000)
+      }, 1500)
     }
   }, [createSuccess])
 
@@ -118,7 +118,7 @@ const CreateTemplate = () => {
               Şablon yaradın - Workflow
             </h1>
             <div className="w-[15%]">
-              <Button value="Qeyd edin" form="create-template-form" />
+              <Button value="Qeyd edin" form="create-template-form" isLoading={createIsLoading}/>
             </div>
           </div>
         </div>

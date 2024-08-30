@@ -17,9 +17,7 @@ const fieldService = api.injectEndpoints({
         formData.append("assignee_id", data.assignee_id);
 
         if (data.files && data.files.length > 0) {
-          data.files.forEach((file, index) => {
-            formData.append(`files[${index}]`, file);
-          });
+            formData.append(`files[0]`, data?.files[0]);
         }
 
         return {
