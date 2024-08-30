@@ -65,7 +65,8 @@ const api = createApi({
     "PROJECTS",
     "FIELDS",
     "COMPANIES",
-    "TEMPLATES"
+    "TEMPLATES",
+    'INSIGHTS'
   ],
 });
 
