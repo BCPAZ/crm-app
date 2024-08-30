@@ -1,10 +1,13 @@
 import { useGetWorkflowInsightsQuery } from "@/data/services/insightService";
+import moment from "moment";
 
 const WorkflowReport = ({startDate, endDate}) => {
   const { data: insight = {} } = useGetWorkflowInsightsQuery({
-    start_date: startDate,
-    end_date: endDate,
+    start_date: moment(startDate).format("YYYY-MM-DD"),
+    end_date: moment(endDate).format("YYYY-MM-DD"),
   });
+
+  if (Object.keys(insight).length === 0) return null; 
 
   return (
     <div className="md:p-6 p-3 bg-white shadow-lg rounded-lg">

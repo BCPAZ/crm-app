@@ -1,14 +1,13 @@
 import ChartArea from "@/components/App/Insights/ChartArea";
 import WorkflowReport from "@/components/App/Insights/WorkflowReport";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
-import Selectbox from "@/components/common/Selectbox";
 import moment from "moment";
 import { useState } from "react";
 
 const Insights = () => {
 
-  const [startDate, setStartDate] = useState(moment().subtract(7, 'days').format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(moment().add(7, 'days').format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   return (
     <section>
@@ -16,8 +15,8 @@ const Insights = () => {
         <div className="siteContainer">
           <div className="w-full flex items-center gap-10">
             <h1 className="text-lg font-semibold">Projects Overview</h1>
-            <CustomDatePicker label="Başlanğıc Tarixi" />
-            <CustomDatePicker label="Bitmə Tarixi" />
+            <CustomDatePicker label="Başlanğıc Tarixi" value={startDate} onChange={setStartDate} />
+            <CustomDatePicker label="Bitmə Tarixi" value={endDate} onChange={setEndDate} />
           </div>
         </div>
       </div>
