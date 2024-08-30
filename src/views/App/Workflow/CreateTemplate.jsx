@@ -7,11 +7,13 @@ import { MdAdd } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useState } from "react";
 import { useGetGovernmentsQuery } from "@/data/services/companyService";
+// import { useCreateTemplateMutation } from "@/data/services/templateService";
 import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 const CreateTemplate = () => {
   const [columns, setColumns] = useState([]);
   const [modal , setModal] = useState(false);
   const {data : governments = [], isLoading, isError} = useGetGovernmentsQuery();
+  // const [createTemplate, {isSuccess:createSuccess , isError : createError}] = useCreateTemplateMutation()
 
   const handleModal = () => {
     setModal(true)
@@ -21,7 +23,7 @@ const CreateTemplate = () => {
     setModal(false);
   }
   const handleAddColumn = () => {
-    setColumns([...columns, { id: columns.length + 1, agencies: [] }]);
+    setColumns([...columns, { id: columns.length + 1, companies: [], days:0 }]);
   };
 
   return (
@@ -73,20 +75,7 @@ const CreateTemplate = () => {
                         </div>
                         <button className="text-black"><MdClose size={20}/></button>
                       </div>
-                      <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1">
-                          <img className="w-[30px] h-[30px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNQcCAZ_DArpO0dY4kfaeVGSK7M5GkmcY9g&s" alt="" />
-                          <span className="text-sm font-medium">Azərİşıq ASC</span>
-                        </div>
-                        <button className="text-black"><MdClose size={20}/></button>
-                      </div>
-                      <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1">
-                          <img className="w-[30px] h-[30px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNQcCAZ_DArpO0dY4kfaeVGSK7M5GkmcY9g&s" alt="" />
-                          <span className="text-sm font-medium">Azərİşıq ASC</span>
-                        </div>
-                        <button className="text-black"><MdClose size={20}/></button>
-                      </div>
+
                     </div>
                   </div>
                 ))}
