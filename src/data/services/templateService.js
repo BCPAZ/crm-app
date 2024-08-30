@@ -17,6 +17,21 @@ const templateService = api.injectEndpoints({
       }),
       invalidatesTags : ['TEMPLATES'],
       keepUnusedDataFor : 0
+    }),
+    detailTemplate : builder.query({
+      query : (id) => ({
+        url : `templates/${id}`
+      }),
+      providesTags : ['TEMPLATES'],
+      keepUnusedDataFor : 0
+    }),
+    deleteTemplate : builder.mutation({
+      query : (id) => ({
+        url : `/templates/${id}`,
+        method : 'DELETE'
+      }),
+      invalidatesTags : ['TEMPLATES'],
+      keepUnusedDataFor : 0
     })
   })
 })

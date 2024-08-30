@@ -12,6 +12,7 @@ import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 const CreateTemplate = () => {
   const [columns, setColumns] = useState([]);
   const [modal , setModal] = useState(false);
+  const [name , setName] = useState('');
   const {data : governments = [], isLoading, isError} = useGetGovernmentsQuery();
   // const [createTemplate, {isSuccess:createSuccess , isError : createError}] = useCreateTemplateMutation()
 
@@ -75,7 +76,6 @@ const CreateTemplate = () => {
                         </div>
                         <button className="text-black"><MdClose size={20}/></button>
                       </div>
-
                     </div>
                   </div>
                 ))}
