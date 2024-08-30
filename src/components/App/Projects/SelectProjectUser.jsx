@@ -27,6 +27,7 @@ const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
   };
 
   const users = companyUsers?.users || [];
+  const positionsList = positions || [];
 
   return (
     <div
@@ -45,8 +46,11 @@ const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
           absolute
           column
           options={users.map(user => ({ id: user.id, name: user.name }))}
-          value={selectedUser}
-          onChange={setSelectedUser}
+          value={selectedUser ? selectedUser.id : ''}
+          onChange={(id) => {
+            const user = users.find(u => u.id === id);
+            setSelectedUser(user);
+          }}
         />
         <Select
           label="Pozisiya adı"
@@ -54,9 +58,12 @@ const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
           placeholder="Pozisiya əlavə edin"
           absolute
           column
-          options={positions.map(position => ({ id: position.id, name: position.name }))}
-          value={selectedPosition}
-          onChange={setSelectedPosition}
+          options={positionsList.map(position => ({ id: position.id, name: position.name }))}
+          value={selectedPosition ? selectedPosition.id : ''}
+          onChange={(id) => {
+            const position = positionsList.find(p => p.id === id);
+            setSelectedPosition(position);
+          }}
         />
         <div className="flex justify-end gap-3">
           <CustomButton

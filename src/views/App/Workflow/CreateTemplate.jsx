@@ -1,84 +1,96 @@
 import Button from "@/components/common/Button";
-import CheckboxElement from "@/components/common/CheckboxElement";
 import SecondInput from "@/components/common/SecondInput";
 import SecondTextArea from "@/components/common/SecondTextArea";
-import Select from "@/components/common/Select";
-import { IoIosAdd } from "react-icons/io";
+import { FaPlay } from "react-icons/fa6";
+import { FaStop } from "react-icons/fa6";
+import { MdAdd } from "react-icons/md";
+import { MdClose } from "react-icons/md";
+import { useState } from "react";
 
 const CreateTemplate = () => {
+  const [columns, setColumns] = useState([]);
+
+  const handleAddColumn = () => {
+    setColumns([...columns, { id: columns.length + 1, agencies: [] }]);
+  };
+
   return (
     <section>
       <div className="border-b border-gray-400 py-7">
         <div className="siteContainer">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold w-full">
-              Create Template - Workflow
+              Şablon yaradın - Workflow
             </h1>
             <div className="w-[15%]">
-              <Button value="Save" />
+              <Button value="Qeyd edin" />
             </div>
           </div>
         </div>
       </div>
       <div className="siteContainer">
         <div className="py-[60px]">
-        <div className="md:max-w-[750px] max-w-full">
-          <div className="flex justify-center flex-col gap-5">
-            <SecondInput column label="Name *" placeholder="Template Name" />
-            <SecondTextArea
-              solid
-              column
-              label="Description"
-              placeholder="Description"
-            />
-            <Select column label="Approval statuses" />
+          <div className="md:max-w-[750px] max-w-full">
+            <div className="flex justify-center flex-col gap-5">
+              <SecondInput column label="Name *" placeholder="Template Name" />
+              <SecondTextArea
+                solid
+                column
+                label="Description"
+                placeholder="Description"
+              />
+            </div>
           </div>
-        </div>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-[60px] mt-10">
-          <div className="flex md:flex-row flex-col gap-10">
-            <h3 className="md:max-w-[82px] max-w-full font-medium">
-              Initiators capabilities
-            </h3>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-3">
-                <h3>Beginning of the process</h3>
-                <CheckboxElement label="The initiator can change the participants and the duration of the stages" />
+          <div className="flex flex-col gap-9 mt-10 w-full">
+            <h1 className="text-2xl font-semibold">Duration</h1>
+            <div className="rounded-lg max-w-full w-full flex items-center justify-center gap-4 border-2 border-grey/20 border-dashed min-h-[200px] p-5 h-full">
+              <div className="h-full p-10 rounded-lg bg-grey/20">
+                <button><FaPlay size={20} /></button>
               </div>
-              <div className="flex flex-col gap-3">
-                <h3>During the process execution</h3>
-                <CheckboxElement label="The initiator can change the list of participants in the stage" />
-                <CheckboxElement label="The initiator can skip stages" />
+              <div className="flex-1 flex items-center gap-2 overflow-x-auto py-5">
+                {columns.map((column) => (
+                  <div key={column.id} className="bg-grey/10 p-4 w-fit rounded-lg h-full min-w-[300px] flex flex-col">
+                    <div className="flex items-center gap-2 w-full">
+                      <SecondInput placeholder="Müddət daxil edin" />
+                      <button className="text-white bg-black p-4 rounded-md"><MdAdd /></button>
+                    </div>
+                    <div className="p-2 flex flex-col gap-2"> 
+                      <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1">
+                          <img className="w-[30px] h-[30px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNQcCAZ_DArpO0dY4kfaeVGSK7M5GkmcY9g&s" alt="" />
+                          <span className="text-sm font-medium">Azərİşıq ASC</span>
+                        </div>
+                        <button className="text-black"><MdClose size={20}/></button>
+                      </div>
+                      <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1">
+                          <img className="w-[30px] h-[30px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNQcCAZ_DArpO0dY4kfaeVGSK7M5GkmcY9g&s" alt="" />
+                          <span className="text-sm font-medium">Azərİşıq ASC</span>
+                        </div>
+                        <button className="text-black"><MdClose size={20}/></button>
+                      </div>
+                      <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1">
+                          <img className="w-[30px] h-[30px] rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNQcCAZ_DArpO0dY4kfaeVGSK7M5GkmcY9g&s" alt="" />
+                          <span className="text-sm font-medium">Azərİşıq ASC</span>
+                        </div>
+                        <button className="text-black"><MdClose size={20}/></button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={handleAddColumn}
+                  className="p-4 rounded-md mx-4 bg-white border border-grey/20 flex items-center gap-2 font-semibold text-sm text-nowrap"
+                >
+                  <MdAdd size={18} /> Yeni timeline yarat
+                </button>
+              </div>
+              <div className="h-full p-10 rounded-lg bg-grey/20">
+                <button><FaStop size={20} /></button>
               </div>
             </div>
           </div>
-          <div className="flex md:flex-row flex-col md:gap-10 gap-5">
-            <h3 className="md:max-w-[82px] max-w-full">
-              Rules for completing stages
-            </h3>
-            <div className="flex flex-col gap-4 w-full">
-              <Select column label="Parallel stages are completed if" />
-              <Select column label="If rejected" />
-            </div>
-          </div>
-          <div className="flex md:flex-row flex-col md:gap-10 gap-5 w-full">
-            <h3 className="w-fit">Attributes of writing</h3>
-            <div className="w-full">
-              <Select />
-            </div>
-          </div>
-        </div>
-        <button
-          type="button"
-          className="mt-10 flex items-center gap-3 bg-white border border-grey/20 rounded-lg py-3 px-6 text-sm font-semibold"
-        >
-          <IoIosAdd size={24}/> Drag a new stage into the template
-        </button>
-        <div className="flex flex-col gap-9 mt-10">
-          <h1 className="text-2xl font-semibold">Duration</h1>
-          <div className="rounded-lg md:max-w-[236px] max-w-full w-full flex items-center justify-center border-2 border-grey/20 border-dashed h-[200px]">
-            <h1 className="text-lg text-gray-400">empty</h1>
-          </div>
-        </div>
         </div>
       </div>
     </section>
