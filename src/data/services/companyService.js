@@ -1,4 +1,4 @@
-import api from "../api";
+import api from "@/data/api";
 
 const companyService = api.injectEndpoints({
   endpoints : (builder) => ({

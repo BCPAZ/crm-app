@@ -6,10 +6,20 @@ import { FaStop } from "react-icons/fa6";
 import { MdAdd } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useState } from "react";
-
+import { useGetGovernmentsQuery } from "@/data/services/companyService";
+import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 const CreateTemplate = () => {
   const [columns, setColumns] = useState([]);
+  const [modal , setModal] = useState(false);
+  const {data : governments = [], isLoading, isError} = useGetGovernmentsQuery();
 
+  const handleModal = () => {
+    setModal(true)
+  }
+
+  const closeModal = () => {
+    setModal(false);
+  }
   const handleAddColumn = () => {
     setColumns([...columns, { id: columns.length + 1, agencies: [] }]);
   };
@@ -29,6 +39,7 @@ const CreateTemplate = () => {
         </div>
       </div>
       <div className="siteContainer">
+        <UserSelectModal isLoading={isLoading} isError={isError} options={governments} modal={modal} closeUserModal={closeModal} />
         <div className="py-[60px]">
           <div className="md:max-w-[750px] max-w-full">
             <div className="flex justify-center flex-col gap-5">
@@ -52,7 +63,7 @@ const CreateTemplate = () => {
                   <div key={column.id} className="bg-grey/10 p-4 w-fit rounded-lg h-full min-w-[300px] flex flex-col">
                     <div className="flex items-center gap-2 w-full">
                       <SecondInput placeholder="Müddət daxil edin" />
-                      <button className="text-white bg-black p-4 rounded-md"><MdAdd /></button>
+                      <button onClick={handleModal} className="text-white bg-black p-4 rounded-md"><MdAdd /></button>
                     </div>
                     <div className="p-2 flex flex-col gap-2"> 
                       <div className="p-2 bg-white rounded-lg flex items-center justify-between gap-2">
