@@ -13,7 +13,13 @@ const templateService = api.injectEndpoints({
       query: (data) => ({
         url: "/templates",
         method: "POST",
-        body: data,
+        body: {
+          ...data,
+          duration: data?.duration?.map((c) => ({
+            ...c,
+            companies: c?.companies?.map((c) => c.id),
+          })),
+        },
       }),
       invalidatesTags: ["TEMPLATES"],
       keepUnusedDataFor: 0,
