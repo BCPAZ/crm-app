@@ -55,7 +55,7 @@ function Select({ label, column, absolute, options = [], value, onChange, mode =
           <ListboxOption
             key={option.id}
             value={option}
-            className="hover:bg-blue-100 p-2 rounded-md text-sm cursor-pointer"
+            className="hover:bg-blue-100 p-2 rounded-md text-sm cursor-pointer text-black"
           >
             {option.name}
           </ListboxOption>

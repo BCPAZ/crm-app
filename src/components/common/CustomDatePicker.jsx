@@ -10,7 +10,7 @@ const CustomDatePicker = ({label}) => {
 
   return (
     <div className="relative">
-      <label htmlFor="" className="absolute -top-1.5 left-4 text-[10px]">{label}</label>
+      <label htmlFor="" className="text-sm">{label}</label>
       <div className="flex items-center justify-between border border-grey/20 p-3 rounded-lg">
       <DatePicker
         selected={selectedDate}
