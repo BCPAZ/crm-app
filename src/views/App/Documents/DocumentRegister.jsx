@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IoMdCheckmark } from "react-icons/io";
+import { FileIcon, defaultStyles } from "react-file-icon";
+import Spinner from "@/components/common/Spinner";
+import Pagination from "@/components/common/Pagination";
+import { Toaster } from "react-hot-toast";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
-import DocumentsTable from "@/components/App/Documents/DocumentsTable";
+import useToast from "@/hooks/useToast";
+import {
+  useGetDocumentsQuery,
+  useSubmitDocumentMutation,
+} from "@/data/services/documentService";
+import moment from "moment";
+
+const options = [
+  { id: "register", name: "Reyestr" },
+  { id: "drawings", name: "Çertyoj" },
+  { id: "temporary", name: "Müvəqqəti" },
+];
 
 const DocumentRegister = () => {
-  const options = [
-    { id: 'register', name: 'Reyestr' },
-    { id: 'drawings', name: 'Çertyoj' },
-    { id: 'temporary', name: 'Müvəqqəti' },
-  ];
-  
+  const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
     name: "",
     documentNo: "",
@@ -19,18 +30,67 @@ const DocumentRegister = () => {
     type: null,
   });
 
+  const { name, documentNo, startDate, endDate, type } = filters;
+
+  const { data, isLoading, isError } = useGetDocumentsQuery({
+    page,
+    name,
+    document_no: documentNo,
+    start_date: startDate ? moment(startDate).format("YYYY-MM-DD") : null,
+    end_date: endDate ? moment(endDate).format("YYYY-MM-DD") : null,
+    type,
+  });
+
+  const [submitDocument, { isSuccess: submitSuccess, isError: submitError }] =
+    useSubmitDocumentMutation();
+  const documents = data?.documents || [];
+  const meta = data?.meta || {};
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (submitSuccess) {
+      showToast("Sənəd yoxlanışa göndərildi", "success");
+    }
+  }, [submitSuccess]);
+
+  useEffect(() => {
+    if (submitError) {
+      showToast("Sənəd yoxlanışa göndərilə bilmədi", "error");
+    }
+  }, [submitError]);
+
   const handleChange = (field, value) => {
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [field]: value,
-    }));
+    setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
   };
 
-  const cleanFilters = (filters) => {
-    return Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => value !== null && value !== "")
-    );
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
+
+  const getFileExtension = (filename) => {
+    return filename.split(".").pop();
+  };
+
+  const renderFileIcon = (filename) => {
+    const ext = getFileExtension(filename);
+    const style = defaultStyles[ext] || defaultStyles["default"];
+    return <FileIcon extension={ext} {...style} />;
+  };
+
+  const handleSubmitDocuments = (id) => {
+    submitDocument(id);
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      name: "",
+      documentNo: "",
+      startDate: null,
+      endDate: null,
+      type: null,
+    });
+  };
+
 
   return (
     <section className="h-full">
@@ -40,11 +100,13 @@ const DocumentRegister = () => {
             <SecondInput
               onChange={(e) => handleChange("name", e.target.value)}
               column
+              value={name}
               label="Şablon adı"
               placeholder="Şablon adı daxil edin"
               type="text"
             />
             <SecondInput
+            value={documentNo}
               onChange={(e) => handleChange("documentNo", e.target.value)}
               column
               label="Sənəd nömrəsi"
@@ -52,23 +114,113 @@ const DocumentRegister = () => {
               type="text"
             />
             <CustomDatePicker
-              onChange={(e) => handleChange("startDate", e.target.value)}
+              value={startDate}
+              onChange={(value) => handleChange("startDate", value)}
               label="Başlanğıc tarixi seçin"
             />
             <CustomDatePicker
-              onChange={(e) => handleChange("endDate", e.target.value)}
+              value={endDate}
+              onChange={(value) => handleChange("endDate", value)}
               label="Bitiş tarixi seçin"
             />
             <Select
-              onChange={(e) => handleChange("type", e.target.value)}
+              onChange={(e) => handleChange("type", e)}
               label="Tip"
               options={options}
               column
             />
           </div>
           <div className="py-10">
-            <div>
-              <DocumentsTable filters={cleanFilters(filters)} />
+            <div className="w-full rounded-lg shadow-xl bg-white">
+              <Toaster />
+              <div className="text-sm font-medium text-gray-500 w-full">
+                <div className="flex items-center justify-between w-full p-5">
+                  <h3>{documents.length} nəticə tapıldı</h3>
+                  <button onClick={resetFilters}>Filtrləri təmizlə</button>
+                </div>
+                <div className="w-full overflow-x-auto">
+                  <table className="w-full text-sm min-w-[1200px]">
+                    <thead className="bg-gray-300/30 w-full rounded-lg text-left">
+                      <tr className="p-5 w-full flex items-center justify-between gap-5">
+                        <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
+                          <span className="flex items-center gap-2">Sənəd</span>
+                        </th>
+                        <th className="text-sm font-medium w-[14%] text-gray-500">
+                          Sənəd nömrəsi
+                        </th>
+                        <th className="text-sm font-medium w-[14%] text-gray-500">
+                          Səhifə sayı
+                        </th>
+                        <th className="text-sm font-medium w-[14%] text-gray-500">
+                          Müəllif
+                        </th>
+                        <th className="text-sm font-medium w-[8%] text-gray-500 rounded-e-lg">
+                          Əməliyyat
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="w-full flex flex-col text-left">
+                      <div className="py-4 flex items-center justify-center w-full">
+                        {isLoading && <Spinner />}
+                      </div>
+                      {isError || documents.length === 0 ? (
+                        <div className="p-5 text-center w-full">
+                          Heç bir sənəd tapılmadı
+                        </div>
+                      ) : (
+                        documents.map((document, index) => (
+                          <tr
+                            key={index}
+                            className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]"
+                          >
+                            <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
+                              <div className="flex items-center gap-4">
+                                <div className="w-[25px] h-[25px]">
+                                  {renderFileIcon(document.file)}
+                                </div>
+                                <div className="text-sm text-secondary hover:underline">
+                                  {document.name}
+                                </div>
+                              </div>
+                            </th>
+                            <td className="text-sm font-medium text-gray-500 w-[14%]">
+                              <div className="flex flex-col">
+                                <h3 className="text-xs text-secondary">
+                                  {document.document_no}
+                                </h3>
+                              </div>
+                            </td>
+                            <td className="text-sm font-medium text-gray-500 w-[14%]">
+                              <div className="flex flex-col">
+                                <h3 className="text-xs text-secondary">
+                                  {document.page_size}
+                                </h3>
+                              </div>
+                            </td>
+                            <td className="text-sm font-medium text-gray-500 w-[14%]">
+                              <span className="text-xs text-secondary">
+                                {document.author}
+                              </span>
+                            </td>
+                            <td className="text-sm font-medium text-gray-500 w-[8%] flex items-center gap-2">
+                              <button
+                                onClick={() =>
+                                  handleSubmitDocuments(document.id)
+                                }
+                                className="outline-none border-none p-1 hover:bg-blue-600/40 hover:text-blue-600 rounded-lg"
+                                type="button"
+                              >
+                                <IoMdCheckmark size={20} />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+                <Pagination meta={meta} onPageChange={handlePageChange} />
+              </div>
             </div>
           </div>
         </div>

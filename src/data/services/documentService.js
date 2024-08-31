@@ -26,7 +26,9 @@ const documentService = api.injectEndpoints({
     getDocuments: builder.query({
       query: (params) => ({
         url: "/documents",
-        params,
+        params: Object.fromEntries(
+          Object.entries(params).filter(([_, value]) => value !== null)
+        ),
       }),
       providesTags: ["DOCUMENTS"],
       keepUnusedDataFor: 0,
