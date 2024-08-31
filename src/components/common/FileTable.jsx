@@ -2,7 +2,6 @@ import CheckboxElement from "./CheckboxElement";
 import avatar from "@/assets/images/img.png";
 import { GoArrowDown } from "react-icons/go";
 
-
 const FileTable = () => {
   return (
     <div className="w-full overflow-x-auto">
@@ -21,42 +20,6 @@ const FileTable = () => {
           </tr>
         </thead>
         <tbody className="w-full flex flex-col gap-5 text-left mt-5">
-          <tr className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]">
-            <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-              <CheckboxElement />
-              <span>fraction-health-sao-tome-and-principe-helen-reddy-045706-sm-151104-ulan-bator.jpg</span>
-            </th>
-            <td className="text-sm font-medium text-gray-500 w-[10%]">Structure 1</td>
-            <td className="text-sm font-medium text-gray-500 w-[10%]">Rejected</td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
-              <span className="text-xs">09 Aug 2022</span>
-              <span className="text-xs">10:37 AM</span>
-            </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
-              <img src={avatar} alt="" />
-              <img src={avatar} alt="" />
-              <img src={avatar} alt="" />
-            </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">Approved</td>
-          </tr>
-          <tr className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]">
-            <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-              <CheckboxElement />
-              <span>fraction-health-sao-tome-and-principe-helen-reddy-045706-sm-151104-ulan-bator.jpg</span>
-            </th>
-            <td className="text-sm font-medium text-gray-500 w-[10%]">Structure 1</td>
-            <td className="text-sm font-medium text-gray-500 w-[10%]">Rejected</td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
-              <span className="text-xs">09 Aug 2022</span>
-              <span className="text-xs">10:37 AM</span>
-            </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
-              <img src={avatar} alt="" />
-              <img src={avatar} alt="" />
-              <img src={avatar} alt="" />
-            </td>
-            <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">Approved</td>
-          </tr>
           <tr className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]">
             <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
               <CheckboxElement />

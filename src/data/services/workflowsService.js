@@ -5,7 +5,9 @@ const workflowsService = api.injectEndpoints({
     getWorkflows: builder.query({
       query: (params) => ({
         url: "/workflows",
-        params,
+        params: Object.fromEntries(
+          Object.entries(params).filter(([_, value]) => value !== null)
+        ),
       }),
       providesTags: ["WORKFLOWS"],
       keepUnusedDataFor: 0,
