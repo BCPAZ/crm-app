@@ -151,7 +151,7 @@ const Workflows = () => {
                 ) : (
                   workflows.map((workflow, index) => (
                     <Link
-                    to={`${workflow.id}`}
+                    to={`/workflows/${workflow.id}`}
                       key={index}
                       className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
                     >
