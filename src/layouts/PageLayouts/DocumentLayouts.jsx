@@ -14,10 +14,10 @@ const DocumentLayout = () => {
         </div>
       </div>
       <div className="flex flex-grow">
-        <div className="w-[20%] h-screen">
+        <div className="w-[20%] lg:block hidden h-screen">
           <Sidebar links={documentLinks} />
         </div>
-        <main className="w-[80%] h-full">
+        <main className="lg:w-[80%] w-full h-full">
           <Outlet />
         </main>
       </div>

@@ -10,6 +10,7 @@ const CustomDatePicker = ({ label, onChange, value }) => {
       <div className="flex items-center justify-between border border-grey/20 p-3 rounded-lg">
       <DatePicker
         selected={value}
+        value={value}
         onChange={onChange}
         className="w-full rounded-lg h-full bg-transparent text-sm text-gray-500 cursor-pointer"
         dateFormat="yyyy/MM/dd"
