@@ -15,6 +15,7 @@ const Projects = lazy(() => import("@/views/App/Projects"));
 const TaskManagement = lazy(() => import("@/views/App/TaskManagement"));
 const Dashboard = lazy(() => import("@/views/App/Dashboard"));
 const Profile = lazy(() => import("@/views/App/Profile"));
+const WorkflowDetail = lazy(() => import("@/views/App/Workflow/WorkflowDetail"));
 const DocumentLayout = lazy(() =>
   import("@/layouts/PageLayouts/DocumentLayouts")
 );
@@ -85,10 +86,11 @@ const AppRouter = () => {
                   element={<UploadNewDocument />}
                 />
               </Route>
-              <Route path="/workflow/*" element={<WorkflowLayout />}>
-                <Route path="workflows" element={<Workflows />} />
-                <Route path="templates" element={<Templates />} />
-                <Route path="create-template" element={<CreateTemplate />} />
+              <Route element={<WorkflowLayout />}>
+                <Route path="/workflows" element={<Workflows />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/create-template" element={<CreateTemplate />} />
+                <Route path="/workflows/:id" element={<WorkflowDetail />} />
               </Route>
               <Route element={<FieldManagementLayout />}>
                 <Route path="/issues" element={<Issues />} />
