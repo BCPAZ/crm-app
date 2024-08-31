@@ -2,6 +2,7 @@ import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import { IoIosArrowForward } from "react-icons/io";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
+import DocumentsTable from "@/components/App/Documents/DocumentsTable";
 
 const DocumentRegister = () => {
   const filterTypes = [
@@ -35,8 +36,11 @@ const DocumentRegister = () => {
             </span>
             <button>Restore Filters</button>
           </div>
-          <div className="bg-gray-200">
-            <div className="p-3 flex flex-col gap-4">
+          <div className="py-10">
+            <div>
+              <DocumentsTable />
+            </div>
+            {/* <div className="p-3 flex flex-col gap-4">
               <h2>No results.</h2>
               <span>Suggestions:</span>
               <ul className="list-disc p-3">
@@ -44,7 +48,7 @@ const DocumentRegister = () => {
                 <li className="list-disc">Try using different keywords</li>
                 <li className="list-disc">Try using different filters</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
