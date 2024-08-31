@@ -35,14 +35,6 @@ export const navigationLinks = [
         path : '/document-register',
         label : 'Document Register'
       },
-      // {
-      //   path : '/drawings',
-      //   label : 'Drawings'
-      // },
-      // {
-      //   path : '/temporary-files',
-      //   label : 'Temporary Files'
-      // },
       {
         path : '/upload-new-document',
         label : 'Upload New Document'
