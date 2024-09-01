@@ -11,6 +11,20 @@ import { IoMdRefresh } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const Workflows = () => {
+
+  const renderStatus = (status) => {
+    switch(status) {
+      case 'REJECTED':
+        return <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">{status}</span>;
+      case 'APPROVED':  
+        return <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">{status}</span>;
+      case 'PENDING':
+        return <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">{status}</span>;
+      default:
+        return <span className="text-xs py-1 px-2  rounded bg-gray-600/40 capitalize w-full">{status}</span>;
+    }
+  }
+
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
     name: "",
@@ -124,16 +138,16 @@ const Workflows = () => {
                     </span>
                   </th>
                   <th className="text-sm font-medium w-[10%] text-gray-500">
-                    Mərhələ
+                    İcraçı
                   </th>
                   <th className="text-sm font-medium w-[10%] text-gray-500">
-                    Nəticə
+                    Sənəd No
                   </th>
                   <th className="text-sm font-medium w-[10%] text-gray-500">
                     Deadline
                   </th>
                   <th className="text-sm font-medium w-[10%] text-gray-500 text-right">
-                    İcraçı
+                    Qurum
                   </th>
                   <th className="text-sm font-medium w-[10%] text-gray-500 rounded-e-lg">
                     Status
@@ -164,7 +178,7 @@ const Workflows = () => {
                         {workflow.sender.name}
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%]">
-                        Rejected
+                        {workflow.document.document_no}
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
                         <span className="text-xs">{moment(workflow.updated_at).format('YYYY-MM-DD')}</span>
@@ -174,7 +188,7 @@ const Workflows = () => {
                         <img className="w-[30px] h-[40px] rounded-full" src={workflow.government.image_url} alt={workflow.government.name} />
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
-                        {workflow.status}
+                        {renderStatus(workflow.status)}
                       </td>
                     </Link>
                   ))

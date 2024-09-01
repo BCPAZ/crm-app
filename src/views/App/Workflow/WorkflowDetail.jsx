@@ -1,17 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useGetWorkflowDetailQuery } from "@/data/services/workflowsService";
 import moment from "moment";
+import Spinner from "@/components/common/Spinner";
 
 const WorkflowDetail = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetWorkflowDetailQuery(id);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center h-full w-full"><Spinner /></div>;
   }
 
   if (isError) {
-    return <div>Error loading workflow details.</div>;
+    return <div className="w-full h-full flex items-center justify-center">Məlumat yüklənən zaman xəta baş verdi.</div>;
   }
 
   const workflowData = data || {};
@@ -33,7 +34,7 @@ const WorkflowDetail = () => {
           </h1>
           <div className="flex items-center gap-5">
           <span className="text-md font-medium text-gray-500">Ümumi gün sayı : {workflowData.days}</span>
-          <span className="text-md font-medium py-2 px-4 rounded-lg bg-black text-white">{workflowData.status}</span>
+          <span className="text-sm font-medium py-2 px-4 rounded-lg bg-black text-white">{workflowData.status}</span>
           </div>
         </div>
         <div className="mt-10 grid md:grid-cols-2 grid-cols-1 gap-10">
