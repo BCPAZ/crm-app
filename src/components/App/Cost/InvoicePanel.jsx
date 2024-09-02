@@ -18,8 +18,8 @@ const InvoicePanel = () => {
       <div className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
         <CircleProgressBar progress={calculateProgress(data.PENDING.count)} />
         <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium">Gözləyən</h3>
-          <p className="text-sm text-gray-400">{data.PENDING.count} faktura</p>
+          <h3 className="text-sm font-medium">Gözləyən</h3>
+          <p className="text-xs text-gray-400">{data.PENDING.count} faktura</p>
           <span className="font-medium text-sm">₼{data.PENDING.total}</span>
         </div>
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300 sm:block hidden"></div>
@@ -28,8 +28,8 @@ const InvoicePanel = () => {
       <div className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
         <CircleProgressBar progress={calculateProgress(data.PAID.count)} />
         <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium">Ödənilənlər</h3>
-          <p className="text-sm text-gray-400">{data.PAID.count} faktura</p>
+          <h3 className="text-sm font-medium">Ödənilənlər</h3>
+          <p className="text-xs text-gray-400">{data.PAID.count} faktura</p>
           <span className="font-medium text-sm">₼{data.PAID.total}</span>
         </div>
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300 sm:block hidden"></div>
@@ -38,8 +38,8 @@ const InvoicePanel = () => {
       <div className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
         <CircleProgressBar progress={calculateProgress(data.CANCELLED.count)} />
         <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium">Ləğv edilən</h3>
-          <p className="text-sm text-gray-400">{data.CANCELLED.count} faktura</p>
+          <h3 className="text-sm font-medium">Ləğv edilən</h3>
+          <p className="text-xs text-gray-400">{data.CANCELLED.count} faktura</p>
           <span className="font-medium text-sm">₼{data.CANCELLED.total}</span>
         </div>
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300 sm:block hidden"></div>
@@ -48,8 +48,8 @@ const InvoicePanel = () => {
       <div className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
         <CircleProgressBar progress={calculateProgress(data.OVERDUE.count)} />
         <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium">Vaxtı keçmiş</h3>
-          <p className="text-sm text-gray-400">{data.OVERDUE.count} faktura</p>
+          <h3 className="text-sm font-medium">Vaxtı keçmiş</h3>
+          <p className="text-xs text-gray-400">{data.OVERDUE.count} faktura</p>
           <span className="font-medium text-sm">₼{data.OVERDUE.total}</span>
         </div>
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-full bg-gray-300 sm:block hidden"></div>
@@ -58,8 +58,8 @@ const InvoicePanel = () => {
       <div className="flex items-center gap-3 border-grey/20 px-6 relative w-full">
         <CircleProgressBar progress={calculateProgress(data.DRAFT.count)} />
         <div className="flex flex-col gap-1">
-          <h3 className="text-md font-medium">Qaralama</h3>
-          <p className="text-sm text-gray-400">{data.DRAFT.count} faktura</p>
+          <h3 className="text-sm font-medium">Qaralama</h3>
+          <p className="text-xs text-gray-400">{data.DRAFT.count} faktura</p>
           <span className="font-medium text-sm">₼{data.DRAFT.total}</span>
         </div>
       </div>
