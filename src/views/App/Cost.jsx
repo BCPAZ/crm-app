@@ -1,22 +1,11 @@
 import InvoicePanel from "@/components/App/Cost/InvoicePanel";
 import InvoiceTable from "@/components/App/Cost/InvoiceTable";
-import Selectbox from "@/components/common/Selectbox";
 import { IoAddSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const Cost = () => {
   return (
     <section>
-      <div className="border-b border-gray-400 py-7">
-        <div className="siteContainer">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold w-full">Cost</h1>
-            <div className="w-[15%]">
-              <Selectbox />
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="siteContainer">
         <div className="py-10">
           <div className="flex items-center justify-between">

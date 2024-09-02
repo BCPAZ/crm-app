@@ -1,4 +1,3 @@
-import Selectbox from "@/components/common/Selectbox";
 import SendInvoice from "@/components/App/Cost/SendInvoice";
 import Select from "@/components/common/Select";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
@@ -20,20 +19,9 @@ const CreateNewInvoice = () => {
   return (
     <section>
       <UserSelectModal modal={modal} closeUserModal={closeUserModal}  />
-      <div className="border-b border-gray-400 py-7">
-        <div className="siteContainer">
-          <div className="flex items-center justify-between">
-            <h1 className="md:text-xl font-semibold w-full">Cost</h1>
-            <div className="w-[150px]">
-              <Selectbox />
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="siteContainer">
         <div className="py-10">
           <h1 className="md:text-2xl text-xl font-bold">Create new invoice</h1>
-          <button onClick={openUserModal}>Open Modal</button>
           <div className="rounded-xl shadow-lg mt-10 bg-white">
             <div className="md:p-6 p-3">
               <SendInvoice openUserModal={openUserModal} />
