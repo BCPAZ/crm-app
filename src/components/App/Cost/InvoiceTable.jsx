@@ -3,28 +3,43 @@ import Select from "@/components/common/Select";
 import { GoArrowDown } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { HiTrash } from "react-icons/hi2";
-import { useGetInvoicesQuery, useDeleteInvoiceMutation } from "@/data/services/costService";
+import {
+  useGetInvoicesQuery,
+  useDeleteInvoiceMutation,
+} from "@/data/services/costService";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import Pagination from "@/components/common/Pagination";
 import Spinner from "@/components/common/Spinner";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
 
 const InvoiceTable = () => {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(null);
   const [search, setSearch] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
   const { data, isLoading, isError } = useGetInvoicesQuery({
     page,
     search,
     status,
   });
-  const [deleteInvoice, {isSuccess : deleteSuccess, isError:deleteError}] = useDeleteInvoiceMutation();
+  const [deleteInvoice, { isSuccess: deleteSuccess, isError: deleteError, isLoading:deleteLoading }] =
+    useDeleteInvoiceMutation();
   const invoices = data?.invoices || [];
   const meta = data?.meta || {};
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
+  const openConfirmation = (id) => {
+    setSelectedInvoice(id);
+    setShowConfirmation(true);
+  };
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
+  };
   const options = [
     {
       id: "PENDING",
@@ -61,10 +76,12 @@ const InvoiceTable = () => {
     setSearch(e.target.value);
   };
 
-  const handleDeleteInvoice = (id) => {
-    deleteInvoice(id);
-  }
-  //TODO : Confirmation modal əlavə etmək
+  const handleDeleteInvoice = () => {
+    if (selectedInvoice) {
+      deleteInvoice(selectedInvoice);
+      closeConfirmation();
+    }
+  };
   const renderStatus = (statusType) => {
     switch (statusType) {
       case "CANCELLED":
@@ -94,20 +111,26 @@ const InvoiceTable = () => {
     }
   };
 
+  useEffect(() => {
+    if (deleteSuccess) {
+      showToast("Faktura uğurlu şəkildə silindi", "success");
+    }
+  }, [deleteSuccess]);
 
   useEffect(() => {
-    if(deleteSuccess){
-      showToast('Faktura uğurlu şəkildə silindi','success')
+    if (deleteError) {
+      showToast("Faktura silinə bilmədi", "error");
     }
-  },[deleteSuccess])
+  }, [deleteError]);
 
-  useEffect(() => {
-    if(deleteError){
-      showToast('Faktura silinə bilmədi','error')
-    }
-  },[deleteError])
   return (
     <div className="w-full rounded-lg shadow-xl">
+      <ConfirmationModal
+        handleDelete={handleDeleteInvoice}
+        closeConfirmationModal={closeConfirmation}
+        showConfirmation={showConfirmation}
+        isLoading={deleteLoading}
+      />
       <div className="text-sm font-medium text-gray-500 ">
         <Toaster />
         <div className="flex items-center justify-between flex-wrap gap-2 p-5">
@@ -226,7 +249,7 @@ const InvoiceTable = () => {
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center justify-center">
                         <button
-                        onClick={() => handleDeleteInvoice(invoice.id)}
+                          onClick={() => openConfirmation(invoice.id)}
                           className="outline-none border-none p-1 rounded-lg hover:text-red-600 hover:bg-red-600/30 transition-all duration-300"
                           type="button"
                         >
