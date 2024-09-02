@@ -1,7 +1,5 @@
 import Searchbar from "@/components/common/Searchbar";
 import Select from "@/components/common/Select";
-import Tabs from "@/components/common/Tabs";
-import CheckboxElement from "@/components/common/CheckboxElement";
 import userInvoices from "@/mocks/userInvoices";
 import { GoArrowDown } from "react-icons/go";
 import { Link } from "react-router-dom";
@@ -23,7 +21,6 @@ const InvoiceTable = () => {
   return (
     <div className="w-full rounded-lg shadow-xl">
       <div className="text-sm font-medium text-gray-500 ">
-        <Tabs />
         <div className="flex items-center justify-between flex-wrap gap-2 p-5">
           <div className="lg:w-[15%] sm:w-[48%] w-full">
             <Select column />
@@ -42,7 +39,6 @@ const InvoiceTable = () => {
               <thead className="bg-gray-300/30 w-full rounded-lg text-left">
                 <tr className="p-5 w-full flex items-center justify-between gap-5">
                   <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
-                    <CheckboxElement />
                     <span className="flex items-center gap-2">
                       User <GoArrowDown />
                     </span>
@@ -70,7 +66,6 @@ const InvoiceTable = () => {
                   <Link className="group" to={`${invoice.id}`} key={index}>
                     <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20  w-full flex items-center justify-between gap-5 min-h-[76px]">
                       <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
-                        <CheckboxElement />
                         <div className="flex items-center gap-4">
                           <img
                             className="w-[40px] h-[40px] rounded-full"
