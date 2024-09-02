@@ -5,7 +5,9 @@ const costService = api.injectEndpoints({
     getInvoices: builder.query({
       query: (params) => ({
         url: "/invoices",
-        params,
+        params: Object.fromEntries(
+          Object.entries(params).filter(([_, value]) => value !== null)
+        ),
       }),
       providesTags: ["INVOICES"],
       keepUnusedDataFor: 0,
