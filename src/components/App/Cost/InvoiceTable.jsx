@@ -2,75 +2,124 @@ import Searchbar from "@/components/common/Searchbar";
 import Select from "@/components/common/Select";
 import { GoArrowDown } from "react-icons/go";
 import { Link } from "react-router-dom";
-import { LuMoreVertical } from "react-icons/lu";
-import { useGetInvoicesQuery } from "@/data/services/costService";
-import { useState } from "react";
+import { HiTrash } from "react-icons/hi2";
+import { useGetInvoicesQuery, useDeleteInvoiceMutation } from "@/data/services/costService";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import Pagination from "@/components/common/Pagination";
 import Spinner from "@/components/common/Spinner";
+import useToast from "@/hooks/useToast";
+import { Toaster } from "react-hot-toast";
 
 const InvoiceTable = () => {
-  const [page , setPage] = useState(1);
-  const [status , setStatus ] = useState(null);
-  const [search , setSearch] = useState('');
-  const {data, isLoading, isError} = useGetInvoicesQuery({page , search, status});
+  const [page, setPage] = useState(1);
+  const [status, setStatus] = useState(null);
+  const [search, setSearch] = useState("");
+  const { data, isLoading, isError } = useGetInvoicesQuery({
+    page,
+    search,
+    status,
+  });
+  const [deleteInvoice, {isSuccess : deleteSuccess, isError:deleteError}] = useDeleteInvoiceMutation();
   const invoices = data?.invoices || [];
   const meta = data?.meta || {};
+  const {showToast} = useToast();
 
   const options = [
     {
-      id: 'PENDING',
-      name : 'Gözlənilir'
+      id: "PENDING",
+      name: "Gözlənilir",
     },
     {
-      id:'PAID',
-      name : 'Ödənilib'
+      id: "PAID",
+      name: "Ödənilib",
     },
     {
-      id:'CANCELLED',
-      name : 'Ləğv edilib'
+      id: "CANCELLED",
+      name: "Ləğv edilib",
     },
     {
-      id:'OVERDUE',
-      name : 'Vaxtı keçmiş'
+      id: "OVERDUE",
+      name: "Vaxtı keçmiş",
     },
     {
-      id: 'DRAFT',
-      name : 'Qaralama'
-    }
-  ]
+      id: "DRAFT",
+      name: "Qaralama",
+    },
+  ];
 
   const handlePageChange = (newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const handleSelectStatus = (value) => {
-    setStatus(value)
-    console.log(value)
-  }
+    setStatus(value);
+    console.log(value);
+  };
 
-  const handleSearch = (e) =>{
+  const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const handleDeleteInvoice = (id) => {
+    deleteInvoice(id);
   }
- 
+  //TODO : Confirmation modal əlavə etmək
   const renderStatus = (statusType) => {
-    switch(statusType) {
-      case 'CANCELLED':
-        return <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">{statusType}</span>;
-      case 'PAID':
-        return <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">{statusType}</span>;
-      case 'PENDING':
-        return <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">{statusType}</span>;
+    switch (statusType) {
+      case "CANCELLED":
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">
+            {statusType}
+          </span>
+        );
+      case "PAID":
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">
+            {statusType}
+          </span>
+        );
+      case "PENDING":
+        return (
+          <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
+            {statusType}
+          </span>
+        );
       default:
-        return <span className="text-xs py-1 px-2  rounded bg-blue-600/40 capitalize w-full">{statusType}</span>;
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-blue-600/40 capitalize w-full">
+            {statusType}
+          </span>
+        );
     }
-  }
+  };
+
+
+  useEffect(() => {
+    if(deleteSuccess){
+      showToast('Faktura uğurlu şəkildə silindi','success')
+    }
+  },[deleteSuccess])
+
+  useEffect(() => {
+    if(deleteError){
+      showToast('Faktura silinə bilmədi','error')
+    }
+  },[deleteError])
   return (
     <div className="w-full rounded-lg shadow-xl">
       <div className="text-sm font-medium text-gray-500 ">
+        <Toaster />
         <div className="flex items-center justify-between flex-wrap gap-2 p-5">
           <div className="lg:w-[15%] sm:w-[48%] w-full">
-            <Select value={status} options={options} onChange={handleSelectStatus} column absolute label="Status" />
+            <Select
+              value={status}
+              options={options}
+              onChange={handleSelectStatus}
+              column
+              absolute
+              label="Status"
+            />
           </div>
           <div className="flex-1">
             <Searchbar onChange={handleSearch} simple />
@@ -112,37 +161,48 @@ const InvoiceTable = () => {
                 </tr>
               </thead>
               <tbody className="w-full flex flex-col text-left">
-                {isLoading && <div className="p-10 flex items-center justify-center w-full h-full"><Spinner /></div>}
-                {isError && <div className="p-10 flex items-center justify-center w-full h-full text-sm font-semibold">Hər hansı bir faktura mövcud deyil</div>}
+                {isLoading && (
+                  <div className="p-10 flex items-center justify-center w-full h-full">
+                    <Spinner />
+                  </div>
+                )}
+                {isError && (
+                  <div className="p-10 flex items-center justify-center w-full h-full text-sm font-semibold">
+                    Hər hansı bir faktura mövcud deyil
+                  </div>
+                )}
                 {invoices.map((invoice, index) => (
-                  <Link className="group" to={`${invoice.id}`} key={index}>
+                  <div className="group" to={`${invoice.id}`} key={index}>
                     <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20  w-full flex items-center justify-between gap-5 min-h-[76px]">
                       <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[30%]">
                         <div className="flex items-center gap-4">
                           <div className="flex flex-col">
-                            <span className="text-sm text-gray-400">
+                            <Link
+                              to={`/cost/${invoice.id}`}
+                              className="text-sm hover:underline text-gray-400"
+                            >
                               {invoice.code}
-                            </span>
+                            </Link>
                           </div>
                         </div>
                       </th>
                       <td className="text-sm font-medium text-gray-500 w-[11%]">
                         <div className="flex flex-col">
                           <h3 className="text-xs text-secondary">
-                            {moment(invoice.created_at).format('YYYY-MM-DD')}
+                            {moment(invoice.created_at).format("YYYY-MM-DD")}
                           </h3>
                           <span className="text-xs text-gray-400">
-                          {moment(invoice.created_at).format('HH:ss')}
+                            {moment(invoice.created_at).format("HH:ss")}
                           </span>
                         </div>
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[11%]">
                         <div className="flex flex-col">
                           <h3 className="text-xs text-secondary">
-                          {moment(invoice.updated_at).format('YYYY-MM-DD')}
+                            {moment(invoice.updated_at).format("YYYY-MM-DD")}
                           </h3>
                           <span className="text-xs text-gray-400">
-                          {moment(invoice.updated_at).format('HH:ss')}
+                            {moment(invoice.updated_at).format("HH:ss")}
                           </span>
                         </div>
                       </td>
@@ -158,7 +218,7 @@ const InvoiceTable = () => {
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[11%]">
                         <span className="text-xs text-secondary">
-                        ₼ {invoice.total}
+                          ₼ {invoice.total}
                         </span>
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[11%]">
@@ -166,14 +226,15 @@ const InvoiceTable = () => {
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center justify-center">
                         <button
-                          className="outline-none border-none"
+                        onClick={() => handleDeleteInvoice(invoice.id)}
+                          className="outline-none border-none p-1 rounded-lg hover:text-red-600 hover:bg-red-600/30 transition-all duration-300"
                           type="button"
                         >
-                          <LuMoreVertical size={18} />
+                          <HiTrash size={18} />
                         </button>
                       </td>
                     </tr>
-                  </Link>
+                  </div>
                 ))}
               </tbody>
               <Pagination meta={meta} onPageChange={handlePageChange} />
