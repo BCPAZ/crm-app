@@ -21,7 +21,7 @@ const persistedReducer = persistReducer(
   {
     key: "crm.az",
     storage,
-    whitelist: [authSlice.reducerPath, projectSlice.reducerPath],
+    whitelist: [authSlice.reducerPath, projectSlice.reducerPath, kanbanSlice.reducerPath],
   },
   reducers
 );

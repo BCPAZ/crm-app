@@ -6,15 +6,13 @@ import { MdDragIndicator } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
 import TaskCard from "./TaskCard";
 import {
+  useCreateTaskMutation,
   useDeleteBoardMutation,
   useUpdateBoardMutation,
 } from "@/data/services/taskManagementService";
 
 const Column = ({
   column,
-  handleDeleteColumn,
-  handleUpdateColumnName,
-  handleAddTask,
   handleDeleteTask,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +21,7 @@ const Column = ({
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [deleteBoard] = useDeleteBoardMutation();
   const [updateBoard] = useUpdateBoardMutation();
+  const [createTask] = useCreateTaskMutation();
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -40,7 +39,6 @@ const Column = ({
 
   const handleSave = () => {
     if (newName.trim() === "") return;
-    // handleUpdateColumnName(column.id, newName);
     updateBoard({ id: column.id, data: { name: newName } });
     setIsEditing(false);
   };
@@ -55,7 +53,7 @@ const Column = ({
 
   const handleTaskSave = () => {
     if (newTaskName.trim() === "") return;
-    handleAddTask(column.id, newTaskName);
+    createTask({ id: column.id, data: { name: newTaskName } });
     setNewTaskName("");
     setIsAddingTask(false);
   };
@@ -76,7 +74,7 @@ const Column = ({
   };
 
   return (
-    <Droppable droppableId={`column-${column.id}`} type="TASK">
+    <Droppable droppableId={`board-${column.id}`} type="TASK">
       {(provided) => (
         <div
           className="min-w-[336px] bg-gray-100 p-4 rounded-xl"
@@ -124,17 +122,6 @@ const Column = ({
               </button>
             </div>
           </div>
-          <div className="space-y-2">
-            {column?.items?.map((task, index) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                index={index}
-                handleDeleteTask={handleDeleteTask}
-              />
-            ))}
-            {provided.placeholder}
-          </div>
           {isAddingTask && (
             <div className="mt-4 flex flex-col gap-2">
               <input
@@ -152,6 +139,17 @@ const Column = ({
               </span>
             </div>
           )}
+          <div className="space-y-2">
+            {column?.tasks?.map((task, index) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                index={index}
+                handleDeleteTask={handleDeleteTask}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
         </div>
       )}
     </Droppable>
@@ -171,7 +169,6 @@ Column.propTypes = {
   }),
   handleDeleteColumn: PropTypes.func.isRequired,
   handleUpdateColumnName: PropTypes.func.isRequired,
-  handleAddTask: PropTypes.func.isRequired,
   handleDeleteTask: PropTypes.func.isRequired,
 };
 

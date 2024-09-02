@@ -9,9 +9,9 @@ import Low from "@/assets/icons/Kanban/low.svg";
 
 const TaskCard = ({ task, index, handleDeleteTask }) => {
   const checkPriority = (priority) => {
-    if (priority === "High") {
+    if (priority === "HIGH") {
       return High;
-    } else if (priority === "Medium") {
+    } else if (priority === "MEDIUM") {
       return Medium;
     } else {
       return Low;
@@ -19,7 +19,7 @@ const TaskCard = ({ task, index, handleDeleteTask }) => {
   };
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={`task-${task.id}`} index={index}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -34,7 +34,7 @@ const TaskCard = ({ task, index, handleDeleteTask }) => {
                 <img
                   className="w-full h-full object-cover rounded-lg"
                   src={task?.img}
-                  alt={task?.title}
+                  alt={task?.name}
                 />
               </div>
             )}
@@ -46,28 +46,28 @@ const TaskCard = ({ task, index, handleDeleteTask }) => {
               />
             </div>
             <div className="pb-5 px-5 mt-2">
-              <h3 className="text-md font-bold">{task.content}</h3>
+              <h3 className="text-md font-bold">{task.name}</h3>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <button className="flex items-center gap-1 text-gray-500 text-sm font-semibold">
                     <FaCommentDots size={14} />
-                    <span>{task.comments?.length}</span>
+                    <span>{task.comments_count}</span>
                   </button>
                   <button className="flex items-center gap-1 text-gray-500 text-sm font-semibold">
                     <CgAttachment size={14} />
-                    <span>{task.attachments?.length}</span>
+                    <span>{task.attachments_count}</span>
                   </button>
                 </div>
                 <div className="flex items-center">
-                  {task.selectedUsers?.map((user, index) => (
+                  {task.appointed_users?.map((user, index) => (
                     <div
                       className="w-[25px] h-[25px] rounded-full overflow-hidden border border-white"
                       key={index}
                     >
                       <img
                         className="w-full h-full object-cover object-center"
-                        src={user.img}
-                        alt={user.name}
+                        src={user?.img}
+                        alt={user?.name}
                       />
                     </div>
                   ))}
@@ -83,9 +83,8 @@ const TaskCard = ({ task, index, handleDeleteTask }) => {
 
 TaskCard.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    img: PropTypes.string,
-    title: PropTypes.string.isRequired,
+    id: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
     comments: PropTypes.array,
     content : PropTypes.string,

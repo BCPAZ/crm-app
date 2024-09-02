@@ -6,6 +6,7 @@ const taskManagementService = api.injectEndpoints({
       query: () => ({
         url: "/task-management/boards",
       }),
+      keepUnusedDataFor: 0,
     }),
 
     createBoard: builder.mutation({
@@ -41,6 +42,26 @@ const taskManagementService = api.injectEndpoints({
         },
       }),
     }),
+
+    createTask: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/task-management/tasks/${id}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    changeTaskPosition: builder.mutation({
+      query: ({ board_id, task_id, position }) => ({
+        url: "/task-management/tasks/change-position",
+        method: "PUT",
+        body: {
+          board_id,
+          task_id,
+          position,
+        },
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -50,7 +71,9 @@ export const {
   useCreateBoardMutation,
   useDeleteBoardMutation,
   useUpdateBoardMutation,
-  useChangeBoardPositionMutation
+  useChangeBoardPositionMutation,
+  useCreateTaskMutation,
+  useChangeTaskPositionMutation,
 } = taskManagementService;
 
 export default taskManagementService;

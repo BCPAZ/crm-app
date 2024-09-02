@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskDetail from "./TaskDetail";
 import {
   useChangeBoardPositionMutation,
+  useChangeTaskPositionMutation,
   useCreateBoardMutation,
   useGetBoardsQuery,
 } from "@/data/services/taskManagementService";
@@ -14,11 +15,11 @@ const KanbanBoard = () => {
   useGetBoardsQuery();
   const { boards = [] } = useSelector((state) => state.kanban);
 
-  const [columns, setColumns] = useState([]);
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const [newColumnName, setNewColumnName] = useState("");
   const [createBoard] = useCreateBoardMutation();
   const [changeBoardPosition] = useChangeBoardPositionMutation();
+  const [changeTaskPosition] = useChangeTaskPositionMutation();
 
   const handleAddColumn = () => {
     setIsAddingColumn(true);
@@ -36,109 +37,48 @@ const KanbanBoard = () => {
 
   const handleSaveColumn = () => {
     if (newColumnName.trim() === "") return;
-
-    setColumns((prevColumns) => [
-      ...prevColumns,
-      {
-        id: `column-${prevColumns.length + 1}`,
-        name: newColumnName,
-        items: [],
-      },
-    ]);
     setNewColumnName("");
     setIsAddingColumn(false);
     createBoard({ name: newColumnName });
   };
 
   const handleDeleteColumn = useCallback((id) => {
-    setColumns((prevColumns) => prevColumns.filter((col) => col.id !== id));
   }, []);
 
   const handleUpdateColumnName = useCallback((id, newName) => {
-    setColumns((prevColumns) =>
-      prevColumns.map((col) =>
-        col.id === id ? { ...col, name: newName } : col
-      )
-    );
+  
   }, []);
 
   const handleDeleteTask = (columnId, taskId) => {
-    setColumns((prevColumns) =>
-      prevColumns.map((column) =>
-        column.id === columnId
-          ? {
-              ...column,
-              items: column.items.filter((task) => task.id !== taskId),
-            }
-          : column
-      )
-    );
+  
   };
-
-  const handleAddTask = useCallback((columnId, taskContent) => {
-    setColumns((prevColumns) =>
-      prevColumns.map((column) =>
-        column.id === columnId
-          ? {
-              ...column,
-              items: [
-                ...column.items,
-                { id: `task-${column.items.length + 1}`, content: taskContent },
-              ],
-            }
-          : column
-      )
-    );
-  }, []);
 
   const onDragEnd = useCallback(
     (result) => {
-      const { source, destination, type } = result;
+      const { source, destination, type, draggableId } = result;
+
 
       if (!destination) return;
 
       if (type === "COLUMN") {
-        const newColumns = [...columns];
-        const [movedColumn] = newColumns.splice(source.index, 1);
-        newColumns.splice(destination.index, 0, movedColumn);
         changeBoardPosition({
           old_position: source.index,
           new_position: destination.index,
         });
-        setColumns(newColumns);
-
         return;
       }
 
-      const sourceColumnIndex = columns.findIndex(
-        (column) => column.id === source.droppableId
-      );
-      const destinationColumnIndex = columns.findIndex(
-        (column) => column.id === destination.droppableId
-      );
-      if (sourceColumnIndex === -1 || destinationColumnIndex === -1) return;
+      console.log(result)
+      
 
-      const sourceColumn = columns[sourceColumnIndex];
-      const destinationColumn = columns[destinationColumnIndex];
-
-      const sourceItems = [...sourceColumn.items];
-      const [movedItem] = sourceItems.splice(source.index, 1);
-      const destinationItems = [...destinationColumn.items];
-      destinationItems.splice(destination.index, 0, movedItem);
-
-      const updatedColumns = [...columns];
-      updatedColumns[sourceColumnIndex] = {
-        ...sourceColumn,
-        items: sourceItems,
-      };
-      updatedColumns[destinationColumnIndex] = {
-        ...destinationColumn,
-        items: destinationItems,
-      };
-
-      setColumns(updatedColumns);
+      changeTaskPosition({
+        board_id: destination.droppableId?.replace("board-", ""),
+        position: destination.index,
+        task_id: draggableId.replace("task-", ""),
+        source_board_id: source.droppableId?.replace("board-", ""),
+      })
     },
-    [columns]
+    []
   );
 
   return (
@@ -159,7 +99,7 @@ const KanbanBoard = () => {
               >
                 {boards.map((column, index) => (
                   <Draggable
-                    draggableId={`column-${column.id}`}
+                    draggableId={`board-${column.id}`}
                     key={column.id}
                     index={index}
                   >
@@ -173,7 +113,6 @@ const KanbanBoard = () => {
                           column={column}
                           handleDeleteColumn={handleDeleteColumn}
                           handleUpdateColumnName={handleUpdateColumnName}
-                          handleAddTask={handleAddTask}
                           handleDeleteTask={(taskId) =>
                             handleDeleteTask(column.id, taskId)
                           }
