@@ -28,7 +28,7 @@ const costService = api.injectEndpoints({
       }),
       invalidatesTags: ["INVOICES"],
     }),
-    getDashboard: builder.mutation({
+    getDashboard: builder.query({
       query: () => ({
         url: "/invoices/dashboard",
       }),
@@ -41,7 +41,7 @@ export const {
   useGetInvoicesQuery,
   useCreateInvoiceMutation,
   useUpdateInvoiceMutation,
-  useGetDashboardMutation,
+  useGetDashboardQuery,
 } = costService;
 
 export default costService;
