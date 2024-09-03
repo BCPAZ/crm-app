@@ -1,11 +1,12 @@
+import Spinner from "@/components/common/Spinner";
 import CircleProgressBar from "./CircleProgressBar";
 import { useGetDashboardQuery } from "@/data/services/costService";
 
 const InvoicePanel = () => {
   const { data, isLoading, isError } = useGetDashboardQuery();
 
-  if (isLoading) return <p>Yüklənir...</p>;
-  if (isError) return <p>Bir xəta baş verdi.</p>;
+  if (isLoading) return <div className="p-10 flex items-center justify-center w-full h-full"><Spinner /></div>;
+  if (isError) return <div className="w-full h-full text-md font-semibold flex items-center justify-center">Bir xəta baş verdi.</div>;
 
   const totalCount = data.TOTAL.count;
 
