@@ -1,14 +1,15 @@
 import profile from "@/assets/icons/Dashboard/profile-2user.svg";
 import tasks from "@/assets/icons/Dashboard/task-square.svg";
-import mails from "@/assets/icons/Dashboard/messages-2.svg";
 import unlimited from "@/assets/icons/Dashboard/unlimited.svg";
 import { projects } from "@/mocks/dashboardData";
-import { emails } from "@/mocks/dashboardData";
 import { activityTrack } from "@/mocks/dashboardData";
 import ProjectCard from "@/components/App/Dashboard/ProjectCard";
 import EmailCard from "@/components/App/Dashboard/EmailCard";
 import ActivityCard from "@/components/App/Dashboard/ActivityCard";
+import { useGetFiveMailQuery } from "@/data/services/mailService";
+
 const Dashboard = () => {
+  const {data : mails = []} = useGetFiveMailQuery();
   return (
     <section>
       <div className="siteContainer">
@@ -39,8 +40,8 @@ const Dashboard = () => {
             </div>
             <div className="flex flex-col gap-3">
               {
-                emails.map((email, index) => (
-                  <EmailCard email={email} key={index} />
+                mails.map((mail, index) => (
+                  <EmailCard mail={mail} key={index} />
                 ))
               }
             </div>

@@ -99,6 +99,12 @@ const mailService = api.injectEndpoints({
       }),
       invalidatesTags: ["MAILS"],
     }),
+    getFiveMail : builder.query({
+      query : () => ({
+        url : '/mails/last-five-mails',
+      }),
+      providesTags : ['MAILS']
+    })
   }),
 });
 
@@ -111,6 +117,7 @@ export const {
   useRestoreMailMutation,
   useSoftDeleteMutation,
   useSendMailMutation,
+  useGetFiveMailQuery
 } = mailService;
 
 export default mailService;
