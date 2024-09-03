@@ -97,7 +97,7 @@ const CreateTemplate = () => {
       showToast("Şablon yaradıldı", "success");
 
       setTimeout(() => {
-        navigate('/workflow/templates')
+        navigate('/templates')
       }, 1500)
     }
   }, [createSuccess])
