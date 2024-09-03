@@ -64,6 +64,11 @@ const usersService = api.injectEndpoints({
       },
       invalidatesTags: ["USERS"],
     }),
+    getLastUsers : builder.query({
+      query : () => ({
+        url : '/users/last-five-users'
+      })
+    })
   }),
 });
 
@@ -72,6 +77,7 @@ export const {
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
+  useGetLastUsersQuery
 } = usersService;
 
 export default usersService;
