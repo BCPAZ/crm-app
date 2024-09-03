@@ -26,6 +26,7 @@ const CreateNewInvoice = () => {
   });
   const [items, setItems] = useState([]);
   const [taxAmount, setTaxAmount] = useState("");
+  const [note, setNote] = useState('');
   const [createInvoice, { isLoading, isError, isSuccess }] =
     useCreateInvoiceMutation();
 
@@ -81,7 +82,8 @@ const CreateNewInvoice = () => {
       to,
       items,
       total: calculateTotalWithTax(),
-      taxes: taxAmount
+      taxes: taxAmount,
+      note
     };
     createInvoice(invoiceData);
   };
@@ -191,7 +193,7 @@ const CreateNewInvoice = () => {
             </div>
             <div className="md:p-6 p-3">
               <div className="flex flex-col gap-2">
-                <div className="w-1/2 flex justify-end">
+                <div className="md:w-1/2 w-full flex md:flex-row flex-col justify-end gap-4 mb-3">
                   <Input
                     label="Vergi məbləği"
                     placeholder="Vergi məbləğini daxil edin"
@@ -201,6 +203,12 @@ const CreateNewInvoice = () => {
                       setTaxAmount(parseFloat(e.target.value))
                     }
                   />
+                  <Input 
+                  label="Qeyd"
+                  placeholder="Qeyd əlavə edin"
+                  type="text"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)} />
                 </div>
                 <span className="flex items-center justify-end gap-2 text-sm font-base text-gray-400">
                   Ümumi:{" "}

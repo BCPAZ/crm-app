@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
-import userInvoices from "@/mocks/userInvoices";
 import Breadcrumb from "@/components/App/Cost/Breadcrumb";
 import NotFound from "./NotFound";
 import { invoiceIcons } from "@/utils/constants";
 import Select from "@/components/common/Select";
 import InvoiceDetailTable from "@/components/App/Cost/InvoiceDetailTable";
+import { useGetInvoiceDetail } from "@/data/services/costService";
 const InvoiceDetail = () => {
   const { id } = useParams();
-  const data = userInvoices.find((invoice) => invoice.id === parseInt(id));
-
+  const {data} = useGetInvoiceDetail(id);
+  
   if (!data) {
     return <NotFound name="Invoice" />;
   }

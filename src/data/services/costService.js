@@ -40,6 +40,11 @@ const costService = api.injectEndpoints({
         method : 'DELETE'
       }),
       invalidatesTags : ['INVOICES'],
+    }),
+    getInvoiceDetail : builder.query({
+      query : (id) => ({
+        url : `/invoices/${id}`,
+      })
     })
   }),
 });
@@ -49,7 +54,8 @@ export const {
   useCreateInvoiceMutation,
   useUpdateInvoiceMutation,
   useGetDashboardQuery,
-  useDeleteInvoiceMutation
+  useDeleteInvoiceMutation,
+  useGetInvoiceDetail
 } = costService;
 
 export default costService;
