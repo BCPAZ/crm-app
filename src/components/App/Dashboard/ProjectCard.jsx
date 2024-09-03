@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const ProjectCard = ({ project }) => {
   return (
     <div className="flex flex-col">
@@ -5,20 +6,20 @@ const ProjectCard = ({ project }) => {
         <h1 className="text-md text-black font-medium">{project.name}</h1>
         <div className="flex items-center gap-2">
           <span className="text-xs text-grey">
-            {project.status ? "Joined" : "Denied"}
+           #{project.code}
           </span>
-          <div className="flex items-center">
-            {project.members
-              .map((member, index) => (
-                <img src={member.img} key={index} alt="" />
-              ))
-              .slice(0, 3)}
-          </div>
         </div>
       </div>
       <div></div>
     </div>
   );
 };
+
+ProjectCard.propTypes = {
+  project : PropTypes.shape({
+    code : PropTypes.string,
+    name : PropTypes.string
+  })
+}
 
 export default ProjectCard;

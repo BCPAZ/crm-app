@@ -1,15 +1,20 @@
 import profile from "@/assets/icons/Dashboard/profile-2user.svg";
-import tasks from "@/assets/icons/Dashboard/task-square.svg";
 import unlimited from "@/assets/icons/Dashboard/unlimited.svg";
-import { projects } from "@/mocks/dashboardData";
 import { activityTrack } from "@/mocks/dashboardData";
 import ProjectCard from "@/components/App/Dashboard/ProjectCard";
 import EmailCard from "@/components/App/Dashboard/EmailCard";
 import ActivityCard from "@/components/App/Dashboard/ActivityCard";
 import { useGetFiveMailQuery } from "@/data/services/mailService";
-
+import { useGetLastTaskQuery } from "@/data/services/taskManagementService";
+import { useGetProjectsQuery } from "@/data/services/projectService";
+import TaskCard from "@/components/App/Dashboard/TaskCard";
+import mailsIcon from "@/assets/icons/Dashboard/messages-2.svg";
+import taskIcon from "@/assets/icons/Dashboard/task-square.svg";
 const Dashboard = () => {
   const {data : mails = []} = useGetFiveMailQuery();
+  const {data : tasks = []} = useGetLastTaskQuery();
+  const {data} = useGetProjectsQuery();
+  const projects = data?.projects || [];
   return (
     <section>
       <div className="siteContainer">
@@ -29,13 +34,20 @@ const Dashboard = () => {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2 p-[22px] border-b-2 border-grey/20">
-              <img src={tasks} alt="" />
+              <img src={taskIcon} alt="" />
               <h1 className="text-md text-gray-400 font-medium">Tasks</h1>
+            </div>
+            <div className="flex flex-col gap-3">
+              {
+                tasks.map((task, index) => (
+                  <TaskCard task={task} key={index} />
+                ))
+              }
             </div>
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2 p-[22px] border-b-2 border-grey/20">
-              <img src={mails} alt="" />
+              <img src={mailsIcon} alt="" />
               <h1 className="text-md text-gray-400 font-medium">Mails</h1>
             </div>
             <div className="flex flex-col gap-3">

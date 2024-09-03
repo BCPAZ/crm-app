@@ -78,6 +78,11 @@ const taskManagementService = api.injectEndpoints({
 
       invalidatesTags: ['BOARDS']
     }),
+    getLastTask : builder.query({
+      query : () => ({
+        url : '/task-management/tasks/last-five-tasks'
+      }),
+    })
   }),
   overrideExisting: true,
 });
@@ -91,7 +96,8 @@ export const {
   useCreateTaskMutation,
   useChangeTaskPositionMutation,
   useGetTaskQuery,
-  useDeleteTaskMutation
+  useDeleteTaskMutation,
+  useGetLastTaskQuery
 } = taskManagementService;
 
 export default taskManagementService;
