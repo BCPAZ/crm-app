@@ -9,6 +9,7 @@ import {
   Legend
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useSelector } from 'react-redux';
 
 ChartJS.register(
   CategoryScale,
@@ -19,17 +20,19 @@ ChartJS.register(
   Legend
 );
 
-const ComparisonBarChart = () => {
+const ComparisonBarChart = ({data}) => {
   const [chartKey, setChartKey] = useState(0);
 
+  const {user} = useSelector(state => state.auth)
+
   const chartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: Object.keys(data),
     datasets: [
       {
-        label : 'Flegrei',
+        label : user?.company?.name,
         backgroundColor: '#FFAB00',
         hoverBackgroundColor: '#FFBB20',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: Object.values(data),
         borderRadius: {
           topLeft: 10,
           topRight: 10,
@@ -37,18 +40,6 @@ const ComparisonBarChart = () => {
           bottomRight: 0
         },
       },
-      {
-        label: 'Government',
-        backgroundColor: '#007867',
-        hoverBackgroundColor: '#007600',
-        data: [45, 69, 60, 91, 66, 75, 50],
-        borderRadius: {
-          topLeft: 10,
-          topRight: 10,
-          bottomLeft: 0,
-          bottomRight: 0
-        },
-      }
     ]
   };
 
@@ -70,6 +61,8 @@ const ComparisonBarChart = () => {
       setChartKey(chartKey + 1);
     };
   }, []);
+
+  if (Object.keys(data).length === 0) return null; 
 
   return (
     <div className='w-full'>

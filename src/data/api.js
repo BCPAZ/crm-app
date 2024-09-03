@@ -67,8 +67,9 @@ const api = createApi({
     "COMPANIES",
     "TEMPLATES",
     "DOCUMENTS",
-    'INSIGHTS',
-    'INVOICES'
+    "INSIGHTS",
+    "INVOICES",
+    "BOARDS",
   ],
 });
 

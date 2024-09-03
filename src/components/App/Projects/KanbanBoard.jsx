@@ -20,6 +20,7 @@ const KanbanBoard = () => {
   const [createBoard] = useCreateBoardMutation();
   const [changeBoardPosition] = useChangeBoardPositionMutation();
   const [changeTaskPosition] = useChangeTaskPositionMutation();
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const handleAddColumn = () => {
     setIsAddingColumn(true);
@@ -83,7 +84,7 @@ const KanbanBoard = () => {
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
-      {/* <TaskDetail /> */}
+      <TaskDetail selectedTaskId={selectedTaskId}/>
       <div className="flex space-x-6 h-full overflow-x-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
@@ -116,6 +117,7 @@ const KanbanBoard = () => {
                           handleDeleteTask={(taskId) =>
                             handleDeleteTask(column.id, taskId)
                           }
+                          setSelectedTaskId={setSelectedTaskId}
                         />
                       </div>
                     )}

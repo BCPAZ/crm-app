@@ -6,7 +6,32 @@ const insightService = api.injectEndpoints({
     getWorkflowInsights: build.query({
       query: (params) => ({
         url: "/insights/workflows",
-        params
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["INSIGHTS"],
+    }),
+
+    sendedMails: build.query({
+      query: (params) => ({
+        url: "/insights/sended-mails",
+        params,
+      }),
+      keepUnusedDataFor: 0,
+    }),
+
+    reveicedMails: build.query({
+      query: (params) => ({
+        url: "/insights/received-mails",
+        params,
+      }),
+      keepUnusedDataFor: 0,
+    }),
+
+    sendedDocuments: build.query({
+      query: (params) => ({
+        url: "/insights/documents",
+        params,
       }),
       keepUnusedDataFor: 0,
       providesTags: ["INSIGHTS"],
@@ -14,6 +39,11 @@ const insightService = api.injectEndpoints({
   }),
 });
 
-export const { useGetWorkflowInsightsQuery } = insightService
+export const {
+  useGetWorkflowInsightsQuery,
+  useSendedMailsQuery,
+  useReveicedMailsQuery,
+  useSendedDocumentsQuery,
+} = insightService;
 
-export default insightService
+export default insightService;

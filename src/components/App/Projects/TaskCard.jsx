@@ -6,8 +6,9 @@ import PropTypes from "prop-types";
 import High from "@/assets/icons/Kanban/high.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
+import TaskDetail from "./TaskDetail";
 
-const TaskCard = ({ task, index, handleDeleteTask }) => {
+const TaskCard = ({ task, index, handleDeleteTask, setSelectedTaskId }) => {
   const checkPriority = (priority) => {
     if (priority === "HIGH") {
       return High;
@@ -26,7 +27,7 @@ const TaskCard = ({ task, index, handleDeleteTask }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className="bg-white rounded-xl"
-          onClick={() => handleDeleteTask(task.id)}
+          onClick={() => setSelectedTaskId(task.id)}
         >
           <div className="flex flex-col">
             {task.img && (

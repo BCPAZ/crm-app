@@ -23,7 +23,7 @@ const Insights = () => {
       <div className="siteContainer">
         <div className="py-10">
           <div className="w-full">
-            <ChartArea />
+            <ChartArea startDate={startDate} endDate={endDate}/>
           </div>
           <div className="grid lg:grid-cols-2 grid-cols-1 mt-5">
             <WorkflowReport startDate={startDate} endDate={endDate} />

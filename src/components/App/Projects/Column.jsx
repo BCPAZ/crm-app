@@ -14,6 +14,7 @@ import {
 const Column = ({
   column,
   handleDeleteTask,
+  setSelectedTaskId
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(column.name);
@@ -146,6 +147,7 @@ const Column = ({
                 task={task}
                 index={index}
                 handleDeleteTask={handleDeleteTask}
+                setSelectedTaskId={setSelectedTaskId}
               />
             ))}
             {provided.placeholder}
