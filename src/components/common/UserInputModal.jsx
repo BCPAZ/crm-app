@@ -19,6 +19,12 @@ const UserInputModal = ({ isOpen, onClose, onSubmit }) => {
   const handleSubmit = () => {
     onSubmit(userData);
     onClose();
+    setUserData({
+      name : '',
+      email : '',
+      address : '',
+      phone : ''
+    })
   };
 
   if (!isOpen) return null;

@@ -9,13 +9,13 @@ const Cost = () => {
       <div className="siteContainer">
         <div className="py-10">
           <div className="flex items-center justify-between">
-            <h4 className="text-2xl font-bold">List</h4>
+            <h4 className="text-2xl font-bold">Faktura siyahısı</h4>
             <Link to='/cost/create-new-invoice'
               className="flex items-center gap-2 bg-black text-white py-1.5 px-3 rounded-lg text-sm font-semibold"
               type="button"
             >
               <IoAddSharp size={22} />
-              New Invoice
+              Yeni Faktura
             </Link>
           </div>
           <div className="mt-5">
