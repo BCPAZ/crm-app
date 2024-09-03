@@ -138,15 +138,15 @@ const MailDetail = () => {
 
   const handleToggleStarred = () => {
     toggleStarredStatus({
-      id: mailDetail.id,
-      is_starred: !mailDetail.is_starred,
+      id: mailControl.id,
+      is_starred: !mailControl.is_starred,
     }).then(() => refetch());
   };
 
   const handleToggleImportant = () => {
     toggleImportantStatus({
-      id: mailDetail.id,
-      is_important: !mailDetail.is_important,
+      id: mailControl.id,
+      is_important: !mailControl.is_important,
     }).then(() => refetch());
   };
 
