@@ -5,7 +5,9 @@ const costService = api.injectEndpoints({
     getInvoices: builder.query({
       query: (params) => ({
         url: "/invoices",
-        params,
+        params: Object.fromEntries(
+          Object.entries(params).filter(([_, value]) => value !== null)
+        ),
       }),
       providesTags: ["INVOICES"],
       keepUnusedDataFor: 0,
@@ -26,12 +28,19 @@ const costService = api.injectEndpoints({
       }),
       invalidatesTags: ["INVOICES"],
     }),
-    getDashboard: builder.mutation({
+    getDashboard: builder.query({
       query: () => ({
         url: "/invoices/dashboard",
       }),
       keepUnusedDataFor: 0,
     }),
+    deleteInvoice : builder.mutation({
+      query : (id) => ({
+        url : `/invoices/${id}`,
+        method : 'DELETE'
+      }),
+      invalidatesTags : ['INVOICES'],
+    })
   }),
 });
 
@@ -39,7 +48,8 @@ export const {
   useGetInvoicesQuery,
   useCreateInvoiceMutation,
   useUpdateInvoiceMutation,
-  useGetDashboardMutation,
+  useGetDashboardQuery,
+  useDeleteInvoiceMutation
 } = costService;
 
 export default costService;
