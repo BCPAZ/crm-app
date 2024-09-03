@@ -31,7 +31,7 @@ const Input = React.forwardRef(
             {label}
           </label>
           <div
-            className={`w-full flex items-center justify-between p-4 rounded-lg text-sm border ${
+            className={`w-full disabled:default: flex items-center justify-between p-4 rounded-lg text-sm border ${
               error ? "border-red-600" : "border-grey/20"
             }`}
           >
