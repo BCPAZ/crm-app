@@ -21,10 +21,10 @@ const costService = api.injectEndpoints({
       invalidatesTags: ["INVOICES"],
     }),
     updateInvoice: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({ id, status }) => ({
         url: `/invoices/${id}/change-status`,
         method: "PUT",
-        body: data,
+        body: {status},
       }),
       invalidatesTags: ["INVOICES"],
     }),
@@ -55,7 +55,7 @@ export const {
   useUpdateInvoiceMutation,
   useGetDashboardQuery,
   useDeleteInvoiceMutation,
-  useGetInvoiceDetail
+  useGetInvoiceDetailQuery
 } = costService;
 
 export default costService;
