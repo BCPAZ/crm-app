@@ -38,13 +38,13 @@ const Roles = () => {
 
   const closeConfirmationModal = () => {
     setShowConfirmation(false);
-    setSelectedRoleId(null); // Reset the selected role
+    setSelectedRoleId(null);
   };
 
   const handleDeleteRole = () => {
     if (selectedRoleId) {
       deleteRole(selectedRoleId);
-      closeConfirmationModal(); // Close the modal after deletion
+      closeConfirmationModal();
     }
   };
 

@@ -70,7 +70,7 @@ const CreateNewUser = () => {
     console.log(formState.avatar)
     const formData = {
       ...formState,
-      avatar: formState.avatar,  // Avatar URL olarak ekledik
+      avatar: formState.avatar,
     };
     createUser(formData);
   };
@@ -113,7 +113,7 @@ const CreateNewUser = () => {
                   className="w-full h-full object-cover"
                   src={
                     formState.avatar
-                      ? URL.createObjectURL(formState.avatar)  // Doğru avatar URL'ini kullanıyoruz
+                      ? URL.createObjectURL(formState.avatar)
                       : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg"
                   }
                   alt="Profile Photo"
@@ -151,7 +151,7 @@ const CreateNewUser = () => {
             >
               <SecondInput
                 name="name"
-                value={formState.name}  // Doğru anahtar
+                value={formState.name} 
                 onChange={handleChange}
                 column
                 placeholder="Ad və soyad"
@@ -159,7 +159,7 @@ const CreateNewUser = () => {
               />
               <SecondInput
                 name="email"
-                value={formState.email}  // Doğru anahtar
+                value={formState.email} 
                 onChange={handleChange}
                 column
                 placeholder="Elektron poçt"
@@ -167,7 +167,7 @@ const CreateNewUser = () => {
               />
               <SecondInput
                 name="phone_number"
-                value={formState.phone_number}  // Doğru anahtar
+                value={formState.phone_number}
                 onChange={handleChange}
                 column
                 placeholder="Telefon nömrəsi"
