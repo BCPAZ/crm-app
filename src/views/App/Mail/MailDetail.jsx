@@ -173,7 +173,7 @@ const MailDetail = () => {
   if (isError)
     return (
       <div className="w-full h-full flex items-center justify-center">
-        Error loading mail details
+        Maillərin detalları yüklənilə bilmədi
       </div>
     );
 
@@ -238,14 +238,14 @@ const MailDetail = () => {
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center text-sm gap-2 text-gray-500">
                   <IoMdAttach size={18} />
-                  <span>{mail?.attachments?.length} Attachment</span>
+                  <span>{mail?.attachments?.length} Fayllar</span>
                 </div>
                 <button
                   onClick={handleDownloadFile}
                   className="flex items-center gap-2 text-sm text-black font-semibold"
                 >
                   <IoCloudDownload size={18} />
-                  <span>Download</span>
+                  <span>Yüklə</span>
                 </button>
               </div>
               <div className="flex items-center gap-2 mt-2">
@@ -288,7 +288,7 @@ const MailDetail = () => {
             onClick={handleSendMail}
             disabled={isSending}
           >
-            Send <IoSend size={18} />
+            Göndər <IoSend size={18} />
           </button>
         </div>
       </div>
