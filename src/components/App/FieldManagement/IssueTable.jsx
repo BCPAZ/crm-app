@@ -3,6 +3,7 @@ import moment from "moment";
 import { useGetAllIssuesQuery } from "@/data/services/fieldService";
 import Pagination from "@/components/common/Pagination";
 import { useState } from "react";
+import Spinner from "@/components/common/Spinner";
 
 const IssueTable = () => {
   const [page, setPage] = useState(1);
@@ -39,8 +40,8 @@ const IssueTable = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading issues.</div>;
+  if (isLoading) return <div className="w-full h-full p-10 flex items-center justify-center"><Spinner /></div>;
+  if (isError) return <div className="flex items-center justify-center w-full h-full p-10">Yüklənən zaman xəta baş verdi</div>;
 
   return (
     <div className="w-full overflow-x-auto">
@@ -50,15 +51,15 @@ const IssueTable = () => {
             <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
               Issues
             </th>
-            <th className="text-sm font-medium w-[12%] text-gray-500">User</th>
+            <th className="text-sm font-medium w-[12%] text-gray-500">İstifadəçi</th>
             <th className="text-sm font-medium w-[12%] text-gray-500">
-              Assignee
+              Təyin edən
             </th>
             <th className="text-sm font-medium w-[12%] text-gray-500 rounded-e-lg">
-              Date
+              Tarix
             </th>
             <th className="text-sm font-medium w-[12%] text-gray-500 rounded-e-lg">
-              Check
+              Yoxlanış
             </th>
             <th className="text-sm font-medium w-[12%] text-gray-500 rounded-e-lg">
               Status
@@ -72,7 +73,7 @@ const IssueTable = () => {
                 className="p-5 border-b hover:bg-gray-200/20 border-grey/20 w-full flex items-center justify-between gap-5 min-h-[76px]"
                 key={issue.id}
               >
-                <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
+                <td className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
                   <Link className="group flex items-center gap-4" to={`${issue.id}`}>
                     <img
                       className="w-[40px] h-[40px] rounded-full"
@@ -81,7 +82,7 @@ const IssueTable = () => {
                     />
                     <h3 className="text-sm text-secondary">{issue.name}</h3>
                   </Link>
-                </th>
+                </td>
                 <td className="text-sm font-medium text-gray-500 w-[12%]">
                   <Link className="text-sm text-secondary" to={`${issue.id}`}>
                     {issue.creator?.name || 'Unknown'}
@@ -119,8 +120,8 @@ const IssueTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="6" className="text-center py-4">
-                No issues found
+              <td colSpan="6" className="text-center p-4 font-semibold">
+                Hər hansı bir problem tapılmadı
               </td>
             </tr>
           )}

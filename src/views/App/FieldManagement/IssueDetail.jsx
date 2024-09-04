@@ -82,19 +82,19 @@ const IssueDetail = () => {
             <div className="grid md:grid-cols-2 grid-cols-1 gap-5 mt-5">
               <div className="flex flex-col text-sm text-black font-semibold">
                 <span className="text-gray-500">
-                  User: {issueDetail.creator.name}
+                  İstifadəçi: {issueDetail.creator.name}
                 </span>
                 <span className="text-gray-500">
-                  Assignee: {issueDetail.assignee.name}
+                  Təyin edən: {issueDetail.assignee.name}
                 </span>
               </div>
               <div className="flex flex-col text-sm text-black font-semibold">
                 <span className="text-gray-500">
-                  Create time:{" "}
+                  Yaranma tarixi:{" "}
                   {moment(issueDetail.created_at).format("DD MMM YYYY")}
                 </span>
                 <span className="text-gray-500">
-                  Check time:{" "}
+                  Yoxlanış tarixi:{" "}
                   {moment(issueDetail.updated_at).format("DD MMM YYYY")}
                 </span>
               </div>
