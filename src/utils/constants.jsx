@@ -9,95 +9,95 @@ import insights from "@/assets/icons/Nav/insights.svg";
 
 export const navigationLinks = [
   {
-    title : 'Projects',
+    title : 'Layihələr',
     icon : projects,
     elements : [
       {
         path : '/projects',
-        label : 'All Projects'
+        label : 'Bütün layihələr'
       },
       {
         path : 'create-project',
-        label : 'New Project',
+        label : 'Yeni Layihə',
       },
     ]
   },
   {
-    title : 'Documents',
+    title : 'Sənədlər',
     icon : docs,
     elements : [
       {
         path : '/document-register',
-        label : 'Document Register'
+        label : 'Sənəd qeydiyyatı'
       },
       {
         path : '/upload-new-document',
-        label : 'Upload New Document'
+        label : 'Yeni sənəd yükləmək'
       },
     ]
   },
   {
-    title : 'Mail',
+    title : 'E-poçt',
     icon : mail,
     path : '/mail',
   },
   {
-    title : 'Workflow',
+    title : 'İş axışı',
     icon : workflow,
     elements : [
       {
         path : '/workflows',
-        label : 'Workflows'
+        label : 'İş axını'
       },
       {
         path : '/templates',
-        label : 'Templates'
+        label : 'Şablonlar'
       },
       {
-        label : 'New Template',
+        label : 'Şablon yarat',
         path : '/create-template'
       }
     ]
   },
   {
-    title : 'Field management',
+    title : 'Sahə idarəsi',
     icon : fieldManagement,
     elements : [
       {
         path : '/issues',
-        label : 'Issues'
+        label : 'Problemlər'
       },
       {
         path : '/reports',
-        label : 'Daily Reports'
+        label : 'Hesabat'
       },
     ]
   },
   {
-    title : 'Security',
+    title : 'Təhlükəsizlik',
     icon : security,
     elements : [
       {
         path : '/users',
-        label : 'Users'
+        label : 'İstifadəçilər'
       },
       {
         path : '/roles',
-        label : 'Roles',
+        label : 'Rollar',
       },
       {
         path : '/job-title',
-        label : 'Job Title',
+        label : 'Vəzifə',
       }
     ]
   },
   {
     path : '/cost',
-    title : 'Cost',
+    title : 'Xərclər',
     icon : cost,
   },
   {
-    title : 'Insights',
+    title : 'Statistika',
     icon : insights,
     path : '/insights'
   }

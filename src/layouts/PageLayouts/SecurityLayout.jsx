@@ -3,7 +3,7 @@ import Sidebar from "@/components/App/Documents/Sidebar";
 import { navigationLinks } from "@/utils/constants";
 import { useLocation } from "react-router-dom";
 const SecurityLayout = () => {
-  const securityLinks = navigationLinks.find((link) => link.title.toLowerCase() === 'security').elements;
+  const securityLinks = navigationLinks.find((link) => link.title.toLowerCase() === 'təhlükəsizlik').elements;
   const location = useLocation();
 
   const hideSidebar = location.pathname === '/create-new-user';

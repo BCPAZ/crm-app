@@ -5,7 +5,6 @@ const Sidebar = ({links}) => {
   return (
     <aside className="p-3 border-r border-gray-300/30 w-full h-full">
       <div className="flex flex-col">
-        <h1 className="text-xs text-gray-300 uppercase">Overview</h1>
         <nav className="flex flex-col mt-5 gap-4">
           {
             links.map((link,index) => (

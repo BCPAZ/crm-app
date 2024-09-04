@@ -4,7 +4,7 @@ import { navigationLinks } from "@/utils/constants";
 import { useLocation } from "react-router-dom";
 
 const FieldManagementLayout = () => {
-  const fieldManagementLinks = navigationLinks.find((link) => link.title.toLowerCase() === 'field management').elements;
+  const fieldManagementLinks = navigationLinks.find((link) => link.title.toLowerCase() === 'sahə idarəsi').elements;
   const location = useLocation();
 
   const hideSidebar = location.pathname.match(/^\/issues\/[^/]+$/) !== null;
