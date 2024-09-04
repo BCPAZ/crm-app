@@ -269,7 +269,7 @@ const MailDetail = () => {
       <div className="absolute bottom-0 left-0 w-full h-[250px] z-20 flex flex-col gap-3">
         <SecondTextArea
           solid
-          placeholder="Write something awesome..."
+          placeholder="Mesajınızı yazın"
           value={message}
           onChange={handleMessageChange}
         />
