@@ -24,9 +24,7 @@ const createTemplateSchema = Yup.object().shape({
 });
 
 const CreateTemplate = () => {
-  const [columns, setColumns] = useState([]);
   const [modal, setModal] = useState(false);
-  const [name, setName] = useState("");
   const {
     data: governments = [],
     isLoading,
@@ -115,7 +113,7 @@ const CreateTemplate = () => {
         <div className="siteContainer">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold w-full">
-              Şablon yaradın - Workflow
+              Şablon yaradın - İş axını
             </h1>
             <div className="w-[15%]">
               <Button value="Qeyd edin" form="create-template-form" isLoading={createIsLoading}/>
