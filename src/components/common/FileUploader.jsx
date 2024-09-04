@@ -1,5 +1,6 @@
 import { FiUploadCloud } from "react-icons/fi";
 import { useRef } from "react";
+import PropTypes from "prop-types";
 const FileUploader = ({ onChange, label = "File" }) => {
   const fileRef = useRef();
 
@@ -17,12 +18,17 @@ const FileUploader = ({ onChange, label = "File" }) => {
       >
         <div className="flex flex-col gap-2 items-center justify-center">
           <FiUploadCloud className="text-gray-400" size={32} />
-          <span className="text-sm font-light text-gray-400">Upload File</span>
+          <span className="text-sm font-light text-gray-400">Fayl yükləyin</span>
         </div>
         <input ref={fileRef} type="file" className="hidden" onChange={onChange} />
       </div>
     </div>
   );
 };
+
+FileUploader.propTypes = {
+  onChange : PropTypes.func,
+  label : PropTypes.string
+}
 
 export default FileUploader;
