@@ -10,6 +10,7 @@ const TaskDetail = ({ selectedTaskId }) => {
     skip: !selectedTaskId,
   });
 
+  // TODO: delete modal
   const [deleteTask] = useDeleteTaskMutation();
 
   return (
@@ -17,15 +18,15 @@ const TaskDetail = ({ selectedTaskId }) => {
       <header className="p-5 flex items-center justify-between gap-2">
         <Selectbox outline />
         <div className="flex items-center gap-5 text-gray-500">
-          <button>
+          {/* <button>
             <BiSolidLike size={24} />
-          </button>
+          </button> */}
           <button onClick={() => deleteTask(selectedTaskId)}>
             <HiTrash size={24} />
           </button>
-          <button>
+          {/* <button>
             <IoMdMore size={24} />
-          </button>
+          </button> */}
         </div>
       </header>
       <div className="w-full h-full">
