@@ -7,32 +7,32 @@ import star from "@/assets/icons/Mail/star.svg";
 
 const mailLinks = [
   {
-    label: 'All',
+    label: 'Hamısı',
     icon: mail,
     type: 'ALL'
   },
   {
-    label: 'Inbox',
+    label: 'Gələnlər',
     icon: inbox,
     type: 'INBOX'
   },
   {
-    label: 'Sent',
+    label: 'Göndərilən',
     icon: send,
     type: 'SENT'
   },
   {
-    label: 'Trash',
+    label: 'Zibillər',
     icon: trash,
     type: 'TRASH'
   },
   {
-    label: 'Important',
+    label: 'Vaciblər',
     icon: important,
     type: 'IMPORTANT'
   },
   {
-    label: 'Starred',
+    label: 'Ulduzlananlar',
     icon: star,
     type: 'STARRED'
   },

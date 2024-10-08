@@ -7,7 +7,7 @@ import SelectUserProject from "@/components/App/Projects/SelectProjectUser";
 import { Toaster } from "react-hot-toast";
 import useToast from "@/hooks/useToast";
 import { IoMdClose } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 const CreateProject = () => {
   const [createProject, { isSuccess, isError, isLoading}] = useCreateProjectMutation();
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +15,7 @@ const CreateProject = () => {
   const [projectCode, setProjectCode] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -49,6 +50,7 @@ const CreateProject = () => {
       setProjectName('');
       setProjectCode('');
       setSelectedUsers([]);
+      navigate('/projects')
     }
   }, [isSuccess]);
 

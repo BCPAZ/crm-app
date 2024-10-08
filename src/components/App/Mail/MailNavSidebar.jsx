@@ -33,7 +33,7 @@ const MailNavSidebar = ({
         className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
       >
         <FaPen size={20} />
-        <span className="text-sm">Compose</span>
+        <span className="text-sm">Mail yaz</span>
       </button>
       <div className="py-3 flex flex-col gap-2 h-full">
         {mailLinks.map((link, index) => (

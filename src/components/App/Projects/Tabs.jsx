@@ -6,15 +6,15 @@ import CommentsPanel from "./CommentsPanel";
 const tabs = [
   {
     id: 1,
-    tabName: "Overview",
+    tabName: "Ümumi baxış",
   },
   {
     id: 2,
-    tabName: "Subtasks",
+    tabName: "Alt tapşırıqlar",
   },
   {
     id: 3,
-    tabName: "Comments",
+    tabName: "Rəylər",
   },
 ];
 

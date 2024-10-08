@@ -129,7 +129,7 @@ const MailLayout = () => {
     <section className="py-10">
       <div className="siteContainer relative">
         <div className="flex items-center justify-between w-full">
-          <h1 className="font-bold text-2xl">Mail {filterType} ({mails.length})</h1>
+          <h1 className="font-bold text-2xl">Maillərim ({mails.length})</h1>
           <div className="md:hidden flex items-center gap-3">
             <button
               onClick={handleSidebar}

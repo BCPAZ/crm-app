@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { useCreateIssueMutation } from "@/data/services/fieldService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Reports = () => {
   const [createIssue, { isError, isSuccess, isLoading }] = useCreateIssueMutation();
@@ -19,6 +20,7 @@ const Reports = () => {
   const fileRef = useRef(null);
   const companyUsers = users?.users;
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const handleChangeTitle = (e) => setTitle(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
@@ -63,6 +65,7 @@ const Reports = () => {
       setAssigneeId(null);
       setFilePreview(null);
       showToast('Report uğurlu şəkildə yaradıldı', 'success');
+      navigate('/issues')
     }
   }, [isSuccess]);
 

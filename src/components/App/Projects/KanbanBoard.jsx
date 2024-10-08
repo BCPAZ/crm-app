@@ -43,21 +43,9 @@ const KanbanBoard = () => {
     createBoard({ name: newColumnName });
   };
 
-  const handleDeleteColumn = useCallback((id) => {
-  }, []);
-
-  const handleUpdateColumnName = useCallback((id, newName) => {
-  
-  }, []);
-
-  const handleDeleteTask = (columnId, taskId) => {
-  
-  };
-
   const onDragEnd = useCallback(
     (result) => {
       const { source, destination, type, draggableId } = result;
-
 
       if (!destination) return;
 
@@ -69,22 +57,25 @@ const KanbanBoard = () => {
         return;
       }
 
-      console.log(result)
-      
-
       changeTaskPosition({
         board_id: destination.droppableId?.replace("board-", ""),
         position: destination.index,
         task_id: draggableId.replace("task-", ""),
         source_board_id: source.droppableId?.replace("board-", ""),
-      })
+      });
     },
     []
   );
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
-      <TaskDetail selectedTaskId={selectedTaskId}/>
+      {/* Task seçilibsə, TaskDetail komponentini göstər */}
+      {selectedTaskId && (
+        <TaskDetail 
+          selectedTaskId={selectedTaskId} 
+          closeTaskDetail={() => setSelectedTaskId(null)} // TaskDetail bağlamaq üçün funksiyanı ötürürük
+        />
+      )}
       <div className="flex space-x-6 h-full overflow-x-scroll">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
@@ -112,12 +103,7 @@ const KanbanBoard = () => {
                       >
                         <Column
                           column={column}
-                          handleDeleteColumn={handleDeleteColumn}
-                          handleUpdateColumnName={handleUpdateColumnName}
-                          handleDeleteTask={(taskId) =>
-                            handleDeleteTask(column.id, taskId)
-                          }
-                          setSelectedTaskId={setSelectedTaskId}
+                          setSelectedTaskId={setSelectedTaskId} // Taskın üzərinə kliklədikdə ID-ni təyin etmək üçün
                         />
                       </div>
                     )}

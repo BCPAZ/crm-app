@@ -2,6 +2,7 @@ import Searchbar from "@/components/common/Searchbar";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import Spinner from "@/components/common/Spinner";
+import { IoCloseSharp } from "react-icons/io5";
 
 const UserSelectModal = ({
   modal,
@@ -24,7 +25,10 @@ const UserSelectModal = ({
     <section className="bg-black/70 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-full z-30">
       <div className="bg-white rounded-lg shadow-lg w-[444px] min-h-[420px]">
         <div className="p-6">
+          <div className="flex items-center justify-between gap-3">
           <h6 className="text-lg font-semibold">Seçim edin</h6>
+          <button onClick={closeUserModal}><IoCloseSharp size={20} /></button>
+          </div>
           <div className="w-full mt-6">
             <Searchbar simple />
           </div>

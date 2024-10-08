@@ -32,8 +32,8 @@ SecondTextArea.propTypes = {
   label: PropTypes.string,
   column: PropTypes.bool,
   solid: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
 };
 
 export default SecondTextArea;

@@ -1,32 +1,65 @@
 import Selectbox from "@/components/common/Selectbox";
-import { BiSolidLike } from "react-icons/bi";
 import { HiTrash } from "react-icons/hi2";
-import { IoMdMore } from "react-icons/io";
+import { IoCloseSharp } from "react-icons/io5";
+import { useEffect, useState } from "react";
 import Tabs from "./Tabs";
-import { useDeleteTaskMutation, useGetTaskQuery } from "@/data/services/taskManagementService";
+import PropTypes from "prop-types";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
+import {
+  useDeleteTaskMutation,
+  useGetTaskQuery,
+} from "@/data/services/taskManagementService";
+import useToast from "@/hooks/useToast";
 
-const TaskDetail = ({ selectedTaskId }) => {
+const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const {showToast} = useToast();
   const { data: task = {} } = useGetTaskQuery(selectedTaskId, {
     skip: !selectedTaskId,
   });
 
-  // TODO: delete modal
-  const [deleteTask] = useDeleteTaskMutation();
+  const [deleteTask, { isLoading, isSuccess, isError }] = useDeleteTaskMutation();
+
+  const closeConfirmationModal = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleDeleteTask = () => {
+    deleteTask(selectedTaskId);
+    setShowConfirmation(false);
+  };
+
+  useEffect(() => {
+    if(isSuccess){
+      showToast('success', 'Tapşırıq uğurlu şəkildə silindi');
+      setShowConfirmation(false);
+      closeTaskDetail();
+    }
+  },[isSuccess])
+
+  useEffect(() => {
+    if(isError){
+      showToast('error', 'Tapşırıq silinə bilmədi')
+    }
+  },[isError])
 
   return (
     <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg overflow-y-auto">
+      <ConfirmationModal
+        showConfirmation={showConfirmation}
+        closeConfirmationModal={closeConfirmationModal}
+        handleDelete={handleDeleteTask}
+        isLoading={isLoading}
+      />
       <header className="p-5 flex items-center justify-between gap-2">
         <Selectbox outline task={task} />
         <div className="flex items-center gap-5 text-gray-500">
-          {/* <button>
-            <BiSolidLike size={24} />
-          </button> */}
-          <button onClick={() => deleteTask(selectedTaskId)}>
+          <button onClick={() => setShowConfirmation(true)}>
             <HiTrash size={24} />
           </button>
-          {/* <button>
-            <IoMdMore size={24} />
-          </button> */}
+          <button onClick={closeTaskDetail}>
+            <IoCloseSharp size={24} />
+          </button>
         </div>
       </header>
       <div className="w-full h-full">
@@ -34,6 +67,11 @@ const TaskDetail = ({ selectedTaskId }) => {
       </div>
     </aside>
   );
+};
+
+TaskDetail.propTypes = {
+  selectedTaskId: PropTypes.number,
+  closeTaskDetail : PropTypes.func
 };
 
 export default TaskDetail;

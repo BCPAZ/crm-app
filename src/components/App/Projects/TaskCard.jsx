@@ -84,9 +84,9 @@ const TaskCard = ({ task, index, handleDeleteTask, setSelectedTaskId }) => {
 
 TaskCard.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.any.isRequired,
-    name: PropTypes.string.isRequired,
-    priority: PropTypes.string.isRequired,
+    id: PropTypes.any,
+    name: PropTypes.string,
+    priority: PropTypes.string,
     comments: PropTypes.array,
     content : PropTypes.string,
     attachments: PropTypes.arrayOf(PropTypes.string),
@@ -94,9 +94,9 @@ TaskCard.propTypes = {
       img: PropTypes.string,
       name: PropTypes.string,
     })),
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-  handleDeleteTask : PropTypes.func.isRequired
+  }),
+  index: PropTypes.number,
+  handleDeleteTask : PropTypes.func
 };
 
 export default memo(TaskCard);

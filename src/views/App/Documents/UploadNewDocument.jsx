@@ -85,9 +85,7 @@ const UploadNewDocument = () => {
   useEffect(() => {
     if (isSuccess) {
       showToast("Sənəd uğurla yükləndi", "success");
-      setTimeout(() => {
-        navigate('/document-register')
-      }, 1500)
+      navigate('/document-register')
     }
   }, [isSuccess]);
 

@@ -169,9 +169,9 @@ Column.propTypes = {
     //   })
     // ).isRequired,
   }),
-  handleDeleteColumn: PropTypes.func.isRequired,
-  handleUpdateColumnName: PropTypes.func.isRequired,
-  handleDeleteTask: PropTypes.func.isRequired,
+  handleDeleteColumn: PropTypes.func,
+  handleUpdateColumnName: PropTypes.func,
+  handleDeleteTask: PropTypes.func,
 };
 
 export default memo(Column);
