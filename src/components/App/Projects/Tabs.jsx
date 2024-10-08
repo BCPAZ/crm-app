@@ -38,7 +38,7 @@ export default function Tabs({ task }) {
           <OverviewPanel task={task} />
         </TabPanel>
         <TabPanel>
-          <SubtasksPanel />
+          <SubtasksPanel task={task} />
         </TabPanel>
         <TabPanel>
           <CommentsPanel task={task}/>

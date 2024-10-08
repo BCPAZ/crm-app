@@ -1,7 +1,7 @@
 import CheckboxElement from "@/components/common/CheckboxElement";
 import { IoMdAdd } from "react-icons/io";
 
-const SubtasksPanel = () => {
+const SubtasksPanel = ({ task }) => {
   return (
     <section className="w-full h-full">
       <div className="flex flex-col gap-2">
@@ -11,14 +11,16 @@ const SubtasksPanel = () => {
         </div>
       </div>
       <div className="flex flex-col gap-5 mt-6">
-        <CheckboxElement  label="Complete the task"/>
-        <CheckboxElement  label="Complete the task"/>
-        <CheckboxElement  label="Complete the task"/>
-        <CheckboxElement  label="Complete the task"/>
+        {task?.sub_tasks?.map((sub_task) => (
+          <CheckboxElement label={sub_task?.content} />
+        ))}
       </div>
-      <button className="p-2 rounded-lg border text-sm font-semibold flex items-center gap-1 mt-6"><IoMdAdd size={20}/>Create Task</button>
+      <button className="p-2 rounded-lg border text-sm font-semibold flex items-center gap-1 mt-6">
+        <IoMdAdd size={20} />
+        Create Task
+      </button>
     </section>
-  )
-}
+  );
+};
 
-export default SubtasksPanel
+export default SubtasksPanel;
