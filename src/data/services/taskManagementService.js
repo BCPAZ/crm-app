@@ -45,7 +45,7 @@ const taskManagementService = api.injectEndpoints({
     }),
 
     createTask: builder.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/task-management/tasks/${id}`,
         method: "POST",
         body: data,
@@ -68,6 +68,9 @@ const taskManagementService = api.injectEndpoints({
       query: (id) => ({
         url: `/task-management/tasks/${id}`,
       }),
+      providesTags: (result, error, id) => {
+        return [{ type: "TASK", id }]
+      },
     }),
 
     deleteTask: builder.mutation({
@@ -76,13 +79,40 @@ const taskManagementService = api.injectEndpoints({
         method: "DELETE",
       }),
 
-      invalidatesTags: ['BOARDS']
+      invalidatesTags: ["BOARDS"],
     }),
-    getLastTask : builder.query({
-      query : () => ({
-        url : '/task-management/tasks/last-five-tasks'
+    getLastTask: builder.query({
+      query: () => ({
+        url: "/task-management/tasks/last-five-tasks",
       }),
-    })
+    }),
+
+    createComment: builder.mutation({
+      query: ({ taskId, data }) => {
+        const formData = new FormData();
+        if (data?.image) {
+          formData.append("image", data?.image);
+        }
+
+        if (data?.attachment) {
+          formData.append("attachment", data?.attachment);
+        }
+
+        if (data?.text) {
+          formData.append("text", data?.text);
+        }
+
+        return {
+          url: `/task-management/task-comments/${taskId}`,
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: (result, error, {taskId}) => { 
+        console.log(taskId)
+        return [{ type: "TASK", id: taskId }]
+      },
+    }),
   }),
   overrideExisting: true,
 });
@@ -97,7 +127,8 @@ export const {
   useChangeTaskPositionMutation,
   useGetTaskQuery,
   useDeleteTaskMutation,
-  useGetLastTaskQuery
+  useGetLastTaskQuery,
+  useCreateCommentMutation,
 } = taskManagementService;
 
 export default taskManagementService;

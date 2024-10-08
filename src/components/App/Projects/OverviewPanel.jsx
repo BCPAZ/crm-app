@@ -60,18 +60,24 @@ const OverviewPanel = ({ task }) => {
             Priority
           </h3>
           <div className="flex-1 flex items-center gap-2">
-            <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-              <img src={Low} alt="Priority" />
-              Low
-            </button>
-            <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-              <img src={Medium} alt="Priority" />
-              Medium
-            </button>
-            <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-              <img src={High} alt="Priority" />
-              High
-            </button>
+            {task?.priority === "LOW" && (
+              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
+                <img src={Low} alt="Priority" />
+                Low
+              </button>
+            )}
+            {task?.priority === "MEDIUM" && (
+              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
+                <img src={Medium} alt="Priority" />
+                Medium
+              </button>
+            )}
+            {task?.priority === "HIGH" && (
+              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
+                <img src={High} alt="Priority" />
+                High
+              </button>
+            )}
           </div>
         </div>
         <div className="flex ">
