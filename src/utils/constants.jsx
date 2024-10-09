@@ -9,20 +9,6 @@ import insights from "@/assets/icons/Nav/insights.svg";
 
 export const navigationLinks = [
   {
-    title : 'Layihələr',
-    icon : projects,
-    elements : [
-      {
-        path : '/projects',
-        label : 'Bütün layihələr'
-      },
-      {
-        path : 'create-project',
-        label : 'Yeni Layihə',
-      },
-    ]
-  },
-  {
     title : 'Sənədlər',
     icon : docs,
     elements : [
@@ -42,7 +28,7 @@ export const navigationLinks = [
     path : '/mail',
   },
   {
-    title : 'İş axışı',
+    title : 'İş axını',
     icon : workflow,
     elements : [
       {
@@ -100,7 +86,21 @@ export const navigationLinks = [
     title : 'Statistika',
     icon : insights,
     path : '/insights'
-  }
+  },
+  {
+    title : 'Layihələr',
+    icon : projects,
+    elements : [
+      {
+        path : '/projects',
+        label : 'Bütün layihələr'
+      },
+      {
+        path : 'create-project',
+        label : 'Yeni Layihə',
+      },
+    ]
+  },
 ]
 
 
