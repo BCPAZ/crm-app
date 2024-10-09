@@ -64,30 +64,37 @@ const InvoiceDetail = () => {
     },
   ];
 
-  const renderStatus = (status) => {
-    switch (status) {
+  const renderStatus = (statusType) => {
+    switch (statusType) {
       case "CANCELLED":
         return (
-          <span className="text-xs font-bold py-1 px-2 rounded bg-red-600/20 text-red-600 capitalize w-full">
-            {status}
+          <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">
+            Ləğv edilib
           </span>
         );
       case "PAID":
         return (
-          <span className="text-xs font-bold py-1 px-2 rounded bg-green-600/20 text-green-600 capitalize w-full">
-            {status}
+          <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">
+            Ödənilib
           </span>
         );
       case "PENDING":
         return (
-          <span className="text-xs font-bold py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
-            {status}
+          <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
+            Gözlənilir
           </span>
         );
-      default:
+      case "OVERDUE":
         return (
-          <span className="text-xs font-bold py-1 px-2 rounded bg-gray-600/40 capitalize w-full">
-            {status}
+          <span className="text-xs py-1 px-2 rounded bg-blue-600/20 text-blue-600 capitalize w-full">
+            Vaxtı keçmiş
+          </span>
+        );
+
+        case "DRAFT":
+        return (
+          <span className="text-xs py-1 px-2 rounded bg-gray-300 text-gray-600 capitalize w-full">
+            Qaralama
           </span>
         );
     }
@@ -101,16 +108,17 @@ const InvoiceDetail = () => {
           <h1 className="text-2xl font-semibold">{data.code}</h1>
           <Breadcrumb />
           <div className="flex items-center justify-between flex-wrap gap-4">
-              <ReactToPrint
-                trigger={() => (
-                  <button className="text-xl text-gray-400 p-2 relative group">
-                    <BsFillPrinterFill />
-                    <span className="text-xs font-medium text-center bg-black/20 text-black p-1 rounded hidden group-hover:block absolute -bottom-5 left-0">
-                      Print
-                    </span>
-                  </button>
-                )}  content={() => componentRef.current}
-              />
+            <ReactToPrint
+              trigger={() => (
+                <button className="text-xl text-gray-400 p-2 relative group">
+                  <BsFillPrinterFill />
+                  <span className="text-xs font-medium text-center bg-black/20 text-black p-1 rounded hidden group-hover:block absolute -bottom-5 left-0">
+                    Print
+                  </span>
+                </button>
+              )}
+              content={() => componentRef.current}
+            />
             <div className="w-[20%]">
               <Select
                 onChange={handleChangeStatus}

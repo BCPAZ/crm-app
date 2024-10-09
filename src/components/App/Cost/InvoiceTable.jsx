@@ -87,25 +87,25 @@ const InvoiceTable = () => {
       case "CANCELLED":
         return (
           <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">
-            {statusType}
+            Ləğv edilib
           </span>
         );
       case "PAID":
         return (
           <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">
-            {statusType}
+            Ödənilib
           </span>
         );
       case "PENDING":
         return (
           <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
-            {statusType}
+            Gözlənilir
           </span>
         );
       default:
         return (
           <span className="text-xs py-1 px-2  rounded bg-blue-600/40 capitalize w-full">
-            {statusType}
+            Naməlum
           </span>
         );
     }
