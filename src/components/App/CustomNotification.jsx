@@ -29,6 +29,14 @@ const CustomNotification = () => {
               <span className="w-2 h-2 bg-red-500 rounded-full"></span>
               <p className="text-sm">İş axını prosesi artıq yekunlaşıb</p>
             </div>
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+              <p className="text-sm">İş axını prosesi artıq yekunlaşıb</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+              <p className="text-sm">İş axını prosesi artıq yekunlaşıb</p>
+            </div>
           </div>
         </div>
       )}
