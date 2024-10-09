@@ -106,7 +106,7 @@ const IssueDetail = () => {
             </div>
           </div>
         </div>
-=      </div>
+      </div>
     </section>
   );
 };

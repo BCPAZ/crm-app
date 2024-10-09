@@ -49,7 +49,7 @@ const IssueTable = () => {
         <thead className="bg-gray-300/30 w-full rounded-lg text-left">
           <tr className="p-5 w-full flex items-center justify-between gap-5">
             <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[40%]">
-              Issues
+              Problemlər
             </th>
             <th className="text-sm font-medium w-[12%] text-gray-500">İstifadəçi</th>
             <th className="text-sm font-medium w-[12%] text-gray-500">

@@ -1,4 +1,5 @@
 import { useGetWorkflowInsightsQuery } from "@/data/services/insightService";
+import PropTypes from "prop-types";
 import moment from "moment";
 
 const WorkflowReport = ({startDate, endDate}) => {
@@ -11,12 +12,12 @@ const WorkflowReport = ({startDate, endDate}) => {
 
   return (
     <div className="md:p-6 p-3 bg-white shadow-lg rounded-lg">
-      <h6 className="w-full font-medium text-lg">Workflows</h6>
+      <h6 className="w-full font-medium text-lg">İş axını</h6>
       <div className="flex flex-col gap-2 mt-6">
         <div className="flex items-center justify-between">
-          <h6 className="text-sm font-medium">Completed</h6>
+          <h6 className="text-sm font-medium">Tamamlanan</h6>
           <div className="text-sm font-medium">
-            {insight?.completed} <span className="text-sm text-gray-400">(Total:{insight?.total})</span>
+            {insight?.completed} <span className="text-sm text-gray-400">(Ümumi:{insight?.total})</span>
           </div>
         </div>
         <div className="bg-grey/20 relative w-full h-2 rounded-lg">
@@ -25,9 +26,9 @@ const WorkflowReport = ({startDate, endDate}) => {
       </div>
       <div className="flex flex-col gap-2 mt-6">
         <div className="flex items-center justify-between">
-          <h6 className="text-sm font-medium">In progress</h6>
+          <h6 className="text-sm font-medium">İcrası davam edən</h6>
           <div className="text-sm font-medium">
-            {insight?.progress} <span className="text-sm text-gray-400">(Total:{insight?.total})</span>
+            {insight?.progress} <span className="text-sm text-gray-400">(Ümumi:{insight?.total})</span>
           </div>
         </div>
         <div className="bg-grey/20 relative w-full h-2 rounded-lg">
@@ -37,5 +38,10 @@ const WorkflowReport = ({startDate, endDate}) => {
     </div>
   );
 };
+
+WorkflowReport.propTypes = {
+  startDate : PropTypes.string,
+  endDate : PropTypes.string
+}
 
 export default WorkflowReport;

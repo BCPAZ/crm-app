@@ -2,20 +2,45 @@ import { useParams } from "react-router-dom";
 import { useGetWorkflowDetailQuery } from "@/data/services/workflowsService";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
+import { translateStatus } from "@/utils/translateStatus";
 
 const WorkflowDetail = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetWorkflowDetailQuery(id);
+  const workflowData = data || {};
+
+  const dateRenderer = (date) => {
+    if (date <= 2) {
+      return (
+        <span className="text-sm font-semibold text-yellow-500">
+          Qalan gün sayı : {date}
+        </span>
+      );
+    } else if (date === 0) {
+      return (
+        <span className="text-sm font-semibold text-yellow-500">Qalan gün sayı : {date}</span>
+      );
+    } else {
+      return (
+        <span className="text-sm font-semibold text-green-600">Qalan gün sayı : {date}</span>
+      );
+    }
+  };
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-full w-full"><Spinner /></div>;
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <Spinner />
+      </div>
+    );
   }
-
   if (isError) {
-    return <div className="w-full h-full flex items-center justify-center">Məlumat yüklənən zaman xəta baş verdi.</div>;
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        Məlumat yüklənən zaman xəta baş verdi.
+      </div>
+    );
   }
-
-  const workflowData = data || {};
 
   if (!workflowData.id) {
     return (
@@ -33,8 +58,10 @@ const WorkflowDetail = () => {
             {workflowData.project?.name || "Project Name"}
           </h1>
           <div className="flex items-center gap-5">
-          <span className="text-md font-medium text-gray-500">Ümumi gün sayı : {workflowData.days}</span>
-          <span className="text-sm font-medium py-2 px-4 rounded-lg bg-black text-white">{workflowData.status}</span>
+            {dateRenderer(workflowData.days)}
+            <div>
+              {translateStatus(workflowData.status)}
+            </div>
           </div>
         </div>
         <div className="mt-10 grid md:grid-cols-2 grid-cols-1 gap-10">
@@ -62,19 +89,41 @@ const WorkflowDetail = () => {
                   alt={workflowData.government.name}
                   className="w-[30px] h-[30px] rounded-full border border-black/20 object-cover"
                 />
-                <p className="text-lg font-semibold">{workflowData.government.name}</p>
+                <p className="text-lg font-semibold">
+                  {workflowData.government.name}
+                </p>
               </div>
             </div>
-            <div className="text-sm font-semibold">Yaradılma tarixi : <span className="font-medium">{moment(workflowData.government.createdAt).format('YYYY-MM-DD')}</span></div>
+            <div className="text-sm font-semibold">
+              Yaradılma tarixi :{" "}
+              <span className="font-medium">
+                {moment(workflowData.government.createdAt).format("YYYY-MM-DD")}
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4 bg-grey/20 p-4 rounded-lg">
             <h2 className="text-lg font-semibold">Sənəd</h2>
-            <p className="text-md font-medium"><span className="font-semibold">Ad -</span> {workflowData.document.name}</p>
-            <p className="text-md font-medium"><span className="font-semibold">Sənəd No -</span> {workflowData.document.document_no}</p>
-            <p className="text-md font-medium"><span className="font-semibold">Müəllif adı -</span> {workflowData.document.author}</p>
-            <p className="text-md font-medium"><span className="font-semibold">Sənəd tipi -</span> {workflowData.document.type}</p>
-            <p className="text-md font-medium"><span className="font-semibold">Səhifə sayı -</span> {workflowData.document.page_size}</p>
+            <p className="text-md font-medium">
+              <span className="font-semibold">Ad -</span>{" "}
+              {workflowData.document.name}
+            </p>
+            <p className="text-md font-medium">
+              <span className="font-semibold">Sənəd No -</span>{" "}
+              {workflowData.document.document_no}
+            </p>
+            <p className="text-md font-medium">
+              <span className="font-semibold">Müəllif adı -</span>{" "}
+              {workflowData.document.author}
+            </p>
+            <p className="text-md font-medium">
+              <span className="font-semibold">Sənəd tipi -</span>{" "}
+              {workflowData.document.type}
+            </p>
+            <p className="text-md font-medium">
+              <span className="font-semibold">Səhifə sayı -</span>{" "}
+              {workflowData.document.page_size}
+            </p>
             <a
               href={workflowData.document.file}
               target="_blank"
@@ -87,9 +136,18 @@ const WorkflowDetail = () => {
 
           <div className="flex flex-col gap-4 bg-grey/20 p-4 rounded-lg">
             <h2 className="text-lg font-semibold">Göndərən</h2>
-            <p><span className="font-semibold">Ad -</span> {workflowData.sender.name}</p>
-            <p><span className="font-semibold">E-poçt -</span> {workflowData.sender.email}</p>
-            <p><span className="font-semibold">Şirkət adı -</span> {workflowData.sender.company.name}</p>
+            <p>
+              <span className="font-semibold">Ad -</span>{" "}
+              {workflowData.sender.name}
+            </p>
+            <p>
+              <span className="font-semibold">E-poçt -</span>{" "}
+              {workflowData.sender.email}
+            </p>
+            <p>
+              <span className="font-semibold">Şirkət adı -</span>{" "}
+              {workflowData.sender.company.name}
+            </p>
           </div>
         </div>
       </div>

@@ -23,11 +23,6 @@ export const navigationLinks = [
     ]
   },
   {
-    title : 'E-poçt',
-    icon : mail,
-    path : '/mail',
-  },
-  {
     title : 'İş axını',
     icon : workflow,
     elements : [
@@ -58,6 +53,11 @@ export const navigationLinks = [
         label : 'Hesabat'
       },
     ]
+  },
+  {
+    title : 'E-poçt',
+    icon : mail,
+    path : '/mail',
   },
   {
     title : 'Təhlükəsizlik',
