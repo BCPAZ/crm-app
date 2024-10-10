@@ -71,8 +71,6 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     }
   }, [isError]);
 
-  console.log(isError)
-
   return (
     <div
       className={`w-full h-screen bg-black/70 ${
@@ -134,7 +132,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
             label="Rol"
             column
             absolute
-            value={roles.find((role) => role.id === formData.role_id) || ""}
+            value={roles.find((role) => role.id === formData.role_id) || null}
             onChange={handleSelectChange}
             options={roles}
           />

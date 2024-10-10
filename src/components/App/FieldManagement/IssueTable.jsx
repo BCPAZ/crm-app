@@ -22,19 +22,19 @@ const IssueTable = () => {
       case "RESOLVED":
         return (
           <span className="text-xs py-1 px-2 rounded bg-green-600/20 text-green-600 capitalize w-full">
-            {status}
+            Həll olundu
           </span>
         );
       case "PENDING":
         return (
           <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
-            {status}
+            Gözləyir
           </span>
         );
       default:
         return (
           <span className="text-xs py-1 px-2 rounded bg-gray-600/40 capitalize w-full">
-            {status}
+            Naməlum
           </span>
         );
     }

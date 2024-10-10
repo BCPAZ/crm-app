@@ -13,14 +13,15 @@ import { useNavigate } from "react-router-dom";
 
 const CreateNewUser = () => {
   const { data: roles = [] } = useGetRolesQuery();
-  const [createUser, { isLoading, isSuccess, isError }] = useCreateUserMutation();
+  const [createUser, { isLoading, isSuccess, isError }] =
+    useCreateUserMutation();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
-    phone_number: "", 
-    role_id: roles[0]?.id || null,
+    phone_number: "",
+    role_id: null,
     address: "",
     city: "",
     zip_code: "",
@@ -28,6 +29,16 @@ const CreateNewUser = () => {
     about: "",
     avatar: null,
   });
+
+  // roles data gələndən sonra role_id-i update edirik
+  useEffect(() => {
+    if (roles.length > 0) {
+      setFormState((prevState) => ({
+        ...prevState,
+        role_id: roles[0]?.id || null,
+      }));
+    }
+  }, [roles]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,9 +49,10 @@ const CreateNewUser = () => {
   };
 
   const handleRoleChange = (selectedRole) => {
+    console.log(selectedRole);
     setFormState((prevState) => ({
       ...prevState,
-      role_id: selectedRole?.id || null,
+      role_id: selectedRole, // Artıq yalnız id gəlir, ona görə sadəcə selectedRole yazmaq olar
     }));
   };
 
@@ -53,21 +65,24 @@ const CreateNewUser = () => {
           useWebWorker: true,
         };
         const compressedFile = await imageCompression(file, options);
-        console.log(compressedFile)
+        console.log(compressedFile);
 
         setFormState((prevState) => ({
           ...prevState,
           avatar: compressedFile,
         }));
       } catch (error) {
-        showToast('Şəkil ölçüsü gözləniləndən böyükdür', "error");
+        showToast("Şəkil ölçüsü gözləniləndən böyükdür", "error");
       }
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formState.avatar)
+    if (!formState.role_id) {
+      showToast("Rol seçilməlidir", "error");
+      return;
+    }
     const formData = {
       ...formState,
       avatar: formState.avatar,
@@ -81,7 +96,7 @@ const CreateNewUser = () => {
         name: "",
         email: "",
         phone_number: "",
-        role_id: null,
+        role_id: roles[0]?.id || null,
         address: "",
         city: "",
         zip_code: "",
@@ -90,7 +105,7 @@ const CreateNewUser = () => {
         avatar: null,
       });
       showToast("Hesab uğurlu şəkildə yaradıldı", "success");
-      navigate('/users')
+      navigate("/users");
     }
   }, [isSuccess]);
 
@@ -130,19 +145,10 @@ const CreateNewUser = () => {
                 />
               </div>
               <p className="text-xs text-gray-400 max-w-[174px] text-center mt-6">
-                İcazə verilən formatlar : *.jpeg, *.jpg, *.png, *.gif. Şəkilin max ölçüsü 2MB olmalıdır.
+                İcazə verilən formatlar : *.jpeg, *.jpg, *.png, *.gif. Şəkilin
+                max ölçüsü 2MB olmalıdır.
               </p>
             </div>
-             {/* <div className="flex justify-between mt-5">
-              <div className="flex flex-col gap-2 max-w-[247px]">
-                <h3 className="text-sm font-semibold">Email verified</h3>
-                <p className="text-sm">
-                  Disabling this will automatically send the user a verification
-                  email
-                </p>
-              </div>
-              <CustomSwitch />
-            </div> */}
           </div>
           <div className="bg-white p-6 rounded-xl lg:w-[62%] w-full shadow-lg">
             <form
@@ -151,7 +157,7 @@ const CreateNewUser = () => {
             >
               <SecondInput
                 name="name"
-                value={formState.name} 
+                value={formState.name}
                 onChange={handleChange}
                 column
                 placeholder="Ad və soyad"
@@ -159,7 +165,7 @@ const CreateNewUser = () => {
               />
               <SecondInput
                 name="email"
-                value={formState.email} 
+                value={formState.email}
                 onChange={handleChange}
                 column
                 placeholder="Elektron poçt"
@@ -174,9 +180,14 @@ const CreateNewUser = () => {
                 type="text"
               />
               <Select
+                name="role_id"
                 options={roles}
                 column
-                value={roles.find((role) => role.id === formState.role_id)}
+                value={
+                  roles.length > 0
+                    ? roles.find((role) => role.id === formState.role_id)
+                    : null
+                }
                 onChange={handleRoleChange}
               />
               <SecondInput

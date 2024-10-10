@@ -127,7 +127,7 @@ const UserList = () => {
                           <div className="flex items-center gap-4">
                             <img
                               className="w-[40px] h-[40px] rounded-full"
-                              src={user.avatar_url}
+                              src={user?.avatar_url}
                               alt={user.name}
                             />
                             <div className="flex flex-col">

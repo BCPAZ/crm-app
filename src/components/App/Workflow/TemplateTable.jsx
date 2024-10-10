@@ -99,7 +99,6 @@ const TemplateTable = () => {
               <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
                 <div className="flex items-center gap-4">
                   <Link
-                    to={`${template.id}`}
                     className="text-sm text-secondary hover:underline"
                   >
                     {template.name}

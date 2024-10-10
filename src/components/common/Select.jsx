@@ -8,8 +8,10 @@ import { useState, useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import PropTypes from "prop-types";
 
-function Select({ label, column, absolute, options = [], value, onChange, mode = 'id' }) {
+function Select({ label, column, absolute, options = [], value, onChange }) {
   const [selectedOption, setSelectedOption] = useState(value || '');
+
+  // mode = 'id'
 
   useEffect(() => {
     if (value !== undefined) {
@@ -18,7 +20,8 @@ function Select({ label, column, absolute, options = [], value, onChange, mode =
   }, [value]);
 
   const handleChange = (selected) => {
-    const newValue = mode === 'id' ? selected.id : selected;
+    const newValue = selected.id; // Mode-a görə dəyişmək lazım deyil
+    console.log('---Selected Value', newValue);
     setSelectedOption(newValue);
     if (onChange) {
       onChange(newValue);
