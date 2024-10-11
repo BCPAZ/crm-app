@@ -119,7 +119,7 @@ const Workflows = () => {
           />
           <SecondInput
             name="document_no"
-            onChange={(e) => handleChange('documentNo',e.target.value)}
+            onChange={(e) => handleChange("documentNo", e.target.value)}
             placeholder="Sənəd nömrəsi daxil edin"
             value={documentNo}
             column
@@ -212,11 +212,13 @@ const Workflows = () => {
                         </span>
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
-                        <img
-                          className="w-[30px] h-[40px] rounded-full"
-                          src={workflow.government.image_url}
-                          alt={workflow.government.name}
-                        />
+                        <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                          <img
+                            className="w-full h-full object-cover"
+                            src={workflow.government.image_url}
+                            alt={workflow.government.name}
+                          />
+                        </div>
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
                         {renderStatus(workflow.status)}
