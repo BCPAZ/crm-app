@@ -50,6 +50,7 @@ const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
         closeConfirmationModal={closeConfirmationModal}
         handleDelete={handleDeleteTask}
         isLoading={isLoading}
+        title="Tapşırığı silmək istədiyinizdən əminsinizmi?"
       />
       <header className="p-5 flex items-center justify-between gap-2">
         <Selectbox outline task={task} />

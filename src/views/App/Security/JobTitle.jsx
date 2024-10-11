@@ -112,6 +112,7 @@ const JobTitle = () => {
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
         handleDelete={handleDelete} 
+        title="Pozisiyanı silmək istədiyinizdən əminsiniz?"
       />
       <JobTitleModal
         showModal={showModal}

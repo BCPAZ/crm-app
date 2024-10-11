@@ -15,7 +15,7 @@ const TemplateTable = () => {
   const { data: templates = [], isLoading, isError } = useGetTemplatesQuery();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   const [
     deleteTemplate,
     {
@@ -46,16 +46,16 @@ const TemplateTable = () => {
   };
 
   useEffect(() => {
-    if(deleteSuccess){
+    if (deleteSuccess) {
       showToast('Şablon uğurlu şəkildə silindi', 'success');
     }
-  },[deleteSuccess])
+  }, [deleteSuccess]);
 
   useEffect(() => {
-    if(deleteError){
+    if (deleteError) {
       showToast('Şablon silinə bilmədi', 'error');
     }
-  },[deleteError])
+  }, [deleteError]);
 
   return (
     <div className="w-full overflow-x-auto">
@@ -64,6 +64,7 @@ const TemplateTable = () => {
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
         handleDelete={handleDeleteTemplate}
+        title="Siz bu şablonu silmək istədiyinizdən əminsinizmi?"
       />
       <table className="w-full text-sm min-w-[1200px] border">
         <thead className="bg-gray-300/30 w-full rounded-lg text-left">
@@ -91,7 +92,7 @@ const TemplateTable = () => {
             </div>
           )}
           {isError && <div>Hər hansı bir şablon mövcud deyil</div>}
-          {templates.length > 0 ?templates.map((template) => (
+          {templates.length > 0 ? templates.map((template) => (
             <tr
               key={template.id}
               className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]"

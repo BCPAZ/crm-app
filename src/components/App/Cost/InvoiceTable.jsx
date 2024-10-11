@@ -130,6 +130,7 @@ const InvoiceTable = () => {
         closeConfirmationModal={closeConfirmation}
         showConfirmation={showConfirmation}
         isLoading={deleteLoading}
+        title="Siz bu fakturanı silmək istədiyinizdən əminsinizmi?"
       />
       <div className="text-sm font-medium text-gray-500 ">
         <Toaster />

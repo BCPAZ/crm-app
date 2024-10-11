@@ -78,6 +78,7 @@ const Roles = () => {
           closeConfirmationModal={closeConfirmationModal}
           showConfirmation={showConfirmation}
           handleDelete={handleDeleteRole}
+          title="Bu rolu silmək istədiyinizdən əminsinizmi?"
         />
         <div className="mt-10 w-full overflow-x-scroll">
           <div className="p-4 border-b border-gray-400/40 outline-none flex items-center justify-between gap-4 w-full">
