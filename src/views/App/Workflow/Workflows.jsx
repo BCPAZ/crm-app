@@ -11,19 +11,34 @@ import { IoMdRefresh } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const Workflows = () => {
-
   const renderStatus = (status) => {
-    switch(status) {
-      case 'REJECTED':
-        return <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">{status}</span>;
-      case 'APPROVED':  
-        return <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">{status}</span>;
-      case 'PENDING':
-        return <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">{status}</span>;
+    switch (status) {
+      case "REJECTED":
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">
+            Rədd edilib
+          </span>
+        );
+      case "APPROVED":
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">
+            Təsdiqlənib
+          </span>
+        );
+      case "PENDING":
+        return (
+          <span className="text-xs py-1 px-2 rounded bg-yellow-600/20 text-yellow-600 capitalize w-full">
+            Gözlənilir
+          </span>
+        );
       default:
-        return <span className="text-xs py-1 px-2  rounded bg-gray-600/40 capitalize w-full">{status}</span>;
+        return (
+          <span className="text-xs py-1 px-2  rounded bg-gray-600/40 capitalize w-full">
+            Naməlum
+          </span>
+        );
     }
-  }
+  };
 
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -103,8 +118,10 @@ const Workflows = () => {
             placeholder="Proyekt adı daxil edin"
           />
           <SecondInput
-            onChange={(e) => handleChange(e.target.value)}
+            name="document_no"
+            onChange={(e) => handleChange('documentNo',e.target.value)}
             placeholder="Sənəd nömrəsi daxil edin"
+            value={documentNo}
             column
             type="text"
             label="Sənəd No"
@@ -120,14 +137,22 @@ const Workflows = () => {
             label="Bitiş tarixi seçin"
           />
           <Select
-            onChange={(e) => handleChange("type", e)}
-            label="Tip"
+            name="type"
+            onChange={(e) => handleChange("status", e)}
+            value={status}
+            label="Status"
             options={options}
             column
           />
         </div>
         <div className="py-10">
-          <button onClick={resetFilters} className="mb-5 text-black border-2 border-grey/20 p-2 rounded-lg text-sm font-medium flex items-center gap-2"><IoMdRefresh size={20}/>Filtrləri təmizlə</button>
+          <button
+            onClick={resetFilters}
+            className="mb-5 text-black border-2 border-grey/20 p-2 rounded-lg text-sm font-medium flex items-center gap-2"
+          >
+            <IoMdRefresh size={20} />
+            Filtrləri təmizlə
+          </button>
           <div className="w-full overflow-x-auto shadow-lg p-5 rounded-xl">
             <table className="w-full text-sm min-w-[1200px]">
               <thead className="bg-gray-300/30 w-full rounded-lg text-left">
@@ -165,14 +190,12 @@ const Workflows = () => {
                 ) : (
                   workflows.map((workflow, index) => (
                     <Link
-                    to={`/workflows/${workflow.id}`}
+                      to={`/workflows/${workflow.id}`}
                       key={index}
                       className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
                     >
                       <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-                        <span>
-                          {workflow.project?.name}
-                        </span>
+                        <span>{workflow.project?.name}</span>
                       </th>
                       <td className="text-sm font-medium text-gray-500 w-[10%]">
                         {workflow.sender.name}
@@ -181,11 +204,19 @@ const Workflows = () => {
                         {workflow.document.document_no}
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
-                        <span className="text-xs">{moment(workflow.updated_at).format('YYYY-MM-DD')}</span>
-                        <span className="text-xs">{moment(workflow.updated_at).format("HH:mm")}</span>
+                        <span className="text-xs">
+                          {moment(workflow.updated_at).format("YYYY-MM-DD")}
+                        </span>
+                        <span className="text-xs">
+                          {moment(workflow.updated_at).format("HH:mm")}
+                        </span>
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
-                        <img className="w-[30px] h-[40px] rounded-full" src={workflow.government.image_url} alt={workflow.government.name} />
+                        <img
+                          className="w-[30px] h-[40px] rounded-full"
+                          src={workflow.government.image_url}
+                          alt={workflow.government.name}
+                        />
                       </td>
                       <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
                         {renderStatus(workflow.status)}
