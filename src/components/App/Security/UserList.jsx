@@ -17,7 +17,10 @@ import { Toaster } from "react-hot-toast";
 const UserList = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, isError } = useGetCompanyUsersQuery({ page });
+  const { data, isLoading, isError } = useGetCompanyUsersQuery({ 
+    page,
+    name : searchTerm
+  });
   const [deleteUser, { isSuccess: userSuccess, isError: userError }] = useDeleteUserMutation();
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -29,9 +32,6 @@ const UserList = () => {
   const users = data?.users || [];
   const meta = data?.meta || {};
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const openConfirmationModal = (id) => {
     setSelectedUserId(id);
@@ -95,7 +95,7 @@ const UserList = () => {
           </div>
         </div>
         <div className="flex flex-col w-full p-5">
-          <h3>{filteredUsers.length} nəticə tapıldı</h3>
+          <h3>{users.length} nəticə tapıldı</h3>
         </div>
         <div className="w-full overflow-x-auto">
           <div className="w-full overflow-x-auto">
@@ -118,10 +118,10 @@ const UserList = () => {
                 <div className="py-4 flex items-center justify-center w-full">
                   {isLoading && <Spinner />}
                 </div>
-                {isError || filteredUsers.length === 0 ? (
+                {isError || users.length === 0 ? (
                   <div className="p-5 text-center w-full">Heç bir istifadəçi tapılmadı</div>
                 ) : (
-                  filteredUsers.map((user, index) => (
+                  users.map((user, index) => (
                     <div className="group" key={index}>
                       <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]">
                         <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[35%]">
