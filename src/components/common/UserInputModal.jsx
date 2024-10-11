@@ -37,26 +37,26 @@ const UserInputModal = ({ isOpen, onClose, onSubmit }) => {
         </h2>
         <div className="flex flex-col gap-5 mt-7">
           <Input
-            label="Name"
-            placeholder="Enter the name"
+            label="Ad"
+            placeholder="Adınızı daxil edin"
             value={userData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
           />
           <Input
             label="Email"
-            placeholder="Enter the email"
+            placeholder="Email adresinizi daxil edin"
             value={userData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
           />
           <Input
-            label="Address"
-            placeholder="Enter the address"
+            label="Ünvan"
+            placeholder="Ünvanınızı daxil edin"
             value={userData.address}
             onChange={(e) => handleInputChange("address", e.target.value)}
           />
           <Input
-            label="Phone"
-            placeholder="Enter the phone number"
+            label="Telefon nömrəsi"
+            placeholder="Telefon nömrənizi daxil edin"
             value={userData.phone}
             onChange={(e) => handleInputChange("phone", e.target.value)}
           />
