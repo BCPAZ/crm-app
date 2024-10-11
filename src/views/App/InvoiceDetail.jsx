@@ -14,8 +14,8 @@ import ReactToPrint from "react-to-print";
 
 const InvoiceDetail = () => {
   const { id } = useParams();
-  const { data } = useGetInvoiceDetailQuery(id);
-  const [updateInvoice, { isSuccess, isError }] = useUpdateInvoiceMutation();
+  const { data, refetch } = useGetInvoiceDetailQuery(id);
+  const [updateInvoice, { isSuccess, isError}] = useUpdateInvoiceMutation();
   const { showToast } = useToast();
 
   const componentRef = useRef();
@@ -28,6 +28,7 @@ const InvoiceDetail = () => {
   useEffect(() => {
     if (isSuccess) {
       showToast("Status uğurlu şəkildə dəyişdirildi", "success");
+      refetch();
     }
   }, [isSuccess]);
 
