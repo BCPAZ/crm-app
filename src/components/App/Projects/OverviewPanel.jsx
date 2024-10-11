@@ -7,6 +7,7 @@ import { IoCloudUploadSharp } from "react-icons/io5";
 import UserSelectModal from "../Cost/UserSelectModal";
 import { useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
+import PropTypes from "prop-types";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -123,5 +124,9 @@ const OverviewPanel = ({ task }) => {
     </section>
   );
 };
+
+OverviewPanel.propTypes = {
+  task : PropTypes.any
+}
 
 export default OverviewPanel;

@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import High from "@/assets/icons/Kanban/high.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
-import TaskDetail from "./TaskDetail";
 
 const TaskCard = ({ task, index, handleDeleteTask, setSelectedTaskId }) => {
   const checkPriority = (priority) => {
@@ -96,7 +95,8 @@ TaskCard.propTypes = {
     })),
   }),
   index: PropTypes.number,
-  handleDeleteTask : PropTypes.func
+  handleDeleteTask : PropTypes.func,
+  setSelectedTaskId : PropTypes.any
 };
 
 export default memo(TaskCard);

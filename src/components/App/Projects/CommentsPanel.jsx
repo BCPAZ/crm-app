@@ -6,6 +6,7 @@ import { useCreateCommentMutation } from "@/data/services/taskManagementService"
 import { RiErrorWarningLine } from "react-icons/ri";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const CommentsPanel = ({ task }) => {
   const [text, setText] = useState("");
@@ -161,5 +162,10 @@ const CommentsPanel = ({ task }) => {
     </section>
   );
 };
+
+
+CommentsPanel.propTypes = {
+  task : PropTypes.any
+}
 
 export default CommentsPanel;

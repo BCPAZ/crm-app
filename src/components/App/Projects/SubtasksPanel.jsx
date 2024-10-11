@@ -1,7 +1,7 @@
 import CheckboxElement from "@/components/common/CheckboxElement";
 import { IoMdAdd } from "react-icons/io";
 import { useState } from "react";
-
+import PropTypes from "prop-types";
 const SubtasksPanel = ({ task }) => {
   const [newSubtask, setNewSubtask] = useState("");
   const [isAdding, setIsAdding] = useState(false);
@@ -61,5 +61,9 @@ const SubtasksPanel = ({ task }) => {
     </section>
   );
 };
+
+SubtasksPanel.propTypes = {
+  task : PropTypes.any
+}
 
 export default SubtasksPanel;
