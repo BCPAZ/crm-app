@@ -14,12 +14,14 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
-    phone_number: user?.phone_number || "",
+    phone: user?.phone_number || "",
     address: user?.address || "",
     city: user?.city || "",
     zip_code: user?.zip_code || "",
     role_id: user?.role_id || "",
-    avatar: null,
+    avatar: user?.avatar_url || null,
+    password : user?.password || "",
+    about : user?.about || ''
   });
 
   const { showToast } = useToast();
@@ -29,12 +31,14 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
       setFormData({
         name: user.name,
         email: user.email,
-        phone_number: user.phone_number,
+        phone: user.phone_number,
         address: user.address,
         city: user.city,
         zip_code: user.zip_code,
         role_id: user.role_id,
-        avatar: null,
+        avatar: user.avatar_url,
+        password : user.password,
+        about : user.about
       });
     }
   }, [user]);
@@ -50,7 +54,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
 
   const handleSelectChange = (selectedOption) => {
     if (selectedOption) {
-      setFormData((prev) => ({ ...prev, role_id: selectedOption.id }));
+      setFormData((prev) => ({ ...prev, role_id: selectedOption }));
     }
   };
 
@@ -79,7 +83,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5">
         <h1 className="text-xl font-semibold">Sürətli yeniləmə</h1>
-        <Alert value="salam" type="primary" />
+        <Alert value="İstifadəçi məlumatının yenilənməsi" type="primary" />
         <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
           <Input
             label="Ad və soyad"
@@ -100,8 +104,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
           <Input
             label="Telefon nömrəsi"
             type="text"
-            name="phone_number"
-            value={formData.phone_number}
+            name="phone"
+            value={formData.phone}
             onChange={handleInputChange}
             placeholder="Telefon nömrəsi daxil edin"
           />
@@ -112,6 +116,14 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
             value={formData.address}
             onChange={handleInputChange}
             placeholder="Addresi daxil edin"
+          />
+          <Input
+            label="Haqqında"
+            type="text"
+            name="about"
+            value={formData.about}
+            onChange={handleInputChange}
+            placeholder="Haqqında məlumat daxil et"
           />
           <Input
             label="Poçt kodu"
@@ -125,6 +137,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
             label="Şifrə"
             type="password"
             name="password"
+            value={formData.password}
+            onChange={handleInputChange}
             placeholder="Yeni şifrəni daxil edin"
           />
           <Select
@@ -139,7 +153,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
           <Input
             label="Şəkil"
             type="file"
-            name="avatar"
+            name="avatar_url"
             onChange={handleFileChange}
           />
         </div>
@@ -173,7 +187,9 @@ QuickUpdateModal.propTypes = {
     city: PropTypes.string,
     zip_code: PropTypes.string,
     role_id: PropTypes.string,
-    avatar: PropTypes.string,
+    avatar_url: PropTypes.string,
+    password : PropTypes.string,
+    about : PropTypes.string
   }),
 };
 
