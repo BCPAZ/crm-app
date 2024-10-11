@@ -5,7 +5,7 @@ const ActivityCard = ({user}) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-start gap-3 py-[22px] border-b-2 border-grey/20">
-        <img className="w-[40px] h-[40px]" src={user.avatar_url || img} alt="" />
+        <img className="w-[40px] h-[40px] rounded-full" src={user.avatar_url || img} alt="" />
         <div className="flex flex-col justify-start items-start gap-2">
           <span className="text-md text-black font-medium">{user.name}</span>
           <span className="text-xs text-gray-400">{user.email}</span>
