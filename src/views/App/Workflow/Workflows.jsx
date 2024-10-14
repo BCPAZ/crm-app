@@ -15,13 +15,13 @@ const Workflows = () => {
     switch (status) {
       case "REJECTED":
         return (
-          <span className="text-xs py-1 px-2  rounded bg-red-600/20 text-red-600 capitalize w-full">
+          <span className="text-xs py-1 px-2 rounded bg-red-600/20 text-red-600 capitalize w-full">
             Rədd edilib
           </span>
         );
       case "APPROVED":
         return (
-          <span className="text-xs py-1 px-2  rounded bg-green-600/20 text-green-600 capitalize w-full">
+          <span className="text-xs py-1 px-2 rounded bg-green-600/20 text-green-600 capitalize w-full">
             Təsdiqlənib
           </span>
         );
@@ -33,7 +33,7 @@ const Workflows = () => {
         );
       default:
         return (
-          <span className="text-xs py-1 px-2  rounded bg-gray-600/40 capitalize w-full">
+          <span className="text-xs py-1 px-2 rounded bg-gray-600/40 capitalize w-full">
             Naməlum
           </span>
         );
@@ -92,7 +92,7 @@ const Workflows = () => {
       documentNo: "",
       startDate: null,
       endDate: null,
-      type: null,
+      status: null,
     });
   };
 
@@ -118,7 +118,6 @@ const Workflows = () => {
             placeholder="Proyekt adı daxil edin"
           />
           <SecondInput
-            name="document_no"
             onChange={(e) => handleChange("documentNo", e.target.value)}
             placeholder="Sənəd nömrəsi daxil edin"
             value={documentNo}
@@ -137,7 +136,6 @@ const Workflows = () => {
             label="Bitiş tarixi seçin"
           />
           <Select
-            name="type"
             onChange={(e) => handleChange("status", e)}
             value={status}
             label="Status"
@@ -188,47 +186,53 @@ const Workflows = () => {
                     Heç bir sənəd tapılmadı
                   </div>
                 ) : (
-                  workflows.map((workflow, index) => (
-                    <Link
-                      to={`/workflows/${workflow.id}`}
-                      key={index}
-                      className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
-                    >
-                      <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-                        <span>{workflow.project?.name}</span>
-                      </th>
-                      <td className="text-sm font-medium text-gray-500 w-[10%]">
-                        {workflow.sender.name}
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[10%]">
-                        {workflow.document.document_no}
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
-                        <span className="text-xs">
-                          {moment(workflow.updated_at).format("YYYY-MM-DD")}
-                        </span>
-                        <span className="text-xs">
-                          {moment(workflow.updated_at).format("HH:mm")}
-                        </span>
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
-                        <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
-                          <img
-                            className="w-full h-full object-cover"
-                            src={workflow.government.image_url}
-                            alt={workflow.government.name}
-                          />
-                        </div>
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
-                        {renderStatus(workflow.status)}
-                      </td>
-                    </Link>
-                  ))
+                  Object.keys(workflows).map((key) =>
+                  (
+                    <div className="flex flex-col gap-1" key={key}>
+                      {workflows[key].map((workflow) => (
+                      <Link
+                        to={`/workflows/${workflow.id}`}
+                        key={workflow.id}
+                        className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
+                      >
+                        <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
+                          <span>{workflow.project?.name}</span>
+                        </th>
+                        <td className="text-sm font-medium text-gray-500 w-[10%]">
+                          {workflow.sender.name}
+                        </td>
+                        <td className="text-sm font-medium text-gray-500 w-[10%]">
+                          {workflow.document.document_no}
+                        </td>
+                        <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
+                          <span className="text-xs">
+                            {moment(workflow.updated_at).format("YYYY-MM-DD")}
+                          </span>
+                          <span className="text-xs">
+                            {moment(workflow.updated_at).format("HH:mm")}
+                          </span>
+                        </td>
+                        <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
+                          <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                            <img
+                              className="w-full h-full object-cover"
+                              src={workflow.government.image_url}
+                              alt={workflow.government.name}
+                            />
+                          </div>
+                        </td>
+                        <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
+                          {renderStatus(workflow.status)}
+                        </td>
+                      </Link>
+                    ))}
+                    </div>
+                  )
+                  )
                 )}
               </tbody>
-              <Pagination meta={meta} onPageChange={handlePageChange} />
             </table>
+            <Pagination meta={meta} onPageChange={handlePageChange} />
           </div>
         </div>
       </div>

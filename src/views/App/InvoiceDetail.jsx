@@ -11,14 +11,39 @@ import { useUpdateInvoiceMutation } from "@/data/services/costService";
 import moment from "moment";
 import { Toaster } from "react-hot-toast";
 import ReactToPrint from "react-to-print";
+import { FileIcon, defaultStyles } from "react-file-icon";
+import { RiDownloadLine } from "react-icons/ri";
+
 
 const InvoiceDetail = () => {
   const { id } = useParams();
   const { data, refetch } = useGetInvoiceDetailQuery(id);
-  const [updateInvoice, { isSuccess, isError}] = useUpdateInvoiceMutation();
+  const [updateInvoice, { isSuccess, isError }] = useUpdateInvoiceMutation();
   const { showToast } = useToast();
 
   const componentRef = useRef();
+
+  const getFileExtension = (filename) => {
+    return filename.split(".").pop();
+  };
+
+  const renderFileIcon = (filename) => {
+    const ext = getFileExtension(filename);
+    const style = defaultStyles[ext] || defaultStyles["default"];
+    return <FileIcon extension={ext} {...style} />;
+  };
+
+  const downloadFile = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    
+    const fileName = url.split('/').pop();
+    link.download = fileName;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
 
   const handleChangeStatus = (status) => {
     if (id) {
@@ -92,7 +117,7 @@ const InvoiceDetail = () => {
           </span>
         );
 
-        case "DRAFT":
+      case "DRAFT":
         return (
           <span className="text-xs py-1 px-2 rounded bg-gray-300 text-gray-600 capitalize w-full">
             Qaralama
@@ -171,6 +196,10 @@ const InvoiceDetail = () => {
                   <span>{moment(data.updated_at).format("YYYY-MM-DD")}</span>-
                   <span>{moment(data.updated_at).format("HH:ss")}</span>
                 </div>
+              </div>
+              <div className="flex items-center gap-5 mt-5">
+                <button onClick={() => downloadFile(data.receipt_file)} className="text-sm font-semibold flex items-center gap-2"><RiDownloadLine size={18} />Faylı yüklə</button>
+                <div className="w-6 h-6">{renderFileIcon(data.receipt_file)}</div>
               </div>
             </div>
             <div className="mt-10">
