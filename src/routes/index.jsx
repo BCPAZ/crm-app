@@ -67,11 +67,11 @@ const AppRouter = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
               <Route path="/projects" element={<Projects />} />
+              <Route path="/create-project" element={<CreateProject />} />
             <Route element={<PrivateRoute />}>
               <Route path="/cost" element={<Cost />} />
               <Route path="/cost/:id" element={<InvoiceDetail />} />
               <Route path="/projects/:id" element={<TaskManagement />} />
-              <Route path="/create-project" element={<CreateProject />} />
               <Route
                 path="/cost/create-new-invoice"
                 element={<CreateNewInvoice />}

@@ -9,7 +9,6 @@ import moment from "moment";
 import Spinner from "@/components/common/Spinner";
 import { setProject } from "@/data/slices/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 const Projects = () => {
   const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
   const {project: selectedProject} = useSelector(state => state.project)
