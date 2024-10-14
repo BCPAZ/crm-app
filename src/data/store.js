@@ -8,20 +8,26 @@ import authSlice from "@/data/slices/authSlice";
 import kanbanSlice from "./slices/kanbanSlice";
 import projectSlice from "./slices/projectSlice";
 import siteSlice from "./slices/siteSlice";
+import companySlice from "./slices/companySlice";
 
 const reducers = combineReducers({
   [api.reducerPath]: api.reducer,
   [authSlice.reducerPath]: authSlice.reducer,
   [kanbanSlice.reducerPath]: kanbanSlice.reducer,
   [projectSlice.reducerPath]: projectSlice.reducer,
-  [siteSlice.reducerPath] : siteSlice.reducer
+  [siteSlice.reducerPath]: siteSlice.reducer,
+  [companySlice.reducerPath]: companySlice.reducer,
 });
 
 const persistedReducer = persistReducer(
   {
     key: "crm.az",
     storage,
-    whitelist: [authSlice.reducerPath, projectSlice.reducerPath, kanbanSlice.reducerPath],
+    whitelist: [
+      authSlice.reducerPath,
+      projectSlice.reducerPath,
+      kanbanSlice.reducerPath,
+    ],
   },
   reducers
 );

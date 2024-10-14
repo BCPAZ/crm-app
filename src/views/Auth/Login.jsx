@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -22,9 +23,12 @@ const Login = () => {
     resolver: yupResolver(authSchema),
   });
 
+  const { company } = useSelector((state) => state.company);
+
+
   const onSubmit = (data) => {
     const loginData = {
-      subdomain: 'flegri',
+      subdomain: company?.subdomain,
       email: data.email,
       password: data.password
     };
@@ -52,7 +56,7 @@ const Login = () => {
       <div className='max-w-[352px] w-full flex flex-col justify-center items-center'>
         <h1 className='font-bold text-2xl leading-normal mb-5 text-center'>Giriş et</h1>
         <p className='max-w-[196px] text-center text-sm font-light mb-6'>
-          flegrei şirkətindən sizə verilən e-poçt və şifrə ilə giriş edin.
+          {`${company?.name} şirkətindən sizə verilən e-poçt və şifrə ilə giriş edin.`}
         </p>
         <form
           className='w-full mb-5 flex flex-col gap-5'

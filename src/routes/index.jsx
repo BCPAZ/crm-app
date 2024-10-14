@@ -5,6 +5,7 @@ import LoadingScreen from "@/components/common/LoadingScreen";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PrivateRoute from "@/components/App/PrivateRoute";
 import { useCurrentAccountQuery } from "@/data/services/accountService";
+import { useGetCompanyQuery } from "@/data/services/companyService";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 const AppLayout = lazy(() => import("@/layouts/AppLayout"));
@@ -60,6 +61,11 @@ const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
 
 const AppRouter = () => {
   useCurrentAccountQuery();
+
+  const url = window.location.href;
+  const subdomain = url.split(".")[0];
+
+  useGetCompanyQuery(subdomain);
 
   return (
     <Suspense fallback={<LoadingScreen />}>
