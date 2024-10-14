@@ -5,10 +5,12 @@ import Input from "@/components/common/Input";
 import UserInputModal from "@/components/common/UserInputModal";
 import { HiTrash } from "react-icons/hi2";
 import { IoAddSharp } from "react-icons/io5";
+import { LuUpload } from "react-icons/lu";
 import { useCreateInvoiceMutation } from "@/data/services/costService";
 import Spinner from "@/components/common/Spinner";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { FileIcon, defaultStyles } from "react-file-icon";
 
 const CreateNewInvoice = () => {
   const [modal, setModal] = useState({ isOpen: false, type: "" });
@@ -24,9 +26,12 @@ const CreateNewInvoice = () => {
     address: "",
     phone: "",
   });
+  console.log(to);
+  console.log(from);
   const [items, setItems] = useState([]);
   const [taxAmount, setTaxAmount] = useState("");
-  const [note, setNote] = useState('');
+  const [note, setNote] = useState("");
+  const [receiptFile, setReceiptFile] = useState(null);
   const [createInvoice, { isLoading, isError, isSuccess }] =
     useCreateInvoiceMutation();
 
@@ -67,6 +72,11 @@ const CreateNewInvoice = () => {
     setItems(newItems);
   };
 
+  const handleReceiptFile = (e) => {
+    const file = e.target.files[0];
+    setReceiptFile(file);
+  };
+
   const calculateTotal = () => {
     return items.reduce((acc, item) => acc + item.total, 0);
   };
@@ -81,11 +91,12 @@ const CreateNewInvoice = () => {
       from,
       to,
       items,
-      total: calculateTotalWithTax(),
       taxes: taxAmount,
-      note
-    };
+      note,
+      receipt_file : receiptFile
+    }
     createInvoice(invoiceData);
+    
   };
 
   useEffect(() => {
@@ -104,6 +115,7 @@ const CreateNewInvoice = () => {
         address: "",
         phone: "",
       });
+      setReceiptFile(null);
       navigate("/cost");
     }
   }, [isSuccess]);
@@ -139,6 +151,7 @@ const CreateNewInvoice = () => {
                   >
                     <Input
                       label="Ad"
+                      name="name"
                       placeholder="Ad daxil edin"
                       value={item.name}
                       onChange={(e) =>
@@ -193,27 +206,56 @@ const CreateNewInvoice = () => {
             </div>
             <div className="md:p-6 p-3">
               <div className="flex flex-col gap-2">
-                <div className="md:w-1/2 w-full flex md:flex-row flex-col justify-end gap-4 mb-3">
-                  <Input
-                    label="Vergi məbləği"
-                    placeholder="Vergi məbləğini daxil edin"
-                    type="number"
-                    value={taxAmount}
-                    onChange={(e) =>
-                      setTaxAmount(parseFloat(e.target.value))
-                    }
-                  />
-                  <Input 
-                  label="Qeyd"
-                  placeholder="Qeyd əlavə edin"
-                  type="text"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)} />
+                <div className="flex items-center justify-between">
+                  <div className="md:w-1/2 w-full flex md:flex-row flex-col justify-end gap-4 mb-3">
+                    <Input
+                      label="Vergi məbləği"
+                      placeholder="Vergi məbləğini daxil edin"
+                      type="number"
+                      value={taxAmount}
+                      onChange={(e) => setTaxAmount(parseFloat(e.target.value))}
+                    />
+                    <Input
+                      label="Qeyd"
+                      placeholder="Qeyd əlavə edin"
+                      type="text"
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-auto cursor-pointer bg-gray-400/40 rounded-lg p-3">
+                      <input
+                        type="file"
+                        id="receiptFile"
+                        style={{ display: "none" }}
+                        onChange={handleReceiptFile}
+                      />
+                      <label htmlFor="receiptFile" className="cursor-pointer">
+                        <LuUpload size={20} />
+                      </label>
+                    </div>
+                    <div className="flex items-center justify-center">
+                      {receiptFile && (
+                        <div className="mt-4 flex items-center gap-2">
+                          <div className="w-7">
+                            <FileIcon
+                              extension={receiptFile.name.split(".").pop()}
+                              {...(defaultStyles[
+                                receiptFile.name.split(".").pop()
+                              ] || {})}
+                            />
+                          </div>
+                          <span className="text-sm">{receiptFile.name}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <span className="flex items-center justify-end gap-2 text-sm font-base text-gray-400">
                   Ümumi:{" "}
                   <span className="w-[160px] text-end text-black">
-                  ₼{calculateTotalWithTax()}
+                    ₼{calculateTotalWithTax()}
                   </span>
                 </span>
               </div>

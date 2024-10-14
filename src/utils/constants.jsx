@@ -105,4 +105,4 @@ export const navigationLinks = [
 
 
 
-export const BASE_URL = 'http://94.20.88.106';
+export const BASE_URL = 'https://api.texnogallery.com';
