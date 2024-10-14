@@ -65,7 +65,11 @@ const AppRouter = () => {
   const url = window.location.href;
   const subdomain = url.split(".")[0];
 
-  useGetCompanyQuery(subdomain);
+  const {isError} = useGetCompanyQuery(subdomain);
+
+  if (isError) {
+    // TODO: Render Error Page
+  }
 
   return (
     <Suspense fallback={<LoadingScreen />}>
