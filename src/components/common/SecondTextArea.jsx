@@ -7,6 +7,7 @@ const SecondTextArea = ({
   solid,
   onChange,
   value,
+  onBlur,
 }) => {
   return (
     <div
@@ -22,6 +23,7 @@ const SecondTextArea = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        onBlur={onBlur}
       />
     </div>
   );

@@ -5,20 +5,31 @@ import High from "@/assets/icons/Kanban/high.svg";
 import SecondTextArea from "@/components/common/SecondTextArea";
 import { IoCloudUploadSharp } from "react-icons/io5";
 import UserSelectModal from "../Cost/UserSelectModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
 import PropTypes from "prop-types";
-import { useSetPriorityMutation } from "@/data/services/taskManagementService";
+import {
+  useSetDescriptionMutation,
+  useSetPriorityMutation,
+} from "@/data/services/taskManagementService";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [assignees, setAssignees] = useState(task.assignees || []);
 
+  const [description, setDescription] = useState(task.description || "");
+
   const [setPriority] = useSetPriorityMutation();
+  const [changeDescription] = useSetDescriptionMutation();
 
   const handleUserSelect = (user) => {
     setAssignees([...assignees, user]);
   };
+
+  useEffect(() => {
+    setDescription(task.description || "");
+  }, [task.id, task.description]);
+
   return (
     <section className="w-full h-full">
       <UserSelectModal
@@ -131,7 +142,17 @@ const OverviewPanel = ({ task }) => {
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
             Açıqlama
           </h3>
-          <SecondTextArea placeholder="Rəy daxil edin" />
+          <SecondTextArea
+            placeholder="Rəy daxil edin"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            onBlur={() =>
+              changeDescription({
+                taskId: task.id,
+                description: description,
+              })
+            }
+          />
         </div>
         <div className="flex ">
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
