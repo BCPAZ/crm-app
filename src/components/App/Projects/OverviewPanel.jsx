@@ -10,8 +10,10 @@ import CustomDatePicker from "@/components/common/CustomDatePicker";
 import PropTypes from "prop-types";
 import {
   useSetDescriptionMutation,
+  useSetDueDateMutation,
   useSetPriorityMutation,
 } from "@/data/services/taskManagementService";
+import moment from "moment";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,8 +21,11 @@ const OverviewPanel = ({ task }) => {
 
   const [description, setDescription] = useState(task.description || "");
 
+  const [dueDate, setDueDate] = useState(task.due_date || null);
+
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
+  const [changeDueDate] = useSetDueDateMutation();
 
   const handleUserSelect = (user) => {
     setAssignees([...assignees, user]);
@@ -29,6 +34,10 @@ const OverviewPanel = ({ task }) => {
   useEffect(() => {
     setDescription(task.description || "");
   }, [task.id, task.description]);
+
+  useEffect(() => {
+    setDueDate(task.due_date || null);
+  }, [task.id, task.due_date]);
 
   return (
     <section className="w-full h-full">
@@ -82,15 +91,14 @@ const OverviewPanel = ({ task }) => {
           <div className="flex-1">
             <div className="flex items-center gap-4">
               <div>
-                <span className="text-xs font-medium">Başlanğıc tarixi</span>
-                <CustomDatePicker />
-              </div>
-              <div>
-                <span className="text-xs font-medium">Bitiş tarixi</span>
-                <CustomDatePicker />
+                <CustomDatePicker
+                  value={dueDate ? moment(dueDate).format("YYYY/MM/DD") : null}
+                  onChange={(v) =>
+                    changeDueDate({ taskId: task.id, dueDate: v })
+                  }
+                />
               </div>
             </div>
-            <h3 className="font-medium text-sm mt-3">22-23 June</h3>
           </div>
         </div>
         <div className="flex items-center">

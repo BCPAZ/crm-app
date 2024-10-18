@@ -16,6 +16,7 @@ const CustomDatePicker = ({ label, onChange, value }) => {
           className="w-full rounded-lg h-full bg-transparent text-sm text-gray-500 cursor-pointer"
           dateFormat="yyyy/MM/dd"
           placeholderText="YYYY/MM/DD"
+          value={value}
         />
         <BsCalendar2DateFill className="text-gray-500" />
       </div>

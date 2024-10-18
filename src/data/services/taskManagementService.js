@@ -69,7 +69,7 @@ const taskManagementService = api.injectEndpoints({
         url: `/task-management/tasks/${id}`,
       }),
       providesTags: (result, error, id) => {
-        return [{ type: "TASK", id }]
+        return [{ type: "TASK", id }];
       },
     }),
 
@@ -108,9 +108,9 @@ const taskManagementService = api.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: (result, error, {taskId}) => { 
-        console.log(taskId)
-        return [{ type: "TASK", id: taskId }]
+      invalidatesTags: (result, error, { taskId }) => {
+        console.log(taskId);
+        return [{ type: "TASK", id: taskId }];
       },
     }),
 
@@ -120,20 +120,20 @@ const taskManagementService = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: (result, error, {taskId}) => {
-        return [{ type: "TASK", id: taskId }]
-      }
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: taskId }];
+      },
     }),
 
     toggleSubTask: builder.mutation({
-      query: ({subTaskId, ...data}) => ({
+      query: ({ subTaskId, ...data }) => ({
         url: `/task-management/sub-tasks/${subTaskId}`,
         method: "PUT",
-        body: data
+        body: data,
       }),
-      invalidatesTags: (result, error, {taskId}) => {
-        return [{ type: "TASK", id: result.task_id }]
-      }
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: result.task_id }];
+      },
     }),
 
     setPriority: builder.mutation({
@@ -152,6 +152,17 @@ const taskManagementService = api.injectEndpoints({
         url: `/task-management/tasks/${taskId}/set-description`,
         method: "PATCH",
         body: { description },
+      }),
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: taskId }];
+      },
+    }),
+
+    setDueDate: builder.mutation({
+      query: ({ taskId, dueDate }) => ({
+        url: `/task-management/tasks/${taskId}/set-due-date`,
+        method: "PATCH",
+        body: { due_date: dueDate },
       }),
       invalidatesTags: (result, error, { taskId }) => {
         return [{ type: "TASK", id: taskId }];
@@ -176,7 +187,8 @@ export const {
   useCreateSubTaskMutation,
   useToggleSubTaskMutation,
   useSetPriorityMutation,
-  useSetDescriptionMutation  
+  useSetDescriptionMutation,
+  useSetDueDateMutation,
 } = taskManagementService;
 
 export default taskManagementService;
