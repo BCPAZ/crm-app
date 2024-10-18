@@ -29,7 +29,7 @@ const WorkflowDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full w-full">
+      <div className="flex items-center justify-center h-full w-full py-10">
         <Spinner />
       </div>
     );
