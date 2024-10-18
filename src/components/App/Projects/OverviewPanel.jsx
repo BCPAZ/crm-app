@@ -12,6 +12,7 @@ import {
   useSetDescriptionMutation,
   useSetDueDateMutation,
   useSetPriorityMutation,
+  useSetReporterMutation,
 } from "@/data/services/taskManagementService";
 import moment from "moment";
 
@@ -26,6 +27,7 @@ const OverviewPanel = ({ task }) => {
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
   const [changeDueDate] = useSetDueDateMutation();
+  const [changeReporter] = useSetReporterMutation();
 
   const handleUserSelect = (user) => {
     setAssignees([...assignees, user]);
@@ -38,6 +40,14 @@ const OverviewPanel = ({ task }) => {
   useEffect(() => {
     setDueDate(task.due_date || null);
   }, [task.id, task.due_date]);
+
+
+  const handleChangeReporter = (reporterId) => {
+    changeReporter({
+      taskId: task.id,
+      reporter_id: reporterId,
+    });
+  }
 
   return (
     <section className="w-full h-full">

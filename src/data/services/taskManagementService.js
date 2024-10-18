@@ -168,6 +168,19 @@ const taskManagementService = api.injectEndpoints({
         return [{ type: "TASK", id: taskId }];
       },
     }),
+
+    setReporter: builder.mutation({
+      query: ({ taskId, reporter_id }) => ({
+        url: `/task-management/tasks/${taskId}/set-reporter`,
+
+        method: "PATCH",
+        body: { reporter_id },
+      }),
+
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: taskId }];
+      },
+    }),
   }),
   overrideExisting: true,
 });
@@ -189,6 +202,7 @@ export const {
   useSetPriorityMutation,
   useSetDescriptionMutation,
   useSetDueDateMutation,
+  useSetReporterMutation,
 } = taskManagementService;
 
 export default taskManagementService;
