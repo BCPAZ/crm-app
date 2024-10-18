@@ -136,6 +136,17 @@ const taskManagementService = api.injectEndpoints({
       },
     }),
 
+    updateName: builder.mutation({
+      query: ({ taskId, name }) => ({
+        url: `/task-management/tasks/${taskId}/update-name`,
+        method: "PATCH",
+        body: { name },
+      }),
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: taskId }];
+      },
+    }),
+
     setPriority: builder.mutation({
       query: ({ taskId, priority }) => ({
         url: `/task-management/tasks/${taskId}/set-priority`,
@@ -214,7 +225,8 @@ export const {
   useSetDescriptionMutation,
   useSetDueDateMutation,
   useSetReporterMutation,
-  useSetAttachmentMutation
+  useSetAttachmentMutation,
+  useUpdateNameMutation,
 } = taskManagementService;
 
 export default taskManagementService;
