@@ -8,10 +8,13 @@ import UserSelectModal from "../Cost/UserSelectModal";
 import { useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
 import PropTypes from "prop-types";
+import { useSetPriorityMutation } from "@/data/services/taskManagementService";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [assignees, setAssignees] = useState(task.assignees || []);
+
+  const [setPriority] = useSetPriorityMutation();
 
   const handleUserSelect = (user) => {
     setAssignees([...assignees, user]);
@@ -84,24 +87,44 @@ const OverviewPanel = ({ task }) => {
             Öncəlik
           </h3>
           <div className="flex-1 flex items-center gap-2">
-            {task?.priority === "LOW" && (
-              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-                <img src={Low} alt="Priority" />
-                Aşağı
-              </button>
-            )}
-            {task?.priority === "MEDIUM" && (
-              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-                <img src={Medium} alt="Priority" />
-                Orta
-              </button>
-            )}
-            {task?.priority === "HIGH" && (
-              <button className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border">
-                <img src={High} alt="Priority" />
-                Yüksək
-              </button>
-            )}
+            <button
+              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              onClick={() =>
+                setPriority({
+                  taskId: task.id,
+                  priority: "LOW",
+                })
+              }
+            >
+              <img src={Low} alt="Priority" />
+              Aşağı
+            </button>
+            <button
+              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              onClick={() =>
+                setPriority({
+                  taskId: task.id,
+                  priority: "MEDIUM",
+                })
+              }
+            >
+              <img src={Medium} alt="Priority" />
+              Orta
+            </button>
+            {/* {task?.priority === "HIGH" && ( */}
+            <button
+              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              onClick={() =>
+                setPriority({
+                  taskId: task.id,
+                  priority: "HIGH",
+                })
+              }
+            >
+              <img src={High} alt="Priority" />
+              Yüksək
+            </button>
+            {/* )} */}
           </div>
         </div>
         <div className="flex ">
@@ -126,7 +149,7 @@ const OverviewPanel = ({ task }) => {
 };
 
 OverviewPanel.propTypes = {
-  task : PropTypes.any
-}
+  task: PropTypes.any,
+};
 
 export default OverviewPanel;
