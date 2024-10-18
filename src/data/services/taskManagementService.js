@@ -181,6 +181,17 @@ const taskManagementService = api.injectEndpoints({
         return [{ type: "TASK", id: taskId }];
       },
     }),
+
+    setAttachment: builder.mutation({
+      query: ({ taskId, body }) => ({
+        url: `/task-management/tasks/${taskId}/set-attachment`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, { taskId }) => {
+        return [{ type: "TASK", id: taskId }];
+      },  
+    }),
   }),
   overrideExisting: true,
 });
@@ -203,6 +214,7 @@ export const {
   useSetDescriptionMutation,
   useSetDueDateMutation,
   useSetReporterMutation,
+  useSetAttachmentMutation
 } = taskManagementService;
 
 export default taskManagementService;

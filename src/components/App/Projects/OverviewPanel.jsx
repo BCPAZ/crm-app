@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
 import PropTypes from "prop-types";
 import {
+  useSetAttachmentMutation,
   useSetDescriptionMutation,
   useSetDueDateMutation,
   useSetPriorityMutation,
@@ -28,6 +29,7 @@ const OverviewPanel = ({ task }) => {
   const [changeDescription] = useSetDescriptionMutation();
   const [changeDueDate] = useSetDueDateMutation();
   const [changeReporter] = useSetReporterMutation();
+  const [changeAttachment] = useSetAttachmentMutation();
 
   const handleUserSelect = (user) => {
     setAssignees([...assignees, user]);
@@ -41,13 +43,30 @@ const OverviewPanel = ({ task }) => {
     setDueDate(task.due_date || null);
   }, [task.id, task.due_date]);
 
-
   const handleChangeReporter = (reporterId) => {
     changeReporter({
       taskId: task.id,
       reporter_id: reporterId,
     });
-  }
+  };
+
+  const handleFileUpload = () => {
+    const fileInput = document.createElement("input");
+    fileInput.setAttribute("type", "file");
+    fileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("attachment", file);
+      changeAttachment({
+        taskId: task.id,
+        body: formData,
+      });
+
+      fileInput.remove();
+    });
+
+    fileInput?.click();
+  };
 
   return (
     <section className="w-full h-full">
@@ -177,7 +196,10 @@ const OverviewPanel = ({ task }) => {
             Fayllar
           </h3>
           <div className="flex-1 flex items-center gap-2">
-            <button className="flex items-center justify-center gap-1 text-sm font-medium w-16 h-16 rounded-lg border border-gray-400 border-dashed bg-grey/20 text-gray-500">
+            <button
+              onClick={handleFileUpload}
+              className="flex items-center justify-center gap-1 text-sm font-medium w-16 h-16 rounded-lg border border-gray-400 border-dashed bg-grey/20 text-gray-500"
+            >
               <IoCloudUploadSharp size={20} />
             </button>
           </div>
