@@ -7,6 +7,8 @@ import { IoCloudUploadSharp } from "react-icons/io5";
 import UserSelectModal from "../Cost/UserSelectModal";
 import { useEffect, useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
+import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { FileIcon, defaultStyles } from "react-file-icon";
 import PropTypes from "prop-types";
 import {
   useSetAttachmentMutation,
@@ -14,26 +16,29 @@ import {
   useSetDueDateMutation,
   useSetPriorityMutation,
   useSetReporterMutation,
+  useUpdateNameMutation
 } from "@/data/services/taskManagementService";
 import moment from "moment";
+import Spinner from "@/components/common/Spinner";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [assignees, setAssignees] = useState(task.assignees || []);
-
   const [description, setDescription] = useState(task.description || "");
+  const [taskName, setTaskName] = useState(task.name || "");
+  const [updateTask, setUpdateTask] = useState(false);
 
   const [dueDate, setDueDate] = useState(task.due_date || null);
+  const { data } = useGetCompanyUsersQuery();
+
+  const users = data?.users || [];
 
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
   const [changeDueDate] = useSetDueDateMutation();
   const [changeReporter] = useSetReporterMutation();
   const [changeAttachment] = useSetAttachmentMutation();
-
-  const handleUserSelect = (user) => {
-    setAssignees([...assignees, user]);
-  };
+  const [changeName, {isLoading, isError, isSuccess}] = useUpdateNameMutation();
 
   useEffect(() => {
     setDescription(task.description || "");
@@ -44,6 +49,7 @@ const OverviewPanel = ({ task }) => {
   }, [task.id, task.due_date]);
 
   const handleChangeReporter = (reporterId) => {
+    setAssignees([...assignees]);
     changeReporter({
       taskId: task.id,
       reporter_id: reporterId,
@@ -68,17 +74,62 @@ const OverviewPanel = ({ task }) => {
     fileInput?.click();
   };
 
+  const getFileExtension = (filename) => {
+    return filename.split(".").pop();
+  };
+
+  const renderFileIcon = (filename) => {
+    if (!filename) return null;
+
+    const ext = getFileExtension(filename);
+    const style = defaultStyles[ext] || defaultStyles["default"];
+    return <FileIcon extension={ext} {...style} />;
+  };
+
+  const handleUpdateTask = () => {
+    setUpdateTask(true);
+  };
+
+  const handleChangeTaskName = () => {
+    changeName({
+      taskId : task.id,
+      name : taskName
+    })
+  }
+
+  useEffect(() => {
+    if(isSuccess){
+      setUpdateTask(false);
+    }
+  },[isSuccess])
+
+  useEffect(() => {
+    if(isError){
+      console.log('error')
+    }
+  },[isError])
+
   return (
     <section className="w-full h-full">
       <UserSelectModal
         modal={isModalOpen}
         closeUserModal={() => setIsModalOpen(false)}
-        options={[]}
+        options={users || []}
         isLoading={false}
         isError={false}
-        onChange={handleUserSelect}
+        onChange={handleChangeReporter}
+        returnIdOnly={true}
       />
-      <h1 className="text-lg font-medium">{task?.name}</h1>
+      {updateTask ? (
+        <div className="flex items-center justify-between gap-2">
+          <input onChange={(e) => setTaskName(e.target.value)} value={taskName} placeholder="Tapşırıq adını daxil edin" className="h-full p-3 rounded-lg bg-gray-200/20 text-sm w-[80%] border border-gray-400/20" />
+          <button  onClick={handleChangeTaskName} className="text-sm bg-black text-white p-3 rounded-lg flex items-center justify-center">{isLoading ? <Spinner /> : 'Təyin et'}</button>
+        </div>
+      ) : (
+        <h1 onClick={handleUpdateTask} className="text-lg font-medium">
+          {task?.name}
+        </h1>
+      )}
       <div className="mt-10 flex flex-col gap-5">
         <div className="flex items-center">
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
@@ -100,8 +151,11 @@ const OverviewPanel = ({ task }) => {
             {assignees.map((user, index) => (
               <img
                 key={index}
-                className="w-[25px] h-[25px] rounded-full "
-                src={user.image_url}
+                className="w-[25px] h-[25px] rounded-full border border-gray-400/20"
+                src={
+                  user.image_url ||
+                  "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
+                }
                 alt="avatar"
               />
             ))}
@@ -136,7 +190,9 @@ const OverviewPanel = ({ task }) => {
           </h3>
           <div className="flex-1 flex items-center gap-2">
             <button
-              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
+                task.priority === "LOW" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -148,7 +204,9 @@ const OverviewPanel = ({ task }) => {
               Aşağı
             </button>
             <button
-              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
+                task.priority === "MEDIUM" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -161,7 +219,9 @@ const OverviewPanel = ({ task }) => {
             </button>
             {/* {task?.priority === "HIGH" && ( */}
             <button
-              className="flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border"
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg ${
+                task.priority === "HIGH" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -195,13 +255,23 @@ const OverviewPanel = ({ task }) => {
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
             Fayllar
           </h3>
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex-1 flex-col items-center gap-5">
             <button
               onClick={handleFileUpload}
               className="flex items-center justify-center gap-1 text-sm font-medium w-16 h-16 rounded-lg border border-gray-400 border-dashed bg-grey/20 text-gray-500"
             >
               <IoCloudUploadSharp size={20} />
             </button>
+            <div className="flex gap-5 items-center mt-5">
+              {task.attachments.map((attachment) => (
+                <div key={attachment.id} className="w-10 group">
+                  {renderFileIcon(task?.attachments[0].url)}
+                  <span className="text-[9px] font-medium">
+                    {task?.attachments[0]?.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

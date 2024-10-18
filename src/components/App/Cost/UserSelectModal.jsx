@@ -10,24 +10,30 @@ const UserSelectModal = ({
   options,
   isLoading,
   isError,
-  onChange
+  onChange,
+  returnIdOnly = false
 }) => {
   const [selected, setSelected] = useState(null);
 
+  // İstifadəçi seçimi funksiyası
   const handleSelect = (user) => {
-    onChange(user, modal - 1)
+    if (returnIdOnly) {
+      onChange(user.id);
+    } else {
+      onChange(user);
+    }
     closeUserModal();
   };
 
-  if (!!!modal) return null;
+  if (!modal) return null;
 
   return (
     <section className="bg-black/70 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-full z-30">
-      <div className="bg-white rounded-lg shadow-lg w-[444px] min-h-[420px]">
+      <div className="bg-white rounded-lg shadow-lg w-[444px] h-[420px] overflow-y-scroll">
         <div className="p-6">
           <div className="flex items-center justify-between gap-3">
-          <h6 className="text-lg font-semibold">Seçim edin</h6>
-          <button onClick={closeUserModal}><IoCloseSharp size={20} /></button>
+            <h6 className="text-lg font-semibold">Seçim edin</h6>
+            <button onClick={closeUserModal}><IoCloseSharp size={20} /></button>
           </div>
           <div className="w-full mt-6">
             <Searchbar simple />
@@ -49,10 +55,10 @@ const UserSelectModal = ({
               }`}
             >
               <div className="flex items-center gap-2">
-                <div className="w-[30px] h-[30px]">
+                <div className="w-[40px] h-[40px] overflow-hidden rounded-full border border-gray-300/50">
                   <img
                     className="w-full h-full object-contain"
-                    src={user.image_url}
+                    src={user.image_url || 'https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg'}
                     alt=""
                   />
                 </div>
@@ -73,8 +79,10 @@ UserSelectModal.propTypes = {
   modal: PropTypes.bool,
   closeUserModal: PropTypes.func,
   options: PropTypes.array,
-  isLoading : PropTypes.any,
-  isError: PropTypes.any
+  isLoading: PropTypes.any,
+  isError: PropTypes.any,
+  onChange: PropTypes.func,
+  returnIdOnly: PropTypes.bool,
 };
 
 export default UserSelectModal;
