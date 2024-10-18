@@ -113,6 +113,28 @@ const taskManagementService = api.injectEndpoints({
         return [{ type: "TASK", id: taskId }]
       },
     }),
+
+    createSubTask: builder.mutation({
+      query: ({ taskId, ...data }) => ({
+        url: `/task-management/sub-tasks/${taskId}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result, error, {taskId}) => {
+        return [{ type: "TASK", id: taskId }]
+      }
+    }),
+
+    toggleSubTask: builder.mutation({
+      query: ({subTaskId, ...data}) => ({
+        url: `/task-management/sub-tasks/${subTaskId}`,
+        method: "PUT",
+        body: data
+      }),
+      invalidatesTags: (result, error, {taskId}) => {
+        return [{ type: "TASK", id: result.task_id }]
+      }
+    }),
   }),
   overrideExisting: true,
 });
@@ -129,6 +151,8 @@ export const {
   useDeleteTaskMutation,
   useGetLastTaskQuery,
   useCreateCommentMutation,
+  useCreateSubTaskMutation,
+  useToggleSubTaskMutation  
 } = taskManagementService;
 
 export default taskManagementService;
