@@ -11,8 +11,6 @@ const CustomNotification = () => {
     setShowNotifications(!showNotifications);
   };
 
-  console.log(data);
-
   return (
     <div className="flex items-center relative">
       <button onClick={openNotifications}>

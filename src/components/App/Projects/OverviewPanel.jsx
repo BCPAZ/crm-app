@@ -16,7 +16,7 @@ import {
   useSetDueDateMutation,
   useSetPriorityMutation,
   useSetReporterMutation,
-  useUpdateNameMutation
+  useUpdateNameMutation,
 } from "@/data/services/taskManagementService";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
@@ -38,7 +38,8 @@ const OverviewPanel = ({ task }) => {
   const [changeDueDate] = useSetDueDateMutation();
   const [changeReporter] = useSetReporterMutation();
   const [changeAttachment] = useSetAttachmentMutation();
-  const [changeName, {isLoading, isError, isSuccess}] = useUpdateNameMutation();
+  const [changeName, { isLoading, isError, isSuccess }] =
+    useUpdateNameMutation();
 
   useEffect(() => {
     setDescription(task.description || "");
@@ -92,22 +93,22 @@ const OverviewPanel = ({ task }) => {
 
   const handleChangeTaskName = () => {
     changeName({
-      taskId : task.id,
-      name : taskName
-    })
-  }
+      taskId: task.id,
+      name: taskName,
+    });
+  };
 
   useEffect(() => {
-    if(isSuccess){
+    if (isSuccess) {
       setUpdateTask(false);
     }
-  },[isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
-    if(isError){
-      console.log('error')
+    if (isError) {
+      console.log("error");
     }
-  },[isError])
+  }, [isError]);
 
   return (
     <section className="w-full h-full">
@@ -122,8 +123,18 @@ const OverviewPanel = ({ task }) => {
       />
       {updateTask ? (
         <div className="flex items-center justify-between gap-2">
-          <input onChange={(e) => setTaskName(e.target.value)} value={taskName} placeholder="Tapşırıq adını daxil edin" className="h-full p-3 rounded-lg bg-gray-200/20 text-sm w-[80%] border border-gray-400/20" />
-          <button  onClick={handleChangeTaskName} className="text-sm bg-black text-white p-3 rounded-lg flex items-center justify-center">{isLoading ? <Spinner /> : 'Təyin et'}</button>
+          <input
+            onChange={(e) => setTaskName(e.target.value)}
+            value={taskName}
+            placeholder="Tapşırıq adını daxil edin"
+            className="h-full p-3 rounded-lg bg-gray-200/20 text-sm w-[80%] border border-gray-400/20"
+          />
+          <button
+            onClick={handleChangeTaskName}
+            className="text-sm bg-black text-white p-3 rounded-lg flex items-center justify-center"
+          >
+            {isLoading ? <Spinner /> : "Təyin et"}
+          </button>
         </div>
       ) : (
         <h1 onClick={handleUpdateTask} className="text-lg font-medium">
@@ -263,12 +274,9 @@ const OverviewPanel = ({ task }) => {
               <IoCloudUploadSharp size={20} />
             </button>
             <div className="flex gap-5 items-center mt-5">
-              {task.attachments.map((attachment) => (
+              {task?.attachments?.map((attachment) => (
                 <div key={attachment.id} className="w-10 group">
-                  {renderFileIcon(task?.attachments[0].url)}
-                  <span className="text-[9px] font-medium">
-                    {task?.attachments[0]?.name}
-                  </span>
+                  <a href={attachment.url}>{renderFileIcon(attachment.url)}</a>
                 </div>
               ))}
             </div>

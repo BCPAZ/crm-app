@@ -128,30 +128,30 @@ const UserList = () => {
                           <div className="flex items-center gap-4">
                             <img
                               className="w-[40px] h-[40px] rounded-full"
-                              src={user?.avatar_url}
+                              src={user?.avatar_url || 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg'}
                               alt={user.name}
                             />
                             <div className="flex flex-col">
                               <div className="text-sm text-secondary hover:underline">{user.name}</div>
-                              <span className="text-xs text-gray-400">{user.email}</span>
+                              <span className="text-xs text-gray-400">{user.email || 'Boşdur'}</span>
                             </div>
                           </div>
                         </th>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           <div className="flex flex-col">
-                            <h3 className="text-xs text-secondary">{user.phone_number}</h3>
+                            <h3 className="text-xs text-secondary">{user.phone_number || 'Boşdur'}</h3>
                           </div>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           <div className="flex flex-col">
-                            <h3 className="text-xs text-secondary">{user.address}</h3>
+                            <h3 className="text-xs text-secondary">{user.address || 'Boşdur'}</h3>
                           </div>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
-                          <span className="text-xs text-secondary">{user.city}</span>
+                          <span className="text-xs text-secondary">{user.city || 'Boşdur'}</span>
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
-                          {user.zip_code}
+                          {user.zip_code || 'Boşdur'}
                         </td>
                         <td className="text-sm font-medium text-gray-500 w-[5%] flex items-center gap-2">
                           <button

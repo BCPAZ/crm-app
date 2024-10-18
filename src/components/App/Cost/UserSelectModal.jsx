@@ -11,17 +11,11 @@ const UserSelectModal = ({
   isLoading,
   isError,
   onChange,
-  returnIdOnly = false
 }) => {
   const [selected, setSelected] = useState(null);
 
-  // İstifadəçi seçimi funksiyası
   const handleSelect = (user) => {
-    if (returnIdOnly) {
-      onChange(user.id);
-    } else {
-      onChange(user);
-    }
+    onChange(user, modal - 1)
     closeUserModal();
   };
 

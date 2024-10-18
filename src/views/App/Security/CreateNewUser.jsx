@@ -30,7 +30,6 @@ const CreateNewUser = () => {
     avatar: null,
   });
 
-  // roles data gələndən sonra role_id-i update edirik
   useEffect(() => {
     if (roles.length > 0) {
       setFormState((prevState) => ({
@@ -49,10 +48,9 @@ const CreateNewUser = () => {
   };
 
   const handleRoleChange = (selectedRole) => {
-    console.log(selectedRole);
     setFormState((prevState) => ({
       ...prevState,
-      role_id: selectedRole, // Artıq yalnız id gəlir, ona görə sadəcə selectedRole yazmaq olar
+      role_id: selectedRole,
     }));
   };
 
@@ -79,16 +77,39 @@ const CreateNewUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+      if (!formState.name) {
+      showToast("Ad və soyad boş ola bilməz", "error");
+      return;
+    }
+  
+    if (!formState.email) {
+      showToast("Elektron poçt boş ola bilməz", "error");
+      return;
+    }
+  
+    if (!formState.phone_number) {
+      showToast("Telefon nömrəsi boş ola bilməz", "error");
+      return;
+    }
+  
     if (!formState.role_id) {
       showToast("Rol seçilməlidir", "error");
       return;
     }
+
+    if (!formState.password) {
+      showToast("Şifrə qeyd edilməlidir", "error");
+      return;
+    }
+  
     const formData = {
       ...formState,
       avatar: formState.avatar,
     };
+  
     createUser(formData);
   };
+  
 
   useEffect(() => {
     if (isSuccess) {
@@ -129,7 +150,7 @@ const CreateNewUser = () => {
                   src={
                     formState.avatar
                       ? URL.createObjectURL(formState.avatar)
-                      : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg"
+                      : "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
                   }
                   alt="Profile Photo"
                 />

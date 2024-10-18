@@ -44,7 +44,7 @@ const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
   },[isError])
 
   return (
-    <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg overflow-y-auto">
+    <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg">
       <ConfirmationModal
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}

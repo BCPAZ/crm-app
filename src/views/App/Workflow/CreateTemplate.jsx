@@ -30,9 +30,16 @@ const CreateTemplate = () => {
     isLoading,
     isError,
   } = useGetGovernmentsQuery();
-  const [createTemplate, {isSuccess:createSuccess , error : createError, isLoading: createIsLoading}] = useCreateTemplateMutation();
+  const [
+    createTemplate,
+    {
+      isSuccess: createSuccess,
+      error: createError,
+      isLoading: createIsLoading,
+    },
+  ] = useCreateTemplateMutation();
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   const {
     control,
@@ -53,7 +60,7 @@ const CreateTemplate = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    createTemplate(data)
+    createTemplate(data);
   };
 
   const handleModal = (index) => {
@@ -88,23 +95,26 @@ const CreateTemplate = () => {
         ...fields[fieldIndex].companies.slice(companyIndex + 1),
       ],
     });
-  }
+  };
 
   useEffect(() => {
-    if(createSuccess) {
+    if (createSuccess) {
       showToast("Şablon yaradıldı", "success");
 
       setTimeout(() => {
-        navigate('/templates')
-      }, 1500)
+        navigate("/templates");
+      }, 1500);
     }
-  }, [createSuccess])
+  }, [createSuccess]);
 
   useEffect(() => {
     if (createError) {
-      showToast(createError?.message || "Şablon yaradılarkən xəta baş verdi", "error");
+      showToast(
+        createError?.message || "Şablon yaradılarkən xəta baş verdi",
+        "error"
+      );
     }
-  }, [createError])
+  }, [createError]);
 
   return (
     <section>
@@ -116,7 +126,11 @@ const CreateTemplate = () => {
               Şablon yaradın - İş axını
             </h1>
             <div className="w-[15%]">
-              <Button value="Qeyd edin" form="create-template-form" isLoading={createIsLoading}/>
+              <Button
+                value="Qeyd edin"
+                form="create-template-form"
+                isLoading={createIsLoading}
+              />
             </div>
           </div>
         </div>
@@ -181,23 +195,23 @@ const CreateTemplate = () => {
                     className="bg-grey/10 p-4 w-fit rounded-lg h-full min-w-[300px] flex flex-col"
                   >
                     <div className="flex items-center gap-2 w-full">
-                     <Controller 
-                      name={`duration.${fieldIndex}.days`}
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <SecondInput
-                          label="Müddət"
-                          placeholder="Müddət daxil edin"
-                          value={value}
-                          onChange={(e) => onChange(e.target.value)}
-                          error={errors?.name?.message}
-                          type="number"
-                          min={1}
-                          default={1}
-                          step={1}
-                        />
-                      )}
-                     />
+                      <Controller
+                        name={`duration.${fieldIndex}.days`}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <SecondInput
+                            label="Müddət"
+                            placeholder="Müddət daxil edin"
+                            value={value}
+                            onChange={(e) => onChange(e.target.value)}
+                            error={errors?.name?.message}
+                            type="number"
+                            min={1}
+                            default={1}
+                            step={1}
+                          />
+                        )}
+                      />
                       <button
                         type="button"
                         onClick={() => handleModal(fieldIndex + 1)}
@@ -229,7 +243,12 @@ const CreateTemplate = () => {
                               {company?.name}
                             </span>
                           </div>
-                          <button className="text-black" onClick={() => handleRemoveCompany(fieldIndex, companyIndex)}>
+                          <button
+                            className="text-black"
+                            onClick={() =>
+                              handleRemoveCompany(fieldIndex, companyIndex)
+                            }
+                          >
                             <MdClose size={20} />
                           </button>
                         </div>

@@ -9,24 +9,6 @@ const WorkflowDetail = () => {
   const { data, isLoading, isError } = useGetWorkflowDetailQuery(id);
   const workflowData = data || {};
 
-  const dateRenderer = (date) => {
-    if (date <= 2) {
-      return (
-        <span className="text-sm font-semibold text-yellow-500">
-          Qalan gün sayı : {date}
-        </span>
-      );
-    } else if (date === 0) {
-      return (
-        <span className="text-sm font-semibold text-yellow-500">Qalan gün sayı : {date}</span>
-      );
-    } else {
-      return (
-        <span className="text-sm font-semibold text-green-600">Qalan gün sayı : {date}</span>
-      );
-    }
-  };
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full w-full py-10">
@@ -50,6 +32,13 @@ const WorkflowDetail = () => {
     );
   }
 
+  const createdAt = moment(workflowData.government.createdAt);
+  const daysToAdd = workflowData.days;
+
+  const dueDate = createdAt.clone().add(daysToAdd, "days")
+
+  const remainingDays = dueDate.diff(moment(), "days");
+
   return (
     <section className="w-full py-10">
       <div className="siteContainer">
@@ -58,7 +47,9 @@ const WorkflowDetail = () => {
             {workflowData.project?.name || "Project Name"}
           </h1>
           <div className="flex items-center gap-5">
-            {dateRenderer(workflowData.days)}
+            <span className={`text-sm font-semibold ${remainingDays <= 2 ? "text-yellow-500" : "text-green-600"}`}>
+              Qalan gün sayı: {remainingDays}
+            </span>
             <div>
               {translateStatus(workflowData.status)}
             </div>
@@ -79,6 +70,7 @@ const WorkflowDetail = () => {
             </div>
           </div>
 
+          {/* Government Details */}
           <div className="flex flex-col gap-4 bg-grey/20 p-4 rounded-lg">
             <h2 className="text-lg font-semibold">Qurum</h2>
             <div className="flex items-center gap-2">
@@ -95,7 +87,7 @@ const WorkflowDetail = () => {
               </div>
             </div>
             <div className="text-sm font-semibold">
-              Yaradılma tarixi :{" "}
+              Yaradılma tarixi:{" "}
               <span className="font-medium">
                 {moment(workflowData.government.createdAt).format("YYYY-MM-DD")}
               </span>

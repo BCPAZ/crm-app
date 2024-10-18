@@ -69,14 +69,14 @@ const CommentsPanel = ({ task }) => {
 
   return (
     <section className="md:w-[440px] w-full h-full">
-      <div className="w-full h-full relative">
-        <div className="flex flex-col gap-10 h-[70%] overflow-y-scroll">
+      <div className="w-full h-[100%] relative">
+        <div className="flex flex-col gap-10 min-h-[720px] overflow-y-auto">
           {task.comments.length > 0 ? (
             task.comments.map((comment, index) => (
-              <div className="flex gap-x-5 min-h-[500px]" key={index}>
+              <div className="flex gap-x-5" key={index}>
                 <div className="w-[40px] h-[40px] flex items-center justify-center overflow-hidden">
                   <img
-                    src={comment.user?.avatar_url}
+                    src={comment.user?.avatar_url || 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg'}
                     className="w-full h-full object-cover rounded-full select-none"
                     alt=""
                   />
@@ -124,14 +124,7 @@ const CommentsPanel = ({ task }) => {
           )}
         </div>
 
-        <div className="sticky bottom-0 left-0 w-full bg-white h-[30%] py-2 flex gap-2">
-          <div className="w-[40px] h-[40px] flex items-center justify-center overflow-hidden">
-            <img
-              src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1723680000&semt=ais_hybrid"
-              className="w-full h-full object-cover rounded-full select-none"
-              alt="Avatar"
-            />
-          </div>
+        <div className="absolute bottom-0 left-0 w-full bg-white min-h-[30%] py-2 gap-2">
           <div className="w-full flex flex-col gap-3">
             <div className="h-auto">
               <SecondTextArea

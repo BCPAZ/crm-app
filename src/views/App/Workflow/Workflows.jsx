@@ -160,19 +160,22 @@ const Workflows = () => {
                       Sənədlər <GoArrowDown />
                     </span>
                   </th>
-                  <th className="text-sm font-medium w-[10%] text-gray-500">
+                  <th className="text-sm font-medium w-[8%] text-gray-500">
                     İcraçı
                   </th>
-                  <th className="text-sm font-medium w-[10%] text-gray-500">
+                  <th className="text-sm font-medium w-[8%] text-gray-500">
                     Sənəd No
                   </th>
-                  <th className="text-sm font-medium w-[10%] text-gray-500">
+                  <th className="text-sm font-medium w-[8%] text-gray-500">
                     Deadline
                   </th>
-                  <th className="text-sm font-medium w-[10%] text-gray-500 text-right">
+                  <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
                     Qurum
                   </th>
-                  <th className="text-sm font-medium w-[10%] text-gray-500 rounded-e-lg">
+                  <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
+                    Qalan gün
+                  </th>
+                  <th className="text-sm font-medium w-[8%] text-gray-500 rounded-e-lg">
                     Status
                   </th>
                 </tr>
@@ -198,13 +201,13 @@ const Workflows = () => {
                         <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
                           <span>{workflow.project?.name}</span>
                         </th>
-                        <td className="text-sm font-medium text-gray-500 w-[10%]">
+                        <td className="text-sm font-medium text-gray-500 w-[8%]">
                           {workflow.sender.name}
                         </td>
-                        <td className="text-sm font-medium text-gray-500 w-[10%]">
+                        <td className="text-sm font-medium text-gray-500 w-[8%]">
                           {workflow.document.document_no}
                         </td>
-                        <td className="text-sm font-medium text-gray-500 w-[10%] flex flex-col gap-1">
+                        <td className="text-sm font-medium text-gray-500 w-[8%] flex flex-col gap-1">
                           <span className="text-xs">
                             {moment(workflow.updated_at).format("YYYY-MM-DD")}
                           </span>
@@ -212,7 +215,7 @@ const Workflows = () => {
                             {moment(workflow.updated_at).format("HH:mm")}
                           </span>
                         </td>
-                        <td className="text-sm font-medium text-gray-500 w-[10%] text-right flex items-center justify-end">
+                        <td className="text-sm font-medium text-gray-500 w-[8%] text-right flex items-center justify-end">
                           <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                             <img
                               className="w-full h-full object-cover"
@@ -221,7 +224,10 @@ const Workflows = () => {
                             />
                           </div>
                         </td>
-                        <td className="text-sm font-medium text-gray-500 w-[10%] rounded-e-lg">
+                        <td className="text-sm font-medium text-center text-gray-500 w-[8%]">
+                          {workflow.days}
+                        </td>
+                        <td className="text-sm font-medium text-gray-500 w-[8%] rounded-e-lg">
                           {renderStatus(workflow.status)}
                         </td>
                       </Link>
