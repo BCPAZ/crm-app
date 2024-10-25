@@ -20,7 +20,7 @@ const tabs = [
 
 export default function Tabs({ task }) {
   return (
-    <TabGroup className={"w-full"}>
+    <TabGroup className={"w-full h-full"}>
       <TabList className={"w-full grid grid-cols-3 gap-5 bg-gray-300/40 p-2"}>
         {tabs.map((tab) => (
           <Tab
@@ -34,13 +34,13 @@ export default function Tabs({ task }) {
         ))}
       </TabList>
       <TabPanels className={"p-5 h-full"}>
-        <TabPanel>
+        <TabPanel className={'w-full h-full'}>
           <OverviewPanel task={task} />
         </TabPanel>
-        <TabPanel>
+        <TabPanel className={'w-full h-full'}>
           <SubtasksPanel task={task} />
         </TabPanel>
-        <TabPanel>
+        <TabPanel className={'w-full h-full'}>
           <CommentsPanel task={task}/>
         </TabPanel>
       </TabPanels>

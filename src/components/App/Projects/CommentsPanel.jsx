@@ -69,24 +69,33 @@ const CommentsPanel = ({ task }) => {
 
   return (
     <section className="md:w-[440px] w-full h-full">
-      <div className="w-full h-[100%] relative">
-        <div className="flex flex-col gap-10 min-h-[720px] overflow-y-auto">
+      <div className="w-full h-full relative">
+        <div className="flex flex-col gap-10 h-3/4 overflow-y-scroll py-12">
           {task.comments.length > 0 ? (
             task.comments.map((comment, index) => (
-              <div className="flex gap-x-5" key={index}>
-                <div className="w-[40px] h-[40px] flex items-center justify-center overflow-hidden">
-                  <img
-                    src={comment.user?.avatar_url || 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg'}
-                    className="w-full h-full object-cover rounded-full select-none"
-                    alt=""
-                  />
-                </div>
+              <div className="flex gap-x-5 h-full" key={index}>
                 <div className="flex-1 flex flex-col gap-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <h4 className="text-md font-medium">{comment?.user?.name}</h4>
-                    <span className="text-sm text-gray-400 font-medium">
-                      {moment(comment.created_at).fromNow()}
-                    </span>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-[30px] h-[30px] flex items-center justify-center">
+                        <img
+                          src={
+                            comment.user?.avatar_url ||
+                            "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
+                          }
+                          className="w-full h-full object-cover rounded-full select-none"
+                          alt=""
+                        />
+                      </div>
+                      <h4 className="text-md font-medium">
+                        {comment?.user?.name}
+                      </h4>
+                    </div>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm text-gray-400 font-medium">
+                        {moment(comment.created_at).fromNow()}
+                      </span>
+                    </div>
                   </div>
                   {comment.type === "MESSAGE" && (
                     <div className="w-full">
@@ -105,26 +114,30 @@ const CommentsPanel = ({ task }) => {
                     </div>
                   )}
                   {comment.type === "FILE" && (
-                    <div 
+                    <div
                       className="select-none flex items-center gap-3 cursor-pointer"
                       onClick={() => handleFileDownload(comment.content_url)}
                     >
-                      <span className="w-[25px]">{renderFileIcon(comment.content_url)}</span>
-                      <span className="text-sm">İstifadə ediləbilən fayl</span>
+                      <span className="w-[25px]">
+                        {renderFileIcon(comment.content_url)}
+                      </span>
+                      <span className="text-xs">
+                        {comment.file_name || "Fayl"}
+                      </span>
                     </div>
                   )}
                 </div>
               </div>
             ))
           ) : (
-            <div className="min-h-[450px] flex items-center justify-center flex-col">
+            <div className="h-[450px] flex items-center justify-center flex-col">
               <RiErrorWarningLine size={36} />
               <span>Hər hansı bir rəy yoxdur</span>
             </div>
           )}
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full bg-white min-h-[30%] py-2 gap-2">
+        <div className="absolute bottom-0 left-0 w-full bg-white h-[250px] py-2 gap-2">
           <div className="w-full flex flex-col gap-3">
             <div className="h-auto">
               <SecondTextArea
@@ -156,9 +169,8 @@ const CommentsPanel = ({ task }) => {
   );
 };
 
-
 CommentsPanel.propTypes = {
-  task : PropTypes.any
-}
+  task: PropTypes.any,
+};
 
 export default CommentsPanel;

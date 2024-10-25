@@ -10,10 +10,13 @@ import {
   useGetTaskQuery,
 } from "@/data/services/taskManagementService";
 import useToast from "@/hooks/useToast";
+import useClickOutside from "@/hooks/useClickOutside";
+import { useRef } from "react";
 
 const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {showToast} = useToast();
+  const detailRef = useRef(null);
   const { data: task = {} } = useGetTaskQuery(selectedTaskId, {
     skip: !selectedTaskId,
   });
@@ -43,8 +46,10 @@ const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
     }
   },[isError])
 
+  useClickOutside(detailRef,closeTaskDetail)
+
   return (
-    <aside className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg">
+    <aside ref={detailRef} className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg">
       <ConfirmationModal
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
