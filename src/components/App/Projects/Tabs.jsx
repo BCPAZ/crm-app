@@ -2,6 +2,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import OverviewPanel from "./OverviewPanel";
 import SubtasksPanel from "./SubtasksPanel";
 import CommentsPanel from "./CommentsPanel";
+import PropTypes from "prop-types";
 
 const tabs = [
   {
@@ -17,6 +18,10 @@ const tabs = [
     tabName: "Rəylər",
   },
 ];
+
+Tabs.propTypes = {
+  task : PropTypes.any
+}
 
 export default function Tabs({ task }) {
   return (

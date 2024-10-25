@@ -69,11 +69,10 @@ const KanbanBoard = () => {
 
   return (
     <section className="py-10 w-full h-screen overflow-x-auto">
-      {/* Task seçilibsə, TaskDetail komponentini göstər */}
       {selectedTaskId && (
         <TaskDetail 
           selectedTaskId={selectedTaskId} 
-          closeTaskDetail={() => setSelectedTaskId(null)} // TaskDetail bağlamaq üçün funksiyanı ötürürük
+          closeTaskDetail={() => setSelectedTaskId(null)}
         />
       )}
       <div className="flex space-x-6 h-full overflow-x-scroll">
@@ -103,7 +102,7 @@ const KanbanBoard = () => {
                       >
                         <Column
                           column={column}
-                          setSelectedTaskId={setSelectedTaskId} // Taskın üzərinə kliklədikdə ID-ni təyin etmək üçün
+                          setSelectedTaskId={setSelectedTaskId}
                         />
                       </div>
                     )}
