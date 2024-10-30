@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { FaUsers } from "react-icons/fa";
-import { LuMoreVertical, LuEye } from "react-icons/lu";
+import { TbTrash } from "react-icons/tb";
+import {  LuEye } from "react-icons/lu";
 import { IoAddSharp } from "react-icons/io5";
 import { useGetProjectsQuery } from "@/data/services/projectService";
 import { IoMdCheckmark } from "react-icons/io";
@@ -9,17 +9,35 @@ import moment from "moment";
 import Spinner from "@/components/common/Spinner";
 import { setProject } from "@/data/slices/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
+import { useState } from "react";
+// import { FaUsers } from "react-icons/fa";
+
 const Projects = () => {
   const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
   const {project: selectedProject} = useSelector(state => state.project)
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const dispatch = useDispatch();
 
   const handleSetProject = (project) => {
     dispatch(setProject(project));
   };
 
+  const openConfirmation = () => {
+    setShowConfirmation(true);
+  }
+
+  const closeConfirmationModal = () => {
+    setShowConfirmation(false);
+  }
+
+  // const handleDelete = (project) => {
+  //   deleteProject(project.id)
+  // }
+
   return (
     <section>
+      <ConfirmationModal title="Bu proyekti silmək istəyirsinizmi?" closeConfirmationModal={closeConfirmationModal} showConfirmation={showConfirmation} />
       <div className="siteContainer">
         <div className="flex items-center justify-between mt-10">
           <h1 className="text-2xl font-semibold ">Proyektlər</h1>
@@ -31,17 +49,17 @@ const Projects = () => {
             Proyekt yarat
           </Link>
         </div>
-        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 py-10">
+        {isLoading && (
+            <div className="flex items-center w-full p-10 justify-center h-full">
+              <Spinner />
+            </div>
+          )}
           {isError && (
             <div className="w-full h-full flex items-center justify-center text-2xl font-semibold">
               Heç bir proyekt tapılmadı
             </div>
           )}
-          {isLoading && (
-            <div className="flex items-center justify-center h-full">
-              <Spinner />
-            </div>
-          )}
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 py-10">
           {projects.map((project, index) => (
             <div
               className="relative p-6 rounded-lg border border-grey/20 flex flex-col gap-2"
@@ -49,11 +67,12 @@ const Projects = () => {
             >
               <button
                 type="button"
-                className="absolute top-5 right-5 hover:bg-grey/20 p-1 rounded"
+                className="absolute top-5 right-5 hover:bg-grey/20 p-2 rounded-md"
+                onClick={openConfirmation}
               >
-                <LuMoreVertical size={20} />
+                <TbTrash size={20} />
               </button>
-              <div className="flex flex-col gap-1 py-5 border-b border-grey/20">
+              <div className="flex flex-col gap-1 py-2 border-b border-grey/20">
                 <h1 className="text-xl font-semibold">{project.name}</h1>
                 <span className="text-xs font-base text-gray-400">
                   Yaradılma tarixi : {moment(project.created_at).fromNow()}
@@ -82,10 +101,10 @@ const Projects = () => {
                     }
                   </button>
                 </div>
-                <span className="flex items-center gap-2 text-xs font-semibold">
+                {/* <span className="flex items-center gap-2 text-xs font-semibold">
                   <FaUsers color="#00A76F" size={16} />
-                  {/* {project.members} members */}
-                </span>
+                  {project.members.length}
+                </span> */}
               </div>
             </div>
           ))}
