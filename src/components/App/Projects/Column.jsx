@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Droppable } from "@hello-pangea/dnd";
 import { IoAddSharp } from "react-icons/io5";
@@ -10,6 +10,8 @@ import {
   useDeleteBoardMutation,
   useUpdateBoardMutation,
 } from "@/data/services/taskManagementService";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
+import useToast from "@/hooks/useToast";
 
 const Column = ({
   column,
@@ -20,10 +22,12 @@ const Column = ({
   const [newName, setNewName] = useState(column.name);
   const [newTaskName, setNewTaskName] = useState("");
   const [isAddingTask, setIsAddingTask] = useState(false);
-  const [deleteBoard] = useDeleteBoardMutation();
+  const [showConfirmation, setShowConfirmation] = useState();
+  const [selectedColumn, setSelectedColumn] = useState(null);
+  const [deleteBoard, {isSuccess, isError}] = useDeleteBoardMutation();
   const [updateBoard] = useUpdateBoardMutation();
   const [createTask] = useCreateTaskMutation();
-
+  const {showToast} = useToast();
   const handleNameClick = () => {
     setIsEditing(true);
   };
@@ -37,6 +41,21 @@ const Column = ({
       handleSave();
     }
   };
+  
+  const openConfirmation = (id) => {
+    setSelectedColumn(id);
+    setShowConfirmation(true);
+  }
+
+  const closeConfirmationModal = () => {
+    setShowConfirmation(false);
+  }
+
+  const handleDeleteColumn = () => {
+    if(selectedColumn){
+      deleteBoard(selectedColumn);
+    }
+  }
 
   const handleSave = () => {
     if (newName.trim() === "") return;
@@ -74,14 +93,29 @@ const Column = ({
     setNewTaskName("");
   };
 
+
+  useEffect(() => {
+    if(isSuccess){
+      showToast('Lövhə uğurlu şəkildə silindi.', "success")
+      closeConfirmationModal();
+    }
+  },[isSuccess])
+
+  useEffect(() => {
+    if(isError){
+      showToast('Lövhə silinə bilmədi', "error")
+    }
+  },[isError])
+
   return (
     <Droppable droppableId={`board-${column.id}`} type="TASK">
       {(provided) => (
         <div
-          className="min-w-[336px] bg-gray-100 p-4 rounded-xl"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
+        className="min-w-[336px] bg-gray-100 p-4 rounded-xl"
+        ref={provided.innerRef}
+        {...provided.droppableProps}
         >
+        <ConfirmationModal handleDelete={handleDeleteColumn} title="Bu lövhəni silmək istədiyinizdən əminsinizmi?" showConfirmation={showConfirmation} closeConfirmationModal={closeConfirmationModal} />
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <span className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-gray-500 bg-grey/20 font-bold text-sm">
@@ -113,7 +147,7 @@ const Column = ({
                 <IoAddSharp size={14} />
               </button>
               <button
-                onClick={() => deleteBoard(column.id)}
+                onClick={() => openConfirmation(column.id)}
                 className="hover:bg-red-500 hover:text-white rounded-full text-gray-400 p-1 transition-colors duration-300"
               >
                 <HiTrash size={18} />
@@ -159,16 +193,17 @@ const Column = ({
 };
 
 Column.propTypes = {
+  setSelectedTaskId : PropTypes.any,
   column: PropTypes.shape({
     id: PropTypes.any.isRequired,
     name: PropTypes.string.isRequired,
     // items: PropTypes.arrayOf(
-    //   PropTypes.shape({
-    //     id: PropTypes.string.isRequired,
-    //     content: PropTypes.string.isRequired,
-    //   })
-    // ).isRequired,
-  }),
+      //   PropTypes.shape({
+        //     id: PropTypes.string.isRequired,
+        //     content: PropTypes.string.isRequired,
+        //   })
+        // ).isRequired,
+      }),
   handleDeleteColumn: PropTypes.func,
   handleUpdateColumnName: PropTypes.func,
   handleDeleteTask: PropTypes.func,
