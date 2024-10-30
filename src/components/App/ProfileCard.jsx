@@ -11,10 +11,10 @@ export default function ProfileCard() {
   return (
     <div className='relative overflow-hidden'>
       <Menu as='nav'>
-        <MenuButton className='flex w-[40px] h-[40px] overflow-hidden p-2 border-2 border-gray-400/20 rounded-full items-center justify-center font-semibold text-white'>
+        <MenuButton className='flex w-[35px] h-[35px] overflow-hidden border-2 border-gray-400/20 rounded-full items-center justify-center font-semibold text-white'>
           <img
-            className='w-full h-full object-cover object-center'
-            src='https://img.freepik.com/premium-photo/graphic-designer-digital-avatar-generative-ai_934475-9292.jpg'
+            className='w-full h-full object-cover rounded-full object-center'
+            src={ currentAccount?.avatar_url || "https://dentistry.co.uk/app/uploads/2020/11/anonymous-avatar-icon-25.png"}
             alt='User avatar'
           />
         </MenuButton>
