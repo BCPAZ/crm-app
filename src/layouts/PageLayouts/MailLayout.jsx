@@ -173,7 +173,7 @@ const MailLayout = () => {
               className="text-md bg-black p-3 rounded-lg text-white font-bold flex items-center justify-center gap-2"
             >
               <FaPen size={20} />
-              <span className="md:block hidden text-sm">Compose</span>
+              <span className="md:block hidden text-sm">Yaradın</span>
             </button>
             <div className="py-3 flex flex-col gap-2">
               {mailLinks.map((link, index) => (
@@ -268,10 +268,10 @@ const MailLayout = () => {
                   <div className="text-center text-gray-500 text-lg h-screen flex items-center justify-center flex-col gap-3">
                     <img src={empty} alt="Empty" />
                     <h1 className="text-gray-400 text-lg font-semibold">
-                      Nothing in here
+                      Bura boşdur
                     </h1>
                     <p className="text-xs text-gray-400 font-base">
-                      This folder is empty
+                      Bu hissədə mail yoxdur
                     </p>
                   </div>
                 )}
