@@ -49,7 +49,7 @@ const TaskDetail = ({ selectedTaskId, closeTaskDetail }) => {
   useClickOutside(detailRef,closeTaskDetail)
 
   return (
-    <aside ref={detailRef} className="min-w-[480px] fixed top-0 right-0 h-full bg-white shadow-lg">
+    <aside ref={detailRef} className="sm:min-w-[480px] min-w-full fixed top-0 right-0 h-full bg-white shadow-lg">
       <ConfirmationModal
         showConfirmation={showConfirmation}
         closeConfirmationModal={closeConfirmationModal}
