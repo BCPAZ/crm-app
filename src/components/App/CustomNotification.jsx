@@ -13,7 +13,8 @@ const CustomNotification = () => {
 
   return (
     <div className="flex items-center relative">
-      <button onClick={openNotifications}>
+      <button className="w-full h-full relative" onClick={openNotifications}>
+        <div className="w-2 h-2 absolute top-1 right-2 rounded-full bg-red-600"></div>
         <img src={notification} alt="Notification Icon" />
       </button>
       {showNotifications && (
@@ -26,7 +27,8 @@ const CustomNotification = () => {
                 key={notification.id}
                 className="flex items-center gap-3 hover:bg-gray-400/40 p-2 rounded-lg"
               >
-                <div className="flex items-center gap-3 w-[65%]">
+                <div className="flex items-center gap-3 relative w-[65%]">
+                  <span className="w-2 h-2 rounded-full bg-red-600 -top-2 -left-1 absolute"></span>
                   <p className="text-xs">{notification.title}</p>
                 </div>
                 <span className="text-xs flex flex-col gap-2 flex-wrap">
