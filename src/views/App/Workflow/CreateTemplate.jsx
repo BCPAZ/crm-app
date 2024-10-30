@@ -181,7 +181,7 @@ const CreateTemplate = () => {
             </div>
           </div>
           <div className="flex flex-col gap-9 mt-10 w-full">
-            <h1 className="text-2xl font-semibold">Müddət</h1>
+            <h1 className="text-2xl font-semibold">Xarici iş axını</h1>
             <div className="rounded-lg max-w-full w-full flex items-center justify-center gap-4 border-2 border-grey/20 border-dashed min-h-[200px] p-5 h-full">
               <div className="h-full p-10 rounded-lg bg-grey/20">
                 <button type="button">
@@ -272,6 +272,104 @@ const CreateTemplate = () => {
             </div>
           </div>
         </form>
+
+        {/* <form
+          className="py-[60px]"
+          onSubmit={handleSubmit(onSubmit)}
+          id="create-template-form"
+        >
+          <div className="flex flex-col gap-9 mt-4 w-full">
+            <h1 className="text-2xl font-semibold">Daxili iş axını</h1>
+            <div className="rounded-lg max-w-full w-full flex items-center justify-center gap-4 border-2 border-grey/20 border-dashed min-h-[200px] p-5 h-full">
+              <div className="h-full p-10 rounded-lg bg-grey/20">
+                <button type="button">
+                  <FaPlay size={20} />
+                </button>
+              </div>
+              <div className="flex-1 flex items-center gap-2 overflow-x-auto py-5">
+                {fields.map((field, fieldIndex) => (
+                  <div
+                    key={fieldIndex}
+                    className="bg-grey/10 p-4 w-fit rounded-lg h-full min-w-[300px] flex flex-col"
+                  >
+                    <div className="flex items-center gap-2 w-full">
+                      <Controller
+                        name={`duration.${fieldIndex}.days`}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <SecondInput
+                            label="Müddət"
+                            placeholder="Müddət daxil edin"
+                            value={value}
+                            onChange={(e) => onChange(e.target.value)}
+                            error={errors?.name?.message}
+                            type="number"
+                            min={1}
+                            default={1}
+                            step={1}
+                          />
+                        )}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleModal(fieldIndex + 1)}
+                        className="text-white bg-black p-4 rounded-md"
+                      >
+                        <MdAdd />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => remove(fieldIndex)}
+                        className="text-white bg-black p-4 rounded-md"
+                      >
+                        <MdClose />
+                      </button>
+                    </div>
+                    <div className="p-2 flex flex-col gap-2">
+                      {field.companies.map((company, companyIndex) => (
+                        <div
+                          className="p-2 bg-white rounded-lg flex items-center justify-between gap-2"
+                          key={companyIndex}
+                        >
+                          <div className="flex items-center gap-1">
+                            <img
+                              className="w-[30px] h-[30px] rounded-full"
+                              src={company?.image_url}
+                              alt=""
+                            />
+                            <span className="text-sm font-medium">
+                              {company?.name}
+                            </span>
+                          </div>
+                          <button
+                            className="text-black"
+                            onClick={() =>
+                              handleRemoveCompany(fieldIndex, companyIndex)
+                            }
+                          >
+                            <MdClose size={20} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddColumn}
+                  className="p-4 rounded-md mx-4 bg-white border border-grey/20 flex items-center gap-2 font-semibold text-sm text-nowrap"
+                >
+                  <MdAdd size={18} /> Yeni timeline yarat
+                </button>
+              </div>
+              <div className="h-full p-10 rounded-lg bg-grey/20">
+                <button type="button">
+                  <FaStop size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </form> */}
       </div>
     </section>
   );
