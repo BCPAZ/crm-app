@@ -7,15 +7,28 @@ import { RiErrorWarningLine } from "react-icons/ri";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
+import { TbTrash } from "react-icons/tb";
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const CommentsPanel = ({ task }) => {
   const [text, setText] = useState("");
   const [createComment] = useCreateCommentMutation();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleCreateTextComment = () => {
     createComment({ data: { text }, taskId: task.id });
     setText("");
   };
+
+  const openConfirmation = () => {
+    setShowConfirmation(true);
+  }
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
+  }
 
   const getFileExtension = (filename) => {
     return filename.split(".").pop();
@@ -69,11 +82,12 @@ const CommentsPanel = ({ task }) => {
 
   return (
     <section className="md:w-[440px] w-full h-full">
+      <ConfirmationModal title="Şərhi silmək istəyirsiniz?" showConfirmation={showConfirmation} closeConfirmationModal={closeConfirmation} />
       <div className="w-full h-full relative">
-        <div className="flex flex-col gap-10 h-3/4 overflow-y-scroll py-12">
+        <div className="flex flex-col gap-8 h-3/4 overflow-y-scroll py-12">
           {task.comments.length > 0 ? (
             task.comments.map((comment, index) => (
-              <div className="flex gap-x-5 h-full" key={index}>
+              <div className="flex gap-x-5 p-2" key={index}>
                 <div className="flex-1 flex flex-col gap-3">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
@@ -87,31 +101,32 @@ const CommentsPanel = ({ task }) => {
                           alt=""
                         />
                       </div>
-                      <h4 className="text-md font-medium">
+                      <h4 className="text-sm font-medium">
                         {comment?.user?.name}
                       </h4>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-sm text-gray-400 font-medium">
+                      <span className="text-xs text-gray-400 font-medium">
                         {moment(comment.created_at).fromNow()}
                       </span>
+                      <button onClick={openConfirmation} className="hover:bg-gray-300/20 p-2 cursor-pointer rounded-lg"><TbTrash /></button>
                     </div>
                   </div>
                   {comment.type === "MESSAGE" && (
                     <div className="w-full">
-                      <p className="w-full text-sm text-gray-500 font-base">
+                      <p className="w-full text-xs text-gray-500">
                         {comment.content}
                       </p>
                     </div>
                   )}
                   {comment.type === "IMAGE" && (
-                    <div className="w-full max-h-[250px] overflow-hidden rounded-xl select-none">
+                    <Zoom className="w-full max-h-[250px] overflow-hidden rounded-xl select-none">
                       <img
                         className="w-full h-full object-cover"
                         src={comment.content_url}
                         alt={comment.content}
                       />
-                    </div>
+                    </Zoom>
                   )}
                   {comment.type === "FILE" && (
                     <div
