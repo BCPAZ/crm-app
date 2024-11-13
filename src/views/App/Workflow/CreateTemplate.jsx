@@ -7,7 +7,7 @@ import { MdAdd } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useGetGovernmentsQuery } from "@/data/services/companyService";
-// import { useCreateTemplateMutation } from "@/data/services/templateService";
+import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -25,11 +25,21 @@ const createTemplateSchema = Yup.object().shape({
 
 const CreateTemplate = () => {
   const [modal, setModal] = useState(false);
+  const [userModal, setUserModal] = useState(false);
   const {
     data: governments = [],
     isLoading,
     isError,
   } = useGetGovernmentsQuery();
+
+  const {
+    data: users = [],
+    isLoading: userLoading,
+    isError: userError,
+  } = useGetCompanyUsersQuery();
+
+  console.log(users);
+
   const [
     createTemplate,
     {
@@ -57,6 +67,16 @@ const CreateTemplate = () => {
     name: "duration",
   });
 
+  const {
+    fields: internalFields,
+    append: internalAppend,
+    remove: internalRemove,
+    update: internalUpdate,
+  } = useFieldArray({
+    control,
+    name: "interal_duration",
+  });
+
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -70,10 +90,43 @@ const CreateTemplate = () => {
   const closeModal = () => {
     setModal(false);
   };
+
+  const handleUserModal = (index) => {
+    setUserModal(index);
+  };
+
+  const closeUserModal = () => {
+    setUserModal(false);
+  };
+
   const handleAddColumn = () => {
     append({
       companies: [],
       days: 1,
+    });
+  };
+
+  const handleAddInternalColumn = () => {
+    internalAppend({ users: [], days: 1 });
+  };
+
+  const handleOnChangeUser = (value, index) => {
+    internalUpdate(index, {
+      ...internalFields[index],
+      users: [
+        ...internalFields[index].users,
+        { id: value.id, name: value.name, avatar_url: value.avatar_url },
+      ],
+    });
+  };
+
+  const handleRemoveUser = (fieldIndex, userIndex) => {
+    internalUpdate(fieldIndex, {
+      ...internalFields[fieldIndex],
+      users: [
+        ...internalFields[fieldIndex].users.slice(0, userIndex),
+        ...internalFields[fieldIndex].users.slice(userIndex + 1),
+      ],
     });
   };
 
@@ -271,14 +324,15 @@ const CreateTemplate = () => {
               </div>
             </div>
           </div>
-        </form>
-
-        {/* <form
-          className="py-[60px]"
-          onSubmit={handleSubmit(onSubmit)}
-          id="create-template-form"
-        >
-          <div className="flex flex-col gap-9 mt-4 w-full">
+          <UserSelectModal
+            modal={userModal}
+            options={users}
+            onChange={handleOnChangeUser}
+            closeUserModal={closeUserModal}
+            isError={userError}
+            isLoading={userLoading}
+          />
+          <div className="flex flex-col gap-9 mt-10 w-full">
             <h1 className="text-2xl font-semibold">Daxili iş axını</h1>
             <div className="rounded-lg max-w-full w-full flex items-center justify-center gap-4 border-2 border-grey/20 border-dashed min-h-[200px] p-5 h-full">
               <div className="h-full p-10 rounded-lg bg-grey/20">
@@ -287,14 +341,14 @@ const CreateTemplate = () => {
                 </button>
               </div>
               <div className="flex-1 flex items-center gap-2 overflow-x-auto py-5">
-                {fields.map((field, fieldIndex) => (
+                {internalFields.map((field, fieldIndex) => (
                   <div
                     key={fieldIndex}
                     className="bg-grey/10 p-4 w-fit rounded-lg h-full min-w-[300px] flex flex-col"
                   >
                     <div className="flex items-center gap-2 w-full">
                       <Controller
-                        name={`duration.${fieldIndex}.days`}
+                        name={`internal_duration.${fieldIndex}.days`}
                         control={control}
                         render={({ field: { onChange, value } }) => (
                           <SecondInput
@@ -312,39 +366,39 @@ const CreateTemplate = () => {
                       />
                       <button
                         type="button"
-                        onClick={() => handleModal(fieldIndex + 1)}
+                        onClick={() => handleUserModal(fieldIndex + 1)}
                         className="text-white bg-black p-4 rounded-md"
                       >
                         <MdAdd />
                       </button>
                       <button
                         type="button"
-                        onClick={() => remove(fieldIndex)}
+                        onClick={() => internalRemove(fieldIndex)}
                         className="text-white bg-black p-4 rounded-md"
                       >
                         <MdClose />
                       </button>
                     </div>
                     <div className="p-2 flex flex-col gap-2">
-                      {field.companies.map((company, companyIndex) => (
+                      {field.users.map((user, userIndex) => (
                         <div
                           className="p-2 bg-white rounded-lg flex items-center justify-between gap-2"
-                          key={companyIndex}
+                          key={userIndex}
                         >
                           <div className="flex items-center gap-1">
                             <img
                               className="w-[30px] h-[30px] rounded-full"
-                              src={company?.image_url}
+                              src={user?.image_url}
                               alt=""
                             />
                             <span className="text-sm font-medium">
-                              {company?.name}
+                              {user?.name}
                             </span>
                           </div>
                           <button
                             className="text-black"
                             onClick={() =>
-                              handleRemoveCompany(fieldIndex, companyIndex)
+                              handleRemoveUser(fieldIndex, userIndex)
                             }
                           >
                             <MdClose size={20} />
@@ -356,7 +410,7 @@ const CreateTemplate = () => {
                 ))}
                 <button
                   type="button"
-                  onClick={handleAddColumn}
+                  onClick={handleAddInternalColumn}
                   className="p-4 rounded-md mx-4 bg-white border border-grey/20 flex items-center gap-2 font-semibold text-sm text-nowrap"
                 >
                   <MdAdd size={18} /> Yeni timeline yarat
@@ -369,7 +423,7 @@ const CreateTemplate = () => {
               </div>
             </div>
           </div>
-        </form> */}
+        </form>
       </div>
     </section>
   );
