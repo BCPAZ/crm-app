@@ -6,12 +6,12 @@ import { FaStop } from "react-icons/fa6";
 import { MdAdd } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { useGetGovernmentsQuery } from "@/data/services/companyService";
 import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateTemplateMutation } from "@/data/services/templateService";
+import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -22,14 +22,14 @@ const createTemplateSchema = Yup.object().shape({
   // duration:
 });
 
-const CreateTemplate = () => {
+const CreateInternalTemplate = () => {
   const [modal, setModal] = useState(false);
   const {
-    data: governments = [],
+    data,
     isLoading,
     isError,
-  } = useGetGovernmentsQuery();
-
+  } = useGetCompanyUsersQuery();
+  const users = data?.users;
   const [
     createTemplate,
     {
@@ -72,27 +72,27 @@ const CreateTemplate = () => {
 
   const handleAddColumn = () => {
     append({
-      companies: [],
+      users: [],
       days: 1,
     });
   };
 
-  const handleOnChangeCompany = (value, index) => {
+  const handleOnChangeUsers = (value, index) => {
     update(index, {
       ...fields[index],
-      companies: [
-        ...fields[index].companies,
-        { id: value.id, name: value.name, image_url: value.image_url },
+      users: [
+        ...fields[index].users,
+        { id: value.id, name: value.name, avatar_url: value.avatar_url },
       ],
     });
   };
 
-  const handleRemoveCompany = (fieldIndex, companyIndex) => {
+  const handleRemoveUser = (fieldIndex, userIndex) => {
     update(fieldIndex, {
       ...fields[fieldIndex],
-      companies: [
-        ...fields[fieldIndex].companies.slice(0, companyIndex),
-        ...fields[fieldIndex].companies.slice(companyIndex + 1),
+      users: [
+        ...fields[fieldIndex].companies.slice(0, userIndex),
+        ...fields[fieldIndex].companies.slice(userIndex + 1),
       ],
     });
   };
@@ -123,7 +123,7 @@ const CreateTemplate = () => {
         <div className="siteContainer">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold w-full">
-              Şablon yaradın - Xarici İş axını
+              Şablon yaradın - Daxili İş axını
             </h1>
             <div className="w-[15%]">
               <Button
@@ -139,10 +139,10 @@ const CreateTemplate = () => {
         <UserSelectModal
           isLoading={isLoading}
           isError={isError}
-          options={governments}
+          options={users}
           modal={modal}
           closeUserModal={closeModal}
-          onChange={handleOnChangeCompany}
+          onChange={handleOnChangeUsers}
         />
         <form
           className="py-[60px]"
@@ -181,7 +181,7 @@ const CreateTemplate = () => {
             </div>
           </div>
           <div className="flex flex-col gap-9 mt-10 w-full">
-            <h1 className="text-2xl font-semibold">Xarici iş axını</h1>
+            <h1 className="text-2xl font-semibold">Daxili iş axını</h1>
             <div className="rounded-lg max-w-full w-full flex items-center justify-center gap-4 border-2 border-grey/20 border-dashed min-h-[200px] p-5 h-full">
               <div className="h-full p-10 rounded-lg bg-grey/20">
                 <button type="button">
@@ -228,25 +228,25 @@ const CreateTemplate = () => {
                       </button>
                     </div>
                     <div className="p-2 flex flex-col gap-2">
-                      {field.companies.map((company, companyIndex) => (
+                      {field.users.map((user, userIndex) => (
                         <div
                           className="p-2 bg-white rounded-lg flex items-center justify-between gap-2"
-                          key={companyIndex}
+                          key={userIndex}
                         >
                           <div className="flex items-center gap-1">
                             <img
                               className="w-[30px] h-[30px] rounded-full"
-                              src={company?.image_url}
+                              src={user?.avatar_url}
                               alt=""
                             />
                             <span className="text-sm font-medium">
-                              {company?.name}
+                              {user?.name}
                             </span>
                           </div>
                           <button
                             className="text-black"
                             onClick={() =>
-                              handleRemoveCompany(fieldIndex, companyIndex)
+                              handleRemoveUser(fieldIndex, userIndex)
                             }
                           >
                             <MdClose size={20} />
@@ -277,4 +277,4 @@ const CreateTemplate = () => {
   );
 };
 
-export default CreateTemplate;
+export default CreateInternalTemplate;
