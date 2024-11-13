@@ -13,6 +13,7 @@ import {
   useSubmitDocumentMutation,
 } from "@/data/services/documentService";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const options = [
   { id: "register", name: "Reyestr" },
@@ -178,9 +179,9 @@ const DocumentRegister = () => {
                                 <div className="w-[25px] h-[25px]">
                                   {renderFileIcon(document.file)}
                                 </div>
-                                <div className="text-sm text-secondary hover:underline">
+                                <Link to={`/document/${document.id}`} className="text-sm text-secondary hover:underline">
                                   {document.name}
-                                </div>
+                                </Link>
                               </div>
                             </th>
                             <td className="text-sm font-medium text-gray-500 w-[14%]">

@@ -15,7 +15,9 @@ const Projects = lazy(() => import("@/views/App/Projects"));
 const TaskManagement = lazy(() => import("@/views/App/TaskManagement"));
 const Dashboard = lazy(() => import("@/views/App/Dashboard"));
 const Profile = lazy(() => import("@/views/App/Profile"));
-const WorkflowDetail = lazy(() => import("@/views/App/Workflow/WorkflowDetail"));
+const WorkflowDetail = lazy(() =>
+  import("@/views/App/Workflow/WorkflowDetail")
+);
 const DocumentLayout = lazy(() =>
   import("@/layouts/PageLayouts/DocumentLayouts")
 );
@@ -24,6 +26,10 @@ const UploadNewDocument = lazy(() =>
 );
 const DocumentRegister = lazy(() =>
   import("@/views/App/Documents/DocumentRegister")
+);
+
+const DocumentDetail = lazy(() =>
+  import("@/views/App/Documents/DocumentDetail")
 );
 const WorkflowLayout = lazy(() =>
   import("@/layouts/PageLayouts/WorkflowLayout")
@@ -66,8 +72,8 @@ const AppRouter = () => {
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/create-project" element={<CreateProject />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/create-project" element={<CreateProject />} />
             <Route element={<PrivateRoute />}>
               <Route path="/cost" element={<Cost />} />
               <Route path="/cost/:id" element={<InvoiceDetail />} />
@@ -76,6 +82,7 @@ const AppRouter = () => {
                 path="/cost/create-new-invoice"
                 element={<CreateNewInvoice />}
               />
+              <Route path="/document/:id" element={<DocumentDetail />} />
               <Route element={<DocumentLayout />}>
                 <Route
                   path="/document-register"
