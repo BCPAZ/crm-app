@@ -36,6 +36,7 @@ const WorkflowLayout = lazy(() =>
 );
 const Workflows = lazy(() => import("@/views/App/Workflow/Workflows"));
 const Templates = lazy(() => import("@/views/App/Workflow/Templates"));
+const InternalTemplates = lazy(() => import("@/views/App/Workflow/InternalTemplates"));
 const CreateTemplate = lazy(() =>
   import("@/views/App/Workflow/CreateTemplate")
 );
@@ -98,6 +99,7 @@ const AppRouter = () => {
               <Route element={<WorkflowLayout />}>
                 <Route path="/workflows" element={<Workflows />} />
                 <Route path="/templates" element={<Templates />} />
+                <Route path="/internal-templates" element={<InternalTemplates />} />
                 <Route path="/create-template" element={<CreateTemplate />} />
                 <Route path="/create-internal-template" element={<CreateInternalTemplate />} />
                 <Route path="/workflows/:id" element={<WorkflowDetail />} />
