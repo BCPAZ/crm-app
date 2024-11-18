@@ -23,7 +23,6 @@ import Spinner from "@/components/common/Spinner";
 
 const OverviewPanel = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [assignees, setAssignees] = useState(task.assignees || []);
   const [description, setDescription] = useState(task.description || "");
   const [taskName, setTaskName] = useState(task.name || "");
   const [updateTask, setUpdateTask] = useState(false);
@@ -32,6 +31,8 @@ const OverviewPanel = ({ task }) => {
   const { data } = useGetCompanyUsersQuery();
 
   const users = data?.users || [];
+
+  console.log(task);
 
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
@@ -50,10 +51,9 @@ const OverviewPanel = ({ task }) => {
   }, [task.id, task.due_date]);
 
   const handleChangeReporter = (reporterId) => {
-    setAssignees([...assignees]);
     changeReporter({
       taskId: task.id,
-      reporter_id: reporterId,
+      reporter_id: reporterId.id,
     });
   };
 
@@ -159,20 +159,17 @@ const OverviewPanel = ({ task }) => {
             Yerinə yetirən
           </h3>
           <div className="flex-1 flex items-center gap-2">
-            {assignees.map((user, index) => (
               <img
-                key={index}
                 className="w-[25px] h-[25px] rounded-full border border-gray-400/20"
                 src={
-                  user.image_url ||
+                  task?.reporter?.avatar_url ||
                   "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
                 }
                 alt="avatar"
               />
-            ))}
             <button
               className="p-1 bg-grey/20 rounded-full border border-gray-400 border-dashed"
-              onClick={() => setIsModalOpen(true)} // Modalı aç
+              onClick={() => setIsModalOpen(true)}
             >
               <IoIosAdd size={18} />
             </button>
