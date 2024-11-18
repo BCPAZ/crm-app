@@ -35,6 +35,10 @@ export const navigationLinks = [
         label : 'Şablonlar'
       },
       {
+        path : '/internal-templates',
+        label : 'Daxili Şablonlar'
+      },
+      {
         label : 'Şablon yarat (Xarici)',
         path : '/create-template'
       },
