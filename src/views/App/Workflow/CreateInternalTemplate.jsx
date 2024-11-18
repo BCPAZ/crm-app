@@ -10,7 +10,7 @@ import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCreateTemplateMutation } from "@/data/services/templateService";
+import { useCreateInternalTemplateMutation } from "@/data/services/templateService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
@@ -37,7 +37,7 @@ const CreateInternalTemplate = () => {
       error: createError,
       isLoading: createIsLoading,
     },
-  ] = useCreateTemplateMutation();
+  ] = useCreateInternalTemplateMutation();
 
   const { showToast } = useToast();
 
@@ -91,8 +91,8 @@ const CreateInternalTemplate = () => {
     update(fieldIndex, {
       ...fields[fieldIndex],
       users: [
-        ...fields[fieldIndex].companies.slice(0, userIndex),
-        ...fields[fieldIndex].companies.slice(userIndex + 1),
+        ...fields[fieldIndex].users.slice(0, userIndex),
+        ...fields[fieldIndex].users.slice(userIndex + 1),
       ],
     });
   };
@@ -102,7 +102,7 @@ const CreateInternalTemplate = () => {
       showToast("Şablon yaradıldı", "success");
 
       setTimeout(() => {
-        navigate("/templates");
+        navigate("/internal-templates");
       }, 1500);
     }
   }, [createSuccess]);
