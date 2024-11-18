@@ -2,37 +2,66 @@ import SecondTextArea from "@/components/common/SecondTextArea";
 import moment from "moment";
 import { IoAttach } from "react-icons/io5";
 import { BiSolidImageAdd } from "react-icons/bi";
-import { useCreateCommentMutation } from "@/data/services/taskManagementService";
+import {
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+} from "@/data/services/taskManagementService";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
 import { TbTrash } from "react-icons/tb";
-import Zoom from 'react-medium-image-zoom'
-import 'react-medium-image-zoom/dist/styles.css'
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+import useToast from "@/hooks/useToast";
 
 const CommentsPanel = ({ task }) => {
   const [text, setText] = useState("");
   const [createComment] = useCreateCommentMutation();
   const [showConfirmation, setShowConfirmation] = useState(false);
-
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [deleteComment, { isError, isSuccess }] = useDeleteCommentMutation();
+  const { showToast } = useToast();
   const handleCreateTextComment = () => {
     createComment({ data: { text }, taskId: task.id });
     setText("");
   };
 
-  const openConfirmation = () => {
+  console.log(task);
+
+  const openConfirmation = (id) => {
+    setSelectedComment(id);
     setShowConfirmation(true);
-  }
+  };
 
   const closeConfirmation = () => {
     setShowConfirmation(false);
-  }
+  };
 
   const getFileExtension = (filename) => {
     return filename.split(".").pop();
   };
+
+  const handleDeleteComment = () => {
+    if (selectedComment) {
+      deleteComment({id: selectedComment, taskId: task.id});
+      closeConfirmation();
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showToast("Rəy uğurlu şəkildə silindi", "success");
+      closeConfirmation();
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      showToast("Rəy silinə bilmədi", "error");
+    }
+  }, [isError]);
 
   const renderFileIcon = (filename) => {
     const ext = getFileExtension(filename);
@@ -82,7 +111,12 @@ const CommentsPanel = ({ task }) => {
 
   return (
     <section className="md:w-[440px] w-full h-full">
-      <ConfirmationModal title="Şərhi silmək istəyirsiniz?" showConfirmation={showConfirmation} closeConfirmationModal={closeConfirmation} />
+      <ConfirmationModal
+        title="Şərhi silmək istəyirsiniz?"
+        showConfirmation={showConfirmation}
+        closeConfirmationModal={closeConfirmation}
+        handleDelete={handleDeleteComment}
+      />
       <div className="w-full h-full relative">
         <div className="flex flex-col gap-8 h-3/4 overflow-y-scroll py-12">
           {task.comments.length > 0 ? (
@@ -109,7 +143,12 @@ const CommentsPanel = ({ task }) => {
                       <span className="text-xs text-gray-400 font-medium">
                         {moment(comment.created_at).fromNow()}
                       </span>
-                      <button onClick={openConfirmation} className="hover:bg-gray-300/20 p-2 cursor-pointer rounded-lg"><TbTrash /></button>
+                      <button
+                        onClick={() => openConfirmation(comment?.id)}
+                        className="hover:bg-gray-300/20 p-2 cursor-pointer rounded-lg"
+                      >
+                        <TbTrash />
+                      </button>
                     </div>
                   </div>
                   {comment.type === "MESSAGE" && (
@@ -129,17 +168,18 @@ const CommentsPanel = ({ task }) => {
                     </Zoom>
                   )}
                   {comment.type === "FILE" && (
-                    <div
-                      className="select-none flex items-center gap-3 cursor-pointer"
-                      onClick={() => handleFileDownload(comment.content_url)}
+                    <a
+                      target="_blank"
+                      className="select-none flex flex-col gap-3 cursor-pointer"
+                      onClick={() => handleFileDownload(comment?.content_url)}
                     >
                       <span className="w-[25px]">
-                        {renderFileIcon(comment.content_url)}
+                        {renderFileIcon(comment?.content_url)}
                       </span>
                       <span className="text-xs">
                         {comment.file_name || "Fayl"}
                       </span>
-                    </div>
+                    </a>
                   )}
                 </div>
               </div>
