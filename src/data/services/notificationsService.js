@@ -5,9 +5,17 @@ const notificationsService = api.injectEndpoints({
   getNotifications : builder.query({
     query : () => ({
       url : '/notifications',
-    })
+    }),
+    providesTags : ["NOTIFICATIONS"]
+  }),
+  readNotification : builder.mutation({
+    query : (id) => ({
+      url : `notifications/${id}`,
+      method : "POST"
+    }),
+    invalidatesTags : ['NOTIFICATIONS']
   })
  })
 })
-export const {useGetNotificationsQuery} = notificationsService;
+export const {useGetNotificationsQuery, useReadNotificationMutation} = notificationsService;
 export default notificationsService

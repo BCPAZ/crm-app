@@ -9,6 +9,13 @@ const templateService = api.injectEndpoints({
       providesTags: ["TEMPLATES"],
       keepUnusedDataFor: 0,
     }),
+    getInternalTemplates : builder.query({
+      query : () => ({
+        url : "/internal-templates"
+      }),
+      providesTags : ["INTERNAL-TEMPLATES"],
+      keepUnusedDataFor : 0
+    }),
     createTemplate: builder.mutation({
       query: (data) => ({
         url: "/templates",
@@ -39,6 +46,29 @@ const templateService = api.injectEndpoints({
       invalidatesTags: ["TEMPLATES"],
       keepUnusedDataFor: 0,
     }),
+    deleteInternalTemplate: builder.mutation({
+      query: (id) => ({
+        url: `/internal-templates/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["INTERNAL-TEMPLATES"],
+      keepUnusedDataFor: 0,
+    }),
+    createInternalTemplate: builder.mutation({
+      query: (data) => ({
+        url: "/internal-templates",
+        method: "POST",
+        body: {
+          ...data,
+          duration: data?.duration?.map((c) => ({
+            ...c,
+            users: c?.users?.map((c) => c.id),
+          })),
+        },
+      }),
+      invalidatesTags: ["TEMPLATES"],
+      keepUnusedDataFor: 0,
+    }),
   }),
 });
 
@@ -47,6 +77,9 @@ export const {
   useGetTemplatesQuery,
   useDeleteTemplateMutation,
   useDetailTemplateQuery,
+  useCreateInternalTemplateMutation,
+  useGetInternalTemplatesQuery,
+  useDeleteInternalTemplateMutation
 } = templateService;
 
 export default templateService;

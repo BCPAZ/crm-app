@@ -70,6 +70,7 @@ const api = createApi({
     "INSIGHTS",
     "INVOICES",
     "BOARDS",
+    "NOTIFICATIONS"
   ],
 });
 
