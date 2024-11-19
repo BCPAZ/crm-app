@@ -12,6 +12,16 @@ const workflowsService = api.injectEndpoints({
       providesTags: ["WORKFLOWS"],
       keepUnusedDataFor: 0,
     }),
+    getInternalWorkflows: builder.query({
+      query: (params) => ({
+        url: "/internal-workflows",
+        params: Object.fromEntries(
+          Object.entries(params).filter(([_, value]) => value !== null)
+        ),
+      }),
+      providesTags: ["WORKFLOWS"],
+      keepUnusedDataFor: 0,
+    }),
     getWorkflowDetail: builder.query({
       query: (id) => ({
         url: `/workflows/${id}`,
@@ -22,6 +32,10 @@ const workflowsService = api.injectEndpoints({
   }),
 });
 
-export const { useGetWorkflowsQuery, useGetWorkflowDetailQuery } = workflowsService;
+export const {
+  useGetWorkflowsQuery,
+  useGetWorkflowDetailQuery,
+  useGetInternalWorkflowsQuery,
+} = workflowsService;
 
 export default workflowsService;

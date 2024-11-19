@@ -5,12 +5,12 @@ import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import moment from "moment";
 import { useState } from "react";
-import { useGetWorkflowsQuery } from "@/data/services/workflowsService";
+import { useGetInternalWorkflowsQuery } from "@/data/services/workflowsService";
 import Pagination from "@/components/common/Pagination";
 import { IoMdRefresh } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-const Workflows = () => {
+const InternalWorkflows = () => {
   const renderStatus = (status) => {
     switch (status) {
       case "REJECTED":
@@ -66,7 +66,7 @@ const Workflows = () => {
 
   const { name, documentNo, startDate, endDate, status } = filters;
 
-  const { data, isLoading, isError } = useGetWorkflowsQuery({
+  const { data, isLoading, isError } = useGetInternalWorkflowsQuery({
     page,
     name,
     document_no: documentNo,
@@ -74,6 +74,8 @@ const Workflows = () => {
     end_date: endDate ? moment(endDate).format("YYYY-MM-DD") : null,
     status: status,
   });
+
+  console.log(data);
 
   const workflows = data?.workflows || [];
   const meta = data?.meta || {};
@@ -102,7 +104,7 @@ const Workflows = () => {
         <div className="siteContainer">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold w-full">
-              Axtarış prosesi - İş axını
+              Axtarış prosesi - Daxili iş axını
             </h1>
           </div>
         </div>
@@ -170,7 +172,7 @@ const Workflows = () => {
                     Deadline
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
-                    Qurum
+                    Əməkdaş
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
                     Qalan gün
@@ -219,8 +221,8 @@ const Workflows = () => {
                           <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
                             <img
                               className="w-full h-full object-cover"
-                              src={workflow?.government?.image_url}
-                              alt={workflow?.government?.name}
+                              src={workflow?.user?.avatar_url}
+                              alt={workflow?.user?.name}
                             />
                           </div>
                         </td>
@@ -246,4 +248,4 @@ const Workflows = () => {
   );
 };
 
-export default Workflows;
+export default InternalWorkflows;

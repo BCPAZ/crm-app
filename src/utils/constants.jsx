@@ -31,6 +31,10 @@ export const navigationLinks = [
         label : 'İş axını'
       },
       {
+        path : '/internal-workflows',
+        label : 'Daxili iş axını'
+      },
+      {
         path : '/templates',
         label : 'Şablonlar'
       },
