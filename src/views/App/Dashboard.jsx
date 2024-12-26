@@ -14,8 +14,7 @@ const Dashboard = () => {
   const {data : mails = []} = useGetFiveMailQuery();
   const {data : tasks = []} = useGetLastTaskQuery();
   const {data : users = []} = useGetLastUsersQuery();
-  const {data} = useGetProjectsQuery();
-  const projects = data?.projects || [];
+  const {data : projects = []} = useGetProjectsQuery();
   return (
     <section>
       <div className="siteContainer">
