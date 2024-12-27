@@ -9,8 +9,8 @@ import CreateMail from "@/components/App/Mail/CreateMail";
 import disabled from "@/assets/icons/Mail/disabled.svg";
 import { FaPen } from "react-icons/fa";
 import mailLinks from "@/utils/mailLinks";
-import { LuUserCircle2 } from "react-icons/lu";
 import LoadingScreen from "@/components/common/LoadingScreen";
+import { FaUser } from "react-icons/fa6";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "@/components/common/Spinner";
 import { IoMdMail } from "react-icons/io";
@@ -236,7 +236,7 @@ const MailLayout = () => {
                           />
                         ) : (
                           <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
-                            <LuUserCircle2 size={30} />
+                            <FaUser size={30} />
                           </div>
                         )}
                         <div className="flex flex-col w-full">

@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import moment from "moment";
 import empty from "@/assets/icons/Mail/empty.svg";
-import { LuUserCircle2 } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { FaUser } from "react-icons/fa";
 
 const ShowMailSidebar = ({
   handleSearchInput,
@@ -65,7 +65,7 @@ const ShowMailSidebar = ({
                     />
                   ) : (
                     <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
-                      <LuUserCircle2 size={30} />
+                            <FaUser size={30} />
                     </div>
                   )}
                   <div className="flex flex-col w-full">
