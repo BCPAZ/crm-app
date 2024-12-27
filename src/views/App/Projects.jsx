@@ -40,13 +40,13 @@ const Projects = () => {
       <ConfirmationModal title="Bu proyekti silmək istəyirsinizmi?" closeConfirmationModal={closeConfirmationModal} showConfirmation={showConfirmation} />
       <div className="siteContainer">
         <div className="flex items-center justify-between mt-10">
-          <h1 className="text-2xl font-semibold ">Proyektlər</h1>
+          <h1 className="text-2xl font-semibold ">Layihələr</h1>
           <Link
             to={"/create-project"}
             className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2"
           >
             <IoAddSharp size={18} />
-            Proyekt yarat
+            Layihə yarat
           </Link>
         </div>
         {isLoading && (
@@ -56,7 +56,7 @@ const Projects = () => {
           )}
           {isError && (
             <div className="w-full h-full flex items-center justify-center text-2xl font-semibold">
-              Heç bir proyekt tapılmadı
+              Heç bir layihə tapılmadı
             </div>
           )}
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 py-10">
