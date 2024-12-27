@@ -9,12 +9,26 @@ const documentService = api.injectEndpoints({
         formData.append("name", data.name);
         formData.append("comment", data.comment);
         formData.append("page_size", data.page_size);
-        formData.append("template_id", data.template_id);
         formData.append("file", data.file);
         formData.append("document_no", data.document_no);
         formData.append("author", data.author);
         formData.append("type", data.type);
-
+    
+        const templateId = data.template_id || null;
+        const internalTemplateId = data.internal_template_id || null;
+    
+        if (templateId) {
+          formData.append("template_id", templateId);
+        } else {
+          // formData.append("template_id", null);
+        }
+    
+        if (internalTemplateId) {
+          formData.append("internal_template_id", internalTemplateId);
+        } else {
+          // formData.append("internal_template_id", null);
+        }
+    
         return {
           url: "documents",
           method: "POST",
@@ -33,17 +47,28 @@ const documentService = api.injectEndpoints({
       providesTags: ["DOCUMENTS"],
       keepUnusedDataFor: 0,
     }),
+    getDocumentById: builder.query({
+      query: (id) => ({
+        url: `/documents/${id}`,
+      }),
+      providesTags: ["DOCUMENT"],
+      keepUnusedDataFor: 0,
+    }),
     submitDocument: builder.mutation({
       query: (id) => ({
         url: `/documents/${id}/submit-for-review`,
         method: "POST",
       }),
-      invalidatesTags : ['WORKFLOWS']
+      invalidatesTags: ["WORKFLOWS"],
     }),
   }),
 });
 
-export const { useUploadDocumentMutation, useGetDocumentsQuery, useSubmitDocumentMutation } =
-  documentService;
+export const {
+  useUploadDocumentMutation,
+  useGetDocumentsQuery,
+  useSubmitDocumentMutation,
+  useGetDocumentByIdQuery,
+} = documentService;
 
 export default documentService;
