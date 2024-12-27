@@ -25,7 +25,7 @@ const TemplateTable = () => {
   ] = useDeleteTemplateMutation();
 
   const getTotalDays = (duration) => {
-    return duration.reduce((total, data) => total + data.days, 0);
+    return duration.reduce((total, data) => total + (parseInt(data.days) || 0), 0);
   };
 
   const openConfirmationModal = (id) => {
@@ -100,6 +100,7 @@ const TemplateTable = () => {
               <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
                 <div className="flex items-center gap-4">
                   <Link
+                  to={`/templates/${template.id}`}
                     className="text-sm text-secondary hover:underline"
                   >
                     {template.name}
