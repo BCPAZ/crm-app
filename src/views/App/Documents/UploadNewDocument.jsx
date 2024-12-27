@@ -10,7 +10,7 @@ import { useUploadDocumentMutation } from "@/data/services/documentService";
 import { useSelector } from "react-redux";
 import { defaultStyles, FileIcon } from "react-file-icon";
 import { MdClose } from "react-icons/md";
-import { useGetTemplatesQuery } from "@/data/services/templateService";
+import { useGetTemplatesQuery, useGetInternalTemplatesQuery } from "@/data/services/templateService";
 import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ const uploadFormSchema = Yup.object().shape({
   comment: Yup.string().nullable(),
   page_size: Yup.number().nullable().min(1),
   template_id: Yup.number().nullable().min(1),
+  internal_template_id: Yup.number().nullable().min(1),
   file: Yup.mixed(),
   document_no: Yup.string().nullable(),
   author: Yup.string().nullable(),
@@ -47,6 +48,7 @@ const UploadNewDocument = () => {
     useUploadDocumentMutation();
 
   const { data: templates = [] } = useGetTemplatesQuery();
+  const { data: internalTemplates = [] } = useGetInternalTemplatesQuery();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -152,11 +154,26 @@ const UploadNewDocument = () => {
             render={({ field: { onChange, value } }) => (
               <Select
                 column
-                label="Şablon"
+                label="Xarici Şablon"
                 options={templates}
-                onChange={(e) => onChange(e)}
-                value={value}
-                error={errors.type?.message}
+                onChange={(e) => onChange(e || null)}
+                value={value || null}
+                error={errors.template_id?.message}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="internal_template_id"
+            render={({ field: { onChange, value } }) => (
+              <Select
+                column
+                label="Daxili Şablon"
+                options={internalTemplates}
+                onChange={(e) => onChange(e || null)}
+                value={value || null}
+                error={errors.internal_template_id?.message}
               />
             )}
           />
