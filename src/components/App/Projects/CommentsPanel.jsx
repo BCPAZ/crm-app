@@ -69,14 +69,14 @@ const CommentsPanel = ({ task }) => {
     return <FileIcon extension={ext} {...style} />;
   };
 
-  const handleFileDownload = (fileUrl) => {
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.download = fileUrl.split("/").pop();
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleFileDownload = (fileUrl) => {
+  //   const link = document.createElement("a");
+  //   link.href = fileUrl;
+  //   link.download = fileUrl.split("/").pop();
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const openImageSelector = () => {
     const imageElement = document.createElement("input");
@@ -169,9 +169,10 @@ const CommentsPanel = ({ task }) => {
                   )}
                   {comment.type === "FILE" && (
                     <a
-                      target="_blank"
                       className="select-none flex flex-col gap-3 cursor-pointer"
-                      onClick={() => handleFileDownload(comment?.content_url)}
+                      // onClick={() => handleFileDownload(comment?.content_url)}
+                      href={comment?.content_url}
+                      target="_blank"
                     >
                       <span className="w-[25px]">
                         {renderFileIcon(comment?.content_url)}

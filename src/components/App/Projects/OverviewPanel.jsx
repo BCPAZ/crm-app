@@ -20,8 +20,11 @@ import {
 } from "@/data/services/taskManagementService";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
+import useToast from "@/hooks/useToast";
+import { Toaster } from "react-hot-toast";
 
 const OverviewPanel = ({ task }) => {
+  const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [description, setDescription] = useState(task.description || "");
   const [taskName, setTaskName] = useState(task.name || "");
@@ -31,13 +34,12 @@ const OverviewPanel = ({ task }) => {
   const { data } = useGetCompanyUsersQuery();
 
   const users = data?.users || [];
-
   console.log(task);
 
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
   const [changeDueDate] = useSetDueDateMutation();
-  const [changeReporter] = useSetReporterMutation();
+  const [changeReporter, { isSuccess: changeReporterSuccess, isError: changeReporterError }] = useSetReporterMutation();
   const [changeAttachment] = useSetAttachmentMutation();
   const [changeName, { isLoading, isError, isSuccess }] =
     useUpdateNameMutation();
@@ -101,17 +103,31 @@ const OverviewPanel = ({ task }) => {
   useEffect(() => {
     if (isSuccess) {
       setUpdateTask(false);
+      showToast('Ad uğurlu şəkildə dəyişdirildi.', 'success');
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      console.log("error");
+      showToast('Ad dəyişdirilən zaman xəta baş verdi.', 'error');
     }
   }, [isError]);
 
+  useEffect(() => {
+    if (changeReporterSuccess) {
+      showToast(`Seçilən şəxs təyin edildi.`, 'success')
+    }
+  }, [changeReporterSuccess]);
+
+  useEffect(() => {
+    if (changeReporterError) {
+      showToast(`Seçilən şəxs təyin edilə bilmədi`, 'error')
+    }
+  }, [changeReporterError]);
+
   return (
     <section className="w-full h-full">
+      <Toaster />
       <UserSelectModal
         modal={isModalOpen}
         closeUserModal={() => setIsModalOpen(false)}
@@ -159,6 +175,7 @@ const OverviewPanel = ({ task }) => {
             Yerinə yetirən
           </h3>
           <div className="flex-1 flex items-center gap-2">
+            <div className="relative group w-auto">
               <img
                 className="w-[25px] h-[25px] rounded-full border border-gray-400/20"
                 src={
@@ -167,6 +184,8 @@ const OverviewPanel = ({ task }) => {
                 }
                 alt="avatar"
               />
+              <span className="text-[10px] flex-1 hidden group-hover:block bg-black/50 text-white p-2 rounded-lg absolute top-8">{task?.reporter?.name || 'N/A'}</span>
+            </div>
             <button
               className="p-1 bg-grey/20 rounded-full border border-gray-400 border-dashed"
               onClick={() => setIsModalOpen(true)}
@@ -198,9 +217,8 @@ const OverviewPanel = ({ task }) => {
           </h3>
           <div className="flex-1 flex items-center gap-2">
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
-                task.priority === "LOW" ? "border border-black" : "border"
-              }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${task.priority === "LOW" ? "border border-black" : "border"
+                }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -212,9 +230,8 @@ const OverviewPanel = ({ task }) => {
               Aşağı
             </button>
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
-                task.priority === "MEDIUM" ? "border border-black" : "border"
-              }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${task.priority === "MEDIUM" ? "border border-black" : "border"
+                }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -227,9 +244,8 @@ const OverviewPanel = ({ task }) => {
             </button>
             {/* {task?.priority === "HIGH" && ( */}
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg ${
-                task.priority === "HIGH" ? "border border-black" : "border"
-              }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg ${task.priority === "HIGH" ? "border border-black" : "border"
+                }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -273,7 +289,7 @@ const OverviewPanel = ({ task }) => {
             <div className="flex gap-5 items-center mt-5">
               {task?.attachments?.map((attachment) => (
                 <div key={attachment.id} className="w-10 group">
-                  <a href={attachment.url}>{renderFileIcon(attachment.url)}</a>
+                  <a target="_blank" href={attachment.url}>{renderFileIcon(attachment.url)}</a>
                 </div>
               ))}
             </div>
