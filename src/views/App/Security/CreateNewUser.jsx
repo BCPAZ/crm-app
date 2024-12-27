@@ -77,21 +77,21 @@ const CreateNewUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      if (!formState.name) {
+    if (!formState.name) {
       showToast("Ad və soyad boş ola bilməz", "error");
       return;
     }
-  
+
     if (!formState.email) {
       showToast("Elektron poçt boş ola bilməz", "error");
       return;
     }
-  
+
     if (!formState.phone_number) {
       showToast("Telefon nömrəsi boş ola bilməz", "error");
       return;
     }
-  
+
     if (!formState.role_id) {
       showToast("Rol seçilməlidir", "error");
       return;
@@ -101,15 +101,15 @@ const CreateNewUser = () => {
       showToast("Şifrə qeyd edilməlidir", "error");
       return;
     }
-  
+
     const formData = {
       ...formState,
       avatar: formState.avatar,
     };
-  
+
     createUser(formData);
   };
-  
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -159,6 +159,7 @@ const CreateNewUser = () => {
                   <span className="text-sm text-white">Şəkil əlavə edin</span>
                 </div>
                 <input
+                  autoComplete="false"
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
@@ -173,6 +174,7 @@ const CreateNewUser = () => {
           </div>
           <div className="bg-white p-6 rounded-xl lg:w-[62%] w-full shadow-lg">
             <form
+              autoComplete="false"
               className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full"
               onSubmit={handleSubmit}
             >
