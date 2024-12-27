@@ -19,14 +19,10 @@ const documentService = api.injectEndpoints({
     
         if (templateId) {
           formData.append("template_id", templateId);
-        } else {
-          // formData.append("template_id", null);
         }
     
         if (internalTemplateId) {
           formData.append("internal_template_id", internalTemplateId);
-        } else {
-          // formData.append("internal_template_id", null);
         }
     
         return {
