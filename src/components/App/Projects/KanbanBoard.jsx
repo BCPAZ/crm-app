@@ -120,7 +120,7 @@ const KanbanBoard = () => {
             value={newColumnName}
             onChange={handleColumnNameChange}
             onKeyDown={handleKeyDown}
-            placeholder="Enter column name"
+            placeholder="Başlıq qeyd edin"
             className="p-2 min-w-[336px] border border-grey/20 h-12 text-sm focus:outline-black rounded-lg"
           />
         ) : (
@@ -129,7 +129,7 @@ const KanbanBoard = () => {
             className="min-w-[336px] h-12 p-2 border-2 border-grey/20 rounded-lg text-sm font-semibold flex items-center justify-center"
           >
             <IoAddSharp size={18} className="mr-2" />
-            Add Column
+            Əlavə et
           </button>
         )}
       </div>
