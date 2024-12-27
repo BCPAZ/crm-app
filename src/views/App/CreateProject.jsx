@@ -64,19 +64,19 @@ const CreateProject = () => {
     <section className="w-full h-full py-10">
       <Toaster />
       <div className="siteContainer">
-        <h1 className="text-2xl font-semibold">Proyekt yarat</h1>
+        <h1 className="text-2xl font-semibold">Layihə yarat</h1>
         <div className="flex flex-col gap-4 md:w-1/2 w-full h-full mt-10">
           <SecondInput
             column
-            label="* Proyekt adı"
-            placeholder="Proyekt adını daxil edin..."
+            label="* Layihə adı"
+            placeholder="Layihə adını daxil edin..."
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
           />
           <SecondInput
             column
-            label="* Proyektin kodu"
-            placeholder="Proyekt kodunu daxil edin..."
+            label="* Layihə kodu"
+            placeholder="Layihə kodunu daxil edin..."
             value={projectCode}
             onChange={(e) => setProjectCode(e.target.value)}
           />
@@ -96,7 +96,7 @@ const CreateProject = () => {
             </ul>
           </div>
           <div className="w-fit mt-3">
-            <Button isLoading={isLoading} value="Proyekt yarat" onClick={handleSubmit} />
+            <Button isLoading={isLoading} value="Layihə  yarat" onClick={handleSubmit} />
           </div>
         </div>
       </div>
