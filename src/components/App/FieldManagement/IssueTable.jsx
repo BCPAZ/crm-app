@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { useGetAllIssuesQuery } from "@/data/services/fieldService";
-import Pagination from "@/components/common/Pagination";
+import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import Spinner from "@/components/common/Spinner";
 
@@ -9,7 +9,7 @@ const IssueTable = () => {
   const [page, setPage] = useState(1);
 
   const { data: allIssues, isLoading, isError } = useGetAllIssuesQuery(page);
-  
+
   const issues = allIssues?.issues || [];
   const meta = allIssues?.meta || {};
 
@@ -127,7 +127,22 @@ const IssueTable = () => {
           )}
         </tbody>
       </table>
-      <Pagination meta={meta} onPageChange={handlePageChange} />
+      <div className="mt-5 flex justify-end">
+        <ReactPaginate
+          previousLabel={"‹"}
+          nextLabel={"›"}
+          breakLabel={"..."}
+          pageCount={meta?.last_page}
+          onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+          containerClassName="flex items-center justify-center space-x-2 py-4"
+          pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+          pageLinkClassName="text-secondary hover:text-blue-900"
+          previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+          nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+          activeClassName="bg-blue-200"
+          breakClassName="px-3 py-1 text-gray-500"
+        />
+      </div>
     </div>
   );
 };

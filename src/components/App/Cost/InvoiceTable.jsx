@@ -9,8 +9,8 @@ import {
 } from "@/data/services/costService";
 import { useState, useEffect } from "react";
 import moment from "moment";
-import Pagination from "@/components/common/Pagination";
 import Spinner from "@/components/common/Spinner";
+import ReactPaginate from "react-paginate";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
@@ -26,7 +26,7 @@ const InvoiceTable = () => {
     search,
     status,
   });
-  const [deleteInvoice, { isSuccess: deleteSuccess, isError: deleteError, isLoading:deleteLoading }] =
+  const [deleteInvoice, { isSuccess: deleteSuccess, isError: deleteError, isLoading: deleteLoading }] =
     useDeleteInvoiceMutation();
   const invoices = data?.invoices || [];
   const meta = data?.meta || {};
@@ -261,7 +261,22 @@ const InvoiceTable = () => {
                   </div>
                 ))}
               </tbody>
-              <Pagination meta={meta} onPageChange={handlePageChange} />
+              <div className="mt-5 flex justify-end px-5">
+              <ReactPaginate
+                  previousLabel={"‹"}
+                  nextLabel={"›"}
+                  breakLabel={"..."}
+                  pageCount={meta?.last_page}
+                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                  containerClassName="flex items-center justify-center space-x-2 py-4"
+                  pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  pageLinkClassName="text-secondary hover:text-blue-900"
+                  previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  activeClassName="bg-blue-200"
+                  breakClassName="px-3 py-1 text-gray-500"
+                />
+              </div>
             </table>
           </div>
         </div>

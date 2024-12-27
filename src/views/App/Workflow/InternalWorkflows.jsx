@@ -6,7 +6,7 @@ import Select from "@/components/common/Select";
 import moment from "moment";
 import { useState } from "react";
 import { useGetInternalWorkflowsQuery } from "@/data/services/workflowsService";
-import Pagination from "@/components/common/Pagination";
+import ReactPaginate from "react-paginate";
 import { IoMdRefresh } from "react-icons/io";
 import { Link } from "react-router-dom";
 
@@ -240,7 +240,22 @@ const InternalWorkflows = () => {
                 )}
               </tbody>
             </table>
-            <Pagination meta={meta} onPageChange={handlePageChange} />
+            <div className="mt-5 flex justify-end px-5">
+            <ReactPaginate
+                  previousLabel={"‹"}
+                  nextLabel={"›"}
+                  breakLabel={"..."}
+                  pageCount={meta?.last_page}
+                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                  containerClassName="flex items-center justify-center space-x-2 py-4"
+                  pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  pageLinkClassName="text-secondary hover:text-blue-900"
+                  previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  activeClassName="bg-blue-200"
+                  breakClassName="px-3 py-1 text-gray-500"
+                />
+              </div>
           </div>
         </div>
       </div>

@@ -11,15 +11,15 @@ import {
 } from "@/data/services/usersService";
 import Spinner from "@/components/common/Spinner";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
-import Pagination from "@/components/common/Pagination";
+import ReactPaginate from "react-paginate";
 import { Toaster } from "react-hot-toast";
 
 const UserList = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, isError } = useGetCompanyUsersQuery({ 
+  const { data, isLoading, isError } = useGetCompanyUsersQuery({
     page,
-    name : searchTerm
+    name: searchTerm
   });
   const [deleteUser, { isSuccess: userSuccess, isError: userError }] = useDeleteUserMutation();
   const [showModal, setShowModal] = useState(false);
@@ -177,7 +177,22 @@ const UserList = () => {
             </table>
           </div>
         </div>
-        <Pagination meta={meta} onPageChange={handlePageChange} />
+        <div className="mt-5 flex justify-end px-5">
+          <ReactPaginate
+            previousLabel={"‹"}
+            nextLabel={"›"}
+            breakLabel={"..."}
+            pageCount={meta?.last_page}
+            onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+            containerClassName="flex items-center justify-center space-x-2 py-4"
+            pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+            pageLinkClassName="text-secondary hover:text-blue-900"
+            previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+            nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+            activeClassName="bg-blue-200"
+            breakClassName="px-3 py-1 text-gray-500"
+          />
+        </div>
         <QuickUpdateModal showModal={showModal} closeModal={closeModal} user={selectedUser} />
       </div>
     </div>
