@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import Spinner from "@/components/common/Spinner";
-import Pagination from "@/components/common/Pagination";
+import ReactPaginate from "react-paginate";
 import { Toaster } from "react-hot-toast";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
@@ -107,7 +107,7 @@ const DocumentRegister = () => {
               type="text"
             />
             <SecondInput
-            value={documentNo}
+              value={documentNo}
               onChange={(e) => handleChange("documentNo", e.target.value)}
               column
               label="Sənəd nömrəsi"
@@ -220,7 +220,22 @@ const DocumentRegister = () => {
                     </tbody>
                   </table>
                 </div>
-                <Pagination meta={meta} onPageChange={handlePageChange} />
+                <div className="mt-5 flex justify-end px-5">
+                <ReactPaginate
+                  previousLabel={"‹"}
+                  nextLabel={"›"}
+                  breakLabel={"..."}
+                  pageCount={meta?.last_page}
+                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                  containerClassName="flex items-center justify-center space-x-2 py-4"
+                  pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  pageLinkClassName="text-secondary hover:text-blue-900"
+                  previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                  activeClassName="bg-blue-200"
+                  breakClassName="px-3 py-1 text-gray-500"
+                />
+              </div>
               </div>
             </div>
           </div>
