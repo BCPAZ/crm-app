@@ -41,19 +41,17 @@ const usersService = api.injectEndpoints({
     }),
     updateUser: builder.mutation({
       query: ({id, data}) => {
-        console.log(data)
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("email", data.email);
         formData.append("password", data.password);
         formData.append("role_id", data.role_id);
-        formData.append("phone", data.phone);
+        formData.append("phone_number", data.phone_number);
         formData.append("address", data.address);
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
-
-        if (formData.avatar) {
+        if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
         return {
