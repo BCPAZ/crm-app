@@ -29,11 +29,45 @@ const templateService = api.injectEndpoints({
         },
       }),
       invalidatesTags: ["TEMPLATES"],
-      keepUnusedDataFor: 0,
+    }),
+    updateTemplate: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/templates/${id}`,
+        method: "PUT",
+        body: {
+          ...data,
+          duration: data?.duration?.map((c) => ({
+            ...c,
+            companies: c?.companies?.map((c) => c.id),
+          })),
+        },
+      }),
+      invalidatesTags: ["TEMPLATES"],
+    }),
+    updateInternalTemplate: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/internal-templates/${id}`,
+        method: "PUT",
+        body: {
+          ...data,
+          duration: data?.duration?.map((c) => ({
+            ...c,
+            users: c?.users?.map((c) => c.id),
+          })),
+        },
+      }),
+      invalidatesTags: ["TEMPLATES"],
     }),
     detailTemplate: builder.query({
       query: (id) => ({
-        url: `templates/${id}`,
+        url: `/templates/${id}`,
+      }),
+      providesTags: ["TEMPLATES"],
+      keepUnusedDataFor: 0,
+    }),
+    detailInternalTemplate: builder.query({
+      query: (id) => ({
+        url: `/internal-templates/${id}`,
       }),
       providesTags: ["TEMPLATES"],
       keepUnusedDataFor: 0,
@@ -79,7 +113,10 @@ export const {
   useDetailTemplateQuery,
   useCreateInternalTemplateMutation,
   useGetInternalTemplatesQuery,
-  useDeleteInternalTemplateMutation
+  useDeleteInternalTemplateMutation,
+  useUpdateInternalTemplateMutation,
+  useUpdateTemplateMutation,
+  useDetailInternalTemplateQuery
 } = templateService;
 
 export default templateService;
