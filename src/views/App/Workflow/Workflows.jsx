@@ -68,6 +68,7 @@ const Workflows = () => {
 
   const { data, isLoading, isError } = useGetWorkflowsQuery({
     page,
+    limit: 10,
     name,
     document_no: documentNo,
     start_date: startDate ? moment(startDate).format("YYYY-MM-DD") : null,
@@ -167,13 +168,13 @@ const Workflows = () => {
                     Sənəd No
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500">
-                    Deadline
+                    Tarix
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
                     Qurum
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500 text-right">
-                    Qalan gün
+                    Deadline
                   </th>
                   <th className="text-sm font-medium w-[8%] text-gray-500 rounded-e-lg">
                     Status
@@ -193,45 +194,46 @@ const Workflows = () => {
                   (
                     <div className="flex flex-col gap-1" key={key}>
                       {workflows[key].map((workflow) => (
-                      <Link
-                        to={`/workflows/${workflow.id}`}
-                        key={workflow.id}
-                        className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
-                      >
-                        <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-                          <span>{workflow?.project?.name}</span>
-                        </th>
-                        <td className="text-sm font-medium text-gray-500 w-[8%]">
-                          {workflow?.sender?.name}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%]">
-                          {workflow?.document?.document_no}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] flex flex-col gap-1">
-                          <span className="text-xs">
-                            {moment(workflow?.updated_at).format("YYYY-MM-DD")}
-                          </span>
-                          <span className="text-xs">
-                            {moment(workflow?.updated_at).format("HH:mm")}
-                          </span>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] text-right flex items-center justify-end">
-                          <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
-                            <img
-                              className="w-full h-full object-cover"
-                              src={workflow?.government?.image_url}
-                              alt={workflow?.government?.name}
-                            />
-                          </div>
-                        </td>
-                        <td className="text-sm font-medium text-center text-gray-500 w-[8%]">
-                          {workflow?.days}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] rounded-e-lg">
-                          {renderStatus(workflow?.status)}
-                        </td>
-                      </Link>
-                    ))}
+                        <Link
+                          to={`/workflows/${workflow.id}`}
+                          key={workflow.id}
+                          className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
+                        >
+                          <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
+                            <span>{workflow?.project?.name}</span>
+                          </th>
+                          <td className="text-sm font-medium text-gray-500 w-[8%]">
+                            {workflow?.sender?.name}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%]">
+                            {workflow?.document?.document_no}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] flex flex-col gap-1">
+                            <span className="text-xs">
+                              {moment(workflow?.updated_at).format("YYYY-MM-DD")}
+                            </span>
+                            <span className="text-xs">
+                              {moment(workflow?.updated_at).format("HH:mm")}
+                            </span>
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] text-right flex items-center justify-end">
+                            <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                              <img
+                                className="w-full h-full object-cover"
+                                src={workflow?.government?.image_url}
+                                alt={workflow?.government?.name}
+                              />
+                            </div>
+                          </td>
+                          <td className="text-xs font-medium text-center text-red-600 w-[8%]">
+                            {
+                              moment(workflow.createdAt).add(workflow.days, 'days').format('YYYY-MM-DD')}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] rounded-e-lg">
+                            {renderStatus(workflow?.status)}
+                          </td>
+                        </Link>
+                      ))}
                     </div>
                   )
                   )
