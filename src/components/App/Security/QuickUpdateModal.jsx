@@ -20,7 +20,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     zip_code: user?.zip_code || "",
     role_id: user?.role_id || "",
     avatar: user?.avatar_url || null,
-    about : user?.about || ''
+    about: user?.about || ''
   });
 
   const { showToast } = useToast();
@@ -32,11 +32,11 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
         email: user.email,
         phone_number: user.phone_number,
         address: user.address,
-        city: user.city,
-        zip_code: user.zip_code,
-        role_id: user.role_id,
+        city: user?.city,
+        zip_code: user?.zip_code,
+        role_id: user?.role_id,
         avatar: user?.avatar_url,
-        about : user.about
+        about: user?.about
       });
     }
   }, [user]);
@@ -57,10 +57,10 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   };
 
   const handleSelectChange = (selectedOption) => {
-  if (selectedOption) {
-    setFormData((prev) => ({ ...prev, role_id: selectedOption.id }));
-  }
-};
+    if (selectedOption) {
+      setFormData((prev) => ({ ...prev, role_id: selectedOption }));
+    }
+  };
 
   const handleSubmit = () => {
     updateUser({ id: user.id, data: formData });
@@ -81,9 +81,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
 
   return (
     <div
-      className={`w-full h-screen bg-black/70 ${
-        showModal ? "flex" : "hidden"
-      } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 p-5`}
+      className={`w-full h-screen bg-black/70 ${showModal ? "flex" : "hidden"
+        } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 p-5`}
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5">
         <h1 className="text-xl font-semibold">Sürətli yeniləmə</h1>
@@ -192,8 +191,8 @@ QuickUpdateModal.propTypes = {
     zip_code: PropTypes.string,
     role_id: PropTypes.string,
     avatar_url: PropTypes.string,
-    password : PropTypes.string,
-    about : PropTypes.string
+    password: PropTypes.string,
+    about: PropTypes.string
   }),
 };
 
