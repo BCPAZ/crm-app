@@ -21,6 +21,7 @@ const SecondInput = ({
         </label>
         <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm border border-grey/20">
           <input
+          autoComplete="false"
             onChange={onChange}
             className="w-full outline-none h-full bg-transparent"
             type={type}

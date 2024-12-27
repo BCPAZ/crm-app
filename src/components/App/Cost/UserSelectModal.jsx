@@ -12,7 +12,7 @@ const UserSelectModal = ({
   isError,
   onChange,
 }) => {
-  const [selected, setSelected] = useState(null);
+  const [selected] = useState(null);
 
   const handleSelect = (user) => {
     onChange(user, modal - 1)
@@ -52,7 +52,7 @@ const UserSelectModal = ({
                 <div className="w-[40px] h-[40px] overflow-hidden rounded-full border border-gray-300/50">
                   <img
                     className="w-full h-full object-contain"
-                    src={user.image_url || 'https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg'}
+                    src={user?.avatar_url || 'https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg'}
                     alt=""
                   />
                 </div>

@@ -11,16 +11,14 @@ import PropTypes from "prop-types";
 function Select({ label, column, absolute, options = [], value, onChange }) {
   const [selectedOption, setSelectedOption] = useState(value || '');
 
-  // mode = 'id'
-
   useEffect(() => {
-    if (value !== undefined) {
+    if (value !== null) {
       setSelectedOption(value);
     }
   }, [value]);
 
   const handleChange = (selected) => {
-    const newValue = selected.id; // Mode-a görə dəyişmək lazım deyil
+    const newValue = selected.id; 
     console.log('---Selected Value', newValue);
     setSelectedOption(newValue);
     if (onChange) {

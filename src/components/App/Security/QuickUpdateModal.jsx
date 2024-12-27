@@ -14,13 +14,12 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
-    phone: user?.phone_number || "",
+    phone_number: user?.phone_number || "",
     address: user?.address || "",
     city: user?.city || "",
     zip_code: user?.zip_code || "",
     role_id: user?.role_id || "",
     avatar: user?.avatar_url || null,
-    password : user?.password || "",
     about : user?.about || ''
   });
 
@@ -31,13 +30,12 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
       setFormData({
         name: user.name,
         email: user.email,
-        phone: user.phone_number,
+        phone_number: user.phone_number,
         address: user.address,
         city: user.city,
         zip_code: user.zip_code,
         role_id: user.role_id,
-        avatar: user.avatar_url,
-        password : user.password,
+        avatar: user?.avatar_url,
         about : user.about
       });
     }
@@ -49,14 +47,20 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   };
 
   const handleFileChange = (e) => {
-    setFormData((prev) => ({ ...prev, avatar: e.target.files[0] }));
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prev) => ({
+        ...prev,
+        avatar: file,
+      }));
+    }
   };
 
   const handleSelectChange = (selectedOption) => {
-    if (selectedOption) {
-      setFormData((prev) => ({ ...prev, role_id: selectedOption }));
-    }
-  };
+  if (selectedOption) {
+    setFormData((prev) => ({ ...prev, role_id: selectedOption.id }));
+  }
+};
 
   const handleSubmit = () => {
     updateUser({ id: user.id, data: formData });
@@ -104,8 +108,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
           <Input
             label="Telefon nömrəsi"
             type="text"
-            name="phone"
-            value={formData.phone}
+            name="phone_number"
+            value={formData.phone_number}
             onChange={handleInputChange}
             placeholder="Telefon nömrəsi daxil edin"
           />
@@ -153,7 +157,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
           <Input
             label="Şəkil"
             type="file"
-            name="avatar_url"
+            name="avatar"
             onChange={handleFileChange}
           />
         </div>
