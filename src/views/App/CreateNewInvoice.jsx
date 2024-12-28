@@ -5,7 +5,7 @@ import Input from "@/components/common/Input";
 import UserInputModal from "@/components/common/UserInputModal";
 import { HiTrash } from "react-icons/hi2";
 import { IoAddSharp } from "react-icons/io5";
-import { LuUpload } from "react-icons/lu";
+import { MdOutlineFileUpload } from "react-icons/md";
 import { useCreateInvoiceMutation } from "@/data/services/costService";
 import Spinner from "@/components/common/Spinner";
 import { useNavigate } from "react-router-dom";
@@ -232,7 +232,7 @@ const CreateNewInvoice = () => {
                         onChange={handleReceiptFile}
                       />
                       <label htmlFor="receiptFile" className="cursor-pointer">
-                        <LuUpload size={20} />
+                        <MdOutlineFileUpload size={20} />
                       </label>
                     </div>
                     <div className="flex items-center justify-center">

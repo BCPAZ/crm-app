@@ -4,8 +4,7 @@ import { FaRegStar, FaStar } from "react-icons/fa6";
 import { IoSend, IoCloudDownload } from "react-icons/io5";
 import { MdLabelImportantOutline, MdLabelImportant } from "react-icons/md";
 import { HiTrash } from "react-icons/hi2";
-import { LuMoreVertical } from "react-icons/lu";
-import { IoMdAttach } from "react-icons/io";
+import { IoMdAttach, IoMdMore } from "react-icons/io";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import {
   useGetMailDetailQuery,
@@ -15,7 +14,7 @@ import {
   useSoftDeleteMutation,
   useForceDeleteMutation,
 } from "@/data/services/mailService";
-import { LuUserCircle2 } from "react-icons/lu";
+import { FaRegUser } from "react-icons/fa6";
 import Spinner from "@/components/common/Spinner";
 import SecondTextArea from "@/components/common/SecondTextArea";
 import useToast from "@/hooks/useToast";
@@ -199,7 +198,7 @@ const MailDetail = () => {
           <HiTrash size={20} />
         </button>
         <button className="text-gray-500">
-          <LuMoreVertical size={26} />
+          <IoMdMore size={26} />
         </button>
       </div>
       <div className="flex items-center justify-between py-5 border-b border-gray-300/50">
@@ -218,7 +217,7 @@ const MailDetail = () => {
               />
             ) : (
               <div className="w-[40px] h-[40px] flex items-center justify-center text-gray-500">
-                <LuUserCircle2 size={30} />
+                <FaRegUser size={30} />
               </div>
             )}
             <div className="flex flex-col gap-1">

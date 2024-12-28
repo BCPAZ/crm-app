@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { LuChevronDown } from "react-icons/lu";
+import { IoChevronDown } from "react-icons/io5";
 import PropTypes from "prop-types";
 
 const DropdownMenu = ({ navElement }) => {
@@ -22,7 +22,7 @@ const DropdownMenu = ({ navElement }) => {
           <span className="lg:block hidden">{navElement.title}</span>
           {navElement.elements && (
             <span className="outline-none flex items-center">
-              <LuChevronDown />
+              <IoChevronDown />
             </span>
           )}
         </Link>
@@ -35,7 +35,7 @@ const DropdownMenu = ({ navElement }) => {
           <span className="lg:block hidden">{navElement.title}</span>
           {navElement.elements && (
             <span className="outline-none flex items-center">
-              <LuChevronDown />
+              <IoChevronDown />
             </span>
           )}
         </button>

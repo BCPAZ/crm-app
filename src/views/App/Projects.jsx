@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { TbTrash } from "react-icons/tb";
-import {  LuEye } from "react-icons/lu";
+import { FaRegEye } from "react-icons/fa";
 import { IoAddSharp } from "react-icons/io5";
 import { useGetProjectsQuery } from "@/data/services/projectService";
 import { IoMdCheckmark } from "react-icons/io";
@@ -85,7 +85,7 @@ const Projects = () => {
                     className="text-white bg-secondary font-medium rounded-lg py-2 px-4 text-xs w-fit flex items-center gap-2"
                     to={`${project.id}`}
                   >
-                    <LuEye size={16} />
+                    <FaRegEye size={16} />
                     Baxın
                   </Link>
                   <button
