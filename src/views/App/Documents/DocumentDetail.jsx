@@ -9,18 +9,18 @@ const DocumentDetail = () => {
   const { id } = useParams();
   const { data: document } = useGetDocumentByIdQuery(id);
 
-  const getFileType = (url) => {
-    return url.split(".").pop().toLowerCase();
-  };
+  // const getFileType = (url) => {
+  //   return url.split(".").pop().toLowerCase();
+  // };
 
-  const fileType = getFileType(document?.file);
+  // const fileType = getFileType(document?.file);
 
   return (
     <div className="w-full h-full">
       <div className="siteContainer">
         <div className="flex md:flex-row flex-col justify-between gap-5 py-10">
           <div className="md:w-1/2 w-full h-full">
-            <FileViewer className="h-full" fileType={fileType} filePath={document?.file} />
+            <FileViewer className="h-full" filePath={document?.file} />
           </div>
           <div className="md:w-1/2 w-full">
             <h1 className="text-2xl font-semibold">{document?.name}</h1>

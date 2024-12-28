@@ -19,7 +19,6 @@ function Select({ label, column, absolute, options = [], value, onChange }) {
 
   const handleChange = (selected) => {
     const newValue = selected.id; 
-    console.log('---Selected Value', newValue);
     setSelectedOption(newValue);
     if (onChange) {
       onChange(newValue);
