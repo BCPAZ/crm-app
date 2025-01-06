@@ -196,7 +196,7 @@ const InternalWorkflows = () => {
                     <div className="flex flex-col gap-1" key={key}>
                       {workflows[key].map((workflow) => (
                       <Link
-                        to={`/workflows/${workflow.id}`}
+                        to={`/internal-workflows/${workflow.id}`}
                         key={workflow.id}
                         className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
                       >
