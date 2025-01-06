@@ -43,6 +43,7 @@ const CreateTemplate = lazy(() =>
 );
 const TemplateDetail = lazy(() => import("@/views/App/Workflow/TemplateDetail"));
 const InternalTemplateDetail = lazy(() => import("@/views/App/Workflow/InternalTemplateDetail"));
+const InternalWorkflowDetail = lazy(() => import("@/views/App/Workflow/InternalWorkflowDetail"));
 
 const CreateInternalTemplate = lazy(() => import("@/views/App/Workflow/CreateInternalTemplate"))
 const FieldManagementLayout = lazy(() =>
@@ -107,9 +108,9 @@ const AppRouter = () => {
                 <Route path="/create-template" element={<CreateTemplate />} />
                 <Route path="/create-internal-template" element={<CreateInternalTemplate />} />
                 <Route path="/workflows/:id" element={<WorkflowDetail />} />
+                <Route path="/internal-workflows/:id" element={<InternalWorkflowDetail />} />
                 <Route path="/templates/:id" element={<TemplateDetail />} />
                 <Route path="/internal-templates/:id" element={<InternalTemplateDetail />} />
-
               </Route>
               <Route element={<FieldManagementLayout />}>
                 <Route path="/issues" element={<Issues />} />
