@@ -29,6 +29,13 @@ const workflowsService = api.injectEndpoints({
       providesTags: ["WORKFLOWS"],
       keepUnusedDataFor: 0,
     }),
+    getInternalWorkflowDetail: builder.query({
+      query: (id) => ({
+        url: `/internal-workflows/${id}`,
+      }),
+      providesTags: ["WORKFLOWS"],
+      keepUnusedDataFor: 0,
+    }),
   }),
 });
 
@@ -36,6 +43,7 @@ export const {
   useGetWorkflowsQuery,
   useGetWorkflowDetailQuery,
   useGetInternalWorkflowsQuery,
+  useGetInternalWorkflowDetailQuery
 } = workflowsService;
 
 export default workflowsService;
