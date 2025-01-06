@@ -1,11 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isOpen: false,
+  sidebar: true,
 };
 
 const siteSlice = createSlice({
-  name: 'site',
+  name: "site",
   initialState,
   reducers: {
     openMobileNav: (state) => {
@@ -14,9 +15,20 @@ const siteSlice = createSlice({
     closeMobileNav: (state) => {
       state.isOpen = false;
     },
+    openProjectSidebar: (state) => {
+      state.sidebar = !state.sidebar;
+    },
+    closeProjectSidebar: (state) => {
+      state.sidebar = false;
+    },
   },
 });
 
-export const { openMobileNav, closeMobileNav } = siteSlice.actions;
+export const {
+  openMobileNav,
+  closeMobileNav,
+  openProjectSidebar,
+  closeProjectSidebar,
+} = siteSlice.actions;
 
 export default siteSlice;
