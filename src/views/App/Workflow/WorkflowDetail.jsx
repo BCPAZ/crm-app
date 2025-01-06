@@ -1,13 +1,40 @@
+import { translateStatus } from "@/utils/translateStatus";
 import { useParams } from "react-router-dom";
 import { useGetWorkflowDetailQuery } from "@/data/services/workflowsService";
+import { useState } from "react";
 import moment from "moment";
 import Spinner from "@/components/common/Spinner";
-import { translateStatus } from "@/utils/translateStatus";
+import StatusSelector from "@/components/common/StatusSelector";
+import DenyModal from "@/components/App/Workflow/DenyModal";
 
 const WorkflowDetail = () => {
   const { id } = useParams();
+  const [selectedStatus, setSelectedStatus] = useState(null);
   const { data, isLoading, isError } = useGetWorkflowDetailQuery(id);
   const workflowData = data || {};
+
+  const options = [
+    {
+      id: "completed",
+      name: "Tamamlanıb"
+    },
+    {
+      id: "pending",
+      name: "Gözlənilir"
+    },
+    {
+      id: "denied",
+      name: "İmtina edilib"
+    }
+  ];
+
+  const handleChangeStatus = (selected) => {
+    setSelectedStatus(selected.id);
+  };
+
+  const selectedOption = options.find(option => option.id === selectedStatus);
+
+  console.log(selectedOption)
 
   if (isLoading) {
     return (
@@ -39,20 +66,41 @@ const WorkflowDetail = () => {
 
   const remainingDays = dueDate.diff(moment(), "days");
 
+  const renderRemainingDays = () => {
+    if (remainingDays < 0) {
+      return (
+        <span className="text-sm font-semibold text-red-600">
+          Deadline vaxtı bitib!
+        </span>
+      );
+    }
+
+    return (
+      <span
+        className={`text-sm font-semibold ${remainingDays <= 2 ? "text-yellow-500" : "text-green-600"
+          }`}
+      >
+        Qalan gün sayı: {remainingDays}
+      </span>
+    );
+  };
+
   return (
     <section className="w-full py-10">
       <div className="siteContainer">
         <div className="flex items-center justify-between">
+          {selectedOption?.id === "denied" && <DenyModal />}
           <h1 className="text-3xl font-semibold">
             {workflowData.project?.name || "Project Name"}
           </h1>
           <div className="flex items-center gap-5">
-            <span className={`text-sm font-semibold ${remainingDays <= 2 ? "text-yellow-500" : "text-green-600"}`}>
-              Qalan gün sayı: {remainingDays}
-            </span>
-            <div>
-              {translateStatus(workflowData.status)}
-            </div>
+            {renderRemainingDays()}
+            <div>{translateStatus(workflowData.status)}</div>
+            <StatusSelector
+              options={options}
+              onChange={handleChangeStatus}
+              value={selectedOption}
+            />
           </div>
         </div>
         <div className="mt-10 grid md:grid-cols-2 grid-cols-1 gap-10">
