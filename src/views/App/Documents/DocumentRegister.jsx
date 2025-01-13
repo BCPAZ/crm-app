@@ -203,15 +203,18 @@ const DocumentRegister = () => {
                                 {document.author}
                               </span>
                             </td>
-                            <td className="text-sm font-medium text-gray-500 w-[8%] flex items-center gap-2">
+                            <td className="text-xs font-medium text-gray-500 w-[8%] flex items-center gap-2">
                               <button
+                                disabled={document?.is_sended === true}
                                 onClick={() =>
                                   handleSubmitDocuments(document.id)
                                 }
-                                className="outline-none border-none p-1 hover:bg-blue-600/40 hover:text-blue-600 rounded-lg"
+                                className="outline-none border-none p-1 hover:bg-blue-600/40 hover:text-blue-600 disabled:text-gray-500 disabled:bg-gray-100 rounded-lg"
                                 type="button"
                               >
-                                <IoMdCheckmark size={20} />
+                                {
+                                  document?.is_sended ? "Göndərilib" : <IoMdCheckmark size={20} />
+                                }
                               </button>
                             </td>
                           </tr>
@@ -221,21 +224,21 @@ const DocumentRegister = () => {
                   </table>
                 </div>
                 <div className="mt-5 flex justify-end px-5">
-                <ReactPaginate
-                  previousLabel={"‹"}
-                  nextLabel={"›"}
-                  breakLabel={"..."}
-                  pageCount={meta?.last_page}
-                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
-                  containerClassName="flex items-center justify-center space-x-2 py-4"
-                  pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  pageLinkClassName="text-secondary hover:text-blue-900"
-                  previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  activeClassName="bg-blue-200"
-                  breakClassName="px-3 py-1 text-gray-500"
-                />
-              </div>
+                  <ReactPaginate
+                    previousLabel={"‹"}
+                    nextLabel={"›"}
+                    breakLabel={"..."}
+                    pageCount={meta?.last_page}
+                    onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                    containerClassName="flex items-center justify-center space-x-2 py-4"
+                    pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                    pageLinkClassName="text-secondary hover:text-blue-900"
+                    previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                    nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                    activeClassName="bg-blue-200"
+                    breakClassName="px-3 py-1 text-gray-500"
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -70,7 +70,9 @@ const api = createApi({
     "INSIGHTS",
     "INVOICES",
     "BOARDS",
-    "NOTIFICATIONS"
+    "NOTIFICATIONS",
+    'WORKFLOW',
+    'INTERNAL_WORKFLOW'
   ],
 });
 

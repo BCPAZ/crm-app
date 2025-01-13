@@ -26,16 +26,32 @@ const workflowsService = api.injectEndpoints({
       query: (id) => ({
         url: `/workflows/${id}`,
       }),
-      providesTags: ["WORKFLOWS"],
+      providesTags: ["WORKFLOW"],
       keepUnusedDataFor: 0,
+    }),
+    updateWorkflowDetail : builder.mutation({
+      query : ({id, ...data}) => ({
+        url : `/workflows/${id}`,
+        method : 'PUT',
+        body : data
+      }),
+      invalidatesTags : ['WORKFLOW']
     }),
     getInternalWorkflowDetail: builder.query({
       query: (id) => ({
         url: `/internal-workflows/${id}`,
       }),
-      providesTags: ["WORKFLOWS"],
+      providesTags: ["INTERNAL_WORKFLOW"],
       keepUnusedDataFor: 0,
     }),
+    updateInternalWorkflowDetail : builder.mutation({
+      query : ({id, ...data}) => ({
+        url : `/internal-workflows/${id}`,
+        method : 'PUT',
+        body : data
+      }),
+      invalidatesTags : ['INTERNAL_WORKFLOW']
+    })
   }),
 });
 
@@ -43,7 +59,9 @@ export const {
   useGetWorkflowsQuery,
   useGetWorkflowDetailQuery,
   useGetInternalWorkflowsQuery,
-  useGetInternalWorkflowDetailQuery
+  useGetInternalWorkflowDetailQuery,
+  useUpdateInternalWorkflowDetailMutation,
+  useUpdateWorkflowDetailMutation
 } = workflowsService;
 
 export default workflowsService;
