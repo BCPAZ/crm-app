@@ -26,15 +26,14 @@ import { Toaster } from "react-hot-toast";
 const OverviewPanel = ({ task }) => {
   const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [description, setDescription] = useState(task.description || "");
-  const [taskName, setTaskName] = useState(task.name || "");
+  const [description, setDescription] = useState(task?.description || "");
+  const [taskName, setTaskName] = useState(task?.name || "");
   const [updateTask, setUpdateTask] = useState(false);
 
-  const [dueDate, setDueDate] = useState(task.due_date || null);
+  const [dueDate, setDueDate] = useState(task?.due_date || null);
   const { data } = useGetCompanyUsersQuery();
 
   const users = data?.users || [];
-  console.log(task);
 
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
@@ -49,7 +48,7 @@ const OverviewPanel = ({ task }) => {
   }, [task.id, task.description]);
 
   useEffect(() => {
-    setDueDate(task.due_date || null);
+    setDueDate(task?.due_date || null);
   }, [task.id, task.due_date]);
 
   const handleChangeReporter = (reporterId) => {
@@ -196,16 +195,25 @@ const OverviewPanel = ({ task }) => {
         </div>
         <div className="flex items-center">
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
+            Başlama tarixi
+          </h3>
+          <span className="text-sm font-medium">{moment(task?.created_at).format("DD/MM/YYYY - HH:ss")}</span>
+        </div>
+        <div className="flex items-center">
+          <h3 className="text-sm font-medium text-gray-500 w-[100px]">
             Son tarix
           </h3>
           <div className="flex-1">
             <div className="flex items-center gap-4">
               <div>
                 <CustomDatePicker
-                  value={dueDate ? moment(dueDate).format("YYYY/MM/DD") : null}
-                  onChange={(v) =>
-                    changeDueDate({ taskId: task.id, dueDate: v })
-                  }
+                  value={dueDate}
+                  onChange={(v) => {
+                    if (v !== dueDate) {
+                      setDueDate(v);
+                      changeDueDate({ taskId: task.id, dueDate: v });
+                    }
+                  }}
                 />
               </div>
             </div>

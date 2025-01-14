@@ -12,7 +12,7 @@ const ProjectSidebar = () => {
 
   const handleProjectClick = (project) => {
     dispatch(setProject(project));
-    window.location.href = `/projects/${project.id}`; // Səhifəni yeniləyərək yönləndirmək
+    window.location.href = `/projects/${project.id}`; 
   };
   return (
     <aside className={`flex-shrink-0  flex-col fixed top-0 z-20 ${sidebar ? 'translate-x-0' : '-translate-x-full'} transition-all duration-300 bg-white shadow-xl h-screen w-[275px]`}>
@@ -26,7 +26,7 @@ const ProjectSidebar = () => {
           {
             projects?.map((project, index) => (
               <button type="button" onClick={() => handleProjectClick(project)} className="font-normal text-sm text-start hover:underline w-full" key={index}>
-                {index}.{project.name}
+                {index + 1}.{project.name}
               </button>
             ))
           }

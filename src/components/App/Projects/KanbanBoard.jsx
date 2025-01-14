@@ -115,7 +115,8 @@ const KanbanBoard = () => {
         </DragDropContext>
 
         {isAddingColumn ? (
-          <input
+          <div className="h-12 flex items-center gap-2">
+            <input
             type="text"
             value={newColumnName}
             onChange={handleColumnNameChange}
@@ -123,6 +124,8 @@ const KanbanBoard = () => {
             placeholder="Başlıq qeyd edin"
             className="p-2 min-w-[336px] border border-grey/20 h-12 text-sm focus:outline-black rounded-lg"
           />
+          <button onClick={handleSaveColumn} className="h-12 rounded-lg bg-black text-white text-sm p-2">Əlavə edin</button>
+          </div>
         ) : (
           <button
             onClick={handleAddColumn}
