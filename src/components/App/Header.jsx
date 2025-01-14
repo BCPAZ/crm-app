@@ -3,9 +3,9 @@ import ProfileCard from "./ProfileCard";
 import { openMobileNav } from "@/data/slices/siteSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
+// import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
 import CustomNotification from "./CustomNotification";
-import { openProjectSidebar } from "@/data/slices/siteSlice";
+// import { openProjectSidebar } from "@/data/slices/siteSlice";
 import logo from "@/assets/images/logo.png";
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Header = () => {
           <img className="w-[50px]" src={logo} alt="" />
         </Link>
         <div className="flex items-center gap-2">
-          <button className="p-1 hover:bg-gray-200 transition-colors rounded-lg" onClick={() => dispatch(openProjectSidebar())}><TbLayoutSidebarRightCollapse size={28} color="gray" /></button>
+          {/* <button className="p-1 hover:bg-gray-200 transition-colors rounded-lg" onClick={() => dispatch(openProjectSidebar())}><TbLayoutSidebarRightCollapse size={28} color="gray" /></button> */}
           <CustomNotification />
           <ProfileCard />
           <button onClick={openMobileMenu} className="lg:hidden block" type="button">
