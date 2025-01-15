@@ -12,16 +12,15 @@ const SecondInput = ({
   return (
     <div className="w-full">
       <div
-        className={`flex ${
-          column ? "flex-col gap-2" : "flex-row items-center gap-x-2"
-        }`}
+        className={`flex ${column ? "flex-col gap-2" : "flex-row items-center gap-x-2"
+          }`}
       >
         <label className="text-sm font-light text-gray-500 w-fit">
           {label}
         </label>
         <div className="w-full flex items-center justify-between p-4 rounded-lg text-sm border border-grey/20">
           <input
-          autoComplete="false"
+            autoComplete="off"
             onChange={onChange}
             className="w-full outline-none h-full bg-transparent"
             type={type}

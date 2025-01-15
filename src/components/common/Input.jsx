@@ -39,7 +39,8 @@ const Input = React.forwardRef(
               className="w-full outline-none h-full bg-transparent disabled:opacity-50"
               type={type === "password" && isPasswordVisible ? "text" : type}
               placeholder={placeholder}
-              value={value} // Ensure value is always defined
+              autoComplete="off"
+              value={value}
               onChange={onChange}
               onBlur={onBlur}
               ref={ref}

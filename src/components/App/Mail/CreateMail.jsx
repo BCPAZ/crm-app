@@ -123,6 +123,7 @@ const CreateMail = ({ closeMailModal }) => {
             className="w-full outline-none border-none text-sm"
             type="text"
             placeholder="To"
+            autoComplete="off"
           />
           <div className="flex items-center gap-1">
             <button onClick={handleCcAdd} className="text-sm font-semibold">Cc</button>
@@ -134,6 +135,7 @@ const CreateMail = ({ closeMailModal }) => {
                 className="w-full outline-none border-none text-sm"
                 type="text"
                 placeholder={`Cc #${index + 1}`}
+                autoComplete="off"
               />
             ))}
             <button onClick={handleBccAdd} className="text-sm font-semibold">Bcc</button>
@@ -144,6 +146,7 @@ const CreateMail = ({ closeMailModal }) => {
                 onChange={(e) => handleBccChange(index, e.target.value)}
                 className="w-full outline-none border-none text-sm"
                 type="text"
+                autoComplete="off"
                 placeholder={`Bcc #${index + 1}`}
               />
             ))}
@@ -156,6 +159,7 @@ const CreateMail = ({ closeMailModal }) => {
             className="w-full outline-none border-none text-sm"
             type="text"
             placeholder="Subject"
+            autoComplete="off"
           />
         </div>
         <div className="px-4 py-3 flex-1">
@@ -164,6 +168,7 @@ const CreateMail = ({ closeMailModal }) => {
             onChange={(e) => setMessage(e.target.value)}
             className={`bg-grey/10 w-full ${isFullscreen ? 'h-[75%]' : 'h-[200px]'} outline-none p-2 text-sm rounded-lg border border-grey/20 resize-none`}
             placeholder="Write something awesome..."
+            autoComplete="off"
           ></textarea>
           <div className="flex items-center justify-between mt-3 bg-white">
             <input
@@ -172,6 +177,7 @@ const CreateMail = ({ closeMailModal }) => {
               onChange={handleAttachmentChange}
               className="hidden"
               id="attachments"
+              autoComplete="off"
             />
             <label htmlFor="attachments" className="cursor-pointer hover:bg-grey/20 rounded p-1">
               <IoMdAttach size={20} />

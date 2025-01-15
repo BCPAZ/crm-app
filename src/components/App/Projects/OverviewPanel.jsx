@@ -142,6 +142,7 @@ const OverviewPanel = ({ task }) => {
             onChange={(e) => setTaskName(e.target.value)}
             value={taskName}
             placeholder="Tapşırıq adını daxil edin"
+            autoComplete="off"
             className="h-full p-3 rounded-lg bg-gray-200/20 text-sm w-[80%] border border-gray-400/20"
           />
           <button

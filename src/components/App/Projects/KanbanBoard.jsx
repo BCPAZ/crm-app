@@ -122,6 +122,7 @@ const KanbanBoard = () => {
             onChange={handleColumnNameChange}
             onKeyDown={handleKeyDown}
             placeholder="Başlıq qeyd edin"
+            autoComplete="off"
             className="p-2 min-w-[336px] border border-grey/20 h-12 text-sm focus:outline-black rounded-lg"
           />
           <button onClick={handleSaveColumn} className="h-12 rounded-lg bg-black text-white text-sm p-2">Əlavə edin</button>

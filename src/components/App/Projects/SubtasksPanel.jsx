@@ -52,6 +52,7 @@ const SubtasksPanel = ({ task }) => {
               onChange={(e) => setNewSubtask(e.target.value)}
               placeholder="Yeni alt tapşırıq yaradın"
               className="border rounded-lg p-2 w-full text-sm outline-black"
+              autoComplete="off"
             />
             <button
               disabled={isLoading}
