@@ -24,6 +24,19 @@ const projectService = api.injectEndpoints({
       }),
       invalidatesTags: ["PROJECTS"],
     }),
+    deleteProject : builder.mutation({
+      query : (id) => ({
+        url : `/projects/${id}`,
+        method : "DELETE"
+      }),
+      invalidatesTags : ['PROJECTS']
+    }),
+    grouppedProjects : builder.query({
+      query : () => ({
+        url : '/projects/groupped-by-users',
+      }),
+      providesTags : ['GROUPPED_PROJECTS']
+    })
   }),
 });
 
@@ -31,6 +44,8 @@ export const {
   useGetProjectsQuery,
   useCreateProjectMutation,
   useSendNotificationToProjectMutation,
+  useDeleteProjectMutation,
+  useGrouppedProjectsQuery
 } = projectService;
 
 export default projectService;

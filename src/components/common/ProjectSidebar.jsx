@@ -1,18 +1,20 @@
 import Logo from "@/assets/images/logo.png";
-import { useGetProjectsQuery } from "@/data/services/projectService";
+import { useGrouppedProjectsQuery } from "@/data/services/projectService";
 import { useDispatch, useSelector } from "react-redux";
 import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import { MdClose } from "react-icons/md";
+import AnimatedSidebarLink from "./AnimatedSidebarLink";
 
 const ProjectSidebar = () => {
   const { sidebar } = useSelector((state) => state.site)
-  const { data: projects = [] } = useGetProjectsQuery();
+  const { data: groups = [] } = useGrouppedProjectsQuery();
   const dispatch = useDispatch();
 
+  console.log(groups);
   const handleProjectClick = (project) => {
     dispatch(setProject(project));
-    window.location.href = `/projects/${project.id}`; 
+    window.location.href = `/projects/${project.id}`;
   };
   return (
     <aside className={`flex-shrink-0  flex-col fixed top-0 z-20 ${sidebar ? 'translate-x-0' : '-translate-x-full'} transition-all duration-300 bg-white shadow-xl h-screen w-[275px]`}>
@@ -22,12 +24,10 @@ const ProjectSidebar = () => {
           <button onClick={() => dispatch(closeProjectSidebar())} className="p-2 rounded-lg bg-gray-200"><MdClose size={20} color="gray" /></button>
         </div>
         <h2 className="py-4 border-b border-gray-200 text-lg font-semibold">Mövcud layihələr</h2>
-        <div className="flex flex-col gap-2 mt-5">
+        <div className="mt-5 flex flex-col gap-2">
           {
-            projects?.map((project, index) => (
-              <button type="button" onClick={() => handleProjectClick(project)} className="font-normal text-sm text-start hover:underline w-full" key={index}>
-                {index + 1}.{project.name}
-              </button>
+            groups.map((group, index) => (
+              <AnimatedSidebarLink group={group} onClick={handleProjectClick} key={index} />
             ))
           }
         </div>
