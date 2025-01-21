@@ -79,6 +79,14 @@ const UserList = () => {
     }
   }, [userSuccess]);
 
+  const changeType = (type) => {
+    if(type === "CUSTOMER"){
+      return "Müştəri"
+    }else{
+      return "İşçi"
+    }
+  }
+
   return (
     <div className="w-full rounded-lg shadow-xl bg-white">
       <Toaster />
@@ -107,6 +115,7 @@ const UserList = () => {
                       İstifadəçilər <GoArrowDown />
                     </span>
                   </th>
+                  <th className="text-sm font-medium w-[12%] text-gray-500">Tip</th>
                   <th className="text-sm font-medium w-[12%] text-gray-500">Telefon nömrəsi</th>
                   <th className="text-sm font-medium w-[12%] text-gray-500">Adres</th>
                   <th className="text-sm font-medium w-[12%] text-gray-500">Şəhər</th>
@@ -137,6 +146,11 @@ const UserList = () => {
                             </div>
                           </div>
                         </th>
+                        <td className="text-sm font-medium text-gray-500 w-[12%]">
+                          <div className="flex flex-col">
+                            <h3 className="text-xs text-secondary">{changeType(user?.type)}</h3>
+                          </div>
+                        </td>
                         <td className="text-sm font-medium text-gray-500 w-[12%]">
                           <div className="flex flex-col">
                             <h3 className="text-xs text-secondary">{user.phone_number || 'Boşdur'}</h3>

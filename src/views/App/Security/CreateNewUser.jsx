@@ -28,7 +28,19 @@ const CreateNewUser = () => {
     password: "",
     about: "",
     avatar: null,
+    type : null
   });
+
+  const myData = [
+    {
+      id:"CONTRACTOR",
+      name : "İşçi"
+    },
+    {
+      id:"CUSTOMER",
+      name:"Müştəri"
+    }
+  ]
 
   useEffect(() => {
     if (roles.length > 0) {
@@ -54,6 +66,13 @@ const CreateNewUser = () => {
     }));
   };
 
+  const handleTypeChange = (selectedType) =>{
+    setFormState((prevState) => ({
+      ...prevState,
+      type : selectedType
+    }))
+  }
+
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -74,6 +93,8 @@ const CreateNewUser = () => {
       }
     }
   };
+
+  console.log(formState.type)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,8 +126,8 @@ const CreateNewUser = () => {
     const formData = {
       ...formState,
       avatar: formState.avatar,
+      type : formState?.type
     };
-
     createUser(formData);
   };
 
@@ -124,6 +145,7 @@ const CreateNewUser = () => {
         password: "",
         about: "",
         avatar: null,
+        type : null
       });
       showToast("Hesab uğurlu şəkildə yaradıldı", "success");
       navigate("/users");
@@ -251,6 +273,13 @@ const CreateNewUser = () => {
                 onChange={handleChange}
                 type="password"
                 placeholder="Şifrə"
+              />
+              <Select
+                name="type"
+                options={myData}
+                column
+                value={formState.type}
+                onChange={handleTypeChange}
               />
               <button
                 type="submit"

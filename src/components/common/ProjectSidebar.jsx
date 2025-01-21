@@ -5,13 +5,14 @@ import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import { MdClose } from "react-icons/md";
 import AnimatedSidebarLink from "./AnimatedSidebarLink";
+import { useNavigate } from "react-router-dom";
 
 const ProjectSidebar = () => {
   const { sidebar } = useSelector((state) => state.site)
   const { data: groups = [] } = useGrouppedProjectsQuery();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  console.log(groups);
   const handleProjectClick = (project) => {
     dispatch(setProject(project));
     window.location.href = `/projects/${project.id}`;
@@ -24,6 +25,7 @@ const ProjectSidebar = () => {
           <button onClick={() => dispatch(closeProjectSidebar())} className="p-2 rounded-lg bg-gray-200"><MdClose size={20} color="gray" /></button>
         </div>
         <h2 className="py-4 border-b border-gray-200 text-lg font-semibold">Mövcud layihələr</h2>
+        <button onClick={() => navigate('/create-new-user')} className="text-sm font-medium mt-3 underline">Müştəri yarat +</button>
         <div className="mt-5 flex flex-col gap-2">
           {
             groups.map((group, index) => (

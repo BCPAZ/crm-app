@@ -20,10 +20,22 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     zip_code: user?.zip_code || "",
     role_id: user?.role_id || "",
     avatar: user?.avatar_url || null,
-    about: user?.about || ''
+    about: user?.about || '',
+    type : user?.type || null
   });
 
   const { showToast } = useToast();
+
+  const myData = [
+    {
+      id: "CONTRACTOR",
+      name: "İşçi"
+    },
+    {
+      id: "CUSTOMER",
+      name: "Müştəri"
+    }
+  ]
 
   useEffect(() => {
     if (user) {
@@ -36,7 +48,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
         zip_code: user?.zip_code,
         role_id: user?.role_id,
         avatar: user?.avatar_url,
-        about: user?.about
+        about: user?.about,
+        type : user?.type
       });
     }
   }, [user]);
@@ -62,6 +75,17 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     }
   };
 
+  console.log(formData.role_id);
+
+  const handleTypeChange = (selectedType) =>{
+    if(selectedType){
+      setFormData((prevState) => ({
+        ...prevState,
+        type : selectedType
+      }))
+    }
+  }
+
   const handleSubmit = () => {
     updateUser({ id: user.id, data: formData });
   };
@@ -81,7 +105,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
 
   return (
     <div
-      className={`w-full h-screen bg-black/70 ${showModal ? "flex" : "hidden"
+      className={`w-full h-screen overflow-y-auto bg-black/70 ${showModal ? "flex" : "hidden"
         } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 p-5`}
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5">
@@ -159,6 +183,13 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
             name="avatar"
             onChange={handleFileChange}
           />
+          <Select
+            name="type"
+            options={myData}
+            value={formData.type}
+            column
+            onChange={handleTypeChange}
+          />
         </div>
         <div className="flex justify-end gap-3">
           <CustomButton
@@ -192,7 +223,8 @@ QuickUpdateModal.propTypes = {
     role_id: PropTypes.string,
     avatar_url: PropTypes.string,
     password: PropTypes.string,
-    about: PropTypes.string
+    about: PropTypes.string,
+    type : PropTypes.string
   }),
 };
 

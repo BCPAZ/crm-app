@@ -21,6 +21,7 @@ const usersService = api.injectEndpoints({
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
+        formData.append("type", data.type)
         if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
@@ -51,6 +52,7 @@ const usersService = api.injectEndpoints({
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
+        formData.append("type" , data.type)
         if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
