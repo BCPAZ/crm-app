@@ -72,7 +72,8 @@ const api = createApi({
     "BOARDS",
     "NOTIFICATIONS",
     'WORKFLOW',
-    'INTERNAL_WORKFLOW'
+    'INTERNAL_WORKFLOW',
+    'GROUPPED_PROJECTS'
   ],
 });
 

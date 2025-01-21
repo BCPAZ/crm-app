@@ -14,7 +14,7 @@ const projectService = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["PROJECTS"],
+      invalidatesTags: ["PROJECTS", "GROUPPED_PROJECTS"],
     }),
     sendNotificationToProject: builder.mutation({
       query: (data) => ({
