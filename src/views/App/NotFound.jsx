@@ -1,20 +1,17 @@
-import { PiWarningOctagon } from "react-icons/pi";
-import PropTypes from "prop-types";
-const NotFound = ({ name }) => {
-  return (
-    <section className="h-screen">
-      <div className="siteContainer flex items-center flex-col justify-center h-full">
-        <span className="text-gray-400">
-          <PiWarningOctagon size={64} />
-        </span>
-        <span className="text-2xl text-gray-400">{name} page not found</span>
-      </div>
-    </section>
-  );
-};
+import { IoWarning } from "react-icons/io5";
 
-NotFound.propTypes = {
-  name : PropTypes.string.isRequired
+const NotFound = () => {
+  return (
+    <div className="w-full h-full">
+      <div className="siteContainer">
+        <div className="flex items-center flex-col justify-center h-dvh gap-5">
+          <IoWarning size={96} color="#003458" />
+          <h1 className="text-8xl font-semibold text-secondary">404</h1>
+          <p className="text-lg font-medium text-center text-secondary">Belə bir səhifə tapılmadı</p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
-export default NotFound;
+export default NotFound

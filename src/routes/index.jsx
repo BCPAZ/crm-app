@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PrivateRoute from "@/components/App/PrivateRoute";
+import NotFound from "@/views/App/NotFound";
 import { useCurrentAccountQuery } from "@/data/services/accountService";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
@@ -77,6 +78,7 @@ const AppRouter = () => {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Routes>
+        <Route path="/*" element={<NotFound />}  />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/projects" element={<Projects />} />
