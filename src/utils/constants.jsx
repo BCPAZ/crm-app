@@ -117,4 +117,4 @@ export const navigationLinks = [
 
 
 
-export const BASE_URL = 'https://api.texnogallery.com';
+export const BASE_URL = 'https://azincrm.az';
