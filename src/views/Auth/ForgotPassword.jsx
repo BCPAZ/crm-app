@@ -9,8 +9,12 @@ import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import * as Yup from "yup"
+import useSubdomain from "@/hooks/useSubDomain";
 
 const ForgotPassword = () => {
+
+  const subdomain = useSubdomain();
+
   const [handleForgotPassword, { isLoading, isError, isSuccess }] =
     useForgotPasswordMutation();
   const { showToast } = useToast();
@@ -30,7 +34,7 @@ const ForgotPassword = () => {
   const onSubmit = (data) => {
     console.log('Form data', data);
     const forgotPasswordData = {
-      subdomain: "flegri",
+      subdomain,
       email: data.email,
     };
     handleForgotPassword(forgotPasswordData);

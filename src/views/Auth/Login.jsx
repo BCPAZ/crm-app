@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useLoginMutation } from '@/data/services/authService';
+import useSubdomain from '@/hooks/useSubDomain';
 import useToast from '@/hooks/useToast';
 import { authSchema } from '@/schema/authSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,6 +12,9 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [handleLogin, { isLoading, isError, isSuccess }] = useLoginMutation();
+
+  const subdomain = useSubdomain();
+
   const { showToast } = useToast();
   const navigate = useNavigate();
   const {
@@ -24,7 +28,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     const loginData = {
-      subdomain: 'flegri',
+      subdomain,
       email: data.email,
       password: data.password
     };
