@@ -1,8 +1,26 @@
 import AuthHeader from "@/components/Auth/AuthHeader";
-import { Fragment } from "react";
-import { Outlet } from "react-router-dom";
+import LoadingScreen from "@/components/common/LoadingScreen";
+import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
+import useSubdomain from "@/hooks/useSubdomain";
+import { Fragment, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const AuthLayout = () => {
+
+  const subdomain = useSubdomain();
+
+  const navigate = useNavigate();
+
+  const { isError, isFetching } = useGetCompanyBySubdomainQuery(subdomain);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/404");
+    }
+  }, [isError]);
+
+  if (isFetching) return <LoadingScreen />;
+
   return (
     <Fragment>
       <AuthHeader />
