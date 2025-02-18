@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useLoginMutation } from '@/data/services/authService';
-import useSubdomain from '@/hooks/useSubDomain';
+import useSubdomain from '@/hooks/useSubdomain';
 import useToast from '@/hooks/useToast';
 import { authSchema } from '@/schema/authSchema';
 import { yupResolver } from '@hookform/resolvers/yup';

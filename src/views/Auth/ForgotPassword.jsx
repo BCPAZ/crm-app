@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
 import * as Yup from "yup"
-import useSubdomain from "@/hooks/useSubDomain";
+import useSubdomain from "@/hooks/useSubdomain";
 
 const ForgotPassword = () => {
 

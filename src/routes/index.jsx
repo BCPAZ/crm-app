@@ -79,6 +79,7 @@ const AppRouter = () => {
     <Suspense fallback={<LoadingScreen />}>
       <Routes>
         <Route path="/*" element={<NotFound />}  />
+        <Route path="/404" element={<NotFound />}  />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/projects" element={<Projects />} />
