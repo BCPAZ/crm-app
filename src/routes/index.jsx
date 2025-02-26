@@ -6,6 +6,7 @@ import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PrivateRoute from "@/components/App/PrivateRoute";
 import NotFound from "@/views/App/NotFound";
 import { useCurrentAccountQuery } from "@/data/services/accountService";
+import Blocked from "@/views/App/Blocked";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 const AppLayout = lazy(() => import("@/layouts/AppLayout"));
@@ -80,6 +81,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/*" element={<NotFound />}  />
         <Route path="/404" element={<NotFound />}  />
+        <Route path="/blocked" element={<Blocked />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/projects" element={<Projects />} />

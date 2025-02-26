@@ -1,17 +1,28 @@
 import Logo from "@/assets/images/logo.png";
+import AnimatedSidebarLink from "./AnimatedSidebarLink";
 import { useGrouppedProjectsQuery } from "@/data/services/projectService";
+import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
 import { useDispatch, useSelector } from "react-redux";
 import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import { MdClose } from "react-icons/md";
-import AnimatedSidebarLink from "./AnimatedSidebarLink";
 import { useNavigate } from "react-router-dom";
 
 const ProjectSidebar = () => {
   const { sidebar } = useSelector((state) => state.site)
   const { data: groups = [] } = useGrouppedProjectsQuery();
+  const { data: companyData } = useGetCompanyBySubdomainQuery();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  const availableModules = companyData?.modules || [];
+  const hasProjectModule = availableModules.includes("projects");
+
+  if (!hasProjectModule) {
+    return null;
+  }
 
   const handleProjectClick = (project) => {
     dispatch(setProject(project));

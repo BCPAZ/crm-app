@@ -2,9 +2,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoChevronDown } from "react-icons/io5";
 import PropTypes from "prop-types";
+import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
 
 const DropdownMenu = ({ navElement }) => {
   const activeProject = useSelector((state) => state.project.project);
+  const {data : companySubdomain} = useGetCompanyBySubdomainQuery();
+
+  console.log(companySubdomain);  
 
   const restrictedElements = ["Workflow", "Documents", "Field management", "Cost"];
 
