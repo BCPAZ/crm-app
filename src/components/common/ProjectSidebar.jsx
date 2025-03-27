@@ -7,11 +7,13 @@ import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import useSubdomain from "@/hooks/useSubdomain";
 
 const ProjectSidebar = () => {
+  const subdomain = useSubdomain();
   const { sidebar } = useSelector((state) => state.site)
   const { data: groups = [] } = useGrouppedProjectsQuery();
-  const { data: companyData } = useGetCompanyBySubdomainQuery();
+  const { data: companyData } = useGetCompanyBySubdomainQuery(subdomain);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

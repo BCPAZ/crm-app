@@ -1,7 +1,7 @@
 import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useSubdomain from "@/hooks/useSubdomain";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
 import LoadingScreen from "@/components/common/LoadingScreen";
 

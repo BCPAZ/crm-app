@@ -5,9 +5,11 @@ import ProjectSidebar from "@/components/common/ProjectSidebar";
 import { Fragment, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
+import useSubdomain from "@/hooks/useSubdomain";
 
 const AppLayout = () => {
-  const { data: companyData, isSuccess } = useGetCompanyBySubdomainQuery();
+  const subdomain = useSubdomain();
+  const { data: companyData, isSuccess } = useGetCompanyBySubdomainQuery(subdomain);
   const location = useLocation();
   const navigate = useNavigate();
 
