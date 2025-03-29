@@ -28,17 +28,17 @@ const CreateNewUser = () => {
     password: "",
     about: "",
     avatar: null,
-    type : null
+    type: null
   });
 
   const myData = [
     {
-      id:"CONTRACTOR",
-      name : "İşçi"
+      id: "CONTRACTOR",
+      name: "İşçi"
     },
     {
-      id:"CUSTOMER",
-      name:"Müştəri"
+      id: "CUSTOMER",
+      name: "Müştəri"
     }
   ]
 
@@ -66,10 +66,10 @@ const CreateNewUser = () => {
     }));
   };
 
-  const handleTypeChange = (selectedType) =>{
+  const handleTypeChange = (selectedType) => {
     setFormState((prevState) => ({
       ...prevState,
-      type : selectedType
+      type: selectedType
     }))
   }
 
@@ -82,7 +82,6 @@ const CreateNewUser = () => {
           useWebWorker: true,
         };
         const compressedFile = await imageCompression(file, options);
-        console.log(compressedFile);
 
         setFormState((prevState) => ({
           ...prevState,
@@ -94,7 +93,6 @@ const CreateNewUser = () => {
     }
   };
 
-  console.log(formState.type)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,7 +124,7 @@ const CreateNewUser = () => {
     const formData = {
       ...formState,
       avatar: formState.avatar,
-      type : formState?.type
+      type: formState?.type
     };
     createUser(formData);
   };
@@ -145,7 +143,7 @@ const CreateNewUser = () => {
         password: "",
         about: "",
         avatar: null,
-        type : null
+        type: null
       });
       showToast("Hesab uğurlu şəkildə yaradıldı", "success");
       navigate("/users");
