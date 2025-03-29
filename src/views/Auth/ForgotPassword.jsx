@@ -4,7 +4,6 @@ import GoBackButton from "@/components/Auth/GoBackButton";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForgotPasswordMutation } from "@/data/services/authService";
-import { authSchema } from "@/schema/authSchema";
 import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
@@ -25,9 +24,9 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(Yup.object().shape({
-      email : Yup.string()
-      .required('Email daxil etmək mütləqdir!')
-      .email('Yanlış email adresi'),
+      email: Yup.string()
+        .required('Email daxil etmək mütləqdir!')
+        .email('Yanlış email adresi'),
     })),
   });
 
