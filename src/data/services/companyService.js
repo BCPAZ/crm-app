@@ -12,7 +12,7 @@ const companyService = api.injectEndpoints({
 
     getCompanyBySubdomain: builder.query({
       query: (subdomain) => ({
-        url: `/companies/test`,
+        url: `/companies/${subdomain}`,
       }),
     }),
   }),
