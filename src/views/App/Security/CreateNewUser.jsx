@@ -234,14 +234,6 @@ const CreateNewUser = () => {
                 onChange={handleRoleChange}
               />
               <SecondInput
-                name="city"
-                value={formState.city}
-                onChange={handleChange}
-                column
-                placeholder="Şəhər"
-                type="text"
-              />
-              <SecondInput
                 name="address"
                 value={formState.address}
                 onChange={handleChange}
@@ -250,13 +242,21 @@ const CreateNewUser = () => {
                 type="text"
               />
               <SecondInput
+                name="city"
+                value={formState.city}
+                onChange={handleChange}
+                column
+                placeholder="Şəhər"
+                type="text"
+              />
+              {/* <SecondInput
                 name="zip_code"
                 value={formState.zip_code}
                 onChange={handleChange}
                 column
                 placeholder="Poçt Kodu"
                 type="text"
-              />
+              /> */}
               <SecondInput
                 name="about"
                 value={formState.about}
