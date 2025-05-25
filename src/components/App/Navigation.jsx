@@ -1,20 +1,21 @@
-import { navigationLinks } from "@/utils/constants";
-import DropdownMenu from "./DropdownMenu";
-import { openProjectSidebar } from "@/data/slices/siteSlice";
-import { useDispatch } from "react-redux";
-import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
 import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
+import { openProjectSidebar } from "@/data/slices/siteSlice";
 import useSubdomain from "@/hooks/useSubdomain";
+import { navigationLinks } from "@/utils/constants";
+import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import DropdownMenu from "./DropdownMenu";
 
 const moduleMapping = {
-  "Sənədlər": "documents",
+  Sənədlər: "documents",
   "İş axını": "workflow",
   "Sahə idarəsi": "field_management",
   "E-poçt": "email",
-  "Təhlükəsizlik": "security",
-  "Xərclər": "cost",
-  "Statistika": "insights",
-  "Layihələr": "projects"
+  Təhlükəsizlik: "security",
+  Xərclər: "cost",
+  Statistika: "insights",
+  Layihələr: "projects",
+  Tapşırıqlar: "works",
 };
 
 const Navigation = () => {
@@ -26,7 +27,7 @@ const Navigation = () => {
 
   const hasProjectModule = availableModules.includes("projects");
 
-  const filteredNavLinks = navigationLinks.filter(navLink => {
+  const filteredNavLinks = navigationLinks.filter((navLink) => {
     const moduleKey = moduleMapping[navLink.title];
     return !moduleKey || availableModules.includes(moduleKey);
   });

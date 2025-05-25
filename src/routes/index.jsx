@@ -1,12 +1,12 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import LoadingScreen from "@/components/common/LoadingScreen";
-import ProtectedRoute from "@/layouts/ProtectedRoute";
 import PrivateRoute from "@/components/App/PrivateRoute";
-import NotFound from "@/views/App/NotFound";
+import LoadingScreen from "@/components/common/LoadingScreen";
 import { useCurrentAccountQuery } from "@/data/services/accountService";
+import ProtectedRoute from "@/layouts/ProtectedRoute";
 import Blocked from "@/views/App/Blocked";
+import NotFound from "@/views/App/NotFound";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout"));
 const AppLayout = lazy(() => import("@/layouts/AppLayout"));
@@ -37,17 +37,29 @@ const WorkflowLayout = lazy(() =>
   import("@/layouts/PageLayouts/WorkflowLayout")
 );
 const Workflows = lazy(() => import("@/views/App/Workflow/Workflows"));
-const InternalWorkflows = lazy(() => import("@/views/App/Workflow/InternalWorkflows"));
+const InternalWorkflows = lazy(() =>
+  import("@/views/App/Workflow/InternalWorkflows")
+);
 const Templates = lazy(() => import("@/views/App/Workflow/Templates"));
-const InternalTemplates = lazy(() => import("@/views/App/Workflow/InternalTemplates"));
+const InternalTemplates = lazy(() =>
+  import("@/views/App/Workflow/InternalTemplates")
+);
 const CreateTemplate = lazy(() =>
   import("@/views/App/Workflow/CreateTemplate")
 );
-const TemplateDetail = lazy(() => import("@/views/App/Workflow/TemplateDetail"));
-const InternalTemplateDetail = lazy(() => import("@/views/App/Workflow/InternalTemplateDetail"));
-const InternalWorkflowDetail = lazy(() => import("@/views/App/Workflow/InternalWorkflowDetail"));
+const TemplateDetail = lazy(() =>
+  import("@/views/App/Workflow/TemplateDetail")
+);
+const InternalTemplateDetail = lazy(() =>
+  import("@/views/App/Workflow/InternalTemplateDetail")
+);
+const InternalWorkflowDetail = lazy(() =>
+  import("@/views/App/Workflow/InternalWorkflowDetail")
+);
 
-const CreateInternalTemplate = lazy(() => import("@/views/App/Workflow/CreateInternalTemplate"))
+const CreateInternalTemplate = lazy(() =>
+  import("@/views/App/Workflow/CreateInternalTemplate")
+);
 const FieldManagementLayout = lazy(() =>
   import("@/layouts/PageLayouts/FieldManagementLayout")
 );
@@ -73,14 +85,17 @@ const CreateNewUser = lazy(() => import("@/views/App/Security/CreateNewUser"));
 const CreateProject = lazy(() => import("@/views/App/CreateProject"));
 const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
 
+const Works = lazy(() => import("@/views/App/Work/Works"));
+const CreateWork = lazy(() => import("@/views/App/Work/CreateWork"));
+
 const AppRouter = () => {
   useCurrentAccountQuery();
 
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Routes>
-        <Route path="/*" element={<NotFound />}  />
-        <Route path="/404" element={<NotFound />}  />
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/404" element={<NotFound />} />
         <Route path="/blocked" element={<Blocked />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
@@ -107,21 +122,38 @@ const AppRouter = () => {
               </Route>
               <Route element={<WorkflowLayout />}>
                 <Route path="/workflows" element={<Workflows />} />
-                <Route path="/internal-workflows" element={<InternalWorkflows />} />
+                <Route
+                  path="/internal-workflows"
+                  element={<InternalWorkflows />}
+                />
                 <Route path="/templates" element={<Templates />} />
-                <Route path="/internal-templates" element={<InternalTemplates />} />
+                <Route
+                  path="/internal-templates"
+                  element={<InternalTemplates />}
+                />
                 <Route path="/create-template" element={<CreateTemplate />} />
-                <Route path="/create-internal-template" element={<CreateInternalTemplate />} />
+                <Route
+                  path="/create-internal-template"
+                  element={<CreateInternalTemplate />}
+                />
                 <Route path="/workflows/:id" element={<WorkflowDetail />} />
-                <Route path="/internal-workflows/:id" element={<InternalWorkflowDetail />} />
+                <Route
+                  path="/internal-workflows/:id"
+                  element={<InternalWorkflowDetail />}
+                />
                 <Route path="/templates/:id" element={<TemplateDetail />} />
-                <Route path="/internal-templates/:id" element={<InternalTemplateDetail />} />
+                <Route
+                  path="/internal-templates/:id"
+                  element={<InternalTemplateDetail />}
+                />
               </Route>
               <Route element={<FieldManagementLayout />}>
                 <Route path="/issues" element={<Issues />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/issues/:id" element={<IssueDetail />} />
               </Route>
+              <Route path="/works" element={<Works />} />
+              <Route path="/works/create-work" element={<CreateWork />} />
             </Route>
             <Route path="/" element={<Dashboard />} />
             <Route path="/change-password" element={<ChangePassword />} />
