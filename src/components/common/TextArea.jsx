@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-const TextArea = ({ placeholder, label, ...props }) => {
+const TextArea = ({ placeholder, label, error, ...props }) => {
   return (
     <div className="flex flex-col relative w-full">
       <label className="text-xs font-semibold text-gray-500 absolute bg-white -top-3 p-1 left-4 w-fit">
@@ -10,6 +10,7 @@ const TextArea = ({ placeholder, label, ...props }) => {
         {...props}
         placeholder={placeholder}
       ></textarea>
+      {error && <p className="text-red-600 text-xs">{error}</p>}
     </div>
   );
 };

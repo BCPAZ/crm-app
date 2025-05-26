@@ -7,13 +7,15 @@ const SecondInput = ({
   onChange,
   value,
   name,
+  error,
   ...props
 }) => {
   return (
     <div className="w-full">
       <div
-        className={`flex ${column ? "flex-col gap-2" : "flex-row items-center gap-x-2"
-          }`}
+        className={`flex ${
+          column ? "flex-col gap-2" : "flex-row items-center gap-x-2"
+        }`}
       >
         <label className="text-sm font-light text-gray-500 w-fit">
           {label}
@@ -30,6 +32,7 @@ const SecondInput = ({
             {...props}
           />
         </div>
+        {error && <p className="text-red-600 text-xs">{error}</p>}
       </div>
     </div>
   );
