@@ -23,56 +23,58 @@ const costService = api.injectEndpoints({
     // }),
     createInvoice: builder.mutation({
       query: (data) => {
-        console.log(data, '-----sended data')
         const formData = new FormData();
-        
+
         if (data.from) {
-          formData.append("from[name]", data.from.name || '');
-          formData.append("from[email]", data.from.email || '');
-          formData.append("from[address]", data.from.address || '');
-          formData.append("from[phone]", data.from.phone || '');
+          formData.append("from[name]", data.from.name || "");
+          formData.append("from[email]", data.from.email || "");
+          formData.append("from[address]", data.from.address || "");
+          formData.append("from[phone]", data.from.phone || "");
         }
-    
+
         if (data.to) {
-          formData.append("to[name]", data.to.name || '');
-          formData.append("to[email]", data.to.email || '');
-          formData.append("to[address]", data.to.address || '');
-          formData.append("to[phone]", data.to.phone || '');
+          formData.append("to[name]", data.to.name || "");
+          formData.append("to[email]", data.to.email || "");
+          formData.append("to[address]", data.to.address || "");
+          formData.append("to[phone]", data.to.phone || "");
         }
-    
+
         if (data.items && Array.isArray(data.items)) {
           data.items.forEach((item, index) => {
-            formData.append(`items[${index}][name]`, item.name || '');
+            formData.append(`items[${index}][name]`, item.name || "");
             formData.append(`items[${index}][quantity]`, item.quantity || 0);
-            formData.append(`items[${index}][unit_price]`, item.unit_price || 0);
+            formData.append(
+              `items[${index}][unit_price]`,
+              item.unit_price || 0
+            );
           });
         }
-    
+
         if (data.taxes) {
           formData.append("taxes", data.taxes);
         }
         if (data.note) {
           formData.append("note", data.note);
         }
-    
+
         if (data.receipt_file) {
-          formData.append('receipt_file', data.receipt_file);
+          formData.append("receipt_file", data.receipt_file);
         }
-    
+
         return {
-          url: '/invoices',
-          method: 'POST',
+          url: "/invoices",
+          method: "POST",
           body: formData,
         };
       },
       invalidatesTags: ["INVOICES"],
     }),
-    
+
     updateInvoice: builder.mutation({
       query: ({ id, status }) => ({
         url: `/invoices/${id}/change-status`,
         method: "PUT",
-        body: {status},
+        body: { status },
       }),
       invalidatesTags: ["INVOICES"],
     }),
@@ -82,18 +84,18 @@ const costService = api.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
     }),
-    deleteInvoice : builder.mutation({
-      query : (id) => ({
-        url : `/invoices/${id}`,
-        method : 'DELETE'
+    deleteInvoice: builder.mutation({
+      query: (id) => ({
+        url: `/invoices/${id}`,
+        method: "DELETE",
       }),
-      invalidatesTags : ['INVOICES'],
+      invalidatesTags: ["INVOICES"],
     }),
-    getInvoiceDetail : builder.query({
-      query : (id) => ({
-        url : `/invoices/${id}`,
-      })
-    })
+    getInvoiceDetail: builder.query({
+      query: (id) => ({
+        url: `/invoices/${id}`,
+      }),
+    }),
   }),
 });
 
@@ -103,7 +105,7 @@ export const {
   useUpdateInvoiceMutation,
   useGetDashboardQuery,
   useDeleteInvoiceMutation,
-  useGetInvoiceDetailQuery
+  useGetInvoiceDetailQuery,
 } = costService;
 
 export default costService;

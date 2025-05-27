@@ -7,11 +7,10 @@ import { useForgotPasswordMutation } from "@/data/services/authService";
 import { useEffect } from "react";
 import useToast from "@/hooks/useToast";
 import { Toaster } from "react-hot-toast";
-import * as Yup from "yup"
+import * as Yup from "yup";
 import useSubdomain from "@/hooks/useSubdomain";
 
 const ForgotPassword = () => {
-
   const subdomain = useSubdomain();
 
   const [handleForgotPassword, { isLoading, isError, isSuccess }] =
@@ -23,15 +22,16 @@ const ForgotPassword = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Yup.object().shape({
-      email: Yup.string()
-        .required('Email daxil etmək mütləqdir!')
-        .email('Yanlış email adresi'),
-    })),
+    resolver: yupResolver(
+      Yup.object().shape({
+        email: Yup.string()
+          .required("Email daxil etmək mütləqdir!")
+          .email("Yanlış email adresi"),
+      })
+    ),
   });
 
   const onSubmit = (data) => {
-    console.log('Form data', data);
     const forgotPasswordData = {
       subdomain,
       email: data.email,
@@ -60,7 +60,8 @@ const ForgotPassword = () => {
           Şifrə yeniləmə
         </h1>
         <p className="w-full text-center text-sm font-light mb-6">
-          flegrei.crm.com adresindən şifrənizi yeniləmək üçün e-poçtunuzu qeyd edin.
+          flegrei.crm.com adresindən şifrənizi yeniləmək üçün e-poçtunuzu qeyd
+          edin.
         </p>
 
         <form

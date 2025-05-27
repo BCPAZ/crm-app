@@ -28,8 +28,6 @@ const CommentsPanel = ({ task }) => {
     setText("");
   };
 
-  console.log(task);
-
   const openConfirmation = (id) => {
     setSelectedComment(id);
     setShowConfirmation(true);
@@ -45,7 +43,7 @@ const CommentsPanel = ({ task }) => {
 
   const handleDeleteComment = () => {
     if (selectedComment) {
-      deleteComment({id: selectedComment, taskId: task.id});
+      deleteComment({ id: selectedComment, taskId: task.id });
       closeConfirmation();
     }
   };

@@ -60,7 +60,6 @@ const kanbanSlice = createSlice({
     builder.addMatcher(
       taskManagementService.endpoints.deleteBoard.matchPending,
       (state, action) => {
-        console.log(action.meta);
         const board = state.boards.find(
           (board) => board.id === action.meta.arg.originalArgs
         );
@@ -280,29 +279,25 @@ const kanbanSlice = createSlice({
           ?.find((board) => board.id == source_board_id)
           ?.tasks?.find((task) => task.id == task_id);
 
-          if (source_board_id == board_id) {
-            state.boards = boards.map((board) => {
-              if (board.id == board_id) {
-                const tasks = [...board.tasks?.filter(
-                  (task) => task.id != task_id)];
-                  const lastTasks = tasks.splice(position, tasks.length + 1).filter(
-                    (task) => task.id != task_id
-                  );
-                return {
-                  ...board,
-                  tasks: [
-                    ...tasks.splice(0, position),
-                    sourceTask,
-                    ...lastTasks
-                  ]
-                }
-              } 
-              return board;
-            })
+        if (source_board_id == board_id) {
+          state.boards = boards.map((board) => {
+            if (board.id == board_id) {
+              const tasks = [
+                ...board.tasks?.filter((task) => task.id != task_id),
+              ];
+              const lastTasks = tasks
+                .splice(position, tasks.length + 1)
+                .filter((task) => task.id != task_id);
+              return {
+                ...board,
+                tasks: [...tasks.splice(0, position), sourceTask, ...lastTasks],
+              };
+            }
+            return board;
+          });
 
-            return;
-          }
-
+          return;
+        }
 
         state.boards = state.boards.map((board) => {
           if (board.id == board_id) {

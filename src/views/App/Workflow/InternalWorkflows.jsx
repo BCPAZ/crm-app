@@ -75,8 +75,6 @@ const InternalWorkflows = () => {
     status: status,
   });
 
-  console.log(data);
-
   const workflows = data?.workflows || [];
   const meta = data?.meta || {};
 
@@ -191,71 +189,73 @@ const InternalWorkflows = () => {
                     Heç bir sənəd tapılmadı
                   </div>
                 ) : (
-                  Object.keys(workflows).map((key) =>
-                  (
+                  Object.keys(workflows).map((key) => (
                     <div className="flex flex-col gap-1" key={key}>
                       {workflows[key].map((workflow) => (
-                      <Link
-                        to={`/internal-workflows/${workflow.id}`}
-                        key={workflow.id}
-                        className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
-                      >
-                        <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
-                          <span>{workflow?.project?.name}</span>
-                        </th>
-                        <td className="text-sm font-medium text-gray-500 w-[8%]">
-                          {workflow?.sender?.name}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%]">
-                          {workflow?.document?.document_no}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] flex flex-col gap-1">
-                          <span className="text-xs">
-                            {moment(workflow?.updated_at).format("YYYY-MM-DD")}
-                          </span>
-                          <span className="text-xs">
-                            {moment(workflow?.updated_at).format("HH:mm")}
-                          </span>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] text-right flex items-center justify-end">
-                          <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
-                            <img
-                              className="w-full h-full object-cover"
-                              src={workflow?.user?.avatar_url}
-                              alt={workflow?.user?.name}
-                            />
-                          </div>
-                        </td>
-                        <td className="text-sm font-medium text-center text-gray-500 w-[8%]">
-                          {workflow?.days}
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[8%] rounded-e-lg">
-                          {renderStatus(workflow?.status)}
-                        </td>
-                      </Link>
-                    ))}
+                        <Link
+                          to={`/internal-workflows/${workflow.id}`}
+                          key={workflow.id}
+                          className="p-4 bg-gray-300/30 rounded-lg w-full flex items-center justify-between gap-5 min-h-[76px]"
+                        >
+                          <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
+                            <span>{workflow?.project?.name}</span>
+                          </th>
+                          <td className="text-sm font-medium text-gray-500 w-[8%]">
+                            {workflow?.sender?.name}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%]">
+                            {workflow?.document?.document_no}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] flex flex-col gap-1">
+                            <span className="text-xs">
+                              {moment(workflow?.updated_at).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </span>
+                            <span className="text-xs">
+                              {moment(workflow?.updated_at).format("HH:mm")}
+                            </span>
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] text-right flex items-center justify-end">
+                            <div className="w-[40px] h-[40px] overflow-hidden rounded-full">
+                              <img
+                                className="w-full h-full object-cover"
+                                src={workflow?.user?.avatar_url}
+                                alt={workflow?.user?.name}
+                              />
+                            </div>
+                          </td>
+                          <td className="text-sm font-medium text-center text-gray-500 w-[8%]">
+                            {workflow?.days}
+                          </td>
+                          <td className="text-sm font-medium text-gray-500 w-[8%] rounded-e-lg">
+                            {renderStatus(workflow?.status)}
+                          </td>
+                        </Link>
+                      ))}
                     </div>
-                  )
-                  )
+                  ))
                 )}
               </tbody>
             </table>
             <div className="mt-5 flex justify-end px-5">
-            <ReactPaginate
-                  previousLabel={"‹"}
-                  nextLabel={"›"}
-                  breakLabel={"..."}
-                  pageCount={meta?.last_page}
-                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
-                  containerClassName="flex items-center justify-center space-x-2 py-4"
-                  pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  pageLinkClassName="text-secondary hover:text-blue-900"
-                  previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
-                  activeClassName="bg-blue-200"
-                  breakClassName="px-3 py-1 text-gray-500"
-                />
-              </div>
+              <ReactPaginate
+                previousLabel={"‹"}
+                nextLabel={"›"}
+                breakLabel={"..."}
+                pageCount={meta?.last_page}
+                onPageChange={(selectedItem) =>
+                  handlePageChange(selectedItem.selected + 1)
+                }
+                containerClassName="flex items-center justify-center space-x-2 py-4"
+                pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                pageLinkClassName="text-secondary hover:text-blue-900"
+                previousClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                nextClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
+                activeClassName="bg-blue-200"
+                breakClassName="px-3 py-1 text-gray-500"
+              />
+            </div>
           </div>
         </div>
       </div>

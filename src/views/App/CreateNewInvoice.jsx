@@ -26,8 +26,6 @@ const CreateNewInvoice = () => {
     address: "",
     phone: "",
   });
-  console.log(to);
-  console.log(from);
   const [items, setItems] = useState([]);
   const [taxAmount, setTaxAmount] = useState("");
   const [note, setNote] = useState("");
@@ -93,10 +91,9 @@ const CreateNewInvoice = () => {
       items,
       taxes: taxAmount,
       note,
-      receipt_file : receiptFile
-    }
+      receipt_file: receiptFile,
+    };
     createInvoice(invoiceData);
-    
   };
 
   useEffect(() => {

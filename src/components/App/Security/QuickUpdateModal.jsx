@@ -9,7 +9,8 @@ import { useUpdateUserMutation } from "@/data/services/usersService";
 import { useGetRolesQuery } from "@/data/services/rolesPermissionsService";
 
 const QuickUpdateModal = ({ showModal, closeModal, user }) => {
-  const [updateUser, { isLoading, isSuccess, isError }] = useUpdateUserMutation();
+  const [updateUser, { isLoading, isSuccess, isError }] =
+    useUpdateUserMutation();
   const { data: roles = [] } = useGetRolesQuery();
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -20,8 +21,8 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     zip_code: user?.zip_code || "",
     role_id: user?.role_id || "",
     avatar: user?.avatar_url || null,
-    about: user?.about || '',
-    type : user?.type || null
+    about: user?.about || "",
+    type: user?.type || null,
   });
 
   const { showToast } = useToast();
@@ -29,13 +30,13 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
   const myData = [
     {
       id: "CONTRACTOR",
-      name: "İşçi"
+      name: "İşçi",
     },
     {
       id: "CUSTOMER",
-      name: "Müştəri"
-    }
-  ]
+      name: "Müştəri",
+    },
+  ];
 
   useEffect(() => {
     if (user) {
@@ -49,7 +50,7 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
         role_id: user?.role_id,
         avatar: user?.avatar_url,
         about: user?.about,
-        type : user?.type
+        type: user?.type,
       });
     }
   }, [user]);
@@ -75,16 +76,14 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
     }
   };
 
-  console.log(formData.role_id);
-
-  const handleTypeChange = (selectedType) =>{
-    if(selectedType){
+  const handleTypeChange = (selectedType) => {
+    if (selectedType) {
       setFormData((prevState) => ({
         ...prevState,
-        type : selectedType
-      }))
+        type: selectedType,
+      }));
     }
-  }
+  };
 
   const handleSubmit = () => {
     updateUser({ id: user.id, data: formData });
@@ -105,8 +104,9 @@ const QuickUpdateModal = ({ showModal, closeModal, user }) => {
 
   return (
     <div
-      className={`w-full h-screen overflow-y-auto bg-black/70 ${showModal ? "flex" : "hidden"
-        } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 p-5`}
+      className={`w-full h-screen overflow-y-auto bg-black/70 ${
+        showModal ? "flex" : "hidden"
+      } items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0 p-5`}
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5">
         <h1 className="text-xl font-semibold">Sürətli yeniləmə</h1>
@@ -224,7 +224,7 @@ QuickUpdateModal.propTypes = {
     avatar_url: PropTypes.string,
     password: PropTypes.string,
     about: PropTypes.string,
-    type : PropTypes.string
+    type: PropTypes.string,
   }),
 };
 

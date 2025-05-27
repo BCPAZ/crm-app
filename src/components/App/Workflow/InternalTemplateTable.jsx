@@ -12,18 +12,23 @@ import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 const InternalTemplateTable = () => {
-  const { data: templates = [], isLoading, isError } = useGetInternalTemplatesQuery();
+  const {
+    data: templates = [],
+    isLoading,
+    isError,
+  } = useGetInternalTemplatesQuery();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const { showToast } = useToast();
   const [deleteTemplate, { isSuccess: deleteSuccess, isError: deleteError }] =
     useDeleteInternalTemplateMutation();
 
-    const getTotalDays = (duration) => {
-      return duration.reduce((total, data) => total + (parseInt(data.days) || 0), 0);
-    };
-  console.log(templates)
-
+  const getTotalDays = (duration) => {
+    return duration.reduce(
+      (total, data) => total + (parseInt(data.days) || 0),
+      0
+    );
+  };
   const openConfirmationModal = (id) => {
     setSelectedTemplate(id);
     setShowConfirmation(true);
@@ -96,7 +101,10 @@ const InternalTemplateTable = () => {
               >
                 <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[50%]">
                   <div className="flex items-center gap-4">
-                    <Link to={`/internal-templates/${template.id}`} className="text-sm text-secondary hover:underline">
+                    <Link
+                      to={`/internal-templates/${template.id}`}
+                      className="text-sm text-secondary hover:underline"
+                    >
                       {template?.name}
                     </Link>
                   </div>
@@ -116,7 +124,10 @@ const InternalTemplateTable = () => {
                           <img
                             className="w-[30px] h-[30px] rounded-full border border-grey/20"
                             key={user?.id}
-                            src={user?.avatar_url || "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"}
+                            src={
+                              user?.avatar_url ||
+                              "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
+                            }
                             alt={user?.name || "Company"}
                           />
                         ))}

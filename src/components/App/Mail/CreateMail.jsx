@@ -16,7 +16,10 @@ const CreateMail = ({ closeMailModal }) => {
   const [cc, setCc] = useState([""]);
   const [bcc, setBcc] = useState([""]);
   const [attachments, setAttachments] = useState([]);
-  const [sendMail, { isSuccess : mailSuccess, isError: mailError, isLoading: mailLoading }] = useSendMailMutation();
+  const [
+    sendMail,
+    { isSuccess: mailSuccess, isError: mailError, isLoading: mailLoading },
+  ] = useSendMailMutation();
   const { showToast } = useToast();
 
   const toggleFullscreen = () => {
@@ -58,11 +61,9 @@ const CreateMail = ({ closeMailModal }) => {
     setAttachments([...attachments, ...event.target.files]);
   };
 
-  console.log(attachments)
-
   const handleSendMail = () => {
-    const filteredCc = cc.filter(email => email.trim() !== "");
-    const filteredBcc = bcc.filter(email => email.trim() !== "");
+    const filteredCc = cc.filter((email) => email.trim() !== "");
+    const filteredBcc = bcc.filter((email) => email.trim() !== "");
 
     sendMail({
       to,
@@ -70,33 +71,30 @@ const CreateMail = ({ closeMailModal }) => {
       message,
       cc: filteredCc,
       bcc: filteredBcc,
-      attachments
+      attachments,
     });
   };
 
   useEffect(() => {
     if (mailSuccess) {
-      showToast('Mail uğurlu şəkildə göndərildi', 'success');
-      
+      showToast("Mail uğurlu şəkildə göndərildi", "success");
+
       closeMailModal();
     }
   }, [mailSuccess]);
 
   useEffect(() => {
     if (mailError) {
-      showToast('Mail göndərilə bilmədi', 'error');
+      showToast("Mail göndərilə bilmədi", "error");
     }
   }, [mailError]);
 
   return (
     <div
-      className={clsx(
-        "bg-white rounded-xl shadow-lg overflow-hidden",
-        {
-          "w-[520px]": !isFullscreen,
-          "w-full h-full fixed inset-0 z-50": isFullscreen,
-        }
-      )}
+      className={clsx("bg-white rounded-xl shadow-lg overflow-hidden", {
+        "w-[520px]": !isFullscreen,
+        "w-full h-full fixed inset-0 z-50": isFullscreen,
+      })}
     >
       <div className="bg-grey/20 p-4 flex items-center justify-between">
         <h1 className="text-sm font-medium">New message</h1>
@@ -126,7 +124,9 @@ const CreateMail = ({ closeMailModal }) => {
             autoComplete="off"
           />
           <div className="flex items-center gap-1">
-            <button onClick={handleCcAdd} className="text-sm font-semibold">Cc</button>
+            <button onClick={handleCcAdd} className="text-sm font-semibold">
+              Cc
+            </button>
             {cc.map((email, index) => (
               <input
                 key={index}
@@ -138,7 +138,9 @@ const CreateMail = ({ closeMailModal }) => {
                 autoComplete="off"
               />
             ))}
-            <button onClick={handleBccAdd} className="text-sm font-semibold">Bcc</button>
+            <button onClick={handleBccAdd} className="text-sm font-semibold">
+              Bcc
+            </button>
             {bcc.map((email, index) => (
               <input
                 key={index}
@@ -166,7 +168,9 @@ const CreateMail = ({ closeMailModal }) => {
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className={`bg-grey/10 w-full ${isFullscreen ? 'h-[75%]' : 'h-[200px]'} outline-none p-2 text-sm rounded-lg border border-grey/20 resize-none`}
+            className={`bg-grey/10 w-full ${
+              isFullscreen ? "h-[75%]" : "h-[200px]"
+            } outline-none p-2 text-sm rounded-lg border border-grey/20 resize-none`}
             placeholder="Write something awesome..."
             autoComplete="off"
           ></textarea>
@@ -179,7 +183,10 @@ const CreateMail = ({ closeMailModal }) => {
               id="attachments"
               autoComplete="off"
             />
-            <label htmlFor="attachments" className="cursor-pointer hover:bg-grey/20 rounded p-1">
+            <label
+              htmlFor="attachments"
+              className="cursor-pointer hover:bg-grey/20 rounded p-1"
+            >
               <IoMdAttach size={20} />
             </label>
             <button

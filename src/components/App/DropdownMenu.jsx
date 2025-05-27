@@ -10,18 +10,24 @@ const DropdownMenu = ({ navElement }) => {
   const subdomain = useSubdomain();
   const { data: companySubdomain } = useGetCompanyBySubdomainQuery(subdomain);
 
-  console.log(companySubdomain);
+  const restrictedElements = [
+    "Workflow",
+    "Documents",
+    "Field management",
+    "Cost",
+  ];
 
-  const restrictedElements = ["Workflow", "Documents", "Field management", "Cost"];
-
-  const isDisabled = restrictedElements.includes(navElement.title) && !activeProject;
+  const isDisabled =
+    restrictedElements.includes(navElement.title) && !activeProject;
 
   return (
     <div className="relative group">
       {navElement.path ? (
         <Link
           to={navElement.path}
-          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
+          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${
+            isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-white/10"
+          }`}
           onClick={(e) => isDisabled && e.preventDefault()}
         >
           <img src={navElement.icon} alt="" />
@@ -34,7 +40,9 @@ const DropdownMenu = ({ navElement }) => {
         </Link>
       ) : (
         <button
-          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}`}
+          className={`flex items-center gap-2 text-white text-sm font-semibold p-2 rounded-md ${
+            isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-white/10"
+          }`}
           disabled={isDisabled}
         >
           <img src={navElement.icon} alt="" />

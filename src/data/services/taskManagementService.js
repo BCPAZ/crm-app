@@ -78,7 +78,7 @@ const taskManagementService = api.injectEndpoints({
         url: `/task-management/tasks/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['TASK']
+      invalidatesTags: ["TASK"],
     }),
     getLastTask: builder.query({
       query: () => ({
@@ -108,19 +108,16 @@ const taskManagementService = api.injectEndpoints({
         };
       },
       invalidatesTags: (result, error, { taskId }) => {
-        console.log(taskId);
         return [{ type: "TASK", id: taskId }];
       },
     }),
 
-
-    deleteComment : builder.mutation({
-      query : ({id}) => ({
-        url : `task-management/task-comments/${id}`,
-        method : "DELETE",
+    deleteComment: builder.mutation({
+      query: ({ id }) => ({
+        url: `task-management/task-comments/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: (result, error, { taskId }) => {
-        console.log(taskId);
         return [{ type: "TASK", id: taskId }];
       },
     }),
@@ -212,7 +209,7 @@ const taskManagementService = api.injectEndpoints({
       }),
       invalidatesTags: (result, error, { taskId }) => {
         return [{ type: "TASK", id: taskId }];
-      },  
+      },
     }),
   }),
   overrideExisting: true,
@@ -238,7 +235,7 @@ export const {
   useSetReporterMutation,
   useSetAttachmentMutation,
   useUpdateNameMutation,
-  useDeleteCommentMutation
+  useDeleteCommentMutation,
 } = taskManagementService;
 
 export default taskManagementService;

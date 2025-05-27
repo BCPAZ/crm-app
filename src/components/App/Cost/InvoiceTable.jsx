@@ -26,8 +26,14 @@ const InvoiceTable = () => {
     search,
     status,
   });
-  const [deleteInvoice, { isSuccess: deleteSuccess, isError: deleteError, isLoading: deleteLoading }] =
-    useDeleteInvoiceMutation();
+  const [
+    deleteInvoice,
+    {
+      isSuccess: deleteSuccess,
+      isError: deleteError,
+      isLoading: deleteLoading,
+    },
+  ] = useDeleteInvoiceMutation();
   const invoices = data?.invoices || [];
   const meta = data?.meta || {};
   const { showToast } = useToast();
@@ -69,7 +75,6 @@ const InvoiceTable = () => {
 
   const handleSelectStatus = (value) => {
     setStatus(value);
-    console.log(value);
   };
 
   const handleSearch = (e) => {
@@ -262,12 +267,14 @@ const InvoiceTable = () => {
                 ))}
               </tbody>
               <div className="mt-5 flex justify-end px-5">
-              <ReactPaginate
+                <ReactPaginate
                   previousLabel={"‹"}
                   nextLabel={"›"}
                   breakLabel={"..."}
                   pageCount={meta?.last_page}
-                  onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                  onPageChange={(selectedItem) =>
+                    handlePageChange(selectedItem.selected + 1)
+                  }
                   containerClassName="flex items-center justify-center space-x-2 py-4"
                   pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
                   pageLinkClassName="text-secondary hover:text-blue-900"
