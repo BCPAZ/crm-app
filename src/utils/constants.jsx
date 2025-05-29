@@ -5,6 +5,7 @@ import insights from "@/assets/icons/Nav/insights.svg";
 import mail from "@/assets/icons/Nav/mail.svg";
 import projects from "@/assets/icons/Nav/projects.svg";
 import security from "@/assets/icons/Nav/security.svg";
+import work from "@/assets/icons/Nav/work.svg";
 import workflow from "@/assets/icons/Nav/workflow.svg";
 
 export const navigationLinks = [
@@ -101,7 +102,7 @@ export const navigationLinks = [
   },
   {
     title: "Tapşırıqlar",
-    icon: insights,
+    icon: work,
     path: "/works",
   },
   {

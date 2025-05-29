@@ -1,20 +1,19 @@
-import UserList from "@/components/App/Security/UserList";
-import CustomButton from "@/components/common/CustomButton";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import { useGetWorkQuery } from "@/data/services/workService";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import moment from "moment";
-import { GoArrowDown } from "react-icons/go";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
+import { Link, useParams } from "react-router-dom";
+
+let index = 0;
 
 const ShowWork = () => {
   const { id } = useParams();
+  const { data, isLoading } = useGetWorkQuery(id);
+  const [openWorkIds, setOpenWorkIds] = useState([]);
 
-  const { data, isLoading, isError } = useGetWorkQuery(id);
-
-  const getFileExtension = (filename) => {
-    return filename.split(".").pop();
-  };
+  const getFileExtension = (filename) => filename.split(".").pop();
 
   const renderFileIcon = (filename) => {
     const ext = getFileExtension(filename);
@@ -22,9 +21,15 @@ const ShowWork = () => {
     return <FileIcon extension={ext} {...style} />;
   };
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+  const toggleAccordion = (workId) => {
+    setOpenWorkIds((prev) =>
+      prev.includes(workId)
+        ? prev.filter((id) => id !== workId)
+        : [...prev, workId]
+    );
+  };
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <section className="w-full h-full p-5">
@@ -33,198 +38,171 @@ const ShowWork = () => {
           <h1 className="text-2xl font-semibold">Tapşırıq: {data?.name}</h1>
         </div>
         <div className="mt-10 w-full">
-          <table className="w-full text-sm min-w-[1200px]">
+          <table className="table-fixed w-full border-collapse border">
             <thead className="bg-gray-300/30 w-full rounded-lg text-left">
-              <tr className="p-5 w-full flex items-center justify-between gap-5">
-                <th className="text-sm font-medium text-gray-500 flex items-center gap-3 rounded-s-lg w-[35%]">
-                  <span className="flex items-center gap-2">Tapşırıq adı</span>
-                </th>
-                <th className="text-sm font-medium w-[24%] text-gray-500">
-                  İcraçı / Müştəri
-                </th>
-                <th className="text-sm font-medium w-[24%] text-gray-500">
-                  Başlama tarixi
-                </th>
-                <th className="text-sm font-medium w-[24%] text-gray-500">
-                  Bitmə tarixi
-                </th>
-                <th className="text-sm font-medium w-[12%] text-gray-500">
-                  Proqress
-                </th>
-                <th className="text-sm font-medium w-[48%] text-gray-500 rounded-e-lg">
-                  Qeyd
-                </th>
-                <th className="text-sm font-medium w-[24%] text-gray-500 rounded-e-lg">
-                  Yüklənmiş fayl
-                </th>
-                <th className="text-sm font-medium w-[24%] text-gray-500 rounded-e-lg">
-                  Tapşırıq kodu
-                </th>
-                <th className="text-sm font-medium w-[5%] text-gray-500 rounded-e-lg"></th>
+              <tr>
+                {[
+                  "Tapşırıq adı",
+                  "İcraçı / Müştəri",
+                  "Başlama tarixi",
+                  "Bitmə tarixi",
+                  "Proqress",
+                  "Qeyd",
+                  "Yüklənmiş fayl",
+                  "Tapşırıq kodu",
+                ].map((header, i) => (
+                  <th
+                    key={i}
+                    className="border border-gray-300 p-4 text-sm font-medium text-gray-500"
+                    colSpan={i === 0 ? 2 : 1}
+                  >
+                    {header}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className="w-full flex flex-col text-left">
-              <div className="group">
-                <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]">
-                  <td className="text-sm font-medium text-gray-500 w-[35%]">
-                    <h3 className="text-xs text-secondary">{data?.name}</h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[24%]">
-                    <h3 className="text-xs text-secondary">
-                      {data?.customer.name}
-                    </h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[24%]">
-                    <h3 className="text-xs text-secondary">
-                      {moment(data?.start_date || new Date()).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[24%]">
-                    <h3 className="text-xs text-secondary">
-                      {moment(data?.end_date || new Date()).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[12%]">
-                    <h3 className="text-xs text-secondary">
-                      {data?.progress}%
-                    </h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[48%]">
-                    <h3 className="text-xs text-secondary">
-                      {data?.description || "N/A"}
-                    </h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[24%]">
-                    <h3 className="text-xs text-secondary">N/A</h3>
-                  </td>
-                  <td className="text-sm font-medium text-gray-500 w-[12%]">
-                    <h3 className="text-xs text-secondary">{data?.code}</h3>
-                  </td>
-                </tr>
-                {data?.sub_works?.map((item, index) => (
-                  <>
-                    <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]">
-                      <td className="text-sm font-medium text-gray-500 w-[35%]">
-                        <h3 className="text-xs text-secondary">
-                          {index + 1} {item?.name}
-                        </h3>
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[24%]">
-                        <h3 className="text-xs text-secondary">
-                          {item?.worker?.name}
-                        </h3>
-                      </td>
-                      <td className="text-sm font-medium text-gray-500 w-[24%]">
-                        <h3 className="text-xs text-secondary">
-                          {moment(item?.start_date || new Date()).format(
-                            "DD/MM/YYYY"
+            <tbody>
+              <tr>
+                <td
+                  className="border p-4 text-sm font-medium text-gray-700"
+                  colSpan={2}
+                >
+                  {data?.name}
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {data?.customer?.name || "N/A"}
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {moment(data?.start_date || new Date()).format("YYYY-MM-DD")}
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {moment(data?.end_date || new Date()).format("YYYY-MM-DD")}
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {data?.progress} %
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {data?.description || "N/A"}
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  N/A
+                </td>
+                <td className="border p-4 text-sm font-medium text-gray-700">
+                  {data?.code}
+                </td>
+              </tr>
+
+              {data?.sub_works?.map((work) => {
+                index++;
+                const isOpen = openWorkIds.includes(work.id);
+                return (
+                  <React.Fragment key={work.id}>
+                    <tr
+                      className="cursor-pointer hover:bg-gray-100"
+                      onClick={() => toggleAccordion(work.id)}
+                    >
+                      <td
+                        className="border p-4 text-sm font-medium text-gray-700"
+                        colSpan={2}
+                      >
+                        <div className="flex flex-1 gap-5 justify-between items-center">
+                          — {work?.name}
+                          {isOpen ? (
+                            <ChevronDown size={16} />
+                          ) : (
+                            <ChevronRight size={16} />
                           )}
-                        </h3>
+                        </div>
                       </td>
-                      <td className="text-sm font-medium text-gray-500 w-[24%]">
-                        <h3 className="text-xs text-secondary">
-                          {moment(item?.end_date || new Date()).format(
-                            "DD/MM/YYYY"
-                          )}
-                        </h3>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        {work?.worker?.name || "N/A"}
                       </td>
-                      <td className="text-sm font-medium text-gray-500 w-[12%]">
-                        <h3 className="text-xs text-secondary">
-                          {item?.progress}%
-                        </h3>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        {moment(work?.start_date || new Date()).format(
+                          "YYYY-MM-DD"
+                        )}
                       </td>
-                      <td className="text-sm font-medium text-gray-500 w-[48%]">
-                        <h3 className="text-xs text-secondary">
-                          {item?.description || "N/A"}
-                        </h3>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        {moment(work?.end_date || new Date()).format(
+                          "YYYY-MM-DD"
+                        )}
                       </td>
-                      <td className="text-sm font-medium text-gray-500 w-[24%]">
-                        <h3 className="text-xs text-secondary">
-                          <div className="flex items-center gap-4">
-                            <div className="w-[25px] h-[25px]">
-                              {renderFileIcon(
-                                `https://azincrm.az/storage/${item?.file}`
-                              )}
-                            </div>
-                            <Link
-                              to={`https://azincrm.az/storage/${item?.file}`}
-                              className="text-sm text-secondary hover:underline"
-                            >
-                              Yüklə
-                            </Link>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        {work?.progress} %
+                      </td>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        {work?.description || "N/A"}
+                      </td>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        <div className="flex items-center gap-4">
+                          <div className="w-[25px] h-[25px]">
+                            {renderFileIcon(work?.file || "")}
                           </div>
-                        </h3>
+                          <Link
+                            to={`https://azincrm.az/storage/${work?.file}`}
+                            className="text-sm text-secondary hover:underline"
+                          >
+                            Yüklə
+                          </Link>
+                        </div>
                       </td>
-                      <td className="text-sm font-medium text-gray-500 w-[12%]">
-                        <h3 className="text-xs text-secondary">N/A</h3>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
+                        N/A
                       </td>
                     </tr>
 
-                    {item?.children?.map((child, childIndex) => (
-                      <tr className="p-5 border-b group-hover:bg-gray-200/20 border-grey/20 border-dashed w-full flex items-center justify-between gap-5 min-h-[76px]">
-                        <td className="text-sm font-medium text-gray-500 w-[35%]">
-                          <h3 className="text-xs text-secondary">
-                            {index + 1}.{childIndex + 1} {child?.name}
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[24%]">
-                          <h3 className="text-xs text-secondary">
-                            {child?.worker?.name}
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[24%]">
-                          <h3 className="text-xs text-secondary">
-                            {moment(child?.start_date || new Date()).format(
-                              "DD/MM/YYYY"
-                            )}
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[24%]">
-                          <h3 className="text-xs text-secondary">
-                            {moment(child?.end_date || new Date()).format(
-                              "DD/MM/YYYY"
-                            )}
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[12%]">
-                          <h3 className="text-xs text-secondary">
-                            {child?.progress}%
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[48%]">
-                          <h3 className="text-xs text-secondary">
-                            {child?.description || "N/A"}
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[24%]">
-                          <h3 className="text-xs text-secondary">
-                            <div className="flex items-center gap-4">
-                              <div className="w-[25px] h-[25px]">
-                                {renderFileIcon(
-                                  `https://azincrm.az/storage/${child?.file}`
-                                )}
+                    {isOpen &&
+                      work?.children?.map((subWork) => {
+                        index++;
+                        return (
+                          <tr key={subWork.id}>
+                            <td
+                              className="border p-4 text-sm font-medium text-gray-700"
+                              colSpan={2}
+                            >
+                              —— {subWork?.name}
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              {subWork?.worker?.name || "N/A"}
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              {moment(subWork?.start_date || new Date()).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              {moment(subWork?.end_date || new Date()).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              {subWork?.progress} %
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              {subWork?.description || "N/A"}
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              <div className="flex items-center gap-4">
+                                <div className="w-[25px] h-[25px]">
+                                  {renderFileIcon(subWork?.file || "")}
+                                </div>
+                                <Link
+                                  to={`https://azincrm.az/storage/${subWork?.file}`}
+                                  className="text-sm text-secondary hover:underline"
+                                >
+                                  Yüklə
+                                </Link>
                               </div>
-                              <Link
-                                to={`https://azincrm.az/storage/${child?.file}`}
-                                className="text-sm text-secondary hover:underline"
-                              >
-                                Yüklə
-                              </Link>
-                            </div>
-                          </h3>
-                        </td>
-                        <td className="text-sm font-medium text-gray-500 w-[12%]">
-                          <h3 className="text-xs text-secondary">N/A</h3>
-                        </td>
-                      </tr>
-                    ))}
-                  </>
-                ))}
-              </div>
+                            </td>
+                            <td className="border p-4 text-sm font-medium text-gray-700">
+                              N/A
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </React.Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>
