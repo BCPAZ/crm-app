@@ -105,6 +105,17 @@ const workService = api.injectEndpoints({
       }),
       invalidatesTags: ["WORKS", "WORK"],
     }),
+
+    addDocumentToWork: builder.mutation({
+      query: ({ sub_work_id, document_no }) => ({
+        url: `/works/add-document`,
+        method: "POST",
+        body: {
+          sub_work_id,
+          document_no,
+        },
+      }),
+    }),
   }),
 });
 
@@ -114,6 +125,7 @@ export const {
   useCreateWorkMutation,
   useGetWorkQuery,
   useCompleteMutation,
+  useAddDocumentToWorkMutation,
 } = workService;
 
 export default workService;

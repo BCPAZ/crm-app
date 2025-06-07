@@ -2,7 +2,11 @@ import Button from "@/components/common/Button";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import SecondInput from "@/components/common/SecondInput";
-import { useGetWorksQuery } from "@/data/services/workService";
+import {
+  useAddDocumentToWorkMutation,
+  useGetWorksQuery,
+} from "@/data/services/workService";
+import useToast from "@/hooks/useToast";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -81,7 +85,6 @@ const Works = () => {
             placeholder="Tapşırıq adı daxil edin"
             type="text"
           />
-
           <CustomDatePicker
             value={startDate}
             onChange={(value) => handleChange("startDate", value)}
@@ -105,6 +108,7 @@ const Works = () => {
                   "Bitmə tarixi",
                   "Proqress",
                   "Qeyd",
+                  "Sənəd nömrəsi",
                   "Yüklənmiş fayl",
                   "Tapşırıq kodu",
                   "Əməliyyatlar",
@@ -112,7 +116,7 @@ const Works = () => {
                   <th
                     key={i}
                     className="border border-gray-300 p-4 text-sm font-medium text-gray-500"
-                    colSpan={i === 1 ? 2 : 1}
+                    colSpan={i === 1 || i === 7 ? 2 : 1}
                   >
                     {header}
                   </th>
@@ -173,6 +177,12 @@ const Works = () => {
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.description || "N/A"}
+                      </td>
+                      <td
+                        className="border p-4 text-sm font-medium text-gray-700"
+                        colSpan={2}
+                      >
+                        {"N/A"}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         N/A
@@ -249,6 +259,14 @@ const Works = () => {
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 {subWork?.description || "N/A"}
                               </td>
+                              <td
+                                className="border p-4 text-sm font-medium text-gray-700"
+                                colSpan={2}
+                              >
+                                {subWork?.document?.document_no || (
+                                  <DocumentChanger subWorkId={subWork?.id} />
+                                )}
+                              </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 <div className="flex items-center gap-4">
                                   <div className="w-[25px] h-[25px]">
@@ -309,6 +327,12 @@ const Works = () => {
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.description || "N/A"}
                                     </td>
+                                    <td
+                                      className="border p-4 text-sm font-medium text-gray-700"
+                                      colSpan={2}
+                                    >
+                                      <DocumentChanger subWorkId={child?.id} />
+                                    </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       <div className="flex items-center gap-4">
                                         <div className="w-[25px] h-[25px]">
@@ -348,6 +372,40 @@ const Works = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const DocumentChanger = ({ subWorkId }) => {
+  const [addDocument, { isError, isSuccess }] = useAddDocumentToWorkMutation();
+  const [documentNo, setDocumentNo] = useState(null);
+
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (isSuccess) {
+      showToast("Sənəd yükləndi", "success");
+    } else if (isError) {
+      showToast("Sənəd tapılmadı", "error");
+    }
+  }, [isSuccess, isError]);
+
+  return (
+    <div className="flex flex-row gap-2 items-center">
+      <SecondInput
+        type="text"
+        name="document_no"
+        value={documentNo}
+        onChange={(e) => setDocumentNo(e.target.value)}
+      />
+      <div>
+        <Button
+          value="Yüklə"
+          onClick={() =>
+            addDocument({ sub_work_id: subWorkId, document_no: documentNo })
+          }
+        />
+      </div>
+    </div>
   );
 };
 
