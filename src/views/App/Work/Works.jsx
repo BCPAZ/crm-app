@@ -1,5 +1,7 @@
 import Button from "@/components/common/Button";
+import CustomDatePicker from "@/components/common/CustomDatePicker";
 import LoadingScreen from "@/components/common/LoadingScreen";
+import SecondInput from "@/components/common/SecondInput";
 import { useGetWorksQuery } from "@/data/services/workService";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import moment from "moment";
@@ -8,7 +10,23 @@ import { FileIcon, defaultStyles } from "react-file-icon";
 import { Link } from "react-router-dom";
 
 const Works = () => {
-  const { data = [], isLoading } = useGetWorksQuery();
+  const [filters, setFilters] = useState({
+    name: "",
+    startDate: null,
+    endDate: null,
+  });
+
+  const { name, startDate, endDate } = filters;
+
+  const { data = [], isLoading } = useGetWorksQuery({
+    name: filters.name,
+    start_date: filters.startDate
+      ? moment(filters.startDate).format("YYYY-MM-DD")
+      : undefined,
+    end_date: filters.endDate
+      ? moment(filters.endDate).format("YYYY-MM-DD")
+      : undefined,
+  });
 
   const [openWorkId, setOpenWorkId] = useState(null);
 
@@ -37,6 +55,10 @@ const Works = () => {
     setOpenedSubWorkIds([]);
   }, [openWorkId]);
 
+  const handleChange = (field, value) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
+  };
+
   if (isLoading) return <LoadingScreen />;
 
   return (
@@ -49,6 +71,27 @@ const Works = () => {
               <Button value="Tapşırıq yaradın" />
             </Link>
           </div>
+        </div>
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+          <SecondInput
+            onChange={(e) => handleChange("name", e.target.value)}
+            column
+            value={name}
+            label="Şablon adı"
+            placeholder="Şablon adı daxil edin"
+            type="text"
+          />
+
+          <CustomDatePicker
+            value={startDate}
+            onChange={(value) => handleChange("startDate", value)}
+            label="Başlanğıc tarixi seçin"
+          />
+          <CustomDatePicker
+            value={endDate}
+            onChange={(value) => handleChange("endDate", value)}
+            label="Bitiş tarixi seçin"
+          />
         </div>
         <div className="mt-10 w-full">
           <table className="table-fixed w-full border-collapse border">

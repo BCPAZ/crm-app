@@ -4,8 +4,9 @@ import moment from "moment";
 const workService = api.injectEndpoints({
   endpoints: (builder) => ({
     getWorks: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/works",
+        params,
       }),
       providesTags: ["WORKS"],
     }),
