@@ -77,8 +77,8 @@ const Works = () => {
             onChange={(e) => handleChange("name", e.target.value)}
             column
             value={name}
-            label="Şablon adı"
-            placeholder="Şablon adı daxil edin"
+            label="Tapşırıq adı"
+            placeholder="Tapşırıq adı daxil edin"
             type="text"
           />
 
