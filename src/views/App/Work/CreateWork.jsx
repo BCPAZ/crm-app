@@ -6,8 +6,14 @@ import TextArea from "@/components/common/TextArea";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import { useCreateWorkMutation } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { defaultStyles, FileIcon } from "react-file-icon";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
@@ -57,6 +63,7 @@ const CreateWork = () => {
   const {
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -91,9 +98,15 @@ const CreateWork = () => {
 
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const [selectedPeople, setSelectedPeople] = useState([]);
+
+  console.log(selectedPeople);
 
   const onSubmit = (data) => {
-    createProject(data);
+    createProject({
+      ...data,
+      users: selectedPeople.map((user) => user.id),
+    });
   };
 
   useEffect(() => {
@@ -159,6 +172,55 @@ const CreateWork = () => {
               />
             )}
           />
+
+          <Listbox
+            value={selectedPeople}
+            onChange={setSelectedPeople}
+            multiple
+            as="nav"
+            className="relative"
+          >
+            <div className={`flex flex-col gap-2`}>
+              <label
+                className={`text-sm font-base font-base text-gray-500}`}
+                htmlFor=""
+              >
+                Yoxlayanlar
+              </label>
+              <ListboxButton className="w-full border border-grey/20 text-gray-500 text-start p-4 rounded-lg text-sm flex items-center justify-between">
+                {selectedPeople.map((person) => person.name).join(", ") ||
+                  "Yoxlayanlar"}
+              </ListboxButton>
+            </div>
+
+            <ListboxOptions className="p-4 bg-white shadow-lg absolute top-[100%] h-[250px] overflow-y-scroll z-20 left-0 w-full outline-none rounded-xl">
+              {companyUsers.map((person) => (
+                <ListboxOption
+                  key={person.id}
+                  value={person}
+                  className="data-focus:bg-blue-100"
+                >
+                  {person.name}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
+          </Listbox>
+
+          {watch("users")?.map((user) => {
+            return (
+              // render users list like badge and remove button
+              <div className="flex flex-row gap-2 items-center">
+                <div className="flex flex-row gap-2 items-center">
+                  <img
+                    src={user?.avatar}
+                    alt=""
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <span>{user?.name}</span>
+                </div>
+              </div>
+            );
+          })}
 
           <Controller
             name="description"
