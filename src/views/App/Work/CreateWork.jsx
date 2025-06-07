@@ -103,6 +103,7 @@ const CreateWork = () => {
   console.log(selectedPeople);
 
   const onSubmit = (data) => {
+    console.log(selectedPeople.map((user) => user.id));
     createProject({
       ...data,
       users: selectedPeople.map((user) => user.id),
