@@ -89,6 +89,15 @@ const workService = api.injectEndpoints({
       query: (id) => ({
         url: `/works/${id}`,
       }),
+      providesTags: ["WORK"],
+    }),
+
+    complete: builder.mutation({
+      query: (id) => ({
+        url: `/works/complete/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["WORKS", "WORK"],
     }),
   }),
 });
@@ -98,6 +107,7 @@ export const {
   useDeleteWorkMutation,
   useCreateWorkMutation,
   useGetWorkQuery,
+  useCompleteMutation,
 } = workService;
 
 export default workService;

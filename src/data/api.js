@@ -75,6 +75,7 @@ const api = createApi({
     "INTERNAL_WORKFLOW",
     "GROUPPED_PROJECTS",
     "WORKS",
+    "WORK",
   ],
 });
 

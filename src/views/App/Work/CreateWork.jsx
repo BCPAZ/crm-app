@@ -3,17 +3,16 @@ import FileUploader from "@/components/common/FileUploader";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import TextArea from "@/components/common/TextArea";
-import { useCreateProjectMutation } from "@/data/services/projectService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import { useCreateWorkMutation } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { defaultStyles, FileIcon } from "react-file-icon";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const yupSchema = Yup.object().shape({
@@ -65,6 +64,7 @@ const CreateWork = () => {
       code: "",
       description: "",
       customer_id: null,
+      users: [],
       sub_works: [
         {
           name: "",
