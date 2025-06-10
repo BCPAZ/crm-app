@@ -153,10 +153,10 @@ const AppRouter = () => {
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/issues/:id" element={<IssueDetail />} />
               </Route>
-              <Route path="/works" element={<Works />} />
-              <Route path="/works/create-work" element={<CreateWork />} />
-              <Route path="/works/:id" element={<ShowWork />} />
             </Route>
+            <Route path="/works" element={<Works />} />
+            <Route path="/works/create-work" element={<CreateWork />} />
+            <Route path="/works/:id" element={<ShowWork />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/profile" element={<Profile />} />
