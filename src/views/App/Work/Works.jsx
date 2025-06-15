@@ -18,9 +18,11 @@ const Works = () => {
     name: "",
     startDate: null,
     endDate: null,
+    documentNo: "",
+    progress: null,
   });
 
-  const { name, startDate, endDate } = filters;
+  const { name, startDate, endDate, documentNo, progress } = filters;
 
   const { data = [], isLoading } = useGetWorksQuery({
     name: filters.name,
@@ -30,6 +32,8 @@ const Works = () => {
     end_date: filters.endDate
       ? moment(filters.endDate).format("YYYY-MM-DD")
       : undefined,
+    document_no: filters.documentNo,
+    progress: filters.progress ? filters.progress : undefined,
   });
 
   const [openWorkId, setOpenWorkId] = useState(null);
@@ -76,25 +80,47 @@ const Works = () => {
             </Link>
           </div>
         </div>
-        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
-          <SecondInput
-            onChange={(e) => handleChange("name", e.target.value)}
-            column
-            value={name}
-            label="Tapşırıq adı"
-            placeholder="Tapşırıq adı daxil edin"
-            type="text"
-          />
-          <CustomDatePicker
-            value={startDate}
-            onChange={(value) => handleChange("startDate", value)}
-            label="Başlanğıc tarixi seçin"
-          />
-          <CustomDatePicker
-            value={endDate}
-            onChange={(value) => handleChange("endDate", value)}
-            label="Bitiş tarixi seçin"
-          />
+        <div className="flex flex-col gap-3">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+            <SecondInput
+              onChange={(e) => handleChange("name", e.target.value)}
+              column
+              value={name}
+              label="Tapşırıq adı"
+              placeholder="Tapşırıq adı daxil edin"
+              type="text"
+            />
+            <CustomDatePicker
+              value={startDate}
+              onChange={(value) => handleChange("startDate", value)}
+              label="Başlanğıc tarixi seçin"
+            />
+            <CustomDatePicker
+              value={endDate}
+              onChange={(value) => handleChange("endDate", value)}
+              label="Bitiş tarixi seçin"
+            />
+          </div>
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+            <SecondInput
+              onChange={(e) => handleChange("documentNo", e.target.value)}
+              column
+              value={documentNo}
+              label="Sənəd nömrəsi"
+              placeholder="Sənəd nömrəsini daxil edin"
+              type="text"
+            />
+            <SecondInput
+              onChange={(e) => handleChange("progress", e.target.value)}
+              column
+              value={progress}
+              label="Proqress"
+              placeholder="Proqress daxil edin"
+              type="number"
+              min={0}
+              max={100}
+            />
+          </div>
         </div>
         <div className="mt-10 w-full">
           <table className="table-fixed w-full border-collapse border">
@@ -286,11 +312,7 @@ const Works = () => {
                                 {subWork?.code || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
-                                {subWork?.children?.length > 0 ? (
-                                  <>N/A</>
-                                ) : (
-                                  <Button value="Bitir" />
-                                )}
+                                <Button value="Bitir" />
                               </td>
                             </tr>
 
