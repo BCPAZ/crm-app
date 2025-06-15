@@ -2,8 +2,10 @@ import Button from "@/components/common/Button";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import SecondInput from "@/components/common/SecondInput";
+import Select from "@/components/common/Select";
 import {
   useAddDocumentToWorkMutation,
+  useCompleteMutation,
   useGetWorksQuery,
 } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
@@ -13,6 +15,13 @@ import React, { useEffect, useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { Link } from "react-router-dom";
 
+const status = {
+  PENDING: "Gözlənilir",
+  ACTIVE: "Aktiv",
+  INACTIVE: "Deaktiv",
+  CLOSED: "Bağlanıb",
+};
+
 const Works = () => {
   const [filters, setFilters] = useState({
     name: "",
@@ -20,6 +29,8 @@ const Works = () => {
     endDate: null,
     documentNo: "",
     progress: null,
+    status: null,
+    user_name: "",
   });
 
   const { name, startDate, endDate, documentNo, progress } = filters;
@@ -34,6 +45,8 @@ const Works = () => {
       : undefined,
     document_no: filters.documentNo,
     progress: filters.progress ? filters.progress : undefined,
+    status: filters.status ? filters.status : undefined,
+    user_name: filters.user_name,
   });
 
   const [openWorkId, setOpenWorkId] = useState(null);
@@ -50,6 +63,15 @@ const Works = () => {
   };
 
   const [openedSubWorkIds, setOpenedSubWorkIds] = useState([]);
+
+  const [
+    completeWork,
+    {
+      isLoading: isCompleteLoading,
+      isSuccess: isCompleteSuccess,
+      isError: isCompleteError,
+    },
+  ] = useCompleteMutation();
 
   const getFileExtension = (filename) => filename.split(".").pop();
 
@@ -102,6 +124,17 @@ const Works = () => {
             />
           </div>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+            <Select
+              label="Status"
+              onChange={(e) => handleChange("status", e)}
+              value={filters.status}
+              options={Object.keys(status).map((s) => ({
+                id: s,
+                name: status[s],
+              }))}
+              column
+            />
+
             <SecondInput
               onChange={(e) => handleChange("documentNo", e.target.value)}
               column
@@ -121,6 +154,16 @@ const Works = () => {
               max={100}
             />
           </div>
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+            <SecondInput
+              onChange={(e) => handleChange("user_name", e.target.value)}
+              column
+              value={filters.user_name}
+              label="Müştəri/İcraçı"
+              placeholder="Müştəri/İcraçı daxil edin"
+              type="text"
+            />
+          </div>
         </div>
         <div className="mt-10 w-full">
           <table className="table-fixed w-full border-collapse border">
@@ -133,6 +176,7 @@ const Works = () => {
                   "Başlama tarixi",
                   "Bitmə tarixi",
                   "Proqress",
+                  "Status",
                   "Qeyd",
                   "Sənəd nömrəsi",
                   "Yüklənmiş fayl",
@@ -142,7 +186,7 @@ const Works = () => {
                   <th
                     key={i}
                     className="border border-gray-300 p-4 text-sm font-medium text-gray-500"
-                    colSpan={i === 1 || i === 7 ? 2 : 1}
+                    colSpan={i === 1 || i === 8 || i === 9 ? 2 : 1}
                   >
                     {header}
                   </th>
@@ -156,10 +200,9 @@ const Works = () => {
                 return (
                   <React.Fragment key={i}>
                     <tr
-                      onClick={() => toggleWorkId(work?.id)}
                       className={
                         moment(work?.end_date).isBefore(moment(), "day")
-                          ? "bg-red-200 cursor-pointer hover:bg-gray-100"
+                          ? "bg-red-200 cursor-pointer"
                           : moment(work?.end_date).isSame(moment(), "day")
                           ? "bg-yellow-200 cursor-pointer hover:bg-gray-100"
                           : "cursor-pointer hover:bg-gray-100"
@@ -169,6 +212,7 @@ const Works = () => {
                         {i + 1}
                       </td>
                       <td
+                        onClick={() => toggleWorkId(work?.id)}
                         className="border p-4 text-sm font-medium text-gray-700"
                         colSpan={2}
                       >
@@ -202,22 +246,37 @@ const Works = () => {
                         {work?.progress} %
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
+                        {status[work?.status] || "N/A"}
+                      </td>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.description || "N/A"}
                       </td>
                       <td
                         className="border p-4 text-sm font-medium text-gray-700"
                         colSpan={2}
                       >
-                        {"N/A"}
+                        {work?.document?.document_no || (
+                          <DocumentChanger subWorkId={work?.id} isWork />
+                        )}
                       </td>
-                      <td className="border p-4 text-sm font-medium text-gray-700">
+                      <td
+                        className="border p-4 text-sm font-medium text-gray-700"
+                        colSpan={2}
+                      >
                         N/A
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.code}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
-                        N/A
+                        <Button
+                          isLoading={isCompleteLoading}
+                          disabled={isCompleteLoading}
+                          value="Bitir"
+                          onClick={() =>
+                            completeWork({ id: work?.id, isWork: true })
+                          }
+                        />
                       </td>
                     </tr>
 
@@ -235,7 +294,7 @@ const Works = () => {
                                   moment(),
                                   "day"
                                 )
-                                  ? "bg-red-200 cursor-pointer hover:bg-gray-100"
+                                  ? "bg-red-200 cursor-pointer"
                                   : moment(subWork.end_date).isSame(
                                       moment(),
                                       "day"
@@ -283,6 +342,9 @@ const Works = () => {
                                 {subWork?.progress} %
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
+                                {status[subWork?.status] || "N/A"}
+                              </td>
+                              <td className="border p-4 text-sm font-medium text-gray-700">
                                 {subWork?.description || "N/A"}
                               </td>
                               <td
@@ -293,7 +355,10 @@ const Works = () => {
                                   <DocumentChanger subWorkId={subWork?.id} />
                                 )}
                               </td>
-                              <td className="border p-4 text-sm font-medium text-gray-700">
+                              <td
+                                className="border p-4 text-sm font-medium text-gray-700"
+                                colSpan={2}
+                              >
                                 <div className="flex items-center gap-4">
                                   <div className="w-[25px] h-[25px]">
                                     {renderFileIcon(subWork?.file || "")}
@@ -312,7 +377,12 @@ const Works = () => {
                                 {subWork?.code || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
-                                <Button value="Bitir" />
+                                <Button
+                                  value="Bitir"
+                                  onClick={() =>
+                                    completeWork({ id: subWork?.id })
+                                  }
+                                />
                               </td>
                             </tr>
 
@@ -347,6 +417,9 @@ const Works = () => {
                                       {child?.progress} %
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
+                                      {status[child?.status] || "N/A"}
+                                    </td>
+                                    <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.description || "N/A"}
                                     </td>
                                     <td
@@ -355,7 +428,10 @@ const Works = () => {
                                     >
                                       <DocumentChanger subWorkId={child?.id} />
                                     </td>
-                                    <td className="border p-4 text-sm font-medium text-gray-700">
+                                    <td
+                                      className="border p-4 text-sm font-medium text-gray-700"
+                                      colSpan={2}
+                                    >
                                       <div className="flex items-center gap-4">
                                         <div className="w-[25px] h-[25px]">
                                           {renderFileIcon(child?.file || "")}
@@ -397,7 +473,7 @@ const Works = () => {
   );
 };
 
-const DocumentChanger = ({ subWorkId }) => {
+const DocumentChanger = ({ subWorkId, isWork = false }) => {
   const [addDocument, { isError, isSuccess }] = useAddDocumentToWorkMutation();
   const [documentNo, setDocumentNo] = useState(null);
 
@@ -423,7 +499,11 @@ const DocumentChanger = ({ subWorkId }) => {
         <Button
           value="Yüklə"
           onClick={() =>
-            addDocument({ sub_work_id: subWorkId, document_no: documentNo })
+            addDocument(
+              isWork
+                ? { work_id: subWorkId, document_no: documentNo }
+                : { sub_work_id: subWorkId, document_no: documentNo }
+            )
           }
         />
       </div>

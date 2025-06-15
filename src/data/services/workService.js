@@ -99,20 +99,25 @@ const workService = api.injectEndpoints({
     }),
 
     complete: builder.mutation({
-      query: (id) => ({
-        url: `/works/complete/${id}`,
+      query: ({ id, isWork = false }) => ({
+        url: isWork ? `/works/complete-work/${id}` : `/works/complete/${id}`,
         method: "POST",
       }),
       invalidatesTags: ["WORKS", "WORK"],
     }),
 
     addDocumentToWork: builder.mutation({
-      query: ({ sub_work_id, document_no }) => ({
+      query: ({
+        sub_work_id = undefined,
+        document_no,
+        work_id = undefined,
+      }) => ({
         url: `/works/add-document`,
         method: "POST",
         body: {
           sub_work_id,
           document_no,
+          work_id,
         },
       }),
     }),

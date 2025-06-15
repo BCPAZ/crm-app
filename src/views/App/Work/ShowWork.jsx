@@ -57,6 +57,7 @@ const ShowWork = () => {
                   "Başlama tarixi",
                   "Bitmə tarixi",
                   "Proqress",
+                  "Status",
                   "Qeyd",
                   "Yüklənmiş fayl",
                   "Tapşırıq kodu",
@@ -76,7 +77,7 @@ const ShowWork = () => {
               <tr
                 className={
                   moment(data?.end_date).isBefore(moment(), "day")
-                    ? "bg-red-200 cursor-pointer hover:bg-gray-100"
+                    ? "bg-red-200 cursor-pointer"
                     : moment(data?.end_date).isSame(moment(), "day")
                     ? "bg-yellow-200 cursor-pointer hover:bg-gray-100"
                     : "cursor-pointer hover:bg-gray-100"
@@ -125,7 +126,7 @@ const ShowWork = () => {
                     <tr
                       className={
                         moment(work.end_date).isBefore(moment(), "day")
-                          ? "bg-red-200 cursor-pointer hover:bg-gray-100"
+                          ? "bg-red-200 cursor-pointer"
                           : moment(work.end_date).isSame(moment(), "day")
                           ? "bg-yellow-200 cursor-pointer hover:bg-gray-100"
                           : "cursor-pointer hover:bg-gray-100"
