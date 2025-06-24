@@ -27,6 +27,7 @@ const workService = api.injectEndpoints({
         formData.append("code", body.code);
         formData.append("description", body.description);
         formData.append("customer_id", body.customer_id);
+        formData.append("company_customer_id", body.company_customer_id);
 
         for (let i = 0; i < body.users.length; i++) {
           formData.append(`users[${i}]`, body.users[i]);
