@@ -13,13 +13,21 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const status = {
-  PENDING: "Gözlənilir",
+  PENDING: "Gözlənilir",
   ACTIVE: "Aktiv",
   INACTIVE: "Deaktiv",
-  CLOSED: "Bağlanıb",
+  CLOSED: "Bağlanıb",
+};
+
+const statusColor = {
+  PENDING: "yellow",
+  ACTIVE: "green",
+  INACTIVE: "red",
+  CLOSED: "blue",
 };
 
 const Works = () => {
@@ -31,9 +39,12 @@ const Works = () => {
     progress: null,
     status: null,
     user_name: "",
+    customer_name: "",
   });
 
   const { name, startDate, endDate, documentNo, progress } = filters;
+
+  const { user } = useSelector((state) => state.auth);
 
   const { data = [], isLoading } = useGetWorksQuery({
     name: filters.name,
@@ -47,6 +58,7 @@ const Works = () => {
     progress: filters.progress ? filters.progress : undefined,
     status: filters.status ? filters.status : undefined,
     user_name: filters.user_name,
+    customer_name: filters.customer_name,
   });
 
   const [openWorkId, setOpenWorkId] = useState(null);
@@ -159,20 +171,29 @@ const Works = () => {
               onChange={(e) => handleChange("user_name", e.target.value)}
               column
               value={filters.user_name}
-              label="Müştəri/İcraçı"
-              placeholder="Müştəri/İcraçı daxil edin"
+              label="İcraçı"
+              placeholder="İcraçı daxil edin"
+              type="text"
+            />
+            <SecondInput
+              onChange={(e) => handleChange("customer_name", e.target.value)}
+              column
+              value={filters.customer_name}
+              label="Müştəri"
+              placeholder="Müştərini daxil edin"
               type="text"
             />
           </div>
         </div>
-        <div className="mt-10 w-full">
-          <table className="table-fixed w-full border-collapse border">
+        <div className="mt-10 w-full overflow-x-auto">
+          <table className="table-auto min-w-full border-collapse border whitespace-nowrap">
             <thead className="bg-gray-300/30 w-full rounded-lg text-left">
               <tr>
                 {[
                   "#",
                   "Tapşırıq adı",
-                  "İcraçı / Müştəri",
+                  "İcraçı",
+                  "Müştəri",
                   "Başlama tarixi",
                   "Bitmə tarixi",
                   "Proqress",
@@ -186,7 +207,7 @@ const Works = () => {
                   <th
                     key={i}
                     className="border border-gray-300 p-4 text-sm font-medium text-gray-500"
-                    colSpan={i === 1 || i === 8 || i === 9 ? 2 : 1}
+                    colSpan={i === 1 || i === 9 || i === 10 ? 2 : 1}
                   >
                     {header}
                   </th>
@@ -233,6 +254,9 @@ const Works = () => {
                         {work?.customer?.name || "N/A"}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
+                        {work?.customerCompany?.name || "N/A"}
+                      </td>
+                      <td className="border p-4 text-sm font-medium text-gray-700">
                         {moment(work?.start_date || new Date()).format(
                           "YYYY-MM-DD"
                         )}
@@ -246,7 +270,15 @@ const Works = () => {
                         {work?.progress} %
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
-                        {status[work?.status] || "N/A"}
+                        {status[work?.status] || "N/A"}{" "}
+                        {status[work?.status] && (
+                          <span
+                            className="w-2 h-2 rounded-full inline-block ml-2"
+                            style={{
+                              background: statusColor[work?.status],
+                            }}
+                          />
+                        )}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.description || "N/A"}
@@ -255,7 +287,14 @@ const Works = () => {
                         className="border p-4 text-sm font-medium text-gray-700"
                         colSpan={2}
                       >
-                        {work?.document?.document_no || (
+                        {work?.document?.document_no ? (
+                          <Link
+                            to={`/document-register?documentNo=${work?.document?.document_no}`}
+                            className="text-sm text-secondary hover:underline"
+                          >
+                            {work?.document?.document_no}
+                          </Link>
+                        ) : (
                           <DocumentChanger subWorkId={work?.id} isWork />
                         )}
                       </td>
@@ -269,14 +308,16 @@ const Works = () => {
                         {work?.code}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
-                        <Button
-                          isLoading={isCompleteLoading}
-                          disabled={isCompleteLoading}
-                          value="Bitir"
-                          onClick={() =>
-                            completeWork({ id: work?.id, isWork: true })
-                          }
-                        />
+                        {work?.customer_id === user?.id && (
+                          <Button
+                            isLoading={isCompleteLoading}
+                            disabled={isCompleteLoading}
+                            value="Bitir"
+                            onClick={() =>
+                              completeWork({ id: work?.id, isWork: true })
+                            }
+                          />
+                        )}
                       </td>
                     </tr>
 
@@ -329,6 +370,9 @@ const Works = () => {
                                 {subWork?.worker?.name || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
+                                {work?.customerCompany?.name || "N/A"}
+                              </td>
+                              <td className="border p-4 text-sm font-medium text-gray-700">
                                 {moment(
                                   subWork?.start_date || new Date()
                                 ).format("YYYY-MM-DD")}
@@ -343,6 +387,14 @@ const Works = () => {
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 {status[subWork?.status] || "N/A"}
+                                {status[subWork?.status] && (
+                                  <span
+                                    className="w-2 h-2 rounded-full inline-block ml-2"
+                                    style={{
+                                      background: statusColor[subWork?.status],
+                                    }}
+                                  />
+                                )}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 {subWork?.description || "N/A"}
@@ -351,7 +403,14 @@ const Works = () => {
                                 className="border p-4 text-sm font-medium text-gray-700"
                                 colSpan={2}
                               >
-                                {subWork?.document?.document_no || (
+                                {subWork?.document?.document_no ? (
+                                  <Link
+                                    to={`/document-register?documentNo=${subWork?.document?.document_no}`}
+                                    className="text-sm text-secondary hover:underline"
+                                  >
+                                    {subWork?.document?.document_no}
+                                  </Link>
+                                ) : (
                                   <DocumentChanger subWorkId={subWork?.id} />
                                 )}
                               </td>
@@ -364,6 +423,7 @@ const Works = () => {
                                     {renderFileIcon(subWork?.file || "")}
                                   </div>
                                   <Link
+                                    target="_blank"
                                     to={`https://azincrm.az/storage/${subWork?.file}`}
                                     className="text-sm text-secondary hover:underline"
                                   >
@@ -377,12 +437,14 @@ const Works = () => {
                                 {subWork?.code || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
-                                <Button
-                                  value="Bitir"
-                                  onClick={() =>
-                                    completeWork({ id: subWork?.id })
-                                  }
-                                />
+                                {subWork?.worker_id === user?.id && (
+                                  <Button
+                                    value="Bitir"
+                                    onClick={() =>
+                                      completeWork({ id: subWork?.id })
+                                    }
+                                  />
+                                )}
                               </td>
                             </tr>
 
@@ -404,6 +466,9 @@ const Works = () => {
                                       {child?.worker?.name || "N/A"}
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
+                                      {work?.customerCompany?.name || "N/A"}
+                                    </td>
+                                    <td className="border p-4 text-sm font-medium text-gray-700">
                                       {moment(
                                         child?.start_date || new Date()
                                       ).format("YYYY-MM-DD")}
@@ -418,6 +483,15 @@ const Works = () => {
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {status[child?.status] || "N/A"}
+                                      {status[child?.status] && (
+                                        <span
+                                          className="w-2 h-2 rounded-full inline-block ml-2"
+                                          style={{
+                                            background:
+                                              statusColor[child?.status],
+                                          }}
+                                        />
+                                      )}
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.description || "N/A"}
@@ -426,7 +500,18 @@ const Works = () => {
                                       className="border p-4 text-sm font-medium text-gray-700"
                                       colSpan={2}
                                     >
-                                      <DocumentChanger subWorkId={child?.id} />
+                                      {child?.document?.document_no ? (
+                                        <Link
+                                          to={`/document-register?documentNo=${child?.document?.document_no}`}
+                                          className="text-sm text-secondary hover:underline"
+                                        >
+                                          {child?.document?.document_no}
+                                        </Link>
+                                      ) : (
+                                        <DocumentChanger
+                                          subWorkId={child?.id}
+                                        />
+                                      )}
                                     </td>
                                     <td
                                       className="border p-4 text-sm font-medium text-gray-700"
@@ -437,6 +522,7 @@ const Works = () => {
                                           {renderFileIcon(child?.file || "")}
                                         </div>
                                         <Link
+                                          target="_blank"
                                           to={`https://azincrm.az/storage/${child?.file}`}
                                           className="text-sm text-secondary hover:underline"
                                         >
@@ -450,10 +536,13 @@ const Works = () => {
                                       {child?.code || "N/A"}
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
-                                      {child?.children?.length > 0 ? (
-                                        <>N/A</>
-                                      ) : (
-                                        <Button value="Bitir" />
+                                      {child?.worker_id === user?.id && (
+                                        <Button
+                                          value="Bitir"
+                                          onClick={() =>
+                                            completeWork({ id: child?.id })
+                                          }
+                                        />
                                       )}
                                     </td>
                                   </tr>
@@ -489,12 +578,14 @@ const DocumentChanger = ({ subWorkId, isWork = false }) => {
 
   return (
     <div className="flex flex-row gap-2 items-center">
-      <SecondInput
-        type="text"
-        name="document_no"
-        value={documentNo}
-        onChange={(e) => setDocumentNo(e.target.value)}
-      />
+      <div className="min-w-[160px] w-full">
+        <SecondInput
+          type="text"
+          name="document_no"
+          value={documentNo}
+          onChange={(e) => setDocumentNo(e.target.value)}
+        />
+      </div>
       <div>
         <Button
           value="Yüklə"

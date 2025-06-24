@@ -3,6 +3,7 @@ import FileUploader from "@/components/common/FileUploader";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import TextArea from "@/components/common/TextArea";
+import { useGetCustomerCompaniesQuery } from "@/data/services/companyService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import { useCreateWorkMutation } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
@@ -65,12 +66,14 @@ const CreateWork = () => {
     control,
     watch,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       name: "",
       code: "",
       description: "",
       customer_id: null,
+      company_customer_id: null,
       users: [],
       sub_works: [
         {
@@ -100,10 +103,7 @@ const CreateWork = () => {
   const navigate = useNavigate();
   const [selectedPeople, setSelectedPeople] = useState([]);
 
-  console.log(selectedPeople);
-
   const onSubmit = (data) => {
-    console.log(selectedPeople.map((user) => user.id));
     createProject({
       ...data,
       users: selectedPeople.map((user) => user.id),
@@ -122,6 +122,21 @@ const CreateWork = () => {
       showToast("Tapşırıq yaradıla bilmədi", "error");
     }
   }, [isError]);
+
+  useEffect(() => {
+    const characters = watch("name").split(" ");
+    const code = characters
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+
+    if (code) {
+      const random = Math.floor(Math.random() * (999 - 100 + 1) + 100);
+
+      setValue("code", `${code}-${random}`);
+    }
+  }, [watch("name")]);
+
+  const { data: companies } = useGetCustomerCompaniesQuery();
 
   return (
     <section className="w-full h-full py-10">
@@ -160,12 +175,27 @@ const CreateWork = () => {
           </div>
 
           <Controller
-            name="customer_id"
+            name="company_customer_id"
             control={control}
             render={({ field }) => (
               <Select
                 column
                 label="Müştəri"
+                placeholder="Qeyd daxil edin..."
+                options={companies}
+                error={errors.customer_id?.message}
+                {...field}
+              />
+            )}
+          />
+
+          <Controller
+            name="customer_id"
+            control={control}
+            render={({ field }) => (
+              <Select
+                column
+                label="Cavabdeh şəxs"
                 placeholder="Qeyd daxil edin..."
                 options={companyUsers}
                 error={errors.customer_id?.message}

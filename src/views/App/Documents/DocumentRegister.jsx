@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import { IoMdCheckmark } from "react-icons/io";
-import { FileIcon, defaultStyles } from "react-file-icon";
-import Spinner from "@/components/common/Spinner";
-import ReactPaginate from "react-paginate";
-import { Toaster } from "react-hot-toast";
+import CustomDatePicker from "@/components/common/CustomDatePicker";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
-import CustomDatePicker from "@/components/common/CustomDatePicker";
-import useToast from "@/hooks/useToast";
+import Spinner from "@/components/common/Spinner";
 import {
   useGetDocumentsQuery,
   useSubmitDocumentMutation,
 } from "@/data/services/documentService";
+import useToast from "@/hooks/useToast";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { FileIcon, defaultStyles } from "react-file-icon";
+import { Toaster } from "react-hot-toast";
+import { IoMdCheckmark } from "react-icons/io";
+import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 const options = [
@@ -23,9 +23,13 @@ const options = [
 
 const DocumentRegister = () => {
   const [page, setPage] = useState(1);
+
+  // get documentNo from query params with react router
+  const searchParams = new URLSearchParams(window.location.search);
+
   const [filters, setFilters] = useState({
     name: "",
-    documentNo: "",
+    documentNo: searchParams.get("documentNo") || "",
     startDate: null,
     endDate: null,
     type: null,
@@ -91,7 +95,6 @@ const DocumentRegister = () => {
       type: null,
     });
   };
-
 
   return (
     <section className="h-full">
@@ -179,7 +182,10 @@ const DocumentRegister = () => {
                                 <div className="w-[25px] h-[25px]">
                                   {renderFileIcon(document.file)}
                                 </div>
-                                <Link to={`/document/${document.id}`} className="text-sm text-secondary hover:underline">
+                                <Link
+                                  to={`/document/${document.id}`}
+                                  className="text-sm text-secondary hover:underline"
+                                >
                                   {document.name}
                                 </Link>
                               </div>
@@ -212,9 +218,11 @@ const DocumentRegister = () => {
                                 className="outline-none border-none p-1 hover:bg-blue-600/40 hover:text-blue-600 disabled:text-gray-500 disabled:bg-gray-100 rounded-lg"
                                 type="button"
                               >
-                                {
-                                  document?.is_sended ? "Göndərilib" : <IoMdCheckmark size={20} />
-                                }
+                                {document?.is_sended ? (
+                                  "Göndərilib"
+                                ) : (
+                                  <IoMdCheckmark size={20} />
+                                )}
                               </button>
                             </td>
                           </tr>
@@ -229,7 +237,9 @@ const DocumentRegister = () => {
                     nextLabel={"›"}
                     breakLabel={"..."}
                     pageCount={meta?.last_page}
-                    onPageChange={(selectedItem) => handlePageChange(selectedItem.selected + 1)}
+                    onPageChange={(selectedItem) =>
+                      handlePageChange(selectedItem.selected + 1)
+                    }
                     containerClassName="flex items-center justify-center space-x-2 py-4"
                     pageClassName="rounded border border-gray-300 px-3 py-1 hover:bg-blue-100 transition duration-300"
                     pageLinkClassName="text-secondary hover:text-blue-900"

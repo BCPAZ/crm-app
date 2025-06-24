@@ -1,12 +1,12 @@
-import api from '@/data/api';
+import api from "@/data/api";
 
 const companyService = api.injectEndpoints({
   endpoints: (builder) => ({
     getGovernments: builder.query({
       query: () => ({
-        url: '/companies/governments',
+        url: "/companies/governments",
       }),
-      providesTags: ['COMPANIES'],
+      providesTags: ["COMPANIES"],
       keepUnusedDataFor: 0,
     }),
 
@@ -15,10 +15,21 @@ const companyService = api.injectEndpoints({
         url: `/companies/${subdomain}`,
       }),
     }),
+
+    getCustomerCompanies: builder.query({
+      query: () => ({
+        url: "/companies/customers",
+      }),
+      providesTags: ["COMPANIES"],
+      keepUnusedDataFor: 0,
+    }),
   }),
 });
 
-export const { useGetGovernmentsQuery, useGetCompanyBySubdomainQuery } =
-  companyService;
+export const {
+  useGetGovernmentsQuery,
+  useGetCompanyBySubdomainQuery,
+  useGetCustomerCompaniesQuery,
+} = companyService;
 
 export default companyService;
