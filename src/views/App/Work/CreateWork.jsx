@@ -35,7 +35,7 @@ const yupSchema = Yup.object().shape({
       description: Yup.string(),
       start_date: Yup.string().required("Tapşırıq başlama tarixini daxil edin"),
       end_date: Yup.string().required("Tapşırıq bitmə tarixini daxil edin"),
-      file: Yup.mixed(),
+      file: Yup.mixed().nullable(),
       worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
       children: Yup.array()
         .of(
@@ -48,7 +48,7 @@ const yupSchema = Yup.object().shape({
             end_date: Yup.string().required(
               "Tapşırıq bitmə tarixini daxil edin"
             ),
-            file: Yup.mixed(),
+            file: Yup.mixed().nullable(),
             worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
           })
         )
@@ -95,7 +95,9 @@ const CreateWork = () => {
     name: "sub_works",
   });
 
-  const { data: companyUserResult = {} } = useGetCompanyUsersQuery();
+  const { data: companyUserResult = {} } = useGetCompanyUsersQuery({
+    limit: 1000000,
+  });
 
   const { users: companyUsers = [] } = companyUserResult;
 
