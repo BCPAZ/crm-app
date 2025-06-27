@@ -88,6 +88,7 @@ const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
 const Works = lazy(() => import("@/views/App/Work/Works"));
 const CreateWork = lazy(() => import("@/views/App/Work/CreateWork"));
 const ShowWork = lazy(() => import("@/views/App/Work/ShowWork"));
+const UpdateWork = lazy(() => import("@/views/App/Work/UpdateWork"));
 
 const AppRouter = () => {
   useCurrentAccountQuery();
@@ -156,6 +157,7 @@ const AppRouter = () => {
             </Route>
             <Route path="/works" element={<Works />} />
             <Route path="/works/create-work" element={<CreateWork />} />
+            <Route path="/works/:id/update" element={<UpdateWork />} />
             <Route path="/works/:id" element={<ShowWork />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="/change-password" element={<ChangePassword />} />

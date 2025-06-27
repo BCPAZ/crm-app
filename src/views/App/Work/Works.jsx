@@ -14,7 +14,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const status = {
   PENDING: "Gözlənilir",
@@ -41,6 +41,8 @@ const Works = () => {
     user_name: "",
     customer_name: "",
   });
+
+  const navigate = useNavigate();
 
   const { name, startDate, endDate, documentNo, progress } = filters;
 
