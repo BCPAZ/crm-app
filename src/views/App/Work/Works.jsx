@@ -109,10 +109,10 @@ const Works = () => {
     <section className="w-full h-full p-5">
       <div className="mx-auto w-full">
         <div className="flex items-center justify-between gap-3">
-          <h1 className="text-2xl font-semibold">Tapşırıqlar</h1>
+          <h1 className="text-2xl font-semibold">Layihələr</h1>
           <div className="mt-5 flex justify-end">
             <Link to="/works/create-work">
-              <Button value="Tapşırıq yaradın" />
+              <Button value="Layihə yaradın" />
             </Link>
           </div>
         </div>
@@ -122,8 +122,8 @@ const Works = () => {
               onChange={(e) => handleChange("name", e.target.value)}
               column
               value={name}
-              label="Tapşırıq adı"
-              placeholder="Tapşırıq adı daxil edin"
+              label="Layihə adı"
+              placeholder="Layihə adı daxil edin"
               type="text"
             />
             <CustomDatePicker
@@ -193,7 +193,7 @@ const Works = () => {
               <tr>
                 {[
                   "#",
-                  "Tapşırıq adı",
+                  "Layihə adı",
                   "İcraçı",
                   "Müştəri",
                   "Başlama tarixi",
@@ -203,7 +203,7 @@ const Works = () => {
                   "Qeyd",
                   "Sənəd nömrəsi",
                   "Yüklənmiş fayl",
-                  "Tapşırıq kodu",
+                  "Layihə kodu",
                   "Əməliyyatlar",
                 ].map((header, i) => (
                   <th

@@ -24,32 +24,30 @@ import * as Yup from "yup";
 
 const yupSchema = Yup.object().shape({
   name: Yup.string()
-    .min(1, "Tapşırıq adını daxil edin")
-    .required("Tapşırıq adını daxil edin"),
-  code: Yup.string().required("Tapşırıq kodunu daxil edin"),
+    .min(1, "Layihə adını daxil edin")
+    .required("Layihə adını daxil edin"),
+  code: Yup.string().required("Layihə kodunu daxil edin"),
   description: Yup.string(),
   customer_id: Yup.number().required("Müştərini seçin"),
   sub_works: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().required("Tapşırıq adını daxil edin"),
+      name: Yup.string().required("Layihə adını daxil edin"),
       description: Yup.string(),
-      start_date: Yup.string().required("Tapşırıq başlama tarixini daxil edin"),
-      end_date: Yup.string().required("Tapşırıq bitmə tarixini daxil edin"),
+      start_date: Yup.string().required("Layihə başlama tarixini daxil edin"),
+      end_date: Yup.string().required("Layihə bitmə tarixini daxil edin"),
       file: Yup.mixed().nullable(),
-      worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
+      worker_id: Yup.number().required("Layihə sənədi daxil edin"),
       children: Yup.array()
         .of(
           Yup.object().shape({
-            name: Yup.string().required("Tapşırıq adını daxil edin"),
+            name: Yup.string().required("Layihə adını daxil edin"),
             description: Yup.string(),
             start_date: Yup.string().required(
-              "Tapşırıq başlama tarixini daxil edin"
+              "Layihə başlama tarixini daxil edin"
             ),
-            end_date: Yup.string().required(
-              "Tapşırıq bitmə tarixini daxil edin"
-            ),
+            end_date: Yup.string().required("Layihə bitmə tarixini daxil edin"),
             file: Yup.mixed().nullable(),
-            worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
+            worker_id: Yup.number().required("Layihə sənədi daxil edin"),
           })
         )
         .nullable(),
@@ -114,14 +112,14 @@ const CreateWork = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      showToast("Tapşırıq uğurlu şəkildə yaradıldı", "success");
+      showToast("Layihə uğurlu şəkildə yaradıldı", "success");
       navigate("/works");
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      showToast("Tapşırıq yaradıla bilmədi", "error");
+      showToast("Layihə yaradıla bilmədi", "error");
     }
   }, [isError]);
 
@@ -144,7 +142,7 @@ const CreateWork = () => {
     <section className="w-full h-full py-10">
       <Toaster />
       <div className="siteContainer">
-        <h1 className="text-2xl font-semibold">Tapşırıq yarat</h1>
+        <h1 className="text-2xl font-semibold">Layihə yarat</h1>
         <div className="flex flex-col gap-4 w-full h-full mt-10">
           <div className="flex flex-row gap-5">
             <Controller
@@ -154,8 +152,8 @@ const CreateWork = () => {
                 <SecondInput
                   column
                   type="text"
-                  label="* Tapşırıq adı"
-                  placeholder="Tapşırıq adını daxil edin..."
+                  label="* Layihə adı"
+                  placeholder="Layihə adını daxil edin..."
                   error={errors.name?.message}
                   {...field}
                 />
@@ -167,8 +165,8 @@ const CreateWork = () => {
               render={({ field }) => (
                 <SecondInput
                   column
-                  label="* Tapşırıq kodu"
-                  placeholder="Tapşırıq kodunu daxil edin..."
+                  label="* Layihə kodu"
+                  placeholder="Layihə kodunu daxil edin..."
                   error={errors.code?.message}
                   {...field}
                 />
@@ -270,7 +268,7 @@ const CreateWork = () => {
           />
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-md font-semibold">Alt tapşırıqlar</h3>
+            <h3 className="text-md font-semibold">Alt Layihələr</h3>
             {fields.map((field, index) => {
               return (
                 <SubWork
@@ -305,7 +303,7 @@ const CreateWork = () => {
           <div className="w-fit mt-3">
             <Button
               isLoading={isLoading}
-              value="Tapşırıq yarat"
+              value="Layihə yarat"
               onClick={handleSubmit(onSubmit)}
             />
           </div>
@@ -356,8 +354,8 @@ const SubWork = ({
           render={({ field }) => (
             <SecondInput
               column
-              label="* Tapşırıq adı"
-              placeholder="Tapşırıq adını daxil edin..."
+              label="* Layihə adı"
+              placeholder="Layihə adını daxil edin..."
               error={errors.sub_works?.[index]?.name?.message}
               {...field}
             />
@@ -417,7 +415,7 @@ const SubWork = ({
         render={({ field }) => (
           <TextArea
             column
-            label="Tapşırıq üçün Qeyd"
+            label="Layihə üçün Qeyd"
             placeholder="Qeyd daxil edin..."
             error={errors.sub_works?.[index]?.description?.message}
             {...field}
@@ -461,7 +459,7 @@ const SubWork = ({
       />
 
       <div className="flex flex-col gap-4">
-        <h3 className="text-md font-semibold">Alt tapşırıqlar</h3>
+        <h3 className="text-md font-semibold">Alt Layihələr</h3>
         {childFields.map((child, childIndex) => {
           return (
             <div
@@ -475,8 +473,8 @@ const SubWork = ({
                   render={({ field }) => (
                     <SecondInput
                       column
-                      label="* Tapşırıq adı"
-                      placeholder="Tapşırıq adını daxil edin..."
+                      label="* Layihə adı"
+                      placeholder="Layihə adını daxil edin..."
                       error={
                         errors.sub_works?.[index]?.children?.[childIndex]?.name
                           ?.message
@@ -543,7 +541,7 @@ const SubWork = ({
                 render={({ field }) => (
                   <TextArea
                     column
-                    label="Tapşırıq üçün Qeyd"
+                    label="Layihə üçün Qeyd"
                     placeholder="Qeyd daxil edin..."
                     error={
                       errors.sub_works?.[index]?.children?.[childIndex]
@@ -598,7 +596,7 @@ const SubWork = ({
       </div>
 
       <Button
-        value="Alt tapşırıq əlavə et"
+        value="Alt Layihə əlavə et"
         onClick={() => {
           childAppend({
             name: "",

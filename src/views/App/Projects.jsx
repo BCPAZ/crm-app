@@ -1,27 +1,29 @@
-import { Link } from "react-router-dom";
-import { TbTrash } from "react-icons/tb";
-import { FaRegEye } from "react-icons/fa";
-import { IoAddSharp } from "react-icons/io5";
-import { useGetProjectsQuery, useDeleteProjectMutation } from "@/data/services/projectService";
-import { IoMdCheckmark } from "react-icons/io";
-import { IoCheckboxSharp } from "react-icons/io5";
-import moment from "moment";
-import Spinner from "@/components/common/Spinner";
-import { setProject } from "@/data/slices/projectSlice";
-import { useDispatch, useSelector } from "react-redux";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
-import { useState } from "react";
-import { useEffect } from "react";
+import Spinner from "@/components/common/Spinner";
+import {
+  useDeleteProjectMutation,
+  useGetProjectsQuery,
+} from "@/data/services/projectService";
+import { setProject } from "@/data/slices/projectSlice";
 import useToast from "@/hooks/useToast";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { FaRegEye } from "react-icons/fa";
+import { IoMdCheckmark } from "react-icons/io";
+import { IoAddSharp, IoCheckboxSharp } from "react-icons/io5";
+import { TbTrash } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 // import { FaUsers } from "react-icons/fa";
 
 const Projects = () => {
   const { showToast } = useToast();
   const { data: projects = [], isLoading, isError } = useGetProjectsQuery();
-  const [ projectSelected, setProjectSelected] = useState(null);
-  const [deleteProject, { isSuccess: deleteSuccess, isError: deleteError }] = useDeleteProjectMutation();
-  const { project: selectedProject } = useSelector(state => state.project)
+  const [projectSelected, setProjectSelected] = useState(null);
+  const [deleteProject, { isSuccess: deleteSuccess, isError: deleteError }] =
+    useDeleteProjectMutation();
+  const { project: selectedProject } = useSelector((state) => state.project);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const dispatch = useDispatch();
 
@@ -32,43 +34,47 @@ const Projects = () => {
   const openConfirmation = (project) => {
     setProjectSelected(project);
     setShowConfirmation(true);
-  }
-
+  };
 
   const closeConfirmationModal = () => {
     setShowConfirmation(false);
-  }
+  };
 
   const handleDelete = () => {
-    deleteProject(projectSelected.id)
+    deleteProject(projectSelected.id);
   };
 
   useEffect(() => {
     if (deleteSuccess) {
-      showToast("Layihə uğurlu şəkildə silindi", 'success');
+      showToast("Tapşırıq uğurlu şəkildə silindi", "success");
       setShowConfirmation(false);
     }
   }, [deleteSuccess]);
 
   useEffect(() => {
     if (deleteError) {
-      showToast("Layihə silinə bilmədi", 'error');
+      showToast("Tapşırıq silinə bilmədi", "error");
     }
   }, [deleteError]);
 
   return (
     <section>
       <Toaster />
-      <ConfirmationModal title="Bu proyekti silmək istəyirsinizmi?" handleDelete={handleDelete} closeConfirmationModal={closeConfirmationModal} showConfirmation={showConfirmation} />
+      <ConfirmationModal
+        title="Bu proyekti silmək istəyirsinizmi?"
+        handleDelete={handleDelete}
+        closeConfirmationModal={closeConfirmationModal}
+        showConfirmation={showConfirmation}
+      />
       <div className="siteContainer">
         <div className="flex items-center justify-between mt-10">
-          <h1 className="text-2xl font-semibold ">Layihələr</h1>
+          <h1 className="text-2xl font-semibold ">Tapşırıqlar</h1>
           <Link
             to={"/create-project"}
             className="bg-black p-3 font-semibold text-white rounded-lg text-sm flex items-center gap-2"
           >
             <IoAddSharp size={18} />
-            Layihə yarat
+            Tapşırıq yarat
           </Link>
         </div>
         {isLoading && (
@@ -78,7 +84,7 @@ const Projects = () => {
         )}
         {isError && (
           <div className="w-full h-full flex items-center justify-center text-2xl font-semibold">
-            Heç bir layihə tapılmadı
+            Heç bir tapşırıq tapılmadı
           </div>
         )}
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 py-10">
@@ -112,14 +118,17 @@ const Projects = () => {
                   </Link>
                   <button
                     onClick={() => handleSetProject(project)}
-                    className={`text-white font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2 ${selectedProject?.id === project.id
-                      ? "bg-grey"
-                      : "bg-green-600"
-                      }`}
+                    className={`text-white font-medium rounded-lg py-2 px-4 text-sm w-fit flex items-center gap-2 ${
+                      selectedProject?.id === project.id
+                        ? "bg-grey"
+                        : "bg-green-600"
+                    }`}
                   >
-                    {
-                      selectedProject?.id === project.id ? <IoCheckboxSharp size={16} /> : <IoMdCheckmark size={16} />
-                    }
+                    {selectedProject?.id === project.id ? (
+                      <IoCheckboxSharp size={16} />
+                    ) : (
+                      <IoMdCheckmark size={16} />
+                    )}
                   </button>
                 </div>
                 {/* <span className="flex items-center gap-2 text-xs font-semibold">

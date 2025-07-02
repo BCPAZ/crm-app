@@ -101,21 +101,21 @@ export const navigationLinks = [
     path: "/insights",
   },
   {
-    title: "Tapşırıqlar",
+    title: "Layihələr",
     icon: work,
     path: "/works",
   },
   {
-    title: "Layihələr",
+    title: "Tapşırıqlar",
     icon: projects,
     elements: [
       {
         path: "/projects",
-        label: "Bütün layihələr",
+        label: "Bütün tapşırıqlar",
       },
       {
         path: "create-project",
-        label: "Yeni Layihə",
+        label: "Yeni Tapşırıq",
       },
     ],
   },
