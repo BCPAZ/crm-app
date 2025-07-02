@@ -340,12 +340,20 @@ const Works = () => {
                           />
                         )}
                         {work?.created_by === user?.id && (
-                          <Button
-                            isLoading={isCompleteLoading}
-                            disabled={isCompleteLoading}
-                            value="Arxivlə"
-                            onClick={() => archive(work?.id)}
-                          />
+                          <>
+                            <Button
+                              isLoading={isCompleteLoading}
+                              disabled={isCompleteLoading}
+                              value="Arxivlə"
+                              onClick={() => archive(work?.id)}
+                            />
+                            <Button
+                              value="Düzəliş et"
+                              onClick={() =>
+                                navigate(`/works/${work?.id}/update`)
+                              }
+                            />
+                          </>
                         )}
                       </td>
                     </tr>

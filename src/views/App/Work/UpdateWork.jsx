@@ -17,6 +17,7 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { defaultStyles, FileIcon } from "react-file-icon";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -27,32 +28,30 @@ import * as Yup from "yup";
 
 const yupSchema = Yup.object().shape({
   name: Yup.string()
-    .min(1, "Tapşırıq adını daxil edin")
-    .required("Tapşırıq adını daxil edin"),
-  code: Yup.string().required("Tapşırıq kodunu daxil edin"),
+    .min(1, "Layihə adını daxil edin")
+    .required("Layihə adını daxil edin"),
+  code: Yup.string().required("Layihə kodunu daxil edin"),
   description: Yup.string(),
   customer_id: Yup.number().required("Müştərini seçin"),
   sub_works: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().required("Tapşırıq adını daxil edin"),
+      name: Yup.string().required("Layihə adını daxil edin"),
       description: Yup.string(),
-      start_date: Yup.string().required("Tapşırıq başlama tarixini daxil edin"),
-      end_date: Yup.string().required("Tapşırıq bitmə tarixini daxil edin"),
+      start_date: Yup.string().required("Layihə başlama tarixini daxil edin"),
+      end_date: Yup.string().required("Layihə bitmə tarixini daxil edin"),
       file: Yup.mixed().nullable(),
-      worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
+      worker_id: Yup.number().required("Layihə sənədi daxil edin"),
       children: Yup.array()
         .of(
           Yup.object().shape({
-            name: Yup.string().required("Tapşırıq adını daxil edin"),
+            name: Yup.string().required("Layihə adını daxil edin"),
             description: Yup.string(),
             start_date: Yup.string().required(
-              "Tapşırıq başlama tarixini daxil edin"
+              "Layihə başlama tarixini daxil edin"
             ),
-            end_date: Yup.string().required(
-              "Tapşırıq bitmə tarixini daxil edin"
-            ),
+            end_date: Yup.string().required("Layihə bitmə tarixini daxil edin"),
             file: Yup.mixed().nullable(),
-            worker_id: Yup.number().required("Tapşırıq sənədi daxil edin"),
+            worker_id: Yup.number().required("Layihə sənədi daxil edin"),
           })
         )
         .nullable(),
@@ -114,21 +113,24 @@ const UpdateWork = () => {
 
   const onSubmit = (data) => {
     createProject({
-      ...data,
-      users: selectedPeople.map((user) => user.id),
+      id,
+      body: {
+        ...data,
+        users: selectedPeople.map((user) => user.id),
+      },
     });
   };
 
   useEffect(() => {
     if (isSuccess) {
-      showToast("Tapşırıq uğurlu şəkildə yaradıldı", "success");
+      showToast("Layihə uğurlu şəkildə yeniləndi", "success");
       navigate("/works");
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      showToast("Tapşırıq yaradıla bilmədi", "error");
+      showToast("Layihə yenilənə bilmədi", "error");
     }
   }, [isError]);
 
@@ -137,27 +139,43 @@ const UpdateWork = () => {
   useEffect(() => {
     if (data) {
       reset({
-        name: data.name,
-        code: data.code,
-        description: data.description,
-        customer_id: data.customer_id,
-        company_customer_id: data.company_customer_id,
-        users: data.users || [],
+        name: data.name || "",
+        code: data.code || "",
+        description: data.description || "",
+        customer_id: data.customer_id || null,
+        company_customer_id: data.company_customer_id || null,
         sub_works: data.sub_works.map((s) => ({
           ...s,
+          description: s.description || "",
+          start_date: s.start_date
+            ? moment(s.start_date).format("YYYY-MM-DD")
+            : null,
+          end_date: s.end_date ? moment(s.end_date).format("YYYY-MM-DD") : null,
           file: null,
-          children: s.children?.map((c) => ({ ...c, file: null })) || [],
+          children: s.children.map((c) => ({
+            ...c,
+            description: c.description || "",
+            start_date: c.start_date
+              ? moment(c.start_date).format("YYYY-MM-DD")
+              : null,
+            end_date: c.end_date
+              ? moment(c.end_date).format("YYYY-MM-DD")
+              : null,
+            file: null,
+          })),
         })),
       });
-      setSelectedPeople(data.users || []);
+      setSelectedPeople(data?.inspectors?.map((ins) => ins.user) || []);
     }
-  }, [data, reset]);
+  }, [data, reset, companyUsers]);
+
+  console.log(selectedPeople);
 
   return (
     <section className="w-full h-full py-10">
       <Toaster />
       <div className="siteContainer">
-        <h1 className="text-2xl font-semibold">Tapşırıq yarat</h1>
+        <h1 className="text-2xl font-semibold">Layihəyə düzəliş et</h1>
         <div className="flex flex-col gap-4 w-full h-full mt-10">
           <div className="flex flex-row gap-5">
             <Controller
@@ -167,8 +185,8 @@ const UpdateWork = () => {
                 <SecondInput
                   column
                   type="text"
-                  label="* Tapşırıq adı"
-                  placeholder="Tapşırıq adını daxil edin..."
+                  label="* Layihə adı"
+                  placeholder="Layihə adını daxil edin..."
                   error={errors.name?.message}
                   {...field}
                 />
@@ -180,8 +198,8 @@ const UpdateWork = () => {
               render={({ field }) => (
                 <SecondInput
                   column
-                  label="* Tapşırıq kodu"
-                  placeholder="Tapşırıq kodunu daxil edin..."
+                  label="* Layihə kodu"
+                  placeholder="Layihə kodunu daxil edin..."
                   error={errors.code?.message}
                   {...field}
                 />
@@ -252,22 +270,6 @@ const UpdateWork = () => {
             </ListboxOptions>
           </Listbox>
 
-          {watch("users")?.map((user) => {
-            return (
-              // render users list like badge and remove button
-              <div className="flex flex-row gap-2 items-center">
-                <div className="flex flex-row gap-2 items-center">
-                  <img
-                    src={user?.avatar}
-                    alt=""
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <span>{user?.name}</span>
-                </div>
-              </div>
-            );
-          })}
-
           <Controller
             name="description"
             control={control}
@@ -283,7 +285,7 @@ const UpdateWork = () => {
           />
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-md font-semibold">Alt tapşırıqlar</h3>
+            <h3 className="text-md font-semibold">Alt Layihələr</h3>
             {fields.map((field, index) => {
               return (
                 <SubWork
@@ -318,7 +320,7 @@ const UpdateWork = () => {
           <div className="w-fit mt-3">
             <Button
               isLoading={isLoading}
-              value="Tapşırıq yarat"
+              value="Layihəni yenilə"
               onClick={handleSubmit(onSubmit)}
             />
           </div>
@@ -369,8 +371,8 @@ const SubWork = ({
           render={({ field }) => (
             <SecondInput
               column
-              label="* Tapşırıq adı"
-              placeholder="Tapşırıq adını daxil edin..."
+              label="* Layihə adı"
+              placeholder="Layihə adını daxil edin..."
               error={errors.sub_works?.[index]?.name?.message}
               {...field}
             />
@@ -430,7 +432,7 @@ const SubWork = ({
         render={({ field }) => (
           <TextArea
             column
-            label="Tapşırıq üçün Qeyd"
+            label="Layihə üçün Qeyd"
             placeholder="Qeyd daxil edin..."
             error={errors.sub_works?.[index]?.description?.message}
             {...field}
@@ -474,7 +476,7 @@ const SubWork = ({
       />
 
       <div className="flex flex-col gap-4">
-        <h3 className="text-md font-semibold">Alt tapşırıqlar</h3>
+        <h3 className="text-md font-semibold">Alt Layihələr</h3>
         {childFields.map((child, childIndex) => {
           return (
             <div
@@ -488,8 +490,8 @@ const SubWork = ({
                   render={({ field }) => (
                     <SecondInput
                       column
-                      label="* Tapşırıq adı"
-                      placeholder="Tapşırıq adını daxil edin..."
+                      label="* Layihə adı"
+                      placeholder="Layihə adını daxil edin..."
                       error={
                         errors.sub_works?.[index]?.children?.[childIndex]?.name
                           ?.message
@@ -556,7 +558,7 @@ const SubWork = ({
                 render={({ field }) => (
                   <TextArea
                     column
-                    label="Tapşırıq üçün Qeyd"
+                    label="Layihə üçün Qeyd"
                     placeholder="Qeyd daxil edin..."
                     error={
                       errors.sub_works?.[index]?.children?.[childIndex]
@@ -611,7 +613,7 @@ const SubWork = ({
       </div>
 
       <Button
-        value="Alt tapşırıq əlavə et"
+        value="Alt Layihə əlavə et"
         onClick={() => {
           childAppend({
             name: "",

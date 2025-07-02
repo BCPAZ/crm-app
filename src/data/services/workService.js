@@ -190,7 +190,7 @@ const workService = api.injectEndpoints({
         });
 
         return {
-          url: `/works/${id}`,
+          url: `/works/update/${id}`,
           method: "POST", // Laravel `update()` metodu PUT/PATCH yerine POST ile çalışıyor
           body: formData,
         };
