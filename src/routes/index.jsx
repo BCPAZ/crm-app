@@ -89,6 +89,7 @@ const Works = lazy(() => import("@/views/App/Work/Works"));
 const CreateWork = lazy(() => import("@/views/App/Work/CreateWork"));
 const ShowWork = lazy(() => import("@/views/App/Work/ShowWork"));
 const UpdateWork = lazy(() => import("@/views/App/Work/UpdateWork"));
+const ArchivedWorks = lazy(() => import("@/views/App/Work/ArchivedWorks"));
 
 const AppRouter = () => {
   useCurrentAccountQuery();
@@ -156,6 +157,7 @@ const AppRouter = () => {
               </Route>
             </Route>
             <Route path="/works" element={<Works />} />
+            <Route path="/works/archived" element={<ArchivedWorks />} />
             <Route path="/works/create-work" element={<CreateWork />} />
             <Route path="/works/:id/update" element={<UpdateWork />} />
             <Route path="/works/:id" element={<ShowWork />} />

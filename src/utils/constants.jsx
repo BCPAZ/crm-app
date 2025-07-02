@@ -104,6 +104,20 @@ export const navigationLinks = [
     title: "Layihələr",
     icon: work,
     path: "/works",
+    elements: [
+      {
+        path: "/works",
+        label: "Bütün layihələr",
+      },
+      {
+        path: "/works/create-work",
+        label: "Yeni Layihə",
+      },
+      {
+        path: "/works/archived",
+        label: "Arxivlənmiş layihələr",
+      },
+    ],
   },
   {
     title: "Tapşırıqlar",

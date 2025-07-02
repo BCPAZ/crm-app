@@ -5,16 +5,14 @@ import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import {
   useAddDocumentToWorkMutation,
-  useArchiveMutation,
   useCompleteMutation,
-  useGetWorksQuery,
+  useGetArchivedWorksQuery,
 } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
-import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -32,7 +30,7 @@ const statusColor = {
   CLOSED: "blue",
 };
 
-const Works = () => {
+const ArchivedWorks = () => {
   const [filters, setFilters] = useState({
     name: "",
     startDate: null,
@@ -46,13 +44,11 @@ const Works = () => {
 
   const navigate = useNavigate();
 
-  const [archive, { isSuccess: isArchiveSuccess }] = useArchiveMutation();
-
   const { name, startDate, endDate, documentNo, progress } = filters;
 
   const { user } = useSelector((state) => state.auth);
 
-  const { data = [], isLoading } = useGetWorksQuery({
+  const { data = [], isLoading } = useGetArchivedWorksQuery({
     name: filters.name,
     start_date: filters.startDate
       ? moment(filters.startDate).format("YYYY-MM-DD")
@@ -107,33 +103,14 @@ const Works = () => {
     setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
   };
 
-  const toast = useToast();
-
-  useEffect(() => {
-    if (isCompleteSuccess) {
-      toast.showToast("Layihə tamamlandı", "success");
-    }
-  }, [isCompleteSuccess]);
-
-  useEffect(() => {
-    if (isArchiveSuccess) {
-      toast.showToast("Layihə arxivləndi", "success");
-    }
-  }, [isArchiveSuccess]);
-
   if (isLoading) return <LoadingScreen />;
 
   return (
     <section className="w-full h-full p-5">
-      <Toaster />
       <div className="mx-auto w-full">
-        <div className="flex items-center justify-between gap-3">
-          <h1 className="text-2xl font-semibold">Layihələr</h1>
-          <div className="mt-5 flex justify-end">
-            <Link to="/works/create-work">
-              <Button value="Layihə yaradın" />
-            </Link>
-          </div>
+        <div className="flex items-center justify-between gap-3 mb-2">
+          <h1 className="text-2xl font-semibold">Arxivlənmiş Layihələr</h1>
+          <div className="mt-5 flex justify-end"></div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
@@ -223,7 +200,7 @@ const Works = () => {
                   "Sənəd nömrəsi",
                   "Yüklənmiş fayl",
                   "Layihə kodu",
-                  "Əməliyyatlar",
+                  //   "Əməliyyatlar",
                 ].map((header, i) => (
                   <th
                     key={i}
@@ -328,7 +305,7 @@ const Works = () => {
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.code}
                       </td>
-                      <td className="border p-4 text-sm font-medium text-gray-700 gap-3 flex flex-col">
+                      {/* <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.customer_id === user?.id && (
                           <Button
                             isLoading={isCompleteLoading}
@@ -339,15 +316,7 @@ const Works = () => {
                             }
                           />
                         )}
-                        {work?.created_by === user?.id && (
-                          <Button
-                            isLoading={isCompleteLoading}
-                            disabled={isCompleteLoading}
-                            value="Arxivlə"
-                            onClick={() => archive(work?.id)}
-                          />
-                        )}
-                      </td>
+                      </td> */}
                     </tr>
 
                     {isWorkOpen &&
@@ -465,7 +434,7 @@ const Works = () => {
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 {subWork?.code || "N/A"}
                               </td>
-                              <td className="border p-4 text-sm font-medium text-gray-700">
+                              {/* <td className="border p-4 text-sm font-medium text-gray-700">
                                 {subWork?.worker_id === user?.id && (
                                   <Button
                                     value="Bitir"
@@ -474,7 +443,7 @@ const Works = () => {
                                     }
                                   />
                                 )}
-                              </td>
+                              </td> */}
                             </tr>
 
                             {isSubWorkOpen &&
@@ -564,7 +533,7 @@ const Works = () => {
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.code || "N/A"}
                                     </td>
-                                    <td className="border p-4 text-sm font-medium text-gray-700">
+                                    {/* <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.worker_id === user?.id && (
                                         <Button
                                           value="Bitir"
@@ -573,7 +542,7 @@ const Works = () => {
                                           }
                                         />
                                       )}
-                                    </td>
+                                    </td> */}
                                   </tr>
                                 );
                               })}
@@ -631,4 +600,4 @@ const DocumentChanger = ({ subWorkId, isWork = false }) => {
   );
 };
 
-export default Works;
+export default ArchivedWorks;

@@ -11,6 +11,14 @@ const workService = api.injectEndpoints({
       providesTags: ["WORKS"],
     }),
 
+    getArchivedWorks: builder.query({
+      query: (params) => ({
+        url: "/works/archived",
+        params,
+      }),
+      providesTags: ["WORKS"],
+    }),
+
     deleteWork: builder.mutation({
       query: (id) => ({
         url: `/works/${id}`,
@@ -204,6 +212,14 @@ const workService = api.injectEndpoints({
       invalidatesTags: ["WORKS", "WORK"],
     }),
 
+    archive: builder.mutation({
+      query: (id) => ({
+        url: `/works/archive/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["WORKS", "WORK"],
+    }),
+
     addDocumentToWork: builder.mutation({
       query: ({
         sub_work_id = undefined,
@@ -230,6 +246,8 @@ export const {
   useCompleteMutation,
   useAddDocumentToWorkMutation,
   useUpdateWorkMutation,
+  useGetArchivedWorksQuery,
+  useArchiveMutation,
 } = workService;
 
 export default workService;
