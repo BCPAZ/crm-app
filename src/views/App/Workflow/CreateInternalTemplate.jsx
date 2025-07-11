@@ -1,20 +1,18 @@
+import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 import Button from "@/components/common/Button";
 import SecondInput from "@/components/common/SecondInput";
 import SecondTextArea from "@/components/common/SecondTextArea";
-import { FaPlay } from "react-icons/fa6";
-import { FaStop } from "react-icons/fa6";
-import { MdAdd } from "react-icons/md";
-import { MdClose } from "react-icons/md";
-import { useEffect, useState } from "react";
-import UserSelectModal from "@/components/App/Cost/UserSelectModal";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateInternalTemplateMutation } from "@/data/services/templateService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
+import { FaPlay, FaStop } from "react-icons/fa6";
+import { MdAdd, MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 
 const createTemplateSchema = Yup.object().shape({
   name: Yup.string().required("Şablonun adını daxil edin"),
@@ -24,11 +22,9 @@ const createTemplateSchema = Yup.object().shape({
 
 const CreateInternalTemplate = () => {
   const [modal, setModal] = useState(false);
-  const {
-    data,
-    isLoading,
-    isError,
-  } = useGetCompanyUsersQuery();
+  const { data, isLoading, isError } = useGetCompanyUsersQuery({
+    limit: 10000000,
+  });
   const users = data?.users;
   const [
     createTemplate,
