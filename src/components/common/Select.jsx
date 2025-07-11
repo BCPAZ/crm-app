@@ -4,9 +4,9 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { useState, useEffect } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import PropTypes from "prop-types";
+import { useEffect, useMemo, useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 function Select({
   label,
@@ -18,6 +18,8 @@ function Select({
   error,
 }) {
   const [selectedOption, setSelectedOption] = useState(value || "");
+
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (value !== null) {
@@ -33,7 +35,24 @@ function Select({
     }
   };
 
-  const validOptions = Array.isArray(options) ? options : [];
+  const validOptions = useMemo(() => {
+    let validOptions = Array.isArray(options) ? options : [];
+
+    if (query !== "") {
+      validOptions = validOptions.filter((option) =>
+        option.name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    return validOptions;
+  }, [options, query]);
+
+  // const filteredPeople =
+  // query === ""
+  //   ? people
+  //   : people.filter((person) =>
+  //       person.name.toLowerCase().includes(query.toLowerCase())
+  //     )
 
   return (
     <Listbox
@@ -66,6 +85,16 @@ function Select({
         </ListboxButton>
       </div>
       <ListboxOptions className="p-4 bg-white shadow-lg absolute top-[100%] h-[250px] overflow-y-scroll z-20 left-0 w-full outline-none rounded-xl">
+        <div className="px-2 py-1">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Ara..."
+            className="w-full px-2 py-1 border rounded"
+            onKeyDown={(e) => e.stopPropagation()}
+          />
+        </div>
         {validOptions.map((option) => (
           <ListboxOption
             key={option.id}
