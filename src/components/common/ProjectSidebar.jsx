@@ -28,6 +28,9 @@ const ProjectSidebar = () => {
     dispatch(setProject(project));
     window.location.href = `/projects/${project.id}`;
   };
+
+  return null;
+
   return (
     <aside
       className={`flex-shrink-0  flex-col fixed top-0 z-20 ${
