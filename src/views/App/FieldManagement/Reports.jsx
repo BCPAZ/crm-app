@@ -2,16 +2,19 @@ import fileIcon from "@/assets/icons/FieldManagement/file.svg";
 import Button from "@/components/common/Button";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
-import useToast from "@/hooks/useToast";
-import { useState, useRef, useEffect } from "react";
 import { useCreateIssueMutation } from "@/data/services/fieldService";
 import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import useToast from "@/hooks/useToast";
+import { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Reports = () => {
-  const [createIssue, { isError, isSuccess, isLoading }] = useCreateIssueMutation();
-  const { data: users = [] } = useGetCompanyUsersQuery();
+  const [createIssue, { isError, isSuccess, isLoading }] =
+    useCreateIssueMutation();
+  const { data: users = [] } = useGetCompanyUsersQuery({
+    limit: 1000000,
+  });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState(null);
@@ -45,10 +48,10 @@ const Reports = () => {
 
   const handleSubmit = () => {
     if (!title || !description || !files) {
-      showToast('Bu sahələr boş buraxıla bilməz', 'error');
+      showToast("Bu sahələr boş buraxıla bilməz", "error");
       return;
     }
-  
+
     createIssue({
       name: title,
       description,
@@ -58,19 +61,19 @@ const Reports = () => {
   };
 
   useEffect(() => {
-    if (isSuccess){ 
-      setTitle('');
+    if (isSuccess) {
+      setTitle("");
       setFiles(null);
-      setDescription('');
+      setDescription("");
       setAssigneeId(null);
       setFilePreview(null);
-      showToast('Report uğurlu şəkildə yaradıldı', 'success');
-      navigate('/issues')
+      showToast("Report uğurlu şəkildə yaradıldı", "success");
+      navigate("/issues");
     }
   }, [isSuccess]);
 
   useEffect(() => {
-    if (isError) showToast('Report yaranan zaman xəta baş verdi', 'error');
+    if (isError) showToast("Report yaranan zaman xəta baş verdi", "error");
   }, [isError]);
 
   return (
@@ -98,7 +101,8 @@ const Reports = () => {
                 </h4>
                 <p className="text-xs font-medium text-center text-gray-500">
                   Bu hissəyə klik edərək kompüterinizdə{" "}
-                  <span className="text-green-600">axtarış</span> edin və fayl seçin
+                  <span className="text-green-600">axtarış</span> edin və fayl
+                  seçin
                 </p>
                 <input
                   className="hidden"
