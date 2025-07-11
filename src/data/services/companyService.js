@@ -23,6 +23,23 @@ const companyService = api.injectEndpoints({
       providesTags: ["COMPANIES"],
       keepUnusedDataFor: 0,
     }),
+
+    getMyCompanies: builder.query({
+      query: () => ({
+        url: "/my-companies",
+      }),
+      providesTags: ["MY_COMPANIES"],
+      keepUnusedDataFor: 0,
+    }),
+
+    createCompany: builder.mutation({
+      query: (data) => ({
+        url: "/companies",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["MY_COMPANIES"],
+    }),
   }),
 });
 
@@ -30,6 +47,8 @@ export const {
   useGetGovernmentsQuery,
   useGetCompanyBySubdomainQuery,
   useGetCustomerCompaniesQuery,
+  useGetMyCompaniesQuery,
+  useCreateCompanyMutation,
 } = companyService;
 
 export default companyService;

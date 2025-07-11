@@ -88,6 +88,10 @@ export const navigationLinks = [
         path: "/job-title",
         label: "Vəzifə",
       },
+      {
+        path: "/customer-companies",
+        label: "Müştərilər",
+      },
     ],
   },
   {
