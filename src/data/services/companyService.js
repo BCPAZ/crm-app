@@ -26,7 +26,7 @@ const companyService = api.injectEndpoints({
 
     getMyCompanies: builder.query({
       query: () => ({
-        url: "/my-companies",
+        url: "/companies/my-companies",
       }),
       providesTags: ["MY_COMPANIES"],
       keepUnusedDataFor: 0,

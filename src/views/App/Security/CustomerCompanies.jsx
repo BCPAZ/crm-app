@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
-import { useGetMyCompaniesQuery, useCreateCompanyMutation } from "@/data/services/companyService";
 import CustomButton from "@/components/common/CustomButton";
-import { Toaster } from "react-hot-toast";
-import Spinner from "@/components/common/Spinner";
-import { PiWarningOctagonDuotone } from "react-icons/pi";
-import useToast from "@/hooks/useToast";
 import Input from "@/components/common/Input";
+import Spinner from "@/components/common/Spinner";
+import {
+  useCreateCompanyMutation,
+  useGetMyCompaniesQuery,
+} from "@/data/services/companyService";
+import useToast from "@/hooks/useToast";
+import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { PiWarningOctagonDuotone } from "react-icons/pi";
 
 const CustomerCompaniesModal = ({ showModal, closeModal }) => {
-  const [createCompany, { isLoading, isSuccess, isError }] = useCreateCompanyMutation();
+  const [createCompany, { isLoading, isSuccess, isError }] =
+    useCreateCompanyMutation();
   const [companyName, setCompanyName] = useState("");
   const { showToast } = useToast();
 
@@ -27,7 +31,7 @@ const CustomerCompaniesModal = ({ showModal, closeModal }) => {
       setCompanyName("");
       closeModal();
     }
-  }, [isSuccess, showToast, closeModal]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -85,7 +89,10 @@ const CustomerCompanies = () => {
       <div className="py-10 px-5 h-full">
         <div className="flex justify-between items-center gap-2">
           <h1 className="text-2xl font-semibold">Müştəri Şirkətləri</h1>
-          <CustomButton value="Müştəri şirkəti yarat" functionality={() => setShowModal(true)} />
+          <CustomButton
+            value="Müştəri şirkəti yarat"
+            functionality={() => setShowModal(true)}
+          />
         </div>
         <div className="mt-[150px] h-full">
           {!isFetching && companies && companies.length > 0 ? (
@@ -106,14 +113,20 @@ const CustomerCompanies = () => {
                       </div>
                     )}
                     <div className="flex flex-col">
-                      <span className="text-md font-semibold">{company.name}</span>
-                      <span className="text-sm text-gray-500">{company.type}</span>
+                      <span className="text-md font-semibold">
+                        {company.name}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {company.type}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 text-sm text-gray-600">
                     <span>Subdomain: {company.subdomain}</span>
                     {company.responsible_person_id && (
-                      <span>Məsul şəxs ID: {company.responsible_person_id}</span>
+                      <span>
+                        Məsul şəxs ID: {company.responsible_person_id}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -128,8 +141,13 @@ const CustomerCompanies = () => {
               ) : (
                 <div className="h-full w-full flex items-center justify-center flex-col gap-3">
                   <PiWarningOctagonDuotone size={48} />
-                  <span className="text-lg font-medium">Heç bir müştəri şirkəti tapılmadı</span>
-                  <p className="text-sm text-gray-500">Yeni müştəri şirkəti yaratmaq üçün yuxarıdakı düyməni istifadə edin</p>
+                  <span className="text-lg font-medium">
+                    Heç bir müştəri şirkəti tapılmadı
+                  </span>
+                  <p className="text-sm text-gray-500">
+                    Yeni müştəri şirkəti yaratmaq üçün yuxarıdakı düyməni
+                    istifadə edin
+                  </p>
                 </div>
               )}
             </div>
