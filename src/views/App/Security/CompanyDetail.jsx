@@ -272,14 +272,6 @@ const CreateUserModal = ({ showModal, closeModal, companyId }) => {
                 placeholder="Poçt kodu"
                 type="text"
               />
-              <Select
-                name="type"
-                options={typeOptions}
-                column
-                value={formState.type}
-                onChange={handleTypeChange}
-                placeholder="Tip seçin"
-              />
               <Input
                 name="password"
                 value={formState.password}
@@ -401,14 +393,24 @@ const CompanyDetail = () => {
                   <span className="font-medium">Ad:</span>
                   <span>{company.name}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Subdomain:</span>
-                  <span>{company.subdomain}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Tip:</span>
-                  <span>{company.type}</span>
-                </div>
+                {company.voen && (
+                  <div className="flex justify-between">
+                    <span className="font-medium">VOEN:</span>
+                    <span>{company.voen}</span>
+                  </div>
+                )}
+                {company.address && (
+                  <div className="flex justify-between">
+                    <span className="font-medium">Ünvan:</span>
+                    <span>{company.address}</span>
+                  </div>
+                )}
+                {company.phone_number && (
+                  <div className="flex justify-between">
+                    <span className="font-medium">Telefon nömrəsi:</span>
+                    <span>{company.phone_number}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="font-medium">Yaradılma tarixi:</span>
                   <span>{moment(company.created_at).format("DD.MM.YYYY")}</span>

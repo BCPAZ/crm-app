@@ -1,11 +1,12 @@
 import CustomButton from "@/components/common/CustomButton";
-import Input from "@/components/common/Input";
+import SecondInput from "@/components/common/SecondInput";
 import Spinner from "@/components/common/Spinner";
 import {
   useCreateCompanyMutation,
   useGetMyCompaniesQuery,
 } from "@/data/services/companyService";
 import useToast from "@/hooks/useToast";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -15,22 +16,63 @@ import { useNavigate } from "react-router-dom";
 const CustomerCompaniesModal = ({ showModal, closeModal }) => {
   const [createCompany, { isLoading, isSuccess, isError }] =
     useCreateCompanyMutation();
-  const [companyName, setCompanyName] = useState("");
+  const [formState, setFormState] = useState({
+    name: "",
+    voen: "",
+    address: "",
+    phone_number: "",
+  });
   const { showToast } = useToast();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!companyName.trim()) {
+
+    // Validation for required fields
+    if (!formState.name.trim()) {
       showToast("Şirkət adı boş ola bilməz", "error");
       return;
     }
-    createCompany({ name: companyName });
+
+    if (formState.name.length > 255) {
+      showToast("Şirkət adı 255 simvoldan çox ola bilməz", "error");
+      return;
+    }
+
+    if (formState.voen && formState.voen.length > 255) {
+      showToast("VOEN 255 simvoldan çox ola bilməz", "error");
+      return;
+    }
+
+    if (formState.address && formState.address.length > 255) {
+      showToast("Ünvan 255 simvoldan çox ola bilməz", "error");
+      return;
+    }
+
+    if (formState.phone_number && formState.phone_number.length > 255) {
+      showToast("Telefon nömrəsi 255 simvoldan çox ola bilməz", "error");
+      return;
+    }
+
+    createCompany(formState);
   };
 
   useEffect(() => {
     if (isSuccess) {
       showToast("Müştəri şirkəti uğurla yaradıldı", "success");
-      setCompanyName("");
+      setFormState({
+        name: "",
+        voen: "",
+        address: "",
+        phone_number: "",
+      });
       closeModal();
     }
   }, [isSuccess]);
@@ -45,15 +87,44 @@ const CustomerCompaniesModal = ({ showModal, closeModal }) => {
 
   return (
     <div className="w-full h-screen bg-black/70 flex items-center justify-center z-20 fixed top-0 left-0 right-0 bottom-0">
-      <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-[50%]">
+      <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-[60%] max-h-[90vh] overflow-y-auto">
         <h1 className="text-xl font-semibold">Yeni müştəri şirkəti yarat</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <Input
-            label="Şirkət adı"
-            type="text"
+          <SecondInput
+            name="name"
+            value={formState.name}
+            onChange={handleChange}
+            column
+            label="* Şirkət adı"
             placeholder="Şirkət adını daxil edin"
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
+            type="text"
+          />
+          <SecondInput
+            name="voen"
+            value={formState.voen}
+            onChange={handleChange}
+            column
+            label="VOEN"
+            placeholder="VOEN daxil edin"
+            type="text"
+          />
+          <SecondInput
+            name="address"
+            value={formState.address}
+            onChange={handleChange}
+            column
+            label="Ünvan"
+            placeholder="Ünvan daxil edin"
+            type="text"
+          />
+          <SecondInput
+            name="phone_number"
+            value={formState.phone_number}
+            onChange={handleChange}
+            column
+            label="Telefon nömrəsi"
+            placeholder="Telefon nömrəsini daxil edin"
+            type="text"
           />
           <div className="flex justify-end gap-3">
             <button
@@ -129,18 +200,13 @@ const CustomerCompanies = () => {
                       <span className="text-md font-semibold">
                         {company.name}
                       </span>
-                      <span className="text-sm text-gray-500">
-                        {company.type}
-                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 text-sm text-gray-600">
-                    <span>Subdomain: {company.subdomain}</span>
-                    {company.responsible_person_id && (
-                      <span>
-                        Məsul şəxs ID: {company.responsible_person_id}
-                      </span>
-                    )}
+                    <span>
+                      Yaradılma tarixi:{" "}
+                      {moment(company.created_at).format("DD.MM.YYYY")}
+                    </span>
                   </div>
                 </div>
               ))}
