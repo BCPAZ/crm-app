@@ -84,7 +84,10 @@ const JobTitle = lazy(() => import("@/views/App/Security/JobTitle"));
 const CreateNewUser = lazy(() => import("@/views/App/Security/CreateNewUser"));
 const CreateProject = lazy(() => import("@/views/App/CreateProject"));
 const ChangePassword = lazy(() => import("@/views/App/ChangePassword"));
-const CustomerCompanies = lazy(() => import("@/views/App/Security/CustomerCompanies"));
+const CustomerCompanies = lazy(() =>
+  import("@/views/App/Security/CustomerCompanies")
+);
+const CompanyDetail = lazy(() => import("@/views/App/Security/CompanyDetail"));
 
 const Works = lazy(() => import("@/views/App/Work/Works"));
 const CreateWork = lazy(() => import("@/views/App/Work/CreateWork"));
@@ -175,7 +178,11 @@ const AppRouter = () => {
               <Route path="/users" element={<Users />} />
               <Route path="/roles" element={<Roles />} />
               <Route path="/job-title" element={<JobTitle />} />
-              <Route path="/customer-companies" element={<CustomerCompanies />} />
+              <Route
+                path="/customer-companies"
+                element={<CustomerCompanies />}
+              />
+              <Route path="/companies/:companyId" element={<CompanyDetail />} />
               <Route path="/create-new-user" element={<CreateNewUser />} />
             </Route>
           </Route>

@@ -6,9 +6,11 @@ import {
   useGetMyCompaniesQuery,
 } from "@/data/services/companyService";
 import useToast from "@/hooks/useToast";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 const CustomerCompaniesModal = ({ showModal, closeModal }) => {
   const [createCompany, { isLoading, isSuccess, isError }] =
@@ -75,12 +77,22 @@ const CustomerCompaniesModal = ({ showModal, closeModal }) => {
   );
 };
 
+CustomerCompaniesModal.propTypes = {
+  showModal: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
+
 const CustomerCompanies = () => {
   const { data: companies = [], isFetching } = useGetMyCompaniesQuery();
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handleCompanyClick = (companyId) => {
+    navigate(`/companies/${companyId}`);
   };
 
   return (
@@ -100,7 +112,8 @@ const CustomerCompanies = () => {
               {companies.map((company, index) => (
                 <div
                   key={index}
-                  className="min-h-[150px] relative p-4 flex flex-col justify-between rounded-lg border border-grey/40"
+                  className="min-h-[150px] relative p-4 flex flex-col justify-between rounded-lg border border-grey/40 cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() => handleCompanyClick(company.id)}
                 >
                   <div className="flex items-center gap-3 mb-4">
                     {company.image_url && (
