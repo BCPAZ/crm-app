@@ -1,23 +1,23 @@
+import ConfirmationModal from "@/components/common/ConfirmationModal";
 import Searchbar from "@/components/common/Searchbar";
+import Spinner from "@/components/common/Spinner";
+import {
+  useDeleteUserMutation,
+  useGetUserQuery,
+} from "@/data/services/usersService";
+import useToast from "@/hooks/useToast";
+import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { GoArrowDown } from "react-icons/go";
 import { HiMiniTrash } from "react-icons/hi2";
 import { MdModeEditOutline } from "react-icons/md";
-import QuickUpdateModal from "./QuickUpdateModal";
-import useToast from "@/hooks/useToast";
-import { useEffect, useState } from "react";
-import {
-  useGetCompanyUsersQuery,
-  useDeleteUserMutation,
-} from "@/data/services/usersService";
-import Spinner from "@/components/common/Spinner";
-import ConfirmationModal from "@/components/common/ConfirmationModal";
 import ReactPaginate from "react-paginate";
-import { Toaster } from "react-hot-toast";
+import QuickUpdateModal from "./QuickUpdateModal";
 
 const UserList = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, isError } = useGetCompanyUsersQuery({
+  const { data, isLoading, isError } = useGetUserQuery({
     page,
     name: searchTerm,
   });

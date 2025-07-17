@@ -1,23 +1,21 @@
+import UserSelectModal from "@/components/App/Cost/UserSelectModal";
 import Button from "@/components/common/Button";
 import SecondInput from "@/components/common/SecondInput";
 import SecondTextArea from "@/components/common/SecondTextArea";
-import { FaPlay } from "react-icons/fa6";
-import { FaStop } from "react-icons/fa6";
-import { MdAdd } from "react-icons/md";
-import { MdClose } from "react-icons/md";
-import { useEffect, useState } from "react";
-import UserSelectModal from "@/components/App/Cost/UserSelectModal";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useDetailInternalTemplateQuery,
   useUpdateInternalTemplateMutation,
 } from "@/data/services/templateService";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { useGetUserQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
+import { FaPlay, FaStop } from "react-icons/fa6";
+import { MdAdd, MdClose } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import * as Yup from "yup";
 
 const updateTemplateSchema = Yup.object().shape({
   name: Yup.string().required("Şablonun adını daxil edin"),
@@ -27,8 +25,9 @@ const updateTemplateSchema = Yup.object().shape({
 const UpdateInternalTemplate = () => {
   const { id } = useParams();
   const [modal, setModal] = useState(false);
-  const { data, isLoading: isDetailLoading } = useDetailInternalTemplateQuery(id);
-  const { data: userData, isLoading, isError } = useGetCompanyUsersQuery();
+  const { data, isLoading: isDetailLoading } =
+    useDetailInternalTemplateQuery(id);
+  const { data: userData, isLoading, isError } = useGetUserQuery();
   const users = userData?.users;
 
   const [
@@ -121,10 +120,9 @@ const UpdateInternalTemplate = () => {
     }
   }, [data]);
 
-   const onSubmit = (data) => {
+  const onSubmit = (data) => {
     updateTemplate({ id, data });
   };
-
 
   return (
     <section>

@@ -4,7 +4,7 @@ import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import TextArea from "@/components/common/TextArea";
 import { useGetCustomerCompaniesQuery } from "@/data/services/companyService";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { useGetUserQuery } from "@/data/services/usersService";
 import {
   useGetWorkQuery,
   useUpdateWorkMutation,
@@ -101,7 +101,7 @@ const UpdateWork = () => {
     name: "sub_works",
   });
 
-  const { data: companyUserResult = {} } = useGetCompanyUsersQuery({
+  const { data: companyUserResult = {} } = useGetUserQuery({
     limit: 1000000,
   });
 

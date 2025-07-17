@@ -2,7 +2,7 @@ import api from "@/data/api";
 
 const usersService = api.injectEndpoints({
   endpoints: (builder) => ({
-    getCompanyUsers: builder.query({
+    getUser: builder.query({
       query: (params) => ({
         url: "/users",
         params,
@@ -21,7 +21,7 @@ const usersService = api.injectEndpoints({
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
-        formData.append("type", data.type)
+        formData.append("type", data.type);
         if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
@@ -41,7 +41,7 @@ const usersService = api.injectEndpoints({
       invalidatesTags: ["USERS"],
     }),
     updateUser: builder.mutation({
-      query: ({id, data}) => {
+      query: ({ id, data }) => {
         const formData = new FormData();
         formData.append("name", data.name);
         formData.append("email", data.email);
@@ -52,7 +52,7 @@ const usersService = api.injectEndpoints({
         formData.append("city", data.city);
         formData.append("zip_code", data.zip_code);
         formData.append("about", data.about);
-        formData.append("type" , data.type)
+        formData.append("type", data.type);
         if (data.avatar?.name) {
           formData.append("avatar", data.avatar);
         }
@@ -64,20 +64,21 @@ const usersService = api.injectEndpoints({
       },
       invalidatesTags: ["USERS"],
     }),
-    getLastUsers : builder.query({
-      query : () => ({
-        url : '/users/last-five-users'
-      })
-    })
+    getLastUsers: builder.query({
+      query: () => ({
+        url: "/users/last-five-users",
+      }),
+    }),
   }),
 });
 
 export const {
-  useGetCompanyUsersQuery,
+  //   useGetCompanyUsersQuery,
+  useGetUserQuery,
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
-  useGetLastUsersQuery
+  useGetLastUsersQuery,
 } = usersService;
 
 export default usersService;

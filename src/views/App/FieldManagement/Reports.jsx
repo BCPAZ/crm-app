@@ -3,7 +3,7 @@ import Button from "@/components/common/Button";
 import SecondInput from "@/components/common/SecondInput";
 import Select from "@/components/common/Select";
 import { useCreateIssueMutation } from "@/data/services/fieldService";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { useGetUserQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
 import { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const Reports = () => {
   const [createIssue, { isError, isSuccess, isLoading }] =
     useCreateIssueMutation();
-  const { data: users = [] } = useGetCompanyUsersQuery({
+  const { data: users = [] } = useGetUserQuery({
     limit: 1000000,
   });
   const [title, setTitle] = useState("");

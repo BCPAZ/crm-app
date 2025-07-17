@@ -3,7 +3,7 @@ import Button from "@/components/common/Button";
 import SecondInput from "@/components/common/SecondInput";
 import SecondTextArea from "@/components/common/SecondTextArea";
 import { useCreateInternalTemplateMutation } from "@/data/services/templateService";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
+import { useGetUserQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const createTemplateSchema = Yup.object().shape({
 
 const CreateInternalTemplate = () => {
   const [modal, setModal] = useState(false);
-  const { data, isLoading, isError } = useGetCompanyUsersQuery({
+  const { data, isLoading, isError } = useGetUserQuery({
     limit: 10000000,
   });
   const users = data?.users;

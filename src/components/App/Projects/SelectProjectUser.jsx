@@ -1,14 +1,15 @@
 import Alert from "@/components/common/Alert";
 import CustomButton from "@/components/common/CustomButton";
 import Select from "@/components/common/Select";
+import { useGetPositionsQuery } from "@/data/services/positionsService";
+import { useGetUserQuery } from "@/data/services/usersService";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useGetPositionsQuery } from "@/data/services/positionsService";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
 
 const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
-  const { data: companyUsers = [], isError: usersError } = useGetCompanyUsersQuery();
-  const { data: positions = [], isError: positionError } = useGetPositionsQuery();
+  const { data: companyUsers = [], isError: usersError } = useGetUserQuery();
+  const { data: positions = [], isError: positionError } =
+    useGetPositionsQuery();
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
@@ -37,18 +38,22 @@ const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
     >
       <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col gap-5 min-w-[50%]">
         <h1 className="text-xl font-semibold">İstifadəçi əlavə edin</h1>
-        {usersError && <Alert type="error" value="İstifadəçiləri əldə etmək mümkün olmadı" />}
-        {positionError && <Alert type="error" value="Pozisiyaları əldə etmək mümkün olmadı" />}
+        {usersError && (
+          <Alert type="error" value="İstifadəçiləri əldə etmək mümkün olmadı" />
+        )}
+        {positionError && (
+          <Alert type="error" value="Pozisiyaları əldə etmək mümkün olmadı" />
+        )}
         <Select
           label="İstifadəçi seçin"
           type="text"
           placeholder="İstifadəçini seçin"
           absolute
           column
-          options={users.map(user => ({ id: user.id, name: user.name }))}
-          value={selectedUser ? selectedUser.id : ''}
+          options={users.map((user) => ({ id: user.id, name: user.name }))}
+          value={selectedUser ? selectedUser.id : ""}
           onChange={(id) => {
-            const user = users.find(u => u.id === id);
+            const user = users.find((u) => u.id === id);
             setSelectedUser(user);
           }}
         />
@@ -58,19 +63,18 @@ const SelectUserProject = ({ showModal, closeModal, onAddUser }) => {
           placeholder="Pozisiya əlavə edin"
           absolute
           column
-          options={positionsList.map(position => ({ id: position.id, name: position.name }))}
-          value={selectedPosition ? selectedPosition.id : ''}
+          options={positionsList.map((position) => ({
+            id: position.id,
+            name: position.name,
+          }))}
+          value={selectedPosition ? selectedPosition.id : ""}
           onChange={(id) => {
-            const position = positionsList.find(p => p.id === id);
+            const position = positionsList.find((p) => p.id === id);
             setSelectedPosition(position);
           }}
         />
         <div className="flex justify-end gap-3">
-          <CustomButton
-            simple
-            value='Seç'
-            functionality={handleAddUser}
-          />
+          <CustomButton simple value="Seç" functionality={handleAddUser} />
           <button
             onClick={closeModal}
             className="text-sm p-2 border border-grey/40 rounded-lg font-semibold bg-white"

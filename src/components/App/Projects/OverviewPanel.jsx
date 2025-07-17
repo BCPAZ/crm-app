@@ -1,15 +1,9 @@
-import { IoIosAdd } from "react-icons/io";
+import High from "@/assets/icons/Kanban/high.svg";
 import Low from "@/assets/icons/Kanban/low.svg";
 import Medium from "@/assets/icons/Kanban/medium.svg";
-import High from "@/assets/icons/Kanban/high.svg";
-import SecondTextArea from "@/components/common/SecondTextArea";
-import { IoCloudUploadSharp } from "react-icons/io5";
-import UserSelectModal from "../Cost/UserSelectModal";
-import { useEffect, useState } from "react";
 import CustomDatePicker from "@/components/common/CustomDatePicker";
-import { useGetCompanyUsersQuery } from "@/data/services/usersService";
-import { FileIcon, defaultStyles } from "react-file-icon";
-import PropTypes from "prop-types";
+import SecondTextArea from "@/components/common/SecondTextArea";
+import Spinner from "@/components/common/Spinner";
 import {
   useSetAttachmentMutation,
   useSetDescriptionMutation,
@@ -18,10 +12,16 @@ import {
   useSetReporterMutation,
   useUpdateNameMutation,
 } from "@/data/services/taskManagementService";
-import moment from "moment";
-import Spinner from "@/components/common/Spinner";
+import { useGetUserQuery } from "@/data/services/usersService";
 import useToast from "@/hooks/useToast";
+import moment from "moment";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { FileIcon, defaultStyles } from "react-file-icon";
 import { Toaster } from "react-hot-toast";
+import { IoIosAdd } from "react-icons/io";
+import { IoCloudUploadSharp } from "react-icons/io5";
+import UserSelectModal from "../Cost/UserSelectModal";
 
 const OverviewPanel = ({ task }) => {
   const { showToast } = useToast();
@@ -31,14 +31,17 @@ const OverviewPanel = ({ task }) => {
   const [updateTask, setUpdateTask] = useState(false);
 
   const [dueDate, setDueDate] = useState(task?.due_date || null);
-  const { data } = useGetCompanyUsersQuery();
+  const { data } = useGetUserQuery();
 
   const users = data?.users || [];
 
   const [setPriority] = useSetPriorityMutation();
   const [changeDescription] = useSetDescriptionMutation();
   const [changeDueDate] = useSetDueDateMutation();
-  const [changeReporter, { isSuccess: changeReporterSuccess, isError: changeReporterError }] = useSetReporterMutation();
+  const [
+    changeReporter,
+    { isSuccess: changeReporterSuccess, isError: changeReporterError },
+  ] = useSetReporterMutation();
   const [changeAttachment] = useSetAttachmentMutation();
   const [changeName, { isLoading, isError, isSuccess }] =
     useUpdateNameMutation();
@@ -102,25 +105,25 @@ const OverviewPanel = ({ task }) => {
   useEffect(() => {
     if (isSuccess) {
       setUpdateTask(false);
-      showToast('Ad uğurlu şəkildə dəyişdirildi.', 'success');
+      showToast("Ad uğurlu şəkildə dəyişdirildi.", "success");
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      showToast('Ad dəyişdirilən zaman xəta baş verdi.', 'error');
+      showToast("Ad dəyişdirilən zaman xəta baş verdi.", "error");
     }
   }, [isError]);
 
   useEffect(() => {
     if (changeReporterSuccess) {
-      showToast(`Seçilən şəxs təyin edildi.`, 'success')
+      showToast(`Seçilən şəxs təyin edildi.`, "success");
     }
   }, [changeReporterSuccess]);
 
   useEffect(() => {
     if (changeReporterError) {
-      showToast(`Seçilən şəxs təyin edilə bilmədi`, 'error')
+      showToast(`Seçilən şəxs təyin edilə bilmədi`, "error");
     }
   }, [changeReporterError]);
 
@@ -184,7 +187,9 @@ const OverviewPanel = ({ task }) => {
                 }
                 alt="avatar"
               />
-              <span className="text-[10px] flex-1 hidden group-hover:block bg-black/50 text-white p-2 rounded-lg absolute top-8">{task?.reporter?.name || 'N/A'}</span>
+              <span className="text-[10px] flex-1 hidden group-hover:block bg-black/50 text-white p-2 rounded-lg absolute top-8">
+                {task?.reporter?.name || "N/A"}
+              </span>
             </div>
             <button
               className="p-1 bg-grey/20 rounded-full border border-gray-400 border-dashed"
@@ -198,7 +203,9 @@ const OverviewPanel = ({ task }) => {
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
             Başlama tarixi
           </h3>
-          <span className="text-sm font-medium">{moment(task?.created_at).format("DD/MM/YYYY - HH:ss")}</span>
+          <span className="text-sm font-medium">
+            {moment(task?.created_at).format("DD/MM/YYYY - HH:ss")}
+          </span>
         </div>
         <div className="flex items-center">
           <h3 className="text-sm font-medium text-gray-500 w-[100px]">
@@ -226,8 +233,9 @@ const OverviewPanel = ({ task }) => {
           </h3>
           <div className="flex-1 flex items-center gap-2">
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${task.priority === "LOW" ? "border border-black" : "border"
-                }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
+                task.priority === "LOW" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -239,8 +247,9 @@ const OverviewPanel = ({ task }) => {
               Aşağı
             </button>
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${task.priority === "MEDIUM" ? "border border-black" : "border"
-                }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg border ${
+                task.priority === "MEDIUM" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -253,8 +262,9 @@ const OverviewPanel = ({ task }) => {
             </button>
             {/* {task?.priority === "HIGH" && ( */}
             <button
-              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg ${task.priority === "HIGH" ? "border border-black" : "border"
-                }`}
+              className={`flex items-center gap-1 text-sm font-medium py-1 px-2 rounded-lg ${
+                task.priority === "HIGH" ? "border border-black" : "border"
+              }`}
               onClick={() =>
                 setPriority({
                   taskId: task.id,
@@ -298,7 +308,9 @@ const OverviewPanel = ({ task }) => {
             <div className="flex gap-5 items-center mt-5">
               {task?.attachments?.map((attachment) => (
                 <div key={attachment.id} className="w-10 group">
-                  <a target="_blank" href={attachment.url}>{renderFileIcon(attachment.url)}</a>
+                  <a target="_blank" href={attachment.url}>
+                    {renderFileIcon(attachment.url)}
+                  </a>
                 </div>
               ))}
             </div>
