@@ -39,7 +39,7 @@ const CreateUserModal = ({ showModal, closeModal, companyId }) => {
     password: "",
     about: "",
     avatar: null,
-    type: null,
+    type: "CUSTOMER",
   });
 
   const typeOptions = [
