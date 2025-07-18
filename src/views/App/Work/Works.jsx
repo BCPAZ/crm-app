@@ -275,7 +275,7 @@ const Works = () => {
                         {work?.customer?.name || "N/A"}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
-                        {work?.customerCompany?.name || "N/A"}
+                        {work?.customer_company?.name || "N/A"}
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {moment(work?.start_date || new Date()).format(
@@ -407,7 +407,7 @@ const Works = () => {
                                 {subWork?.worker?.name || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
-                                {work?.customerCompany?.name || "N/A"}
+                                {work?.customer_company?.name || "N/A"}
                               </td>
                               <td className="border p-4 text-sm font-medium text-gray-700">
                                 {moment(
@@ -503,7 +503,7 @@ const Works = () => {
                                       {child?.worker?.name || "N/A"}
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
-                                      {work?.customerCompany?.name || "N/A"}
+                                      {work?.customer_company?.name || "N/A"}
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {moment(
