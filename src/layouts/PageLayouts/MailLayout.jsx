@@ -1,31 +1,30 @@
-import clsx from "clsx";
-import moment from "moment";
-import { useEffect, useState, useCallback } from "react";
-import { NavLink, Outlet } from "react-router-dom";
-import { useGetMailsQuery } from "@/data/services/mailService";
-import Searchbar from "@/components/common/Searchbar";
+import disabled from "@/assets/icons/Mail/disabled.svg";
 import empty from "@/assets/icons/Mail/empty.svg";
 import CreateMail from "@/components/App/Mail/CreateMail";
-import disabled from "@/assets/icons/Mail/disabled.svg";
-import { FaPen } from "react-icons/fa";
-import mailLinks from "@/utils/mailLinks";
-import LoadingScreen from "@/components/common/LoadingScreen";
-import { FaUser } from "react-icons/fa6";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Spinner from "@/components/common/Spinner";
-import { IoMdMail } from "react-icons/io";
-import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import MailNavSidebar from "@/components/App/Mail/MailNavSidebar";
-import { useRef } from "react";
-import useClickOutside from "@/hooks/useClickOutside";
 import ShowMailSidebar from "@/components/App/Mail/ShowMailSidebar";
+import LoadingScreen from "@/components/common/LoadingScreen";
+import Searchbar from "@/components/common/Searchbar";
+import Spinner from "@/components/common/Spinner";
+import { useGetMailsQuery } from "@/data/services/mailService";
+import useClickOutside from "@/hooks/useClickOutside";
+import mailLinks from "@/utils/mailLinks";
+import clsx from "clsx";
+import moment from "moment";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BiSolidMessageRoundedDetail } from "react-icons/bi";
+import { FaPen } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { IoMdMail } from "react-icons/io";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { NavLink, Outlet } from "react-router-dom";
 const MailLayout = () => {
   const [filterType, setFilterType] = useState("ALL");
   const [mailModal, setMailModal] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
+
   const openMailModal = () => {
     setMailModal(true);
   };
@@ -76,7 +75,9 @@ const MailLayout = () => {
     setSearchInput(e.target.value);
   };
 
-  const { data, isLoading, isError } = useGetMailsQuery(filter);
+  const { data, isLoading, isError } = useGetMailsQuery(filter, {
+    pollingInterval: 2500,
+  });
 
   const mails = data?.mails || [];
   const meta = data?.meta || {};
@@ -108,7 +109,7 @@ const MailLayout = () => {
   };
   const handlMailsSidebar = () => {
     setToggleMailsSidebar(!toggleMailsSidebar);
-  }
+  };
 
   const closeNavSidebar = () => {
     setToggleSidebar(false);
@@ -116,11 +117,10 @@ const MailLayout = () => {
 
   const closeMailsSidebar = () => {
     setToggleMailsSidebar(false);
-  }
+  };
 
   useClickOutside(sidebarRef, closeNavSidebar);
   useClickOutside(mailsRef, closeMailsSidebar);
-
 
   if (isLoading && !data) return <LoadingScreen />;
   if (isError) return <p>Error loading mails</p>;
@@ -137,7 +137,10 @@ const MailLayout = () => {
             >
               <IoMdMail size={20} />
             </button>
-            <button onClick={handlMailsSidebar} className="text-gray-500 cursor-pointer">
+            <button
+              onClick={handlMailsSidebar}
+              className="text-gray-500 cursor-pointer"
+            >
               <BiSolidMessageRoundedDetail size={20} />
             </button>
           </div>
