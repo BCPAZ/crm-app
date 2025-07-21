@@ -265,7 +265,9 @@ const Works = () => {
                         colSpan={2}
                       >
                         <div className="flex flex-1 gap-5 justify-between items-center">
-                          {work?.name}
+                          <h2 className="font-semibold text-base">
+                            {work?.name}
+                          </h2>
                           {work?.sub_works?.length > 0 && (
                             <>
                               {openWorkId === work?.id ? (
@@ -512,7 +514,9 @@ const Works = () => {
                                       className="border p-4 text-sm font-medium text-gray-700"
                                       colSpan={2}
                                     >
-                                      {child?.name}
+                                      <h4 className="font-semibold text-xs">
+                                        {child?.name}
+                                      </h4>
                                     </td>
                                     <td className="border p-4 text-sm font-medium text-gray-700">
                                       {child?.worker?.name || "N/A"}
