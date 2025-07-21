@@ -84,6 +84,12 @@ const companyService = api.injectEndpoints({
       },
       invalidatesTags: ["COMPANY_USERS"],
     }),
+
+    getCompaniesWithWorks: builder.query({
+      query: () => ({
+        url: "/companies-with-works",
+      }),
+    }),
   }),
 });
 
@@ -96,6 +102,7 @@ export const {
   useGetCompanyDetailsQuery,
   useGetCompanyUsersQuery,
   useCreateCompanyUserMutation,
+  useGetCompaniesWithWorksQuery,
 } = companyService;
 
 export default companyService;

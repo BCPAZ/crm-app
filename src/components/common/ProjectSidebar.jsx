@@ -1,5 +1,7 @@
-import { useGetCompanyBySubdomainQuery } from "@/data/services/companyService";
-import { useGrouppedProjectsQuery } from "@/data/services/projectService";
+import {
+  useGetCompaniesWithWorksQuery,
+  useGetCompanyBySubdomainQuery,
+} from "@/data/services/companyService";
 import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import useSubdomain from "@/hooks/useSubdomain";
@@ -11,7 +13,7 @@ import AnimatedSidebarLink from "./AnimatedSidebarLink";
 const ProjectSidebar = () => {
   const subdomain = useSubdomain();
   const { sidebar } = useSelector((state) => state.site);
-  const { data: groups = [] } = useGrouppedProjectsQuery();
+  const { data: companiesData = [] } = useGetCompaniesWithWorksQuery();
   const { data: companyData } = useGetCompanyBySubdomainQuery(subdomain);
 
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ const ProjectSidebar = () => {
 
   const availableModules = companyData?.modules || [];
   const hasProjectModule = availableModules.includes("projects");
+
+  // Transform companies into groups format
 
   if (!hasProjectModule) {
     return null;
@@ -28,8 +32,6 @@ const ProjectSidebar = () => {
     dispatch(setProject(project));
     window.location.href = `/projects/${project.id}`;
   };
-
-  return null;
 
   return (
     <aside
@@ -62,13 +64,13 @@ const ProjectSidebar = () => {
           Mövcud tapşırıqlar
         </h2>
         <button
-          onClick={() => navigate("/create-new-user")}
+          onClick={() => navigate("/customer-companies")}
           className="text-sm font-medium mt-3 underline"
         >
           Müştəri yarat +
         </button>
         <div className="mt-5 flex flex-col gap-2">
-          {groups.map((group, index) => (
+          {companiesData?.map((group, index) => (
             <AnimatedSidebarLink
               group={group}
               onClick={handleProjectClick}
