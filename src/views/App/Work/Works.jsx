@@ -10,7 +10,13 @@ import {
   useGetWorksQuery,
 } from "@/data/services/workService";
 import useToast from "@/hooks/useToast";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import {
+  Archive,
+  Check,
+  ChevronDown,
+  ChevronRight,
+  Pencil,
+} from "lucide-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FileIcon, defaultStyles } from "react-file-icon";
@@ -291,7 +297,7 @@ const Works = () => {
                         {work?.progress} %
                       </td>
                       <td className="border p-4 text-sm font-medium text-gray-700">
-                        {status[work?.status] || "N/A"}{" "}
+                        {status[work?.status] || "N/A"}
                         {status[work?.status] && (
                           <span
                             className="w-2 h-2 rounded-full inline-block ml-2"
@@ -328,31 +334,40 @@ const Works = () => {
                       <td className="border p-4 text-sm font-medium text-gray-700">
                         {work?.code}
                       </td>
-                      <td className="border p-4 text-sm font-medium text-gray-700 gap-3 flex flex-col">
+                      <td className="border p-4 text-sm font-medium text-gray-700 flex flex-row gap-2 justify-start">
                         {work?.customer_id === user?.id && (
-                          <Button
-                            isLoading={isCompleteLoading}
-                            disabled={isCompleteLoading}
-                            value="Bitir"
-                            onClick={() =>
-                              completeWork({ id: work?.id, isWork: true })
-                            }
-                          />
-                        )}
-                        {work?.created_by === user?.id && (
-                          <>
+                          <div className="basis-1/3">
                             <Button
                               isLoading={isCompleteLoading}
                               disabled={isCompleteLoading}
-                              value="Arxivlə"
-                              onClick={() => archive(work?.id)}
-                            />
-                            <Button
-                              value="Düzəliş et"
                               onClick={() =>
-                                navigate(`/works/${work?.id}/update`)
+                                completeWork({ id: work?.id, isWork: true })
                               }
-                            />
+                            >
+                              <Check size={18} />
+                            </Button>
+                          </div>
+                        )}
+                        {work?.created_by === user?.id && (
+                          <>
+                            <div className="basis-1/3">
+                              <Button
+                                isLoading={isCompleteLoading}
+                                disabled={isCompleteLoading}
+                                onClick={() => archive(work?.id)}
+                              >
+                                <Archive size={18} />
+                              </Button>
+                            </div>
+                            <div className="basis-1/3">
+                              <Button
+                                onClick={() =>
+                                  navigate(`/works/${work?.id}/update`)
+                                }
+                              >
+                                <Pencil size={18} />
+                              </Button>
+                            </div>
                           </>
                         )}
                       </td>
