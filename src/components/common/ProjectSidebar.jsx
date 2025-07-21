@@ -2,7 +2,6 @@ import {
   useGetCompaniesWithWorksQuery,
   useGetCompanyBySubdomainQuery,
 } from "@/data/services/companyService";
-import { setProject } from "@/data/slices/projectSlice";
 import { closeProjectSidebar } from "@/data/slices/siteSlice";
 import useSubdomain from "@/hooks/useSubdomain";
 import { MdClose } from "react-icons/md";
@@ -28,9 +27,9 @@ const ProjectSidebar = () => {
     return null;
   }
 
-  const handleProjectClick = (project) => {
-    dispatch(setProject(project));
-    window.location.href = `/projects/${project.id}`;
+  const handleProjectClick = () => {
+    // dispatch(setProject(project));
+    // window.location.href = `/projects/${project.id}`;
   };
 
   return (
