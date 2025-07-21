@@ -29,7 +29,7 @@ const ProjectSidebar = () => {
 
   const handleProjectClick = () => {
     // dispatch(setProject(project));
-    // window.location.href = `/projects/${project.id}`;
+    window.location.href = `/works`;
   };
 
   return (
