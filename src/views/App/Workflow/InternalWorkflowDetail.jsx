@@ -1,19 +1,25 @@
-import { translateStatus } from "@/utils/translateStatus";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import useToast from "@/hooks/useToast";
-import moment from "moment";
-import Spinner from "@/components/common/Spinner";
-import { useGetInternalWorkflowDetailQuery, useUpdateInternalWorkflowDetailMutation } from "@/data/services/workflowsService";
-import StatusSelector from "@/components/common/StatusSelector";
 import DenyModal from "@/components/App/Workflow/DenyModal";
+import Spinner from "@/components/common/Spinner";
+import StatusSelector from "@/components/common/StatusSelector";
+import {
+  useGetInternalWorkflowDetailQuery,
+  useUpdateInternalWorkflowDetailMutation,
+} from "@/data/services/workflowsService";
+import useToast from "@/hooks/useToast";
+import { translateStatus } from "@/utils/translateStatus";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const InternalWorkflowDetail = () => {
   const { id } = useParams();
   const { showToast } = useToast();
   const { data, isLoading, isError } = useGetInternalWorkflowDetailQuery(id);
-  const [updateStatus, { isError: updateError, isSuccess: updateSuccess }] = useUpdateInternalWorkflowDetailMutation();
+  const [updateStatus, { isError: updateError, isSuccess: updateSuccess }] =
+    useUpdateInternalWorkflowDetailMutation();
   const workflowData = data || {};
+  const { user } = useSelector((state) => state.auth);
 
   const [selectedStatus, setSelectedStatus] = useState(workflowData?.status);
   const [reason, setReason] = useState("");
@@ -26,8 +32,8 @@ const InternalWorkflowDetail = () => {
   ];
 
   useEffect(() => {
-    setSelectedStatus(workflowData?.status)
-  },[workflowData])
+    setSelectedStatus(workflowData?.status);
+  }, [workflowData]);
 
   const handleChangeStatus = (selected) => {
     setSelectedStatus(selected.id);
@@ -99,10 +105,18 @@ const InternalWorkflowDetail = () => {
 
   const renderRemainingDays = () => {
     if (remainingDays < 0) {
-      return <span className="text-sm font-semibold text-red-600">Deadline vaxtı bitib!</span>;
+      return (
+        <span className="text-sm font-semibold text-red-600">
+          Deadline vaxtı bitib!
+        </span>
+      );
     }
     return (
-      <span className={`text-sm font-semibold ${remainingDays <= 2 ? "text-yellow-500" : "text-green-600"}`}>
+      <span
+        className={`text-sm font-semibold ${
+          remainingDays <= 2 ? "text-yellow-500" : "text-green-600"
+        }`}
+      >
         Qalan gün sayı: {remainingDays}
       </span>
     );
@@ -114,18 +128,26 @@ const InternalWorkflowDetail = () => {
         <div className="flex md:flex-row flex-col md:items-center justify-between">
           {isModalOpen && (
             <DenyModal
-            openModal={isModalOpen}
+              openModal={isModalOpen}
               reason={reason}
               onChange={handleChangeReason}
               onConfirm={handleDeny}
               onCancel={() => setIsModalOpen(false)}
             />
           )}
-          <h1 className="text-3xl font-semibold mb-2">{workflowData.project?.name || "Project Name"}</h1>
+          <h1 className="text-3xl font-semibold mb-2">
+            {workflowData.project?.name || "Project Name"}
+          </h1>
           <div className="flex md:flex-row flex-col md:items-center gap-5">
             {renderRemainingDays()}
             <div>{translateStatus(workflowData.status)}</div>
-            <StatusSelector options={options} onChange={handleChangeStatus} value={selectedOption} />
+            {user?.id === workflowData?.user?.id ? (
+              <StatusSelector
+                options={options}
+                onChange={handleChangeStatus}
+                value={selectedOption}
+              />
+            ) : null}
           </div>
         </div>
         <div className="mt-10 grid md:grid-cols-2 grid-cols-1 gap-10">
@@ -146,21 +168,20 @@ const InternalWorkflowDetail = () => {
           <div className="flex flex-col gap-4 bg-grey/20 p-4 rounded-lg">
             <h2 className="text-lg font-semibold">İstifadəçi</h2>
             <p>
-              <span className="font-medium">Ad:</span>{" "}
-              {workflowData.user?.name}
+              <span className="font-medium">Ad:</span> {workflowData.user?.name}
             </p>
             <p>
               <span className="font-medium">E-poçt:</span>{" "}
               {workflowData.user?.email}
             </p>
-            {
-              workflowData?.status && <div className="text-sm font-semibold">
-              İmtina səbəbi:
-              <p className="font-medium text-sm mt-3">
-                {workflowData?.reason}
-              </p>
-            </div>
-            }
+            {workflowData?.status && (
+              <div className="text-sm font-semibold">
+                İmtina səbəbi:
+                <p className="font-medium text-sm mt-3">
+                  {workflowData?.reason}
+                </p>
+              </div>
+            )}
             {/* <img
               src={workflowData.user?.avatar_url}
               alt={workflowData.user?.name}
