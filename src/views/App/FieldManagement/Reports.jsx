@@ -119,7 +119,7 @@ const Reports = () => {
           <SecondInput
             onChange={handleChangeTitle}
             column
-            placeholder="Başlıq"
+            placeholder="Obyektin adı"
             type="text"
             value={title}
           />
