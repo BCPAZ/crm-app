@@ -408,7 +408,9 @@ const Works = () => {
                                 colSpan={2}
                               >
                                 <div className="flex flex-1 gap-5 justify-between items-center">
-                                  {subWork?.name}
+                                  <h3 className="font-semibold text-sm">
+                                    {subWork?.name}
+                                  </h3>
                                   {subWork?.children?.length > 0 && (
                                     <>
                                       {isSubWorkOpen ? (

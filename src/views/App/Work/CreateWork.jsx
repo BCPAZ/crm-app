@@ -268,7 +268,7 @@ const CreateWork = () => {
           />
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-md font-semibold">Alt Layihələr</h3>
+            <h3 className="text-md font-semibold">Alt Bölmələr</h3>
             {fields.map((field, index) => {
               return (
                 <SubWork
@@ -285,7 +285,7 @@ const CreateWork = () => {
             })}
 
             <Button
-              value="Sətir əlavə et"
+              value="Bölmə əlavə et"
               onClick={() =>
                 append({
                   name: "",
@@ -459,7 +459,7 @@ const SubWork = ({
       />
 
       <div className="flex flex-col gap-4">
-        <h3 className="text-md font-semibold">Alt Layihələr</h3>
+        <h3 className="text-md font-semibold">İş bölgüsü</h3>
         {childFields.map((child, childIndex) => {
           return (
             <div
@@ -596,7 +596,7 @@ const SubWork = ({
       </div>
 
       <Button
-        value="Alt Layihə əlavə et"
+        value="İş bölgüsü əlavə et"
         onClick={() => {
           childAppend({
             name: "",
